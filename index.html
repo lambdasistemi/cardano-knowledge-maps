@@ -257,6 +257,52 @@
     pointer-events: none;
   }
 
+  #filters {
+    position: absolute;
+    top: 48px;
+    left: 12px;
+    display: flex;
+    gap: 6px;
+    z-index: 5;
+    flex-wrap: wrap;
+    max-width: calc(100% - 24px);
+  }
+
+  .filter-btn {
+    display: flex;
+    align-items: center;
+    gap: 5px;
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #8b949e;
+    padding: 4px 10px;
+    border-radius: 14px;
+    cursor: pointer;
+    font-size: 11px;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .filter-btn:hover {
+    background: #30363d;
+  }
+
+  .filter-btn.active {
+    color: #f0f6fc;
+  }
+
+  .filter-btn .dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  .filter-btn:not(.active) .dot {
+    opacity: 0.3;
+  }
+
   #legend {
     position: absolute;
     bottom: 12px;
@@ -264,28 +310,10 @@
     background: #161b22;
     border: 1px solid #30363d;
     border-radius: 8px;
-    padding: 12px 16px;
+    padding: 10px 14px;
     z-index: 5;
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    max-width: calc(100% - 24px);
-  }
-
-  .legend-item {
-    display: flex;
-    align-items: center;
-    gap: 6px;
     font-size: 11px;
-    color: #8b949e;
-    white-space: nowrap;
-  }
-
-  .legend-dot {
-    width: 10px;
-    height: 10px;
-    border-radius: 50%;
-    flex-shrink: 0;
+    color: #6e7681;
   }
 
   #empty-state {
@@ -362,17 +390,8 @@
     <span id="search-icon">&#x1F50D;</span>
     <input type="text" id="search" placeholder="Search nodes...">
   </div>
-  <div id="legend">
-    <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div>Actor</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div>Action Type</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>Process</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#bc8cff"></div>Mechanism</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#f778ba"></div>Artifact</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#79c0ff"></div>Concept</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#e3b341"></div>Param Group</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#a5d6a7"></div>Parameter</div>
-    <div class="legend-item"><div class="legend-dot" style="background:#56d4dd"></div>Tool</div>
-  </div>
+  <div id="filters"></div>
+  <div id="legend">Click node types above to filter. Click a node to explore. Focus mode re-layouts the neighborhood.</div>
 </div>
 
 <div id="sidebar">
@@ -414,10 +433,24 @@ const KIND_SHAPES = {
   'tool':        'round-pentagon'
 };
 
+const KIND_LABELS = {
+  'actor': 'Actor',
+  'action-type': 'Action Type',
+  'process': 'Process',
+  'mechanism': 'Mechanism',
+  'artifact': 'Artifact',
+  'concept': 'Concept',
+  'param-group': 'Param Group',
+  'parameter': 'Parameter',
+  'tool': 'Tool'
+};
+
 let graphData = null;
 let cy = null;
 let focusMode = false;
 let selectedNodeId = null;
+let activeFilters = new Set(Object.keys(KIND_COLORS));
+let allElements = null;
 
 async function init() {
   const resp = await fetch('data/graph.json');
@@ -458,6 +491,10 @@ async function init() {
     wheelSensitivity: 0.3
   });
 
+  allElements = cy.elements().jsons();
+
+  buildFilterButtons();
+
   cy.on('tap', 'node', function(evt) {
     selectNode(evt.target.id());
   });
@@ -478,7 +515,7 @@ async function init() {
     if (focusMode && selectedNodeId) {
       applyFocus(selectedNodeId);
     } else {
-      resetGraph();
+      restoreFullGraph();
     }
   });
 
@@ -486,7 +523,9 @@ async function init() {
     focusMode = false;
     document.getElementById('btn-focus').classList.remove('active');
     selectedNodeId = null;
-    resetGraph();
+    activeFilters = new Set(Object.keys(KIND_COLORS));
+    updateFilterButtons();
+    restoreFullGraph();
     clearSidebar();
   });
 
@@ -523,6 +562,60 @@ async function init() {
   document.getElementById('close-sidebar').addEventListener('click', function() {
     document.getElementById('sidebar').classList.add('collapsed');
   });
+}
+
+function buildFilterButtons() {
+  var container = document.getElementById('filters');
+  container.innerHTML = '';
+  Object.keys(KIND_COLORS).forEach(function(kind) {
+    var btn = document.createElement('button');
+    btn.className = 'filter-btn active';
+    btn.dataset.kind = kind;
+    btn.innerHTML = '<span class="dot" style="background:' + KIND_COLORS[kind] + '"></span>' +
+      (KIND_LABELS[kind] || kind);
+    btn.addEventListener('click', function() {
+      toggleFilter(kind);
+    });
+    container.appendChild(btn);
+  });
+}
+
+function updateFilterButtons() {
+  document.querySelectorAll('.filter-btn').forEach(function(btn) {
+    btn.classList.toggle('active', activeFilters.has(btn.dataset.kind));
+  });
+}
+
+function toggleFilter(kind) {
+  if (activeFilters.has(kind)) {
+    if (activeFilters.size === 1) return;
+    activeFilters.delete(kind);
+  } else {
+    activeFilters.add(kind);
+  }
+  updateFilterButtons();
+  applyFilters();
+}
+
+function applyFilters() {
+  var visibleNodeIds = new Set();
+  cy.nodes().forEach(function(node) {
+    var kind = node.data('kind');
+    if (activeFilters.has(kind)) {
+      node.style('display', 'element');
+      visibleNodeIds.add(node.id());
+    } else {
+      node.style('display', 'none');
+    }
+  });
+  cy.edges().forEach(function(edge) {
+    if (visibleNodeIds.has(edge.source().id()) && visibleNodeIds.has(edge.target().id())) {
+      edge.style('display', 'element');
+    } else {
+      edge.style('display', 'none');
+    }
+  });
+  runLayout(cy.elements(':visible'));
 }
 
 function buildStyle() {
@@ -626,14 +719,15 @@ function selectNode(nodeId) {
   if (!node) return;
 
   cy.elements().removeClass('highlighted neighbor-edge');
-  cy.$('#' + nodeId).addClass('highlighted');
-  cy.$('#' + nodeId).connectedEdges().addClass('neighbor-edge');
 
   showNodeDetail(node);
   document.getElementById('sidebar').classList.remove('collapsed');
 
   if (focusMode) {
     applyFocus(nodeId);
+  } else {
+    cy.$('#' + nodeId).addClass('highlighted');
+    cy.$('#' + nodeId).connectedEdges(':visible').addClass('neighbor-edge');
   }
 }
 
@@ -718,20 +812,30 @@ function applyFocus(nodeId) {
   var depth = parseInt(document.getElementById('depth-slider').value);
   var neighborhood = getNeighborhood(nodeId, depth);
 
-  cy.elements().forEach(function(ele) {
-    if (ele.isNode()) {
-      if (neighborhood.has(ele.id())) {
-        ele.removeClass('dimmed');
-      } else {
-        ele.addClass('dimmed');
-      }
-    } else if (ele.isEdge()) {
-      if (neighborhood.has(ele.source().id()) && neighborhood.has(ele.target().id())) {
-        ele.removeClass('dimmed');
-      } else {
-        ele.addClass('dimmed');
-      }
+  cy.nodes().forEach(function(node) {
+    if (neighborhood.has(node.id()) && activeFilters.has(node.data('kind'))) {
+      node.style('display', 'element');
+      node.removeClass('dimmed');
+    } else {
+      node.style('display', 'none');
     }
+  });
+  cy.edges().forEach(function(edge) {
+    var srcVisible = neighborhood.has(edge.source().id()) && activeFilters.has(edge.source().data('kind'));
+    var tgtVisible = neighborhood.has(edge.target().id()) && activeFilters.has(edge.target().data('kind'));
+    if (srcVisible && tgtVisible) {
+      edge.style('display', 'element');
+      edge.removeClass('dimmed');
+    } else {
+      edge.style('display', 'none');
+    }
+  });
+
+  var visible = cy.elements(':visible');
+  runLayout(visible, function() {
+    cy.$('#' + nodeId).addClass('highlighted');
+    cy.$('#' + nodeId).connectedEdges(':visible').addClass('neighbor-edge');
+    cy.fit(visible, 60);
   });
 }
 
@@ -758,8 +862,41 @@ function getNeighborhood(nodeId, depth) {
   return nodes;
 }
 
-function resetGraph() {
+function runLayout(eles, callback) {
+  var layout = eles.layout({
+    name: 'elk',
+    elk: {
+      algorithm: 'layered',
+      'elk.direction': 'DOWN',
+      'elk.spacing.nodeNode': 80,
+      'elk.layered.spacing.nodeNodeBetweenLayers': 100,
+      'elk.layered.crossingMinimization.strategy': 'LAYER_SWEEP',
+      'elk.edgeRouting': 'SPLINES'
+    },
+    fit: true,
+    padding: 60,
+    animate: true,
+    animationDuration: 400,
+    stop: callback || function() {}
+  });
+  layout.run();
+}
+
+function restoreFullGraph() {
   cy.elements().removeClass('dimmed highlighted neighbor-edge');
+  cy.nodes().forEach(function(node) {
+    if (activeFilters.has(node.data('kind'))) {
+      node.style('display', 'element');
+    } else {
+      node.style('display', 'none');
+    }
+  });
+  cy.edges().forEach(function(edge) {
+    var srcOk = activeFilters.has(edge.source().data('kind'));
+    var tgtOk = activeFilters.has(edge.target().data('kind'));
+    edge.style('display', srcOk && tgtOk ? 'element' : 'none');
+  });
+  runLayout(cy.elements(':visible'));
   document.getElementById('search').value = '';
 }
 
