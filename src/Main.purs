@@ -59,6 +59,7 @@ type State =
 data Action
   = Initialize
   | NodeTapped String
+  | NodeHovered String
   | ToggleFocus
   | SetDepth Int
   | ToggleFilter NodeKind
@@ -280,10 +281,15 @@ handleAction
 handleAction = case _ of
   Initialize -> do
     liftEffect $ Cy.initCytoscape "cy"
-    { emitter, listener } <- liftEffect HS.create
+    tapSub <- liftEffect HS.create
     liftEffect $ Cy.onNodeTap \nodeId ->
-      HS.notify listener (NodeTapped nodeId)
-    void $ H.subscribe emitter
+      HS.notify tapSub.listener (NodeTapped nodeId)
+    void $ H.subscribe tapSub.emitter
+    hoverSub <- liftEffect HS.create
+    liftEffect $ Cy.onNodeHover \nodeId ->
+      HS.notify hoverSub.listener
+        (NodeHovered nodeId)
+    void $ H.subscribe hoverSub.emitter
     result <- liftAff loadGraphData
     case result of
       Left err ->
@@ -296,8 +302,20 @@ handleAction = case _ of
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
     H.modify_ _ { selected = node }
-    if state.focusMode then renderGraph
-    else liftEffect $ Cy.markRoot nodeId
+    if state.focusMode then do
+      -- Click in focus mode: re-center on this node
+      renderGraph
+    else
+      liftEffect $ Cy.markRoot nodeId
+
+  NodeHovered nodeId -> do
+    state <- H.get
+    -- Hover only updates sidebar in focus mode
+    when state.focusMode do
+      let node = Map.lookup nodeId state.graph.nodes
+      H.modify_ _ { selected = node }
+      -- Don't re-render graph, just update sidebar
+      liftEffect $ Cy.markRoot nodeId
 
   ToggleFocus -> do
     H.modify_ \s -> s
@@ -383,7 +401,11 @@ renderGraph = do
         in
           buildGraph filteredNodes filteredEdges
 
-  liftEffect $ Cy.setElements (GCy.toElements visible)
+  let els = GCy.toElements visible
+  if state.focusMode then
+    liftEffect $ Cy.setFocusElements els
+  else
+    liftEffect $ Cy.setElements els
   -- Re-mark selected node after re-render
   for_ state.selected \node ->
     liftEffect $ Cy.markRoot node.id

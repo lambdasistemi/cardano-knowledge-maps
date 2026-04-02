@@ -3,7 +3,9 @@
 module FFI.Cytoscape
   ( initCytoscape
   , setElements
+  , setFocusElements
   , onNodeTap
+  , onNodeHover
   , markRoot
   , clearRoot
   , fitAll
@@ -20,12 +22,21 @@ foreign import initCytoscape
   :: String -> Effect Unit
 
 -- | Replace all elements and re-run layout.
+-- | Edge labels hidden by default.
 foreign import setElements
   :: Foreign -> Effect Unit
 
+-- | Replace elements for focus mode.
+-- | All edge labels visible.
+foreign import setFocusElements
+  :: Foreign -> Effect Unit
+
 -- | Register a tap callback on nodes.
--- | Receives the node ID.
 foreign import onNodeTap
+  :: (String -> Effect Unit) -> Effect Unit
+
+-- | Register a hover (mouseover) callback on nodes.
+foreign import onNodeHover
   :: (String -> Effect Unit) -> Effect Unit
 
 -- | Mark a node as the focus root (white border).

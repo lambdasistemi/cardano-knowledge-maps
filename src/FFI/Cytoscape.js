@@ -156,9 +156,27 @@ export const setElements = (elements) => () => {
   runLayout();
 };
 
+// Focus mode: all edge labels visible
+export const setFocusElements = (elements) => () => {
+  if (!_cy) return;
+  _cy.elements().remove();
+  _cy.add(elements);
+  runLayout();
+  // Show all edge labels in focus mode
+  _cy.edges().style("text-opacity", 1);
+  _cy.edges().style("opacity", 1);
+};
+
 export const onNodeTap = (callback) => () => {
   if (!_cy) return;
   _cy.on("tap", "node", function (evt) {
+    callback(evt.target.id())();
+  });
+};
+
+export const onNodeHover = (callback) => () => {
+  if (!_cy) return;
+  _cy.on("mouseover", "node", function (evt) {
     callback(evt.target.id())();
   });
 };
