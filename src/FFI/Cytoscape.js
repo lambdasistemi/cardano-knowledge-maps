@@ -12,6 +12,13 @@ var KIND_COLORS = {
   tool: "#56d4dd",
 };
 
+function hexToRgba(hex, alpha) {
+  var r = parseInt(hex.slice(1, 3), 16);
+  var g = parseInt(hex.slice(3, 5), 16);
+  var b = parseInt(hex.slice(5, 7), 16);
+  return "rgba(" + r + "," + g + "," + b + "," + alpha + ")";
+}
+
 var KIND_SHAPES = {
   actor: "ellipse",
   "action-type": "round-rectangle",
@@ -30,7 +37,7 @@ function kindStyles() {
     styles.push({
       selector: "node." + kind,
       style: {
-        "background-color": KIND_COLORS[kind] + "22",
+        "background-color": hexToRgba(KIND_COLORS[kind], 0.13),
         "border-color": KIND_COLORS[kind],
         shape: KIND_SHAPES[kind] || "ellipse",
       },
@@ -68,7 +75,7 @@ var _style = [
       "target-arrow-color": "#30363d",
       "target-arrow-shape": "triangle",
       "arrow-scale": 0.8,
-      "curve-style": "bezier",
+      "curve-style": "straight",
       label: "data(label)",
       "font-size": "11px",
       "font-family":
@@ -110,8 +117,8 @@ function runLayout() {
         elk: {
           algorithm: "layered",
           "elk.direction": "DOWN",
-          "elk.spacing.nodeNode": "80",
-          "elk.layered.spacing.nodeNodeBetweenLayers": "100",
+          "elk.spacing.nodeNode": "100",
+          "elk.layered.spacing.nodeNodeBetweenLayers": "120",
           "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
           "elk.edgeRouting": "SPLINES",
         },
@@ -145,7 +152,7 @@ export const initCytoscape = (containerId) => () => {
     elements: [],
     style: _style,
     layout: { name: "preset" },
-    wheelSensitivity: 0.3,
+    wheelSensitivity: 1,
     minZoom: 0.15,
     maxZoom: 3,
   });
