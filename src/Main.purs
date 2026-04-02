@@ -5,20 +5,17 @@ import Prelude
 import Data.Argonaut.Parser (jsonParser)
 import Data.Array as Array
 import Data.Either (Either(..))
-import Data.Foldable (for_)
+import Data.Foldable (foldl, for_)
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
-import Data.Set (Set)
 import Data.Set as Set
-
+import Data.Tuple (Tuple(..), fst, snd)
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
 import Effect.Class (liftEffect)
 import FFI.Cytoscape as Cy
 import Fetch (Method(..), fetch)
-import Halogen.Subscription as HS
-import Graph.Build (buildGraph)
 import Graph.Cytoscape as GCy
 import Graph.Decode (decodeGraph)
 import Graph.Operations (neighborhood, subgraph)
@@ -28,7 +25,6 @@ import Graph.Types
   , Link
   , Node
   , NodeKind(..)
-  , allKinds
   , emptyGraph
   , kindLabel
   )
@@ -37,6 +33,7 @@ import Halogen.Aff as HA
 import Halogen.HTML as HH
 import Halogen.HTML.Events as HE
 import Halogen.HTML.Properties as HP
+import Halogen.Subscription as HS
 import Halogen.VDom.Driver (runUI)
 
 main :: Effect Unit
@@ -48,10 +45,7 @@ main = HA.runHalogenAff do
 type State =
   { graph :: Graph
   , selected :: Maybe Node
-  , focusMode :: Boolean
   , depth :: Int
-  , filters :: Set NodeKind
-  , search :: String
   , error :: Maybe String
   }
 
@@ -60,13 +54,8 @@ data Action
   = Initialize
   | NodeTapped String
   | NodeHovered String
-  | ToggleFocus
   | SetDepth Int
-  | ToggleFilter NodeKind
-  | SetSearch String
   | FitAll
-  | Reset
-  | CloseSidebar
   | NavigateTo String
 
 component
@@ -75,10 +64,7 @@ component = H.mkComponent
   { initialState: \_ ->
       { graph: emptyGraph
       , selected: Nothing
-      , focusMode: false
-      , depth: 1
-      , filters: Set.fromFoldable allKinds
-      , search: ""
+      , depth: 99
       , error: Nothing
       }
   , render
@@ -92,11 +78,8 @@ render :: forall m. State -> H.ComponentHTML Action () m
 render state =
   HH.div [ cls "app" ]
     [ HH.div [ cls "graph-container" ]
-        [ HH.div
-            [ HP.id "cy" ]
-            []
+        [ HH.div [ HP.id "cy" ] []
         , renderControls state
-        , renderFilters state
         , renderLegend
         ]
     , renderSidebar state
@@ -106,8 +89,11 @@ renderControls
   :: forall m. State -> H.ComponentHTML Action () m
 renderControls state =
   HH.div [ cls "controls" ]
-    [ btn "Fit View" FitAll false
-    , btn "Focus Mode" ToggleFocus state.focusMode
+    [ HH.button
+        [ cls "control-btn"
+        , HE.onClick \_ -> FitAll
+        ]
+        [ HH.text "Fit View" ]
     , HH.div [ cls "depth-control" ]
         [ HH.span [ cls "depth-label" ]
             [ HH.text "Depth:" ]
@@ -125,34 +111,7 @@ renderControls state =
             ]
             [ HH.text "All" ]
         ]
-    , btn "Reset" Reset false
     ]
-
-renderFilters
-  :: forall m. State -> H.ComponentHTML Action () m
-renderFilters state =
-  HH.div [ cls "filters" ]
-    ( map mkFilter allKinds
-    )
-  where
-  mkFilter kind =
-    HH.button
-      [ cls
-          ( "filter-btn"
-              <> if Set.member kind state.filters
-                then " active"
-                else ""
-          )
-      , HE.onClick \_ -> ToggleFilter kind
-      ]
-      [ HH.span
-          [ cls "dot"
-          , HP.attr (HH.AttrName "style")
-              ("background:" <> kindColor kind)
-          ]
-          []
-      , HH.text (kindLabel kind)
-      ]
 
 renderSidebar
   :: forall m. State -> H.ComponentHTML Action () m
@@ -160,11 +119,6 @@ renderSidebar state =
   HH.div [ cls "sidebar" ]
     [ HH.div [ cls "sidebar-header" ]
         [ HH.h2_ [ HH.text sidebarTitle ]
-        , HH.button
-            [ cls "close-btn"
-            , HE.onClick \_ -> CloseSidebar
-            ]
-            [ HH.text "\x00D7" ]
         ]
     , HH.div [ cls "sidebar-content" ]
         [ case state.selected of
@@ -183,13 +137,14 @@ renderEmptyState
   :: forall m. H.ComponentHTML Action () m
 renderEmptyState =
   HH.div [ cls "empty-state" ]
-    [ HH.h2_ [ HH.text "Cardano Governance" ]
+    [ HH.h2_
+        [ HH.text "Cardano Governance" ]
     , HH.p_
         [ HH.text
-            "Click any node to explore. \
-            \Use Focus Mode to isolate \
-            \a neighborhood. Filter by \
-            \node type above."
+            "Hover a node to see details. \
+            \Click to re-center. \
+            \Use depth buttons to control \
+            \neighborhood size."
         ]
     ]
 
@@ -217,7 +172,8 @@ renderNodeDetail graph node =
     (\e -> e.target == node.id)
     graph.edges
 
-  renderLinks :: Array Link -> H.ComponentHTML Action () m
+  renderLinks
+    :: Array Link -> H.ComponentHTML Action () m
   renderLinks [] = HH.text ""
   renderLinks links =
     HH.ul [ cls "links" ]
@@ -248,8 +204,8 @@ renderNodeDetail graph node =
   mkConn :: Edge -> H.ComponentHTML Action () m
   mkConn edge =
     let
-      targetId = if edge.source == node.id
-        then edge.target
+      targetId =
+        if edge.source == node.id then edge.target
         else edge.source
       targetNode = Map.lookup targetId graph.nodes
       targetLabel = case targetNode of
@@ -270,20 +226,22 @@ renderLegend :: forall m. H.ComponentHTML Action () m
 renderLegend =
   HH.div [ cls "legend" ]
     [ HH.text
-        "Click nodes to explore. \
-        \Filter by type above. \
-        \Focus mode re-layouts the \
-        \neighborhood."
+        "Hover to inspect. Click to \
+        \re-center. Depth controls \
+        \neighborhood size."
     ]
 
 handleAction
-  :: forall o. Action -> H.HalogenM State Action () o Aff Unit
+  :: forall o
+   . Action
+  -> H.HalogenM State Action () o Aff Unit
 handleAction = case _ of
   Initialize -> do
     liftEffect $ Cy.initCytoscape "cy"
     tapSub <- liftEffect HS.create
     liftEffect $ Cy.onNodeTap \nodeId ->
-      HS.notify tapSub.listener (NodeTapped nodeId)
+      HS.notify tapSub.listener
+        (NodeTapped nodeId)
     void $ H.subscribe tapSub.emitter
     hoverSub <- liftEffect HS.create
     liftEffect $ Cy.onNodeHover \nodeId ->
@@ -295,75 +253,37 @@ handleAction = case _ of
       Left err ->
         H.modify_ _ { error = Just err }
       Right graph -> do
-        H.modify_ _ { graph = graph }
+        let start = mostConnectedNode graph
+        H.modify_ _
+          { graph = graph
+          , selected = start
+          }
         renderGraph
 
   NodeTapped nodeId -> do
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
     H.modify_ _ { selected = node }
-    if state.focusMode then do
-      -- Click in focus mode: re-center on this node
-      renderGraph
-    else
-      liftEffect $ Cy.markRoot nodeId
+    renderGraph
 
   NodeHovered nodeId -> do
     state <- H.get
-    -- Hover only updates sidebar in focus mode
-    when state.focusMode do
-      let node = Map.lookup nodeId state.graph.nodes
-      H.modify_ _ { selected = node }
-      -- Don't re-render graph, just update sidebar
-      liftEffect $ Cy.markRoot nodeId
-
-  ToggleFocus -> do
-    H.modify_ \s -> s
-      { focusMode = not s.focusMode }
-    renderGraph
+    let node = Map.lookup nodeId state.graph.nodes
+    H.modify_ _ { selected = node }
+    liftEffect $ Cy.markRoot nodeId
 
   SetDepth d -> do
     H.modify_ _ { depth = d }
-    state <- H.get
-    when state.focusMode renderGraph
-
-  ToggleFilter kind -> do
-    state <- H.get
-    let
-      newFilters =
-        if Set.member kind state.filters then
-          if Set.size state.filters > 1 then
-            Set.delete kind state.filters
-          else state.filters
-        else Set.insert kind state.filters
-    H.modify_ _ { filters = newFilters }
     renderGraph
-
-  SetSearch q -> do
-    H.modify_ _ { search = q }
 
   FitAll ->
     liftEffect Cy.fitAll
-
-  Reset -> do
-    H.modify_ _
-      { selected = Nothing
-      , focusMode = false
-      , depth = 1
-      , filters = Set.fromFoldable allKinds
-      , search = ""
-      }
-    renderGraph
-
-  CloseSidebar ->
-    H.modify_ _ { selected = Nothing }
 
   NavigateTo nodeId -> do
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
     H.modify_ _ { selected = node }
-    if state.focusMode then renderGraph
-    else liftEffect $ Cy.markRoot nodeId
+    renderGraph
 
 renderGraph
   :: forall o
@@ -371,44 +291,52 @@ renderGraph
 renderGraph = do
   state <- H.get
   let
-    allNodes = Array.fromFoldable
-      (Map.values state.graph.nodes)
-    allNodeIds = Set.fromFoldable (map _.id allNodes)
-
-    -- Focus mode: show full neighborhood unfiltered
-    -- Normal mode: apply kind filters
     visible = case state.selected of
-      Just node | state.focusMode ->
+      Just node ->
         let
           hood = neighborhood state.depth
             node.id
             state.graph
         in
           subgraph hood state.graph
-      _ ->
-        let
-          filteredNodes = Array.filter
-            (\n -> Set.member n.kind state.filters)
-            allNodes
-          filteredIds = Set.fromFoldable
-            (map _.id filteredNodes)
-          filteredEdges = Array.filter
-            ( \e ->
-                Set.member e.source filteredIds
-                  && Set.member e.target filteredIds
-            )
-            state.graph.edges
-        in
-          buildGraph filteredNodes filteredEdges
+      Nothing -> state.graph
 
-  let els = GCy.toElements visible
-  if state.focusMode then
-    liftEffect $ Cy.setFocusElements els
-  else
-    liftEffect $ Cy.setElements els
-  -- Re-mark selected node after re-render
+  liftEffect $ Cy.setFocusElements
+    (GCy.toElements visible)
   for_ state.selected \node ->
     liftEffect $ Cy.markRoot node.id
+
+-- | Find the node with the most connections.
+mostConnectedNode :: Graph -> Maybe Node
+mostConnectedNode graph =
+  let
+    edges = graph.edges
+    counts = foldl countEdge Map.empty edges
+    best = foldl
+      ( \acc (Tuple nid count) ->
+          case acc of
+            Nothing -> Just (Tuple nid count)
+            Just (Tuple _ best') ->
+              if count > best'
+                then Just (Tuple nid count)
+                else acc
+      )
+      Nothing
+      (Map.toUnfoldable counts :: Array _)
+  in
+    case best of
+      Just (Tuple nid _) ->
+        Map.lookup nid graph.nodes
+      Nothing -> Nothing
+  where
+  countEdge m edge =
+    let
+      m1 = Map.alter (Just <<< add 1 <<< orZero) edge.source m
+      m2 = Map.alter (Just <<< add 1 <<< orZero) edge.target m1
+    in
+      m2
+  orZero Nothing = 0
+  orZero (Just n) = n
 
 loadGraphData :: Aff (Either String Graph)
 loadGraphData = do
@@ -429,27 +357,12 @@ depthBtn n current =
   HH.button
     [ cls
         ( "depth-btn"
-            <> if n == current then " active" else ""
+            <> if n == current then " active"
+              else ""
         )
     , HE.onClick \_ -> SetDepth n
     ]
     [ HH.text (show n) ]
-
-btn
-  :: forall m
-   . String
-  -> Action
-  -> Boolean
-  -> H.ComponentHTML Action () m
-btn label action active =
-  HH.button
-    [ cls
-        ( "control-btn"
-            <> if active then " active" else ""
-        )
-    , HE.onClick \_ -> action
-    ]
-    [ HH.text label ]
 
 cls
   :: forall r i
@@ -467,4 +380,3 @@ kindColor Concept = "#79c0ff"
 kindColor ParamGroup = "#e3b341"
 kindColor Parameter = "#a5d6a7"
 kindColor Tool = "#56d4dd"
-
