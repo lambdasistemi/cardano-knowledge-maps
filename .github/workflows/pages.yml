@@ -33,4 +33,5 @@ jobs:
         with:
           path: dist
       - id: deployment
+        if: github.ref == 'refs/heads/main'
         uses: actions/deploy-pages@v5
