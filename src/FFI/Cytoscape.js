@@ -110,6 +110,11 @@ var _style = [
 
 function runLayout(callback) {
   if (!_cy) return;
+  var n = _cy.nodes().length;
+  // Fewer nodes → more space between them
+  var edgeLen = n <= 10 ? 350 : n <= 20 ? 250 : 180;
+  var repulsion = n <= 10 ? 50000 : n <= 20 ? 25000 : 8000;
+  var sep = n <= 10 ? 250 : n <= 20 ? 180 : 120;
   _cy
     .layout({
       name: "fcose",
@@ -118,13 +123,13 @@ function runLayout(callback) {
       animate: true,
       animationDuration: 500,
       fit: true,
-      padding: 60,
-      nodeSeparation: 120,
-      idealEdgeLength: 180,
-      edgeElasticity: 0.1,
-      nodeRepulsion: 8000,
-      gravity: 0.15,
-      gravityRange: 1.5,
+      padding: 80,
+      nodeSeparation: sep,
+      idealEdgeLength: edgeLen,
+      edgeElasticity: 0.05,
+      nodeRepulsion: repulsion,
+      gravity: 0.08,
+      gravityRange: 1.2,
       numIter: 5000,
       stop: function () {
         if (callback) callback();
