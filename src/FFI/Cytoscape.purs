@@ -6,6 +6,7 @@ module FFI.Cytoscape
   , setFocusElements
   , onNodeTap
   , onNodeHover
+  , onEdgeHover
   , markRoot
   , clearRoot
   , fitAll
@@ -38,6 +39,12 @@ foreign import onNodeTap
 -- | Register a hover (mouseover) callback on nodes.
 foreign import onNodeHover
   :: (String -> Effect Unit) -> Effect Unit
+
+-- | Register a hover callback on edges.
+-- | Receives source id, target id, label.
+foreign import onEdgeHover
+  :: (String -> String -> String -> Effect Unit)
+  -> Effect Unit
 
 -- | Mark a node as the focus root (white border).
 foreign import markRoot :: String -> Effect Unit

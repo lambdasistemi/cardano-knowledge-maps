@@ -41,10 +41,18 @@ main = HA.runHalogenAff do
   body <- HA.awaitBody
   runUI component unit body
 
+-- | Edge detail shown on hover.
+type EdgeInfo =
+  { sourceLabel :: String
+  , targetLabel :: String
+  , label :: String
+  }
+
 -- | Application state.
 type State =
   { graph :: Graph
   , selected :: Maybe Node
+  , hoveredEdge :: Maybe EdgeInfo
   , depth :: Int
   , error :: Maybe String
   }
@@ -54,6 +62,7 @@ data Action
   = Initialize
   | NodeTapped String
   | NodeHovered String
+  | EdgeHovered String String String
   | SetDepth Int
   | FitAll
   | NavigateTo String
@@ -64,6 +73,7 @@ component = H.mkComponent
   { initialState: \_ ->
       { graph: emptyGraph
       , selected: Nothing
+      , hoveredEdge: Nothing
       , depth: 99
       , error: Nothing
       }
@@ -121,17 +131,21 @@ renderSidebar state =
         [ HH.h2_ [ HH.text sidebarTitle ]
         ]
     , HH.div [ cls "sidebar-content" ]
-        [ case state.selected of
-            Nothing -> renderEmptyState
-            Just node -> renderNodeDetail
-              state.graph
-              node
+        [ case state.hoveredEdge of
+            Just edge -> renderEdgeDetail edge
+            Nothing -> case state.selected of
+              Nothing -> renderEmptyState
+              Just node -> renderNodeDetail
+                state.graph
+                node
         ]
     ]
   where
-  sidebarTitle = case state.selected of
-    Nothing -> "Cardano Governance"
-    Just n -> n.label
+  sidebarTitle = case state.hoveredEdge of
+    Just edge -> edge.label
+    Nothing -> case state.selected of
+      Nothing -> "Cardano Governance"
+      Just n -> n.label
 
 renderEmptyState
   :: forall m. H.ComponentHTML Action () m
@@ -145,6 +159,30 @@ renderEmptyState =
             \Click to re-center. \
             \Use depth buttons to control \
             \neighborhood size."
+        ]
+    ]
+
+renderEdgeDetail
+  :: forall m. EdgeInfo -> H.ComponentHTML Action () m
+renderEdgeDetail edge =
+  HH.div_
+    [ HH.span [ cls "badge badge-mechanism" ]
+        [ HH.text "relationship" ]
+    , HH.div [ cls "edge-detail" ]
+        [ HH.div [ cls "edge-endpoint" ]
+            [ HH.span [ cls "edge-role" ]
+                [ HH.text "From" ]
+            , HH.span [ cls "edge-name" ]
+                [ HH.text edge.sourceLabel ]
+            ]
+        , HH.div [ cls "edge-label" ]
+            [ HH.text edge.label ]
+        , HH.div [ cls "edge-endpoint" ]
+            [ HH.span [ cls "edge-role" ]
+                [ HH.text "To" ]
+            , HH.span [ cls "edge-name" ]
+                [ HH.text edge.targetLabel ]
+            ]
         ]
     ]
 
@@ -248,6 +286,12 @@ handleAction = case _ of
       HS.notify hoverSub.listener
         (NodeHovered nodeId)
     void $ H.subscribe hoverSub.emitter
+    edgeSub <- liftEffect HS.create
+    liftEffect $ Cy.onEdgeHover
+      \src tgt lbl ->
+        HS.notify edgeSub.listener
+          (EdgeHovered src tgt lbl)
+    void $ H.subscribe edgeSub.emitter
     result <- liftAff loadGraphData
     case result of
       Left err ->
@@ -269,8 +313,29 @@ handleAction = case _ of
   NodeHovered nodeId -> do
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
-    H.modify_ _ { selected = node }
+    H.modify_ _
+      { selected = node, hoveredEdge = Nothing }
     liftEffect $ Cy.markRoot nodeId
+
+  EdgeHovered srcId tgtId lbl -> do
+    state <- H.get
+    let
+      srcNode = Map.lookup srcId state.graph.nodes
+      tgtNode = Map.lookup tgtId state.graph.nodes
+      srcLabel = case srcNode of
+        Just n -> n.label
+        Nothing -> srcId
+      tgtLabel = case tgtNode of
+        Just n -> n.label
+        Nothing -> tgtId
+    H.modify_ _
+      { hoveredEdge = Just
+          { sourceLabel: srcLabel
+          , targetLabel: tgtLabel
+          , label: lbl
+          }
+      , selected = Nothing
+      }
 
   SetDepth d -> do
     H.modify_ _ { depth = d }
