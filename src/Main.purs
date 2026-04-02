@@ -9,7 +9,7 @@ import Data.Foldable (foldl, for_)
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.Set as Set
-import Data.Tuple (Tuple(..), fst, snd)
+import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
@@ -19,6 +19,7 @@ import Fetch (Method(..), fetch)
 import Graph.Cytoscape as GCy
 import Graph.Decode (decodeGraph)
 import Graph.Operations (neighborhood, subgraph)
+import Graph.Search (SearchResult(..), search)
 import Graph.Types
   ( Edge
   , Graph
@@ -55,6 +56,8 @@ type State =
   , selected :: Maybe Node
   , hoveredEdge :: Maybe EdgeInfo
   , depth :: Int
+  , searchQuery :: String
+  , searchResults :: Array SearchResult
   , error :: Maybe String
   }
 
@@ -65,6 +68,8 @@ data Action
   | NodeHovered String
   | EdgeHovered String String String String
   | SetDepth Int
+  | SetSearch String
+  | SelectSearchResult SearchResult
   | FitAll
   | NavigateTo String
 
@@ -76,6 +81,8 @@ component = H.mkComponent
       , selected: Nothing
       , hoveredEdge: Nothing
       , depth: 99
+      , searchQuery: ""
+      , searchResults: []
       , error: Nothing
       }
   , render
@@ -91,6 +98,7 @@ render state =
     [ HH.div [ cls "graph-container" ]
         [ HH.div [ HP.id "cy" ] []
         , renderControls state
+        , renderSearchBox state
         , renderLegend
         ]
     , renderSidebar state
@@ -123,6 +131,65 @@ renderControls state =
             [ HH.text "All" ]
         ]
     ]
+
+renderSearchBox
+  :: forall m. State -> H.ComponentHTML Action () m
+renderSearchBox state =
+  HH.div [ cls "search-container" ]
+    [ HH.input
+        [ cls "search-input"
+        , HP.type_ HP.InputText
+        , HP.placeholder "Search nodes, edges, descriptions..."
+        , HP.value state.searchQuery
+        , HE.onValueInput SetSearch
+        ]
+    , if Array.null state.searchResults then
+        HH.text ""
+      else
+        HH.div [ cls "search-results" ]
+          (Array.take 12 state.searchResults
+            <#> renderSearchResult
+          )
+    ]
+
+renderSearchResult
+  :: forall m
+   . SearchResult
+  -> H.ComponentHTML Action () m
+renderSearchResult result = case result of
+  NodeResult node ->
+    HH.div
+      [ cls "search-result-item"
+      , HE.onClick \_ -> SelectSearchResult result
+      ]
+      [ HH.span
+          [ cls ("search-dot"), HP.attr (HH.AttrName "style")
+              ("background:" <> kindColor node.kind)
+          ]
+          []
+      , HH.span [ cls "search-result-label" ]
+          [ HH.text node.label ]
+      , HH.span [ cls "search-result-kind" ]
+          [ HH.text (kindLabel node.kind) ]
+      ]
+  EdgeResult { edge, sourceLabel, targetLabel } ->
+    HH.div
+      [ cls "search-result-item"
+      , HE.onClick \_ -> SelectSearchResult result
+      ]
+      [ HH.span
+          [ cls "search-dot"
+          , HP.attr (HH.AttrName "style")
+              "background:#8b949e"
+          ]
+          []
+      , HH.span [ cls "search-result-label" ]
+          [ HH.text
+              (sourceLabel <> " → " <> targetLabel)
+          ]
+      , HH.span [ cls "search-result-kind" ]
+          [ HH.text edge.label ]
+      ]
 
 renderSidebar
   :: forall m. State -> H.ComponentHTML Action () m
@@ -352,6 +419,43 @@ handleAction = case _ of
   SetDepth d -> do
     H.modify_ _ { depth = d }
     renderGraph
+
+  SetSearch q -> do
+    state <- H.get
+    let results = search q state.graph
+    H.modify_ _
+      { searchQuery = q
+      , searchResults = results
+      }
+
+  SelectSearchResult result -> do
+    state <- H.get
+    case result of
+      NodeResult node -> do
+        H.modify_ _
+          { selected = Just node
+          , searchQuery = ""
+          , searchResults = []
+          , hoveredEdge = Nothing
+          }
+        renderGraph
+      EdgeResult { edge, sourceLabel, targetLabel } ->
+        do
+          let
+            node = Map.lookup edge.source
+              state.graph.nodes
+          H.modify_ _
+            { selected = node
+            , hoveredEdge = Just
+                { sourceLabel
+                , targetLabel
+                , label: edge.label
+                , description: edge.description
+                }
+            , searchQuery = ""
+            , searchResults = []
+            }
+          renderGraph
 
   FitAll ->
     liftEffect Cy.fitAll
