@@ -11,13 +11,13 @@ import Data.Maybe (Maybe(..), fromMaybe)
 import Data.Set (Set)
 import Data.Set as Set
 import Data.String as String
-import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Aff (Aff)
 import Effect.Aff.Class (liftAff)
 import Effect.Class (liftEffect)
 import FFI.Cytoscape as Cy
 import Fetch (Method(..), fetch)
+import Halogen.Subscription as HS
 import Graph.Build (buildGraph)
 import Graph.Cytoscape as GCy
 import Graph.Decode (decodeGraph)
@@ -280,8 +280,10 @@ handleAction
 handleAction = case _ of
   Initialize -> do
     liftEffect $ Cy.initCytoscape "cy"
-    liftEffect $ Cy.onNodeTap \_ ->
-      pure unit
+    { emitter, listener } <- liftEffect HS.create
+    liftEffect $ Cy.onNodeTap \nodeId ->
+      HS.notify listener (NodeTapped nodeId)
+    void $ H.subscribe emitter
     result <- liftAff loadGraphData
     case result of
       Left err ->
@@ -289,13 +291,6 @@ handleAction = case _ of
       Right graph -> do
         H.modify_ _ { graph = graph }
         renderGraph
-    -- Re-register tap after graph loads
-    liftEffect $ Cy.onNodeTap \_ -> pure unit
-    -- We need subscriptions for node taps.
-    -- Since Cytoscape is external, we use
-    -- a polling-free approach: the FFI calls
-    -- back into PureScript via the action.
-    setupNodeTapCallback
 
   NodeTapped nodeId -> do
     state <- H.get
@@ -351,17 +346,6 @@ handleAction = case _ of
     H.modify_ _ { selected = node }
     if state.focusMode then renderGraph
     else liftEffect $ Cy.markRoot nodeId
-
-setupNodeTapCallback
-  :: forall o
-   . H.HalogenM State Action () o Aff Unit
-setupNodeTapCallback = do
-  -- We can't directly wire Cytoscape taps to
-  -- Halogen actions, so we use a ref-based
-  -- approach: the FFI sets a callback that
-  -- we poll... Actually, let's use
-  -- HalogenSubscriptions.
-  pure unit
 
 renderGraph
   :: forall o
