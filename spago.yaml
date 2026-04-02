@@ -1,0 +1,34 @@
+package:
+  name: cardano-governance-graph
+  dependencies:
+    - prelude
+    - effect
+    - aff
+    - console
+    - halogen
+    - argonaut
+    - argonaut-codecs
+    - arrays
+    - maybe
+    - either
+    - foldable-traversable
+    - tuples
+    - web-html
+    - web-dom
+    - strings
+    - ordered-collections
+    - refs
+    - aff-promise
+    - web-events
+    - foreign
+    - dom-indexed
+    - fetch
+  bundle:
+    module: Main
+    outfile: dist/index.js
+    platform: browser
+    type: app
+
+workspace:
+  packageSet:
+    registry: 72.1.0

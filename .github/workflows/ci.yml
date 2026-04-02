@@ -1,24 +1,17 @@
-name: Deploy to GitHub Pages
+name: CI
 
 on:
-  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
 
 concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}
   cancel-in-progress: true
 
-permissions:
-  pages: write
-  id-token: write
-
 jobs:
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
+  build:
     runs-on: nixos
     env:
       PATH: /run/current-system/sw/bin:/usr/bin:/bin
@@ -28,9 +21,4 @@ jobs:
         with:
           name: paolino
           authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix develop --quiet -c just bundle
-      - uses: actions/upload-pages-artifact@v4
-        with:
-          path: dist
-      - id: deployment
-        uses: actions/deploy-pages@v5
+      - run: nix develop --quiet -c just ci

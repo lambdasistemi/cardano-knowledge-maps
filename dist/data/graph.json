@@ -1,0 +1,502 @@
+{
+  "nodes": [
+    {
+      "id": "governance-model",
+      "label": "Cardano Governance",
+      "kind": "concept",
+      "group": "core",
+      "description": "Cardano uses a tricameral (three-body) governance model implementing liquid democracy, introduced by CIP-1694 as part of the Voltaire phase. Ada holders can vote directly on every governance matter or delegate their voting power to Delegated Representatives (DReps). Three governance bodies — DReps, Stake Pool Operators (SPOs), and the Constitutional Committee (CC) — each play distinct roles in reviewing and ratifying governance actions. Every governance action requires approval from at least two of the three bodies.",
+      "links": [
+        { "label": "CIP-1694 Specification", "url": "https://cips.cardano.org/cip/CIP-1694" },
+        { "label": "Governance Overview (docs.cardano.org)", "url": "https://docs.cardano.org/about-cardano/governance-overview" },
+        { "label": "CF Governance Page", "url": "https://cardanofoundation.org/governance" }
+      ]
+    },
+    {
+      "id": "ada-holder",
+      "label": "Ada Holder",
+      "kind": "actor",
+      "group": "actors",
+      "description": "Any holder of ada. Ada holders are the foundation of Cardano governance — they have 'skin in the game' and can participate in governance in multiple ways: vote directly by registering as a DRep, delegate their voting power to a DRep (or to the pre-defined Abstain/No Confidence options), submit governance actions (with a deposit), and delegate stake to SPOs for block production. Voting power is proportional: one lovelace = one vote.",
+      "links": [
+        { "label": "GovTool — Participate in Governance", "url": "https://gov.tools" },
+        { "label": "Governance Model (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-model/" }
+      ]
+    },
+    {
+      "id": "drep",
+      "label": "Delegated Representative (DRep)",
+      "kind": "actor",
+      "group": "actors",
+      "description": "Any ada holder can register as a DRep by paying a refundable deposit (currently 500 ada). DReps accumulate voting power from ada holders who delegate to them. Their vote weight equals the total lovelace delegated to them — one lovelace = one vote. DReps must vote regularly or they become inactive after the dRepActivity period (currently 20 epochs / 100 days). Inactive DReps do not count toward the active voting stake. DRep delegation is separate from stake pool delegation and takes effect immediately (no two-epoch lag). DReps are identified by a credential: an Ed25519 verification key or a native/Plutus script.",
+      "links": [
+        { "label": "DReps (docs.cardano.org)", "url": "https://docs.cardano.org/about-cardano/governance/delegated-representatives/" },
+        { "label": "Register as DRep (CLI)", "url": "https://developers.cardano.org/docs/get-started/cli-operations/governance/register%20drep/" },
+        { "label": "CF as DRep", "url": "https://cardanofoundation.org/blog/strengthens-commitment-governance-drep" }
+      ]
+    },
+    {
+      "id": "spo",
+      "label": "Stake Pool Operator (SPO)",
+      "kind": "actor",
+      "group": "actors",
+      "description": "Block producers who also participate in governance voting. SPOs vote on a specific subset of governance action types: No Confidence motions, Committee updates, Hard Fork Initiation, security-relevant protocol parameter changes, and Info actions. Their voting power is proportional to the total stake delegated to their pool. SPOs implement approved protocol upgrades (hard forks) on their infrastructure.",
+      "links": [
+        { "label": "Governance Model (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-model/" }
+      ]
+    },
+    {
+      "id": "cc",
+      "label": "Constitutional Committee (CC)",
+      "kind": "actor",
+      "group": "actors",
+      "description": "A community-elected oversight body responsible for ensuring that governance actions respect the Cardano Constitution. Each CC member holds exactly one vote (not stake-weighted). The CC does NOT create proposals and does NOT evaluate merit — it reviews constitutionality only. Members use a hot/cold key credential system (like genesis delegation). Each member has an individual term expiration epoch; expired members cannot vote. Members can resign early. The CC can enter a 'no-confidence' state via a Motion of No-Confidence, which blocks it from participating in ratification until a new committee is elected. The CC does not vote on No-Confidence motions or Committee updates (since those are about the CC itself).",
+      "links": [
+        { "label": "Constitutional Committee Guide", "url": "https://developers.cardano.org/docs/governance/cardano-governance/constitutional-committee-guide/" },
+        { "label": "CC Portal", "url": "https://constitution.gov.tools" }
+      ]
+    },
+    {
+      "id": "abstain-option",
+      "label": "Abstain (Pre-defined DRep)",
+      "kind": "mechanism",
+      "group": "actors",
+      "description": "A pre-defined voting option for ada holders. When delegating to Abstain, the holder's stake is marked as not participating — it is NOT counted in the active voting stake denominator. This means it neither helps nor hinders ratification of any action. The holder still counts as registered for staking reward incentives.",
+      "links": [
+        { "label": "CIP-1694 — Pre-Defined Voting Options", "url": "https://cips.cardano.org/cip/CIP-1694#pre-defined-voting-options" }
+      ]
+    },
+    {
+      "id": "no-confidence-option",
+      "label": "No Confidence (Pre-defined DRep)",
+      "kind": "mechanism",
+      "group": "actors",
+      "description": "A pre-defined voting option for ada holders. When delegating to No Confidence, the holder's stake automatically votes 'Yes' on every Motion of No-Confidence and 'No' on every other governance action. Unlike Abstain, this stake IS counted in the active voting stake — it actively opposes all governance actions except no-confidence motions. This is a signal of dissatisfaction with the current governance state.",
+      "links": [
+        { "label": "CIP-1694 — Pre-Defined Voting Options", "url": "https://cips.cardano.org/cip/CIP-1694#pre-defined-voting-options" }
+      ]
+    },
+    {
+      "id": "constitution",
+      "label": "Cardano Constitution",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "An off-chain text document whose hash is recorded on-chain. It defines shared values and guiding principles for Cardano governance. The current Constitution was ratified at the Buenos Aires Constitutional Convention (December 4-6, 2024) with 95% delegate approval after 63 workshops across 51 countries, and became effective on-chain on January 24, 2026. It contains: a Preamble (not used for constitutionality assessments), 10 Tenets (core principles including transaction freedom, predictable costs, ada supply cap at 45 billion), Articles covering community participation, decentralized governance, CC responsibilities, and treasury provisions, plus Appendix I with permitted parameter ranges. The on-chain version (hash) prevails over the documented version in case of conflict.",
+      "links": [
+        { "label": "Full Constitution Text", "url": "https://constitution.gov.tools" },
+        { "label": "CF Constitution Proposal", "url": "https://cardanofoundation.org/blog/proposal-for-cardano-constitution" }
+      ]
+    },
+    {
+      "id": "guardrails-script",
+      "label": "Guardrails Script",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "An on-chain Plutus script that enforces specific constitutional rules programmatically. It applies ONLY to protocol parameter changes and treasury withdrawals — these are the two governance action types where automated enforcement is feasible. The script checks parameter bounds (e.g., maxBlockBodySize must be between 24,576 and 122,880 bytes) and treasury withdrawal limits. Named guardrails include PARAM-01 through PARAM-06a (parameter rules), TREASURY-01a through TREASURY-04a (withdrawal limits), HARDFORK-01 through HARDFORK-08, and committee/constitution update rules. The guardrails script can be updated via a New Constitution governance action.",
+      "links": [
+        { "label": "CIP-1694 — Guardrails Script", "url": "https://cips.cardano.org/cip/CIP-1694" },
+        { "label": "Submitting Governance Actions", "url": "https://developers.cardano.org/docs/governance/cardano-governance/submitting-governance-actions/" }
+      ]
+    },
+    {
+      "id": "governance-action",
+      "label": "Governance Action",
+      "kind": "concept",
+      "group": "actions",
+      "description": "An on-chain event triggered by a transaction. Any ada holder can submit a governance action by paying the govActionDeposit (currently 100,000 ada, refundable). Every action includes: the deposit amount, a reward address for deposit return, a metadata anchor (URL + hash, following CIP-100/CIP-108 standards), and — for most types — a hash reference to the most recently enacted action of the same type (to prevent collisions). Actions have a lifespan of govActionLifetime epochs (currently 6 epochs / ~30 days). There are 7 types of governance actions.",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" },
+        { "label": "CF — Understanding Governance Actions", "url": "https://cardanofoundation.org/blog/understanding-cardano-governance-actions" },
+        { "label": "Governance Action Flowcharts", "url": "https://cardano.org/insights/governance-actions/" }
+      ]
+    },
+    {
+      "id": "action-no-confidence",
+      "label": "1. Motion of No-Confidence",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Creates a state of no-confidence in the current Constitutional Committee. When ratified, the CC enters a no-confidence state and cannot participate in governance until a new committee is elected via an Update Committee action. This is the highest-priority governance action — if ratified in the same epoch as other actions, it is enacted first. Requires: DRep approval at 67% of active voting stake + SPO approval at 51% of active pool stake. The CC does not vote on this (since it's about them).",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" }
+      ]
+    },
+    {
+      "id": "action-update-committee",
+      "label": "2. Update Committee / Threshold",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Changes the Constitutional Committee membership, its signature threshold, and/or member term limits. Can add new members (with term expiration epochs), remove existing members, and adjust the fraction of CC members required to approve actions. Thresholds differ depending on CC state: in normal state, requires DRep 67% + SPO 51%; in no-confidence state, DRep 60% + SPO 51% (lower DRep threshold to make it easier to replace a failed CC). The CC does not vote on this.",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" }
+      ]
+    },
+    {
+      "id": "action-new-constitution",
+      "label": "3. New Constitution / Guardrails Script",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Modifies the Cardano Constitution and/or the on-chain Guardrails Script. The action includes an anchor to the new Constitution text and optionally a new script hash for the Guardrails Script. Requires: CC approval (2/3 majority) + DRep approval at 75% of active voting stake. SPOs do not vote on this. This is the action with the highest DRep threshold (alongside Governance group parameter changes), reflecting the significance of constitutional amendments.",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" }
+      ]
+    },
+    {
+      "id": "action-hard-fork",
+      "label": "4. Hard Fork Initiation",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Triggers a non-backwards-compatible protocol upgrade. The action specifies a new major protocol version (must be exactly +1 from current). This is the only governance action that requires approval from ALL THREE bodies: CC (2/3 majority), DReps (60%), and SPOs (51%). Guardrail HARDFORK-04a requires at least 85% of stake pools by active stake to have upgraded their node software before enactment. A ratified hard fork delays ratification of all other pending actions until after enactment.",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" },
+        { "label": "Chang Upgrade", "url": "https://docs.cardano.org/about-cardano/evolution/upgrades/chang" }
+      ]
+    },
+    {
+      "id": "action-param-change",
+      "label": "5. Protocol Parameter Changes",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Changes one or more updatable protocol parameters. Parameters are grouped into four categories (Network, Economic, Technical, Governance), each with its own DRep voting threshold. Requires CC approval (2/3 majority) for all groups. If the change touches security-relevant parameters, SPOs must also approve at 51%. The Guardrails Script enforces permitted ranges for each parameter. This is the mechanism used for Plutus cost model updates — cost model parameters are part of the Technical group.",
+      "links": [
+        { "label": "Protocol Parameters", "url": "https://docs.cardano.org/about-cardano/governance/protocol-parameters/" },
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" }
+      ]
+    },
+    {
+      "id": "action-treasury",
+      "label": "6. Treasury Withdrawal",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Withdraws ada from the Cardano treasury. The action specifies a map from stake credentials to positive lovelace amounts. Requires: CC approval (2/3 majority) + DRep approval at 67%. SPOs do not vote on this. The Guardrails Script enforces withdrawal limits (TREASURY-01a through TREASURY-04a). Treasury withdrawals must specify purpose, expected costs, and provide for auditable accounts. This action type does NOT require chaining to previous actions of the same type (unlike most other types).",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" }
+      ]
+    },
+    {
+      "id": "action-info",
+      "label": "7. Info Action",
+      "kind": "action-type",
+      "group": "actions",
+      "description": "Has no on-chain effect — it's a mechanism for recording community sentiment on-chain. Requires 100% threshold from all three bodies (meaning it can never technically be 'ratified' in the normal sense, but serves as a signal). Info actions are useful for polling the community on proposals before committing to a binding governance action. They do not require chaining to previous actions.",
+      "links": [
+        { "label": "Governance Actions (developers.cardano.org)", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/" }
+      ]
+    },
+    {
+      "id": "ratification",
+      "label": "Ratification",
+      "kind": "process",
+      "group": "lifecycle",
+      "description": "The process by which a governance action accumulates enough votes to be approved. Ratification is checked ONLY at epoch boundaries — a new tally is calculated each epoch using the current stake snapshot. An action can become ratified even without new votes if delegation changes shift the stake distribution. Votes can be changed at any time before ratification. Registered stake that did not vote counts as 'No'. Unregistered stake counts as 'Abstain'. Each action type has specific thresholds for each governance body. A successful No-Confidence, Committee Update, New Constitution, or Hard Fork delays ratification of ALL other pending actions until after enactment.",
+      "links": [
+        { "label": "CIP-1694 — Ratification", "url": "https://cips.cardano.org/cip/CIP-1694#ratification" }
+      ]
+    },
+    {
+      "id": "enactment",
+      "label": "Enactment",
+      "kind": "process",
+      "group": "lifecycle",
+      "description": "Ratified governance actions are enacted on the epoch boundary FOLLOWING ratification. When multiple actions are ratified in the same epoch, they are enacted in a fixed priority order: (1) No-Confidence, (2) Committee Update, (3) New Constitution, (4) Hard Fork, (5) Parameter Changes, (6) Treasury Withdrawals, (7) Info. Within the same type, actions are enacted in the order they were accepted to the chain. After enactment, the governance action deposit is returned to the specified reward address.",
+      "links": [
+        { "label": "CIP-1694 — Enactment", "url": "https://cips.cardano.org/cip/CIP-1694#enactment" }
+      ]
+    },
+    {
+      "id": "voting",
+      "label": "Voting",
+      "kind": "process",
+      "group": "lifecycle",
+      "description": "Each governance body votes Yes, No, or Abstain on applicable governance actions. Votes are recorded on-chain via transactions. DRep and SPO votes are weighted by delegated stake; CC votes are one-member-one-vote. Votes can be changed at any time before the action is ratified. The voting period lasts up to govActionLifetime epochs (currently 6 epochs / ~30 days). Abstain votes are NOT counted in the active voting stake denominator. Post-bootstrap: ada holders must delegate to a DRep (or Abstain/No Confidence) to withdraw staking rewards.",
+      "links": [
+        { "label": "Voting (docs.cardano.org)", "url": "https://docs.cardano.org/about-cardano/governance/voting/" },
+        { "label": "GovTool", "url": "https://gov.tools" }
+      ]
+    },
+    {
+      "id": "action-chaining",
+      "label": "Action Chaining",
+      "kind": "mechanism",
+      "group": "lifecycle",
+      "description": "A collision-prevention mechanism. Each governance action (except Treasury Withdrawals and Info) must include the governance action ID of the most recently enacted action of its same type. This forms a chain that prevents two competing same-type actions from both being ratified when they assume incompatible starting states. For example, two parameter change proposals that both assume the current parameter values cannot both be valid after one of them changes those values.",
+      "links": [
+        { "label": "CIP-1694 — Governance Actions", "url": "https://cips.cardano.org/cip/CIP-1694#governance-actions" }
+      ]
+    },
+    {
+      "id": "param-group-network",
+      "label": "Network Parameter Group",
+      "kind": "param-group",
+      "group": "parameters",
+      "description": "Protocol parameters related to network capacity and transaction limits. DRep voting threshold: 67% (P5a). Includes: maxBlockBodySize (24,576–122,880 bytes), maxTxSize (up to 32,768 bytes), maxBlockHeaderSize (up to 5,000 bytes), maxValueSize (up to 12,288 bytes), maxTxExecutionUnits (memory and steps), maxBlockExecutionUnits (memory and steps), maxCollateralInputs (minimum 1). Guardrail NETWORK-01: should not change more than once per 2 epochs. NETWORK-02: only one parameter should change per epoch unless correlated.",
+      "links": [
+        { "label": "Protocol Parameters", "url": "https://docs.cardano.org/about-cardano/governance/protocol-parameters/" }
+      ]
+    },
+    {
+      "id": "param-group-economic",
+      "label": "Economic Parameter Group",
+      "kind": "param-group",
+      "group": "parameters",
+      "description": "Protocol parameters related to transaction fees, deposits, and monetary policy. DRep voting threshold: 67% (P5b). Includes: txFeePerByte (30–1,000 lovelace), txFeeFixed (100,000–10,000,000 lovelace), stakeAddressDeposit, stakePoolDeposit, monetaryExpansion (0.001–0.005), treasuryCut (10%–30%), minPoolCost, utxoCostPerByte (3,000–6,500), executionUnitPrices (priceMemory and priceSteps), minFeeRefScriptCostPerByte.",
+      "links": [
+        { "label": "Protocol Parameters", "url": "https://docs.cardano.org/about-cardano/governance/protocol-parameters/" }
+      ]
+    },
+    {
+      "id": "param-group-technical",
+      "label": "Technical Parameter Group",
+      "kind": "param-group",
+      "description": "Protocol parameters related to stake pool mechanics, Plutus execution, and script validation. DRep voting threshold: 67% (P5c). Includes: poolPledgeInfluence (0.1–1.0), poolRetireMaxEpoch, stakePoolTargetNum (250–2,000), costModels (the Plutus cost model parameters — benchmarked values for each builtin function), collateralPercentage (100–200). The costModels parameter is what gets updated when the Plutus team reprices builtins based on new benchmarks.",
+      "group": "parameters",
+      "links": [
+        { "label": "Protocol Parameters", "url": "https://docs.cardano.org/about-cardano/governance/protocol-parameters/" },
+        { "label": "Plutus Cost Model Generation", "url": "https://github.com/IntersectMBO/plutus/blob/master/plutus-core/cost-model/CostModelGeneration.md" }
+      ]
+    },
+    {
+      "id": "param-group-governance",
+      "label": "Governance Parameter Group",
+      "kind": "param-group",
+      "group": "parameters",
+      "description": "Protocol parameters that govern governance itself. DRep voting threshold: 75% (P5d) — the highest threshold for parameter changes, reflecting the self-referential nature of changing governance rules. Includes: all 15 voting thresholds (P1–P6 for DReps, Q1–Q5 for SPOs), govActionLifetime (1–15 epochs), govActionDeposit (1M–10T lovelace), dRepDeposit (1M–100B lovelace), dRepActivity (13–37 epochs), committeeMinSize (3–10), committeeMaxTermLength (18–293 epochs).",
+      "links": [
+        { "label": "Protocol Parameters", "url": "https://docs.cardano.org/about-cardano/governance/protocol-parameters/" }
+      ]
+    },
+    {
+      "id": "security-params",
+      "label": "Security-Relevant Parameters",
+      "kind": "mechanism",
+      "group": "parameters",
+      "description": "A subset of protocol parameters that additionally require SPO approval (at Q5 = 51% threshold) when changed. These parameters directly affect network security and node operator costs. The list: maxBlockBodySize, maxTxSize, maxBlockHeaderSize, maxValueSize, maxBlockExecutionUnits, txFeePerByte, txFeeFixed, utxoCostPerByte, govActionDeposit, minFeeRefScriptCostPerByte. This gives SPOs a veto over changes that could destabilize the network or make block production uneconomical.",
+      "links": [
+        { "label": "CIP-1694 — Security-relevant parameters", "url": "https://cips.cardano.org/cip/CIP-1694" }
+      ]
+    },
+    {
+      "id": "cost-models",
+      "label": "Plutus Cost Models",
+      "kind": "parameter",
+      "group": "parameters",
+      "description": "Protocol parameters that assign abstract CPU and memory costs (ExUnits) to each Plutus builtin function. These are part of the Technical parameter group. Cost models are calibrated by benchmarking each builtin on a reference machine through the Haskell CEK machine, then fitting cost functions via R scripts. Coefficients are stored as 64-bit integers (picoseconds) for cross-platform reproducibility. The cost model ensures that maxBlockExUnits worth of abstract work fits within the real block validation time budget. Every node implementation (Haskell, Rust, etc.) must compute identical ExUnits — the abstract costs are consensus-critical. Updates go through the governance process as Protocol Parameter Changes.",
+      "links": [
+        { "label": "Cost Model Generation Process", "url": "https://github.com/IntersectMBO/plutus/blob/master/plutus-core/cost-model/CostModelGeneration.md" },
+        { "label": "Benchmark Data (benching-conway.csv)", "url": "https://github.com/IntersectMBO/plutus/blob/master/plutus-core/cost-model/data/benching-conway.csv" },
+        { "label": "R Models", "url": "https://github.com/IntersectMBO/plutus/blob/master/plutus-core/cost-model/data/models.R" }
+      ]
+    },
+    {
+      "id": "drep-thresholds",
+      "label": "DRep Voting Thresholds",
+      "kind": "mechanism",
+      "group": "thresholds",
+      "description": "DRep thresholds are expressed as a fraction of active DRep voting stake. Active voting stake = all stake delegated to registered, active DReps (excluding Abstain delegations). Current mainnet values: No-Confidence (P1) = 67%, Committee Update normal (P2a) = 67%, Committee Update no-confidence (P2b) = 60%, New Constitution (P3) = 75%, Hard Fork (P4) = 60%, Network params (P5a) = 67%, Economic params (P5b) = 67%, Technical params (P5c) = 67%, Governance params (P5d) = 75%, Treasury Withdrawal (P6) = 67%, Info = 100% (fixed).",
+      "links": [
+        { "label": "CIP-1694 — Ratification", "url": "https://cips.cardano.org/cip/CIP-1694#ratification" }
+      ]
+    },
+    {
+      "id": "spo-thresholds",
+      "label": "SPO Voting Thresholds",
+      "kind": "mechanism",
+      "group": "thresholds",
+      "description": "SPO thresholds are expressed as a fraction of active pool stake. SPOs only vote on specific action types. Current mainnet values: No-Confidence (Q1) = 51%, Committee Update normal (Q2a) = 51%, Committee Update no-confidence (Q2b) = 51%, Hard Fork (Q4) = 51%, Security-relevant params (Q5) = 51%, Info = 100% (fixed). SPOs do NOT vote on: New Constitution, non-security parameter changes, or Treasury Withdrawals.",
+      "links": [
+        { "label": "CIP-1694 — Ratification", "url": "https://cips.cardano.org/cip/CIP-1694#ratification" }
+      ]
+    },
+    {
+      "id": "cc-threshold",
+      "label": "CC Voting Threshold",
+      "kind": "mechanism",
+      "group": "thresholds",
+      "description": "The CC uses one-member-one-vote (not stake-weighted). The required fraction of CC members who must approve is a configurable threshold (currently 2/3 on mainnet). The CC votes on: New Constitution, Hard Fork, all Protocol Parameter Changes, Treasury Withdrawals, and Info actions. The CC does NOT vote on: No-Confidence motions or Committee Updates (since those are about the CC itself). Expired members cannot vote. The committee has a minimum size (committeeMinSize = 7 on mainnet).",
+      "links": [
+        { "label": "Constitutional Committee Guide", "url": "https://developers.cardano.org/docs/governance/cardano-governance/constitutional-committee-guide/" }
+      ]
+    },
+    {
+      "id": "intersect",
+      "label": "Intersect",
+      "kind": "actor",
+      "group": "ecosystem",
+      "description": "A not-for-profit organization (registered in Wyoming, USA) that facilitates off-chain governance processes. Intersect manages the Parameter Committee, organizes elections, runs working groups, and coordinates the governance tooling ecosystem. It is NOT a governance body — it does not vote or ratify. Its role is facilitation and coordination: hosting discussions, managing the CIP process, coordinating hard fork readiness, and providing infrastructure like GovTool.",
+      "links": [
+        { "label": "Intersect", "url": "https://www.intersectmbo.org" }
+      ]
+    },
+    {
+      "id": "cardano-foundation",
+      "label": "Cardano Foundation",
+      "kind": "actor",
+      "group": "ecosystem",
+      "description": "One of the three founding entities of Cardano (alongside IOG and EMURGO). The CF is registered as a DRep on-chain and operates a Governance Advisory Team of subject-matter experts. It evaluates proposals on constitutional alignment and governance merit, publishing vote rationales with each governance action vote. The CF served on the interim Constitutional Committee during the bootstrap phase and created the Cardano Proposal Examiner tool. The founding entities relinquished their genesis keys, transitioning control to the community.",
+      "links": [
+        { "label": "CF Governance", "url": "https://cardanofoundation.org/governance" },
+        { "label": "Cardano Proposal Examiner", "url": "https://proposalexaminer.cardanofoundation.org/" },
+        { "label": "CF as DRep", "url": "https://cardanofoundation.org/blog/strengthens-commitment-governance-drep" }
+      ]
+    },
+    {
+      "id": "govtool",
+      "label": "GovTool",
+      "kind": "tool",
+      "group": "ecosystem",
+      "description": "A web application for participating in Cardano governance. GovTool's four architectural pillars: Proposal Discussion, Delegation, Outcomes, and Voting. Users can delegate to DReps, register as DReps, view and vote on governance actions, and track outcomes. It connects to the user's wallet via CIP-95 (the Conway-era web-wallet bridge).",
+      "links": [
+        { "label": "GovTool", "url": "https://gov.tools" },
+        { "label": "GovTool Documentation", "url": "https://docs.gov.tools/overview/what-is-cardano-govtool" }
+      ]
+    },
+    {
+      "id": "sanchonet",
+      "label": "SanchoNet",
+      "kind": "tool",
+      "group": "ecosystem",
+      "description": "A dedicated governance testnet for experimenting with CIP-1694 features. Launched in 2023, it allowed the community to test DRep registration, voting, governance action submission, and the full lifecycle before Conway went live on mainnet. Named after Sancho Panza (Don Quixote's practical companion).",
+      "links": [
+        { "label": "SanchoNet", "url": "https://sancho.network" }
+      ]
+    },
+    {
+      "id": "cip-1694",
+      "label": "CIP-1694",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "The Cardano Improvement Proposal that specifies the on-chain governance mechanism. Authored by Jared Corduan and Andre Knispel, it defines the three governance bodies, seven action types, voting and ratification rules, the Constitutional Committee structure, DRep mechanics, and the full lifecycle of governance actions. CIP-1694 was implemented in the Conway ledger era (named after John Horton Conway).",
+      "links": [
+        { "label": "CIP-1694 Full Text", "url": "https://cips.cardano.org/cip/CIP-1694" }
+      ]
+    },
+    {
+      "id": "conway-era",
+      "label": "Conway Ledger Era",
+      "kind": "concept",
+      "group": "framework",
+      "description": "The current Cardano ledger era that implements CIP-1694 governance. Named after mathematician John Horton Conway. Introduced via two hard forks: Chang #1 (August 2024) — bootstrap phase with limited governance (DRep registration, interim CC, parameter changes and hard forks only); and Plomin hard fork / Chang #2 (December 2024) — full governance activation with all 7 action types and treasury withdrawals. The bootstrap phase ended when the CC and SPOs ratified the Plomin hard fork.",
+      "links": [
+        { "label": "Chang Upgrade", "url": "https://docs.cardano.org/about-cardano/evolution/upgrades/chang" }
+      ]
+    },
+    {
+      "id": "liquid-democracy",
+      "label": "Liquid Democracy",
+      "kind": "concept",
+      "group": "core",
+      "description": "The democratic model used by Cardano governance. Ada holders can vote directly on every governance matter (by registering as their own DRep) OR delegate their voting power to any registered DRep. Delegation can be changed at any time and takes effect immediately. This combines the benefits of direct democracy (anyone can participate) with representative democracy (expertise can be delegated to). DRep delegation is SEPARATE from stake pool delegation — you choose who produces blocks and who votes on your behalf independently.",
+      "links": [
+        { "label": "Governance Overview", "url": "https://docs.cardano.org/about-cardano/governance-overview" }
+      ]
+    },
+    {
+      "id": "metadata-standards",
+      "label": "Governance Metadata Standards",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "A set of CIPs that standardize how governance metadata is structured. CIP-95: web-wallet bridge for Conway era. CIP-100: general governance metadata format. CIP-105: Conway-era HD wallet key chains. CIP-108: governance action metadata format (title, abstract, motivation, rationale). CIP-129: governance identifiers. CIP-136: CC vote metadata standard (allows CC members to cite specific constitutional articles when voting). These standards ensure interoperability between wallets, explorers, and governance tools.",
+      "links": [
+        { "label": "CIP-100", "url": "https://cips.cardano.org/cip/CIP-0100" },
+        { "label": "CIP-108", "url": "https://cips.cardano.org/cip/CIP-0108" }
+      ]
+    },
+    {
+      "id": "bootstrap-phase",
+      "label": "Bootstrap Phase",
+      "kind": "process",
+      "group": "lifecycle",
+      "description": "The initial governance phase after Chang #1 (August 2024) and before the Plomin hard fork (December 2024). During bootstrap: CC vote alone was sufficient for protocol parameter changes; CC + SPO vote was sufficient for hard fork initiation; Info actions were available; no other governance actions were possible; DRep participation was not required. The bootstrap phase ended when CC and SPOs ratified the Plomin hard fork, transitioning to full governance.",
+      "links": [
+        { "label": "Chang Upgrade", "url": "https://docs.cardano.org/about-cardano/evolution/upgrades/chang" }
+      ]
+    },
+    {
+      "id": "deposit-mechanism",
+      "label": "Deposit Mechanism",
+      "kind": "mechanism",
+      "group": "lifecycle",
+      "description": "Several governance actions require refundable deposits to prevent spam. govActionDeposit (currently 100,000 ada) is required to submit any governance action — returned when the action is ratified or expires. dRepDeposit (currently 500 ada) is required to register as a DRep — returned on retirement. These deposits are protocol parameters in the Governance group, changeable via governance actions with a 75% DRep threshold.",
+      "links": [
+        { "label": "Governance Model", "url": "https://developers.cardano.org/docs/governance/cardano-governance/governance-model/" }
+      ]
+    },
+    {
+      "id": "hot-cold-keys",
+      "label": "Hot/Cold Key System",
+      "kind": "mechanism",
+      "group": "framework",
+      "description": "The credential system used by Constitutional Committee members. Similar to genesis delegation certificates. The cold key is the CC member's identity — kept offline for security. The hot key is authorized by the cold key for day-to-day voting. If a hot key is compromised, it can be rotated without changing the CC member's identity. This separation protects against key compromise while allowing active participation. CC members can also use native or Plutus script credentials instead of key pairs.",
+      "links": [
+        { "label": "Constitutional Committee Guide", "url": "https://developers.cardano.org/docs/governance/cardano-governance/constitutional-committee-guide/" }
+      ]
+    }
+  ],
+  "edges": [
+    { "source": "ada-holder", "target": "drep", "label": "delegates voting power to" },
+    { "source": "ada-holder", "target": "abstain-option", "label": "can delegate to" },
+    { "source": "ada-holder", "target": "no-confidence-option", "label": "can delegate to" },
+    { "source": "ada-holder", "target": "spo", "label": "delegates stake to" },
+    { "source": "ada-holder", "target": "governance-action", "label": "submits" },
+    { "source": "ada-holder", "target": "drep", "label": "can register as" },
+    { "source": "drep", "target": "governance-action", "label": "votes on" },
+    { "source": "spo", "target": "action-no-confidence", "label": "votes on" },
+    { "source": "spo", "target": "action-update-committee", "label": "votes on" },
+    { "source": "spo", "target": "action-hard-fork", "label": "votes on" },
+    { "source": "spo", "target": "security-params", "label": "votes on changes to" },
+    { "source": "spo", "target": "action-info", "label": "votes on" },
+    { "source": "cc", "target": "action-new-constitution", "label": "votes on" },
+    { "source": "cc", "target": "action-hard-fork", "label": "votes on" },
+    { "source": "cc", "target": "action-param-change", "label": "votes on" },
+    { "source": "cc", "target": "action-treasury", "label": "votes on" },
+    { "source": "cc", "target": "action-info", "label": "votes on" },
+    { "source": "cc", "target": "constitution", "label": "evaluates actions against" },
+    { "source": "cc", "target": "hot-cold-keys", "label": "uses" },
+    { "source": "governance-action", "target": "ratification", "label": "undergoes" },
+    { "source": "ratification", "target": "enactment", "label": "leads to" },
+    { "source": "governance-action", "target": "voting", "label": "open for" },
+    { "source": "voting", "target": "ratification", "label": "determines" },
+    { "source": "governance-action", "target": "action-chaining", "label": "uses" },
+    { "source": "action-no-confidence", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-update-committee", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-new-constitution", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-hard-fork", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-param-change", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-treasury", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-info", "target": "governance-action", "label": "is a type of" },
+    { "source": "action-param-change", "target": "param-group-network", "label": "can change" },
+    { "source": "action-param-change", "target": "param-group-economic", "label": "can change" },
+    { "source": "action-param-change", "target": "param-group-technical", "label": "can change" },
+    { "source": "action-param-change", "target": "param-group-governance", "label": "can change" },
+    { "source": "param-group-technical", "target": "cost-models", "label": "contains" },
+    { "source": "param-group-network", "target": "security-params", "label": "some params are" },
+    { "source": "param-group-economic", "target": "security-params", "label": "some params are" },
+    { "source": "param-group-governance", "target": "security-params", "label": "some params are" },
+    { "source": "guardrails-script", "target": "action-param-change", "label": "constrains" },
+    { "source": "guardrails-script", "target": "action-treasury", "label": "constrains" },
+    { "source": "constitution", "target": "guardrails-script", "label": "codified in" },
+    { "source": "action-new-constitution", "target": "constitution", "label": "modifies" },
+    { "source": "action-new-constitution", "target": "guardrails-script", "label": "can update" },
+    { "source": "action-no-confidence", "target": "cc", "label": "puts into no-confidence state" },
+    { "source": "action-update-committee", "target": "cc", "label": "changes membership of" },
+    { "source": "governance-model", "target": "liquid-democracy", "label": "implements" },
+    { "source": "governance-model", "target": "drep", "label": "governance body" },
+    { "source": "governance-model", "target": "spo", "label": "governance body" },
+    { "source": "governance-model", "target": "cc", "label": "governance body" },
+    { "source": "cip-1694", "target": "governance-model", "label": "specifies" },
+    { "source": "cip-1694", "target": "conway-era", "label": "implemented in" },
+    { "source": "conway-era", "target": "bootstrap-phase", "label": "started with" },
+    { "source": "drep", "target": "drep-thresholds", "label": "subject to" },
+    { "source": "spo", "target": "spo-thresholds", "label": "subject to" },
+    { "source": "cc", "target": "cc-threshold", "label": "subject to" },
+    { "source": "governance-action", "target": "deposit-mechanism", "label": "requires" },
+    { "source": "drep", "target": "deposit-mechanism", "label": "requires" },
+    { "source": "governance-action", "target": "metadata-standards", "label": "follows" },
+    { "source": "intersect", "target": "governance-model", "label": "facilitates" },
+    { "source": "cardano-foundation", "target": "drep", "label": "registered as" },
+    { "source": "cardano-foundation", "target": "governance-action", "label": "evaluates and votes on" },
+    { "source": "govtool", "target": "voting", "label": "enables" },
+    { "source": "govtool", "target": "drep", "label": "enables registration as" },
+    { "source": "sanchonet", "target": "conway-era", "label": "tested" },
+    { "source": "cost-models", "target": "action-param-change", "label": "updated via" }
+  ]
+}
