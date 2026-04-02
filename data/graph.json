@@ -248,7 +248,6 @@
       "label": "Technical Parameter Group",
       "kind": "param-group",
       "description": "Protocol parameters related to stake pool mechanics, Plutus execution, and script validation. DRep voting threshold: 67% (P5c). Includes: poolPledgeInfluence (0.1–1.0), poolRetireMaxEpoch, stakePoolTargetNum (250–2,000), costModels (the Plutus cost model parameters — benchmarked values for each builtin function), collateralPercentage (100–200). The costModels parameter is what gets updated when the Plutus team reprices builtins based on new benchmarks.",
-      "kind": "param-group",
       "group": "parameters",
       "links": [
         { "label": "Protocol Parameters", "url": "https://docs.cardano.org/about-cardano/governance/protocol-parameters/" },

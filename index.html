@@ -1,0 +1,769 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cardano Governance Graph</title>
+<script src="https://unpkg.com/cytoscape@3.30.4/dist/cytoscape.min.js"></script>
+<script src="https://unpkg.com/elkjs@0.9.3/lib/elk.bundled.js"></script>
+<script src="https://unpkg.com/cytoscape-elk@2.2.0/dist/cytoscape-elk.js"></script>
+<style>
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+    background: #0d1117;
+    color: #c9d1d9;
+    display: flex;
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  #graph-container {
+    flex: 1;
+    position: relative;
+  }
+
+  #cy {
+    width: 100%;
+    height: 100%;
+  }
+
+  #sidebar {
+    width: 420px;
+    min-width: 320px;
+    background: #161b22;
+    border-left: 1px solid #30363d;
+    overflow-y: auto;
+    display: flex;
+    flex-direction: column;
+    transition: transform 0.2s ease;
+  }
+
+  #sidebar.collapsed {
+    transform: translateX(100%);
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    z-index: 10;
+  }
+
+  #sidebar-header {
+    padding: 16px 20px;
+    border-bottom: 1px solid #30363d;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    position: sticky;
+    top: 0;
+    background: #161b22;
+    z-index: 1;
+  }
+
+  #sidebar-header h2 {
+    font-size: 16px;
+    font-weight: 600;
+    color: #f0f6fc;
+  }
+
+  #close-sidebar {
+    background: none;
+    border: none;
+    color: #8b949e;
+    cursor: pointer;
+    font-size: 20px;
+    padding: 4px 8px;
+    border-radius: 6px;
+  }
+
+  #close-sidebar:hover {
+    background: #21262d;
+    color: #f0f6fc;
+  }
+
+  #sidebar-content {
+    padding: 20px;
+    flex: 1;
+  }
+
+  .node-kind-badge {
+    display: inline-block;
+    padding: 2px 10px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    margin-bottom: 12px;
+  }
+
+  .badge-actor { background: #1f3a5f; color: #58a6ff; }
+  .badge-action-type { background: #3b2f1a; color: #d29922; }
+  .badge-process { background: #1a3b2f; color: #3fb950; }
+  .badge-mechanism { background: #2d1f3b; color: #bc8cff; }
+  .badge-artifact { background: #3b1f2f; color: #f778ba; }
+  .badge-concept { background: #1f2d3b; color: #79c0ff; }
+  .badge-param-group { background: #3b2f1a; color: #e3b341; }
+  .badge-parameter { background: #2f3b1a; color: #a5d6a7; }
+  .badge-tool { background: #1a2f3b; color: #56d4dd; }
+
+  .node-description {
+    font-size: 14px;
+    line-height: 1.65;
+    color: #c9d1d9;
+    margin-bottom: 20px;
+  }
+
+  .node-links {
+    list-style: none;
+  }
+
+  .node-links li {
+    margin-bottom: 8px;
+  }
+
+  .node-links a {
+    color: #58a6ff;
+    text-decoration: none;
+    font-size: 13px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    border: 1px solid #30363d;
+    transition: all 0.15s ease;
+  }
+
+  .node-links a:hover {
+    background: #1f2937;
+    border-color: #58a6ff;
+  }
+
+  .node-links a::before {
+    content: '\2197';
+    font-size: 11px;
+  }
+
+  .connections-section {
+    margin-top: 20px;
+    padding-top: 16px;
+    border-top: 1px solid #30363d;
+  }
+
+  .connections-section h3 {
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    color: #8b949e;
+    margin-bottom: 10px;
+  }
+
+  .connection-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 10px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    margin-bottom: 4px;
+    transition: background 0.15s ease;
+  }
+
+  .connection-item:hover {
+    background: #21262d;
+  }
+
+  .connection-label {
+    color: #8b949e;
+    font-size: 11px;
+    font-style: italic;
+  }
+
+  .connection-node {
+    color: #f0f6fc;
+    font-weight: 500;
+  }
+
+  #controls {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: flex;
+    gap: 8px;
+    z-index: 5;
+    flex-wrap: wrap;
+    max-width: calc(100% - 24px);
+  }
+
+  .control-btn {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 6px 12px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    transition: all 0.15s ease;
+    white-space: nowrap;
+  }
+
+  .control-btn:hover {
+    background: #30363d;
+    border-color: #8b949e;
+  }
+
+  .control-btn.active {
+    background: #1f3a5f;
+    border-color: #58a6ff;
+    color: #58a6ff;
+  }
+
+  #search-container {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    z-index: 5;
+  }
+
+  #search {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 6px 12px 6px 32px;
+    border-radius: 6px;
+    font-size: 13px;
+    font-family: inherit;
+    width: 220px;
+    outline: none;
+  }
+
+  #search:focus {
+    border-color: #58a6ff;
+    background: #161b22;
+  }
+
+  #search-icon {
+    position: absolute;
+    left: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #8b949e;
+    font-size: 13px;
+    pointer-events: none;
+  }
+
+  #legend {
+    position: absolute;
+    bottom: 12px;
+    left: 12px;
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 8px;
+    padding: 12px 16px;
+    z-index: 5;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    max-width: calc(100% - 24px);
+  }
+
+  .legend-item {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+    color: #8b949e;
+    white-space: nowrap;
+  }
+
+  .legend-dot {
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+
+  #empty-state {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: #8b949e;
+    text-align: center;
+    padding: 40px;
+  }
+
+  #empty-state h2 {
+    font-size: 18px;
+    color: #f0f6fc;
+    margin-bottom: 8px;
+  }
+
+  #empty-state p {
+    font-size: 14px;
+    line-height: 1.5;
+  }
+
+  #depth-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  #depth-control label {
+    font-size: 12px;
+    color: #8b949e;
+  }
+
+  #depth-slider {
+    width: 80px;
+    accent-color: #58a6ff;
+  }
+
+  #depth-value {
+    font-size: 12px;
+    color: #c9d1d9;
+    min-width: 8px;
+  }
+
+  @media (max-width: 768px) {
+    #sidebar {
+      width: 100%;
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+      z-index: 10;
+    }
+  }
+</style>
+</head>
+<body>
+
+<div id="graph-container">
+  <div id="cy"></div>
+  <div id="controls">
+    <button class="control-btn" id="btn-fit" title="Fit all nodes in view">Fit View</button>
+    <button class="control-btn" id="btn-focus" title="Toggle focus mode (show neighborhood only)">Focus Mode</button>
+    <div id="depth-control">
+      <label for="depth-slider">Depth:</label>
+      <input type="range" id="depth-slider" min="1" max="4" value="1" step="1">
+      <span id="depth-value">1</span>
+    </div>
+    <button class="control-btn" id="btn-reset" title="Reset to full graph">Reset</button>
+  </div>
+  <div id="search-container">
+    <span id="search-icon">&#x1F50D;</span>
+    <input type="text" id="search" placeholder="Search nodes...">
+  </div>
+  <div id="legend">
+    <div class="legend-item"><div class="legend-dot" style="background:#58a6ff"></div>Actor</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#d29922"></div>Action Type</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#3fb950"></div>Process</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#bc8cff"></div>Mechanism</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#f778ba"></div>Artifact</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#79c0ff"></div>Concept</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#e3b341"></div>Param Group</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#a5d6a7"></div>Parameter</div>
+    <div class="legend-item"><div class="legend-dot" style="background:#56d4dd"></div>Tool</div>
+  </div>
+</div>
+
+<div id="sidebar">
+  <div id="sidebar-header">
+    <h2 id="sidebar-title">Cardano Governance</h2>
+    <button id="close-sidebar">&times;</button>
+  </div>
+  <div id="sidebar-content">
+    <div id="empty-state">
+      <h2>Cardano Governance Knowledge Graph</h2>
+      <p>Click any node to explore. Use Focus Mode to see a node's neighborhood. Search to filter.</p>
+    </div>
+    <div id="node-detail" style="display:none"></div>
+  </div>
+</div>
+
+<script>
+const KIND_COLORS = {
+  'actor':       '#58a6ff',
+  'action-type': '#d29922',
+  'process':     '#3fb950',
+  'mechanism':   '#bc8cff',
+  'artifact':    '#f778ba',
+  'concept':     '#79c0ff',
+  'param-group': '#e3b341',
+  'parameter':   '#a5d6a7',
+  'tool':        '#56d4dd'
+};
+
+const KIND_SHAPES = {
+  'actor':       'ellipse',
+  'action-type': 'round-rectangle',
+  'process':     'diamond',
+  'mechanism':   'round-hexagon',
+  'artifact':    'rectangle',
+  'concept':     'round-octagon',
+  'param-group': 'barrel',
+  'parameter':   'round-rectangle',
+  'tool':        'round-pentagon'
+};
+
+let graphData = null;
+let cy = null;
+let focusMode = false;
+let selectedNodeId = null;
+
+async function init() {
+  const resp = await fetch('data/graph.json');
+  graphData = await resp.json();
+
+  const elements = [];
+
+  for (const node of graphData.nodes) {
+    elements.push({
+      data: {
+        id: node.id,
+        label: node.label,
+        kind: node.kind,
+        group: node.group
+      }
+    });
+  }
+
+  for (let i = 0; i < graphData.edges.length; i++) {
+    const edge = graphData.edges[i];
+    elements.push({
+      data: {
+        id: 'e' + i,
+        source: edge.source,
+        target: edge.target,
+        label: edge.label
+      }
+    });
+  }
+
+  cy = cytoscape({
+    container: document.getElementById('cy'),
+    elements: elements,
+    style: buildStyle(),
+    layout: buildLayout(),
+    minZoom: 0.15,
+    maxZoom: 3,
+    wheelSensitivity: 0.3
+  });
+
+  cy.on('tap', 'node', function(evt) {
+    selectNode(evt.target.id());
+  });
+
+  cy.on('tap', function(evt) {
+    if (evt.target === cy) {
+      clearSelection();
+    }
+  });
+
+  document.getElementById('btn-fit').addEventListener('click', function() {
+    cy.fit(null, 50);
+  });
+
+  document.getElementById('btn-focus').addEventListener('click', function() {
+    focusMode = !focusMode;
+    document.getElementById('btn-focus').classList.toggle('active', focusMode);
+    if (focusMode && selectedNodeId) {
+      applyFocus(selectedNodeId);
+    } else {
+      resetGraph();
+    }
+  });
+
+  document.getElementById('btn-reset').addEventListener('click', function() {
+    focusMode = false;
+    document.getElementById('btn-focus').classList.remove('active');
+    selectedNodeId = null;
+    resetGraph();
+    clearSidebar();
+  });
+
+  document.getElementById('depth-slider').addEventListener('input', function(e) {
+    document.getElementById('depth-value').textContent = e.target.value;
+    if (focusMode && selectedNodeId) {
+      applyFocus(selectedNodeId);
+    }
+  });
+
+  document.getElementById('search').addEventListener('input', function(e) {
+    var query = e.target.value.toLowerCase().trim();
+    if (!query) {
+      cy.elements().removeClass('dimmed');
+      return;
+    }
+    cy.nodes().forEach(function(node) {
+      var label = node.data('label').toLowerCase();
+      if (label.includes(query)) {
+        node.removeClass('dimmed');
+      } else {
+        node.addClass('dimmed');
+      }
+    });
+    cy.edges().forEach(function(edge) {
+      if (edge.source().hasClass('dimmed') && edge.target().hasClass('dimmed')) {
+        edge.addClass('dimmed');
+      } else {
+        edge.removeClass('dimmed');
+      }
+    });
+  });
+
+  document.getElementById('close-sidebar').addEventListener('click', function() {
+    document.getElementById('sidebar').classList.add('collapsed');
+  });
+}
+
+function buildStyle() {
+  var styles = [
+    {
+      selector: 'node',
+      style: {
+        'label': 'data(label)',
+        'text-wrap': 'wrap',
+        'text-max-width': '140px',
+        'font-size': '11px',
+        'font-family': '-apple-system, BlinkMacSystemFont, Segoe UI, Roboto, sans-serif',
+        'color': '#f0f6fc',
+        'text-valign': 'center',
+        'text-halign': 'center',
+        'width': '60px',
+        'height': '60px',
+        'border-width': 2,
+        'text-outline-color': '#0d1117',
+        'text-outline-width': 2,
+        'transition-property': 'opacity',
+        'transition-duration': '0.2s'
+      }
+    },
+    {
+      selector: 'edge',
+      style: {
+        'width': 1.5,
+        'line-color': '#30363d',
+        'target-arrow-color': '#30363d',
+        'target-arrow-shape': 'triangle',
+        'arrow-scale': 0.8,
+        'curve-style': 'bezier',
+        'label': 'data(label)',
+        'font-size': '9px',
+        'color': '#6e7681',
+        'text-rotation': 'autorotate',
+        'text-outline-color': '#0d1117',
+        'text-outline-width': 1.5,
+        'text-opacity': 0,
+        'transition-property': 'opacity',
+        'transition-duration': '0.2s'
+      }
+    },
+    {
+      selector: '.dimmed',
+      style: { 'opacity': 0.12 }
+    },
+    {
+      selector: '.highlighted',
+      style: {
+        'border-width': 4,
+        'border-color': '#f0f6fc',
+        'z-index': 10
+      }
+    },
+    {
+      selector: '.neighbor-edge',
+      style: {
+        'text-opacity': 1,
+        'line-color': '#8b949e',
+        'target-arrow-color': '#8b949e',
+        'width': 2
+      }
+    }
+  ];
+
+  for (var kind in KIND_COLORS) {
+    styles.push({
+      selector: 'node[kind = "' + kind + '"]',
+      style: {
+        'background-color': KIND_COLORS[kind] + '22',
+        'border-color': KIND_COLORS[kind],
+        'shape': KIND_SHAPES[kind] || 'ellipse'
+      }
+    });
+  }
+
+  return styles;
+}
+
+function buildLayout() {
+  return {
+    name: 'elk',
+    elk: {
+      algorithm: 'layered',
+      'elk.direction': 'DOWN',
+      'elk.spacing.nodeNode': 60,
+      'elk.layered.spacing.nodeNodeBetweenLayers': 80,
+      'elk.layered.crossingMinimization.strategy': 'LAYER_SWEEP',
+      'elk.edgeRouting': 'SPLINES'
+    },
+    fit: true,
+    padding: 50
+  };
+}
+
+function selectNode(nodeId) {
+  selectedNodeId = nodeId;
+  var node = graphData.nodes.find(function(n) { return n.id === nodeId; });
+  if (!node) return;
+
+  cy.elements().removeClass('highlighted neighbor-edge');
+  cy.$('#' + nodeId).addClass('highlighted');
+  cy.$('#' + nodeId).connectedEdges().addClass('neighbor-edge');
+
+  showNodeDetail(node);
+  document.getElementById('sidebar').classList.remove('collapsed');
+
+  if (focusMode) {
+    applyFocus(nodeId);
+  }
+}
+
+function clearSelection() {
+  cy.elements().removeClass('highlighted neighbor-edge');
+}
+
+function clearSidebar() {
+  document.getElementById('empty-state').style.display = 'flex';
+  document.getElementById('node-detail').style.display = 'none';
+  document.getElementById('sidebar-title').textContent = 'Cardano Governance';
+}
+
+function showNodeDetail(node) {
+  document.getElementById('empty-state').style.display = 'none';
+  document.getElementById('sidebar-title').textContent = node.label;
+
+  var badgeClass = 'badge-' + node.kind;
+  var kindLabel = node.kind.replace(/-/g, ' ');
+
+  var outEdges = graphData.edges.filter(function(e) { return e.source === node.id; });
+  var inEdges = graphData.edges.filter(function(e) { return e.target === node.id; });
+
+  var connectionsHtml = '';
+
+  if (outEdges.length > 0) {
+    connectionsHtml += '<div class="connections-section"><h3>Connects to</h3>';
+    outEdges.forEach(function(edge) {
+      var target = graphData.nodes.find(function(n) { return n.id === edge.target; });
+      if (target) {
+        connectionsHtml += '<div class="connection-item" data-node-id="' + target.id + '">' +
+          '<span class="connection-label">' + edge.label + '</span>' +
+          '<span class="connection-node">' + target.label + '</span></div>';
+      }
+    });
+    connectionsHtml += '</div>';
+  }
+
+  if (inEdges.length > 0) {
+    connectionsHtml += '<div class="connections-section"><h3>Connected from</h3>';
+    inEdges.forEach(function(edge) {
+      var source = graphData.nodes.find(function(n) { return n.id === edge.source; });
+      if (source) {
+        connectionsHtml += '<div class="connection-item" data-node-id="' + source.id + '">' +
+          '<span class="connection-label">' + edge.label + '</span>' +
+          '<span class="connection-node">' + source.label + '</span></div>';
+      }
+    });
+    connectionsHtml += '</div>';
+  }
+
+  var linksHtml = '';
+  if (node.links && node.links.length > 0) {
+    linksHtml = '<ul class="node-links">';
+    node.links.forEach(function(link) {
+      linksHtml += '<li><a href="' + link.url + '" target="_blank" rel="noopener">' + link.label + '</a></li>';
+    });
+    linksHtml += '</ul>';
+  }
+
+  var detail = document.getElementById('node-detail');
+  detail.style.display = 'block';
+  detail.innerHTML =
+    '<span class="node-kind-badge ' + badgeClass + '">' + kindLabel + '</span>' +
+    '<div class="node-description">' + node.description + '</div>' +
+    linksHtml +
+    connectionsHtml;
+
+  detail.querySelectorAll('.connection-item').forEach(function(item) {
+    item.addEventListener('click', function() {
+      var targetId = item.dataset.nodeId;
+      selectNode(targetId);
+      var cyNode = cy.$('#' + targetId);
+      if (cyNode.length > 0) {
+        cy.animate({ center: { eles: cyNode }, duration: 300 });
+      }
+    });
+  });
+}
+
+function applyFocus(nodeId) {
+  var depth = parseInt(document.getElementById('depth-slider').value);
+  var neighborhood = getNeighborhood(nodeId, depth);
+
+  cy.elements().forEach(function(ele) {
+    if (ele.isNode()) {
+      if (neighborhood.has(ele.id())) {
+        ele.removeClass('dimmed');
+      } else {
+        ele.addClass('dimmed');
+      }
+    } else if (ele.isEdge()) {
+      if (neighborhood.has(ele.source().id()) && neighborhood.has(ele.target().id())) {
+        ele.removeClass('dimmed');
+      } else {
+        ele.addClass('dimmed');
+      }
+    }
+  });
+}
+
+function getNeighborhood(nodeId, depth) {
+  var nodes = new Set([nodeId]);
+  var queue = [{ id: nodeId, d: 0 }];
+
+  while (queue.length > 0) {
+    var item = queue.shift();
+    if (item.d >= depth) continue;
+
+    graphData.edges.forEach(function(edge) {
+      if (edge.source === item.id && !nodes.has(edge.target)) {
+        nodes.add(edge.target);
+        queue.push({ id: edge.target, d: item.d + 1 });
+      }
+      if (edge.target === item.id && !nodes.has(edge.source)) {
+        nodes.add(edge.source);
+        queue.push({ id: edge.source, d: item.d + 1 });
+      }
+    });
+  }
+
+  return nodes;
+}
+
+function resetGraph() {
+  cy.elements().removeClass('dimmed highlighted neighbor-edge');
+  document.getElementById('search').value = '';
+}
+
+init();
+</script>
+</body>
+</html>
