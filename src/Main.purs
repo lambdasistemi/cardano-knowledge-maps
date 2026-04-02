@@ -353,35 +353,35 @@ renderGraph
 renderGraph = do
   state <- H.get
   let
-    -- Filter by kind
-    filteredNodes = Array.filter
-      ( \n -> Set.member n.kind state.filters
-      )
-      (Array.fromFoldable (Map.values state.graph.nodes))
+    allNodes = Array.fromFoldable
+      (Map.values state.graph.nodes)
+    allNodeIds = Set.fromFoldable (map _.id allNodes)
 
-    filteredNodeIds = Set.fromFoldable
-      (map _.id filteredNodes)
-
-    filteredEdges = Array.filter
-      ( \e -> Set.member e.source filteredNodeIds
-          && Set.member e.target filteredNodeIds
-      )
-      state.graph.edges
-
-    filtered = buildGraph filteredNodes filteredEdges
-
-    -- Apply focus if active
+    -- Focus mode: show full neighborhood unfiltered
+    -- Normal mode: apply kind filters
     visible = case state.selected of
       Just node | state.focusMode ->
         let
           hood = neighborhood state.depth
             node.id
-            filtered
-          -- Intersect with filtered node IDs
-          keep = Set.intersection hood filteredNodeIds
+            state.graph
         in
-          subgraph keep filtered
-      _ -> filtered
+          subgraph hood state.graph
+      _ ->
+        let
+          filteredNodes = Array.filter
+            (\n -> Set.member n.kind state.filters)
+            allNodes
+          filteredIds = Set.fromFoldable
+            (map _.id filteredNodes)
+          filteredEdges = Array.filter
+            ( \e ->
+                Set.member e.source filteredIds
+                  && Set.member e.target filteredIds
+            )
+            state.graph.edges
+        in
+          buildGraph filteredNodes filteredEdges
 
   liftEffect $ Cy.setElements (GCy.toElements visible)
   -- Re-mark selected node after re-render
