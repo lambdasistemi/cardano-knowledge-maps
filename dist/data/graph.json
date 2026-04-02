@@ -429,6 +429,28 @@
       "links": [
         { "label": "Constitutional Committee Guide", "url": "https://developers.cardano.org/docs/governance/cardano-governance/constitutional-committee-guide/" }
       ]
+    },
+    {
+      "id": "treasury-budgeting",
+      "label": "Treasury Budgeting Process",
+      "kind": "process",
+      "group": "lifecycle",
+      "description": "Treasury withdrawals follow a multi-step budgeting process defined by the Cardano Constitution. First, a Net Change Limit must be approved via an Info Action (DRep 50% + CC 2/3) to set the maximum amount that can be withdrawn in a period. Then, individual Budget proposals are approved (also Info Actions with DRep 50% + CC 2/3). Only after both are in place can Treasury Withdrawal governance actions be submitted against the approved budget. This layered process prevents unchecked treasury spending.",
+      "links": [
+        { "label": "Governance Action Charts", "url": "https://cardano.org/insights/governance-actions/" },
+        { "label": "CF Chart Data (source)", "url": "https://github.com/cardano-foundation/cardano-org/tree/main/src/data" }
+      ]
+    },
+    {
+      "id": "param-exceptions",
+      "label": "Per-Parameter Threshold Exceptions",
+      "kind": "mechanism",
+      "group": "parameters",
+      "description": "Some protocol parameters have voting thresholds that differ from their group defaults, as defined in the Cardano Constitution and implemented in the Guardrails Script. For example: committeeMaxTermLength requires only DRep 67% with no CC vote; deposit parameters (dRepDeposit, stakePoolDeposit, stakeAddressDeposit, minPoolCost, committeeMinSize) use the Governance group threshold (DRep 75% + CC 2/3) rather than their native Economic/Technical group thresholds. These exceptions reflect the constitutional significance of these specific parameters.",
+      "links": [
+        { "label": "CF Critical Parameter Charts", "url": "https://cardano.org/insights/governance-actions/?category=Critical+Parameter+Changes" },
+        { "label": "CF Chart Data (source)", "url": "https://github.com/cardano-foundation/cardano-org/tree/main/src/data" }
+      ]
     }
   ],
   "edges": [
@@ -497,6 +519,11 @@
     { "source": "govtool", "target": "voting", "label": "enables", "description": "GovTool connects to wallets via CIP-95 and enables viewing governance actions, reading metadata, and casting votes on-chain. It makes governance accessible to non-technical participants." },
     { "source": "govtool", "target": "drep", "label": "enables registration as", "description": "GovTool provides a web interface for DRep registration and delegation, handling certificate submission and deposit payment without CLI tools." },
     { "source": "sanchonet", "target": "conway-era", "label": "tested", "description": "SanchoNet was a dedicated governance testnet (launched 2023) where the community tested CIP-1694 features before mainnet. It validated the Conway implementation and allowed governance tooling development against a live environment." },
-    { "source": "cost-models", "target": "action-param-change", "label": "updated via", "description": "Cost model updates go through Protocol Parameter Change governance: the Plutus team benchmarks builtins, fits cost functions via R scripts, and the new coefficients are submitted as a governance action requiring CC 2/3 and DRep 67% (Technical group threshold)." }
+    { "source": "cost-models", "target": "action-param-change", "label": "updated via", "description": "Cost model updates go through Protocol Parameter Change governance: the Plutus team benchmarks builtins, fits cost functions via R scripts, and the new coefficients are submitted as a governance action requiring CC 2/3 and DRep 67% (Technical group threshold)." },
+    { "source": "treasury-budgeting", "target": "action-treasury", "label": "gates", "description": "Treasury Withdrawals can only be submitted after a Net Change Limit and Budget have been approved. The Net Change Limit (Info Action, DRep 50% + CC 2/3) sets the maximum withdrawal amount per period. Budget proposals (also Info Actions, DRep 50% + CC 2/3) allocate portions of that limit. Only then can Treasury Withdrawal governance actions be submitted against the approved budget." },
+    { "source": "action-info", "target": "treasury-budgeting", "label": "used for", "description": "Info Actions, despite having no direct on-chain effect, are the mechanism for the treasury budgeting process. Net Change Limits and Budget approvals are submitted as Info Actions with effective voting thresholds of DRep 50% + CC 2/3. This repurposes the Info Action type for binding community decisions that gate subsequent Treasury Withdrawals." },
+    { "source": "param-exceptions", "target": "param-group-governance", "label": "overrides thresholds from", "description": "Some parameters that belong to the Economic or Technical groups are constitutionally elevated to Governance group thresholds (DRep 75% + CC 2/3). This includes dRepDeposit, stakePoolDeposit, stakeAddressDeposit, minPoolCost, and committeeMinSize. The Constitution treats these as governance-critical despite their technical classification." },
+    { "source": "param-exceptions", "target": "action-param-change", "label": "modifies voting for", "description": "Per-parameter threshold exceptions change which bodies vote and at what thresholds for specific parameter changes. For example, committeeMaxTermLength only requires DRep 67% with no CC or SPO vote — a unique exception where the CC is excluded because the parameter directly governs CC member terms, and self-governance would be a conflict of interest." },
+    { "source": "guardrails-script", "target": "param-exceptions", "label": "enforces", "description": "The Guardrails Script implements the per-parameter threshold exceptions on-chain. When a Protocol Parameter Change governance action is submitted, the script checks not just the permitted value ranges but also whether the correct voting bodies and thresholds apply for each specific parameter being changed." }
   ]
 }
