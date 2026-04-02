@@ -110,44 +110,27 @@ var _style = [
 
 function runLayout(callback) {
   if (!_cy) return;
-  // Hide edges during layout to prevent overlap warnings
-  _cy.edges().style("opacity", 0);
-  var opts = {
-    fit: true,
-    padding: 60,
-    animate: true,
-    animationDuration: 400,
-    stop: function () {
-      _cy.edges().style("opacity", "");
-      if (callback) callback();
-    },
-  };
-  try {
-    _cy
-      .layout(
-        Object.assign(
-          {
-            name: "elk",
-            elk: {
-              algorithm: "layered",
-              "elk.direction": "DOWN",
-              "elk.spacing.nodeNode": "100",
-              "elk.layered.spacing.nodeNodeBetweenLayers": "120",
-              "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
-              "elk.edgeRouting": "SPLINES",
-            },
-          },
-          opts,
-        ),
-      )
-      .run();
-  } catch (e) {
-    _cy
-      .layout(
-        Object.assign({ name: "cose", animate: false }, opts),
-      )
-      .run();
-  }
+  _cy
+    .layout({
+      name: "fcose",
+      quality: "proof",
+      randomize: true,
+      animate: true,
+      animationDuration: 500,
+      fit: true,
+      padding: 60,
+      nodeSeparation: 120,
+      idealEdgeLength: 180,
+      edgeElasticity: 0.1,
+      nodeRepulsion: 8000,
+      gravity: 0.15,
+      gravityRange: 1.5,
+      numIter: 5000,
+      stop: function () {
+        if (callback) callback();
+      },
+    })
+    .run();
 }
 
 export const initCytoscape = (containerId) => () => {
