@@ -268,8 +268,16 @@ renderLegend =
   HH.div [ cls "legend" ]
     [ HH.text
         "Hover to inspect. Click to \
-        \re-center. Depth controls \
-        \neighborhood size."
+        \re-center. "
+    , HH.a
+        [ HP.href
+            "https://github.com/lambdasistemi\
+            \/cardano-governance-graph"
+        , HP.target "_blank"
+        , HP.rel "noopener"
+        , cls "legend-link"
+        ]
+        [ HH.text "Source" ]
     ]
 
 handleAction
