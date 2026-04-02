@@ -75,7 +75,7 @@ var _style = [
       "target-arrow-color": "#30363d",
       "target-arrow-shape": "triangle",
       "arrow-scale": 0.8,
-      "curve-style": "straight",
+      "curve-style": "bezier",
       label: "data(label)",
       "font-size": "11px",
       "font-family":
@@ -108,34 +108,44 @@ var _style = [
   },
 ];
 
-function runLayout() {
+function runLayout(callback) {
   if (!_cy) return;
+  // Hide edges during layout to prevent overlap warnings
+  _cy.edges().style("opacity", 0);
+  var opts = {
+    fit: true,
+    padding: 60,
+    animate: true,
+    animationDuration: 400,
+    stop: function () {
+      _cy.edges().style("opacity", "");
+      if (callback) callback();
+    },
+  };
   try {
     _cy
-      .layout({
-        name: "elk",
-        elk: {
-          algorithm: "layered",
-          "elk.direction": "DOWN",
-          "elk.spacing.nodeNode": "100",
-          "elk.layered.spacing.nodeNodeBetweenLayers": "120",
-          "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
-          "elk.edgeRouting": "SPLINES",
-        },
-        fit: true,
-        padding: 60,
-        animate: true,
-        animationDuration: 400,
-      })
+      .layout(
+        Object.assign(
+          {
+            name: "elk",
+            elk: {
+              algorithm: "layered",
+              "elk.direction": "DOWN",
+              "elk.spacing.nodeNode": "100",
+              "elk.layered.spacing.nodeNodeBetweenLayers": "120",
+              "elk.layered.crossingMinimization.strategy": "LAYER_SWEEP",
+              "elk.edgeRouting": "SPLINES",
+            },
+          },
+          opts,
+        ),
+      )
       .run();
   } catch (e) {
     _cy
-      .layout({
-        name: "cose",
-        fit: true,
-        padding: 60,
-        animate: false,
-      })
+      .layout(
+        Object.assign({ name: "cose", animate: false }, opts),
+      )
       .run();
   }
 }
