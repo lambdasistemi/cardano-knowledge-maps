@@ -2,7 +2,7 @@
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixpkgs-unstable";
     # Pin to fix/nix-build-deps until merged
-    graph-browser.url = "github:lambdasistemi/graph-browser/ca5adf4";
+    graph-browser.url = "github:lambdasistemi/graph-browser/6a2dec8";
   };
 
   outputs =
