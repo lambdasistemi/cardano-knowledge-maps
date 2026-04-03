@@ -95,6 +95,7 @@ data Action
   | StartTutorial String
   | TutorialNext
   | TutorialPrev
+  | TutorialRecenter
   | ExitTutorial
 
 component
@@ -360,6 +361,18 @@ renderTutorialContent state =
                     ]
                     [ HH.text "Finish" ]
               ]
+          , let
+              onDetour = case state.selected of
+                Just sel -> sel.id /= stop.node
+                Nothing -> false
+            in
+              if onDetour then
+                HH.button
+                  [ cls "tutorial-nav-btn recenter"
+                  , HE.onClick \_ -> TutorialRecenter
+                  ]
+                  [ HH.text "Back to stop" ]
+              else HH.text ""
           , HH.button
               [ cls "tutorial-exit"
               , HE.onClick \_ -> ExitTutorial
@@ -781,10 +794,14 @@ handleAction = case _ of
         { tutorialStep = s.tutorialStep - 1 }
       applyTutorialStop
 
+  TutorialRecenter ->
+    applyTutorialStop
+
   ExitTutorial -> do
     H.modify_ _
       { tutorialActive = false
       , depth = 99
+      , hoveredNode = Nothing
       }
     renderGraph
 
