@@ -122,6 +122,23 @@ renderControls
 renderControls state =
   HH.div [ cls "controls" ]
     [ HH.button
+        [ cls
+            ( "control-btn"
+                <> if state.tutorialActive
+                  then " active"
+                  else ""
+            )
+        , HE.onClick \_ ->
+            if state.tutorialActive then ExitTutorial
+            else StartTutorial
+        ]
+        [ HH.text
+            ( if state.tutorialActive then
+                "Exit Tour"
+              else "Guided Tour"
+            )
+        ]
+    , HH.button
         [ cls "control-btn"
         , HE.onClick \_ -> FitAll
         ]
