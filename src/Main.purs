@@ -67,6 +67,7 @@ type TutorialEntry =
 type State =
   { graph :: Graph
   , selected :: Maybe Node
+  , hoveredNode :: Maybe Node
   , hoveredEdge :: Maybe EdgeInfo
   , depth :: Int
   , searchQuery :: String
@@ -102,6 +103,7 @@ component = H.mkComponent
   { initialState: \_ ->
       { graph: emptyGraph
       , selected: Nothing
+      , hoveredNode: Nothing
       , hoveredEdge: Nothing
       , depth: 99
       , searchQuery: ""
@@ -363,6 +365,25 @@ renderTutorialContent state =
               , HE.onClick \_ -> ExitTutorial
               ]
               [ HH.text "Exit tour" ]
+          , case state.hoveredNode of
+              Nothing -> HH.text ""
+              Just node ->
+                HH.div [ cls "tutorial-hovered-node" ]
+                  [ HH.div [ cls "tutorial-hovered-divider" ]
+                      []
+                  , HH.span
+                      [ cls
+                          ( "badge badge-"
+                              <> show node.kind
+                          )
+                      ]
+                      [ HH.text (kindLabel node.kind)
+                      ]
+                  , HH.h3 [ cls "tutorial-hovered-label" ]
+                      [ HH.text node.label ]
+                  , HH.p [ cls "tutorial-hovered-desc" ]
+                      [ HH.text node.description ]
+                  ]
           ]
 
 currentStop :: State -> Maybe TutorialStop
@@ -645,8 +666,14 @@ handleAction = case _ of
   NodeHovered nodeId -> do
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
-    H.modify_ _
-      { selected = node, hoveredEdge = Nothing }
+    if state.tutorialActive then
+      -- In tutorial mode: show node below tutorial text
+      H.modify_ _
+        { hoveredNode = node, hoveredEdge = Nothing }
+    else
+      -- Normal mode: update selected node
+      H.modify_ _
+        { selected = node, hoveredEdge = Nothing }
     liftEffect $ Cy.markRoot nodeId
 
   EdgeHovered srcId tgtId lbl desc -> do
@@ -661,7 +688,8 @@ handleAction = case _ of
         Just n -> n.label
         Nothing -> tgtId
     H.modify_ _
-      { hoveredEdge = Just
+      { hoveredNode = Nothing
+      , hoveredEdge = Just
           { sourceLabel: srcLabel
           , targetLabel: tgtLabel
           , label: lbl
