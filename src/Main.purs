@@ -711,7 +711,12 @@ handleAction = case _ of
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
     H.modify_ _ { selected = node }
-    renderGraph
+    if state.tutorialActive then
+      -- In tutorial mode: update selected (shows Refocus)
+      -- but don't re-layout the graph
+      liftEffect $ Cy.markRoot nodeId
+    else
+      renderGraph
 
   NodeHovered nodeId -> do
     state <- H.get
