@@ -333,7 +333,7 @@ renderTutorialContent state =
               ( map
                   ( \para ->
                       HH.p [ cls "tutorial-para" ]
-                        [ HH.text para ]
+                        (parseNarrative para)
                   )
                   (splitParagraphs stop.narrative)
               )
@@ -369,6 +369,94 @@ currentStop :: State -> Maybe TutorialStop
 currentStop state = do
   t <- state.tutorial
   Array.index t.stops state.tutorialStep
+
+-- | Parse narrative text with inline links.
+-- | Supports [text](node:id) for graph navigation
+-- | and [text](https://...) for external links.
+parseNarrative
+  :: forall m. String -> Array (H.ComponentHTML Action () m)
+parseNarrative str = go str []
+  where
+  go "" acc = Array.reverse acc
+  go remaining acc =
+    case String.indexOf (String.Pattern "[") remaining of
+      Nothing ->
+        Array.reverse
+          (Array.cons (HH.text remaining) acc)
+      Just openBracket ->
+        let
+          before = String.take openBracket remaining
+          rest = String.drop openBracket remaining
+        in
+          case parseLink rest of
+            Nothing ->
+              -- Not a valid link, consume the [
+              go
+                (String.drop 1 rest)
+                ( Array.cons
+                    (HH.text (before <> "["))
+                    acc
+                )
+            Just { text: linkText, target, consumed } ->
+              let
+                after = String.drop consumed rest
+                beforeEl =
+                  if before == "" then []
+                  else [ HH.text before ]
+                linkEl = case target of
+                  NodeTarget nid ->
+                    HH.span
+                      [ cls "narrative-node-link"
+                      , HE.onClick \_ ->
+                          NavigateTo nid
+                      ]
+                      [ HH.text linkText ]
+                  ExternalTarget url ->
+                    HH.a
+                      [ HP.href url
+                      , HP.target "_blank"
+                      , HP.rel "noopener"
+                      , cls "narrative-ext-link"
+                      ]
+                      [ HH.text linkText ]
+              in
+                go after
+                  ( Array.cons linkEl
+                      (beforeEl <> acc)
+                  )
+
+data LinkTarget = NodeTarget String | ExternalTarget String
+
+type ParsedLink =
+  { text :: String
+  , target :: LinkTarget
+  , consumed :: Int
+  }
+
+parseLink :: String -> Maybe ParsedLink
+parseLink str = do
+  -- Expect [text](target)
+  closeBracket <- String.indexOf
+    (String.Pattern "]") str
+  let linkText = String.take (closeBracket - 1)
+        (String.drop 1 str)
+  -- Check for ](
+  let afterClose = String.drop (closeBracket + 1) str
+  openParen <- case String.indexOf
+    (String.Pattern "(") afterClose of
+    Just 0 -> Just 0
+    _ -> Nothing
+  let afterParen = String.drop 1 afterClose
+  closeParen <- String.indexOf
+    (String.Pattern ")") afterParen
+  let targetStr = String.take closeParen afterParen
+  let consumed = closeBracket + 1 + 1 + closeParen + 1
+  let
+    target =
+      if String.take 5 targetStr == "node:" then
+        NodeTarget (String.drop 5 targetStr)
+      else ExternalTarget targetStr
+  Just { text: linkText, target, consumed }
 
 splitParagraphs :: String -> Array String
 splitParagraphs s =

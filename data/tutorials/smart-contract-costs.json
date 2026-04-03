@@ -7,37 +7,37 @@
       "node": "cost-models",
       "depth": 1,
       "title": "What Are Cost Models?",
-      "narrative": "Every time a Plutus smart contract runs on Cardano, the node must know how much to charge for each operation. This is what cost models define: a mapping from each builtin function (addition, division, hash comparison, etc.) to an abstract cost in CPU and memory units called ExUnits.\n\nThese abstract costs are consensus-critical — every node in the network must compute the EXACT same ExUnits for the same transaction, regardless of whether it's a Haskell node, a Rust node (Amaru), or anything else. If nodes disagree, the chain forks.\n\nThe cost model parameters are stored as protocol parameters, meaning they can only be changed through the governance process."
+      "narrative": "Every time a Plutus smart contract runs on Cardano, the node must know how much to charge for each operation. This is what cost models define: a mapping from each builtin function (addition, division, hash comparison, etc.) to an abstract cost in CPU and memory units called ExUnits.\n\nThese abstract costs are consensus-critical — every node in the network must compute the EXACT same ExUnits for the same transaction, regardless of whether it's a Haskell node, a Rust node (Amaru), or anything else. If nodes disagree, the chain forks.\n\nThe cost model parameters are stored as protocol parameters, meaning they can only be changed through the [governance process](node:governance-action)."
     },
     {
       "node": "param-group-technical",
       "depth": 1,
       "title": "Technical Parameters",
-      "narrative": "Cost models live in the Technical parameter group alongside poolPledgeInfluence, stakePoolTargetNum, and collateralPercentage.\n\nChanging any Technical parameter requires CC approval at 2/3 majority and DRep approval at 67%. This means a cost model update — like the recent +75% repricing of integer division — must go through the full governance process.\n\nThe benchmarking is done by the Plutus team, but the decision to apply those benchmarks on-chain is a community governance decision. The Plutus team can't unilaterally change what smart contracts cost."
+      "narrative": "[Cost models](node:cost-models) live in the Technical parameter group alongside poolPledgeInfluence, stakePoolTargetNum, and collateralPercentage.\n\nChanging any Technical parameter requires [CC](node:cc) approval at 2/3 majority and [DRep](node:drep) approval at 67%. This means a cost model update — like the recent +75% repricing of integer division — must go through the full governance process.\n\nThe benchmarking is done by the Plutus team, but the decision to apply those benchmarks on-chain is a community governance decision. The Plutus team can't unilaterally change what smart contracts cost."
     },
     {
       "node": "action-param-change",
       "depth": 1,
       "title": "The Governance Path",
-      "narrative": "To update cost models, someone submits a Protocol Parameter Change governance action specifying the new cost model coefficients. This costs 100,000 ada in refundable deposit.\n\nThe action goes through the standard lifecycle: up to 6 epochs of voting, ratification at an epoch boundary when thresholds are met, enactment at the following epoch boundary.\n\nThe Guardrails Script checks that the proposed values fall within permitted ranges. This prevents someone from submitting a cost model that prices everything at zero (which would allow unlimited computation per block) or at infinity (which would make smart contracts unusable)."
+      "narrative": "To update [cost models](node:cost-models), someone submits a Protocol Parameter Change [governance action](node:governance-action) specifying the new cost model coefficients. This costs 100,000 ada in refundable [deposit](node:deposit-mechanism).\n\nThe action goes through the standard lifecycle: up to 6 epochs of [voting](node:voting), [ratification](node:ratification) at an epoch boundary when thresholds are met, [enactment](node:enactment) at the following epoch boundary.\n\nThe [Guardrails Script](node:guardrails-script) checks that the proposed values fall within permitted ranges. This prevents someone from submitting a cost model that prices everything at zero (which would allow unlimited computation per block) or at infinity (which would make smart contracts unusable)."
     },
     {
       "node": "guardrails-script",
       "depth": 1,
       "title": "Automated Safety Checks",
-      "narrative": "The Guardrails Script is the automated enforcement layer. For parameter changes, it validates that proposed values stay within the constitutional bounds defined in Appendix I.\n\nFor cost models specifically, this means the benchmark-derived coefficients must be reasonable — not so low that blocks become computationally overloaded, and not so high that smart contracts become prohibitively expensive.\n\nThe script runs as part of transaction validation. If a parameter change proposal violates the guardrails, the transaction is rejected before it even reaches the voting stage."
+      "narrative": "The Guardrails Script is the automated enforcement layer. For [parameter changes](node:action-param-change), it validates that proposed values stay within the constitutional bounds defined in Appendix I.\n\nFor [cost models](node:cost-models) specifically, this means the benchmark-derived coefficients must be reasonable — not so low that blocks become computationally overloaded, and not so high that smart contracts become prohibitively expensive.\n\nThe script runs as part of transaction validation. If a parameter change proposal violates the guardrails, the transaction is rejected before it even reaches the [voting](node:voting) stage."
     },
     {
       "node": "constitution",
       "depth": 1,
       "title": "Constitutional Limits",
-      "narrative": "The Constitution's Appendix I defines the permitted ranges for all protocol parameters. For cost models, this creates a constitutional floor and ceiling on smart contract pricing.\n\nThe CC evaluates cost model changes against these constitutional bounds. Even if the benchmarks say a function should cost X, the CC can vote against the change if it believes the impact would violate constitutional tenets — like Tenet 2 (predictable, reasonable transaction costs) or Tenet 3 (no unreasonable barriers to application development).\n\nThis is the human judgment layer on top of the automated guardrails."
+      "narrative": "The Constitution's Appendix I defines the permitted ranges for all protocol parameters. For [cost models](node:cost-models), this creates a constitutional floor and ceiling on smart contract pricing.\n\nThe [CC](node:cc) evaluates cost model changes against these constitutional bounds. Even if the benchmarks say a function should cost X, the CC can vote against the change if it believes the impact would violate constitutional tenets — like Tenet 2 (predictable, reasonable transaction costs) or Tenet 3 (no unreasonable barriers to application development).\n\nThis is the human judgment layer on top of the automated [guardrails](node:guardrails-script)."
     },
     {
       "node": "ratification",
       "depth": 1,
       "title": "When the Price Changes",
-      "narrative": "A cost model update gets ratified like any other parameter change: CC 2/3 + DRep 67% at an epoch boundary.\n\nOnce ratified, the new costs take effect at the NEXT epoch boundary. This gives developers a window to check if their contracts still fit within budget. The recent van Rossem hard fork repricing explicitly warned about 'potentially breaking contracts' — existing scripts using heavy integer division may exceed their ExUnit budgets under the new pricing.\n\nThis is the tradeoff: honest pricing protects node operators from subsidizing underpriced computation, but retroactively increases costs for deployed contracts."
+      "narrative": "A [cost model](node:cost-models) update gets ratified like any other [parameter change](node:action-param-change): [CC](node:cc) 2/3 + [DRep](node:drep) 67% at an epoch boundary.\n\nOnce ratified, the new costs take effect at the NEXT epoch boundary. This gives developers a window to check if their contracts still fit within budget. The recent van Rossem hard fork repricing explicitly warned about 'potentially breaking contracts' — existing scripts using heavy integer division may exceed their ExUnit budgets under the new pricing.\n\nThis is the tradeoff: honest pricing protects node operators from subsidizing underpriced computation, but retroactively increases costs for deployed contracts."
     }
   ]
 }

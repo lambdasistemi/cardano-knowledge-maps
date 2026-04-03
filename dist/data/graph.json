@@ -390,14 +390,63 @@
       ]
     },
     {
-      "id": "metadata-standards",
-      "label": "Governance Metadata Standards",
+      "id": "cip-95",
+      "label": "CIP-95",
       "kind": "artifact",
       "group": "framework",
-      "description": "A set of CIPs that standardize how governance metadata is structured. CIP-95: web-wallet bridge for Conway era. CIP-100: general governance metadata format. CIP-105: Conway-era HD wallet key chains. CIP-108: governance action metadata format (title, abstract, motivation, rationale). CIP-129: governance identifiers. CIP-136: CC vote metadata standard (allows CC members to cite specific constitutional articles when voting). These standards ensure interoperability between wallets, explorers, and governance tools.",
+      "description": "CIP-95 defines the web-wallet bridge for the Conway era. It extends the CIP-30 wallet connector with governance-specific capabilities: DRep registration, vote delegation, and governance action submission from browser-based wallets. Without CIP-95, governance tools like GovTool couldn't interact with users' wallets. It enables the 'connect wallet' flow that makes on-chain governance accessible to non-technical participants.",
       "links": [
-        { "label": "CIP-100", "url": "https://cips.cardano.org/cip/CIP-0100" },
-        { "label": "CIP-108", "url": "https://cips.cardano.org/cip/CIP-0108" }
+        { "label": "CIP-95 Specification", "url": "https://cips.cardano.org/cip/CIP-0095" }
+      ]
+    },
+    {
+      "id": "cip-100",
+      "label": "CIP-100",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "CIP-100 defines the general governance metadata standard. Every governance action includes a metadata anchor — a URL pointing to a JSON document plus its hash for integrity. CIP-100 specifies the base format for this metadata, ensuring all governance tools can parse and display proposal information consistently. The metadata is stored off-chain (to avoid blockchain bloat) but its hash is recorded on-chain, making it tamper-proof.",
+      "links": [
+        { "label": "CIP-100 Specification", "url": "https://cips.cardano.org/cip/CIP-0100" }
+      ]
+    },
+    {
+      "id": "cip-105",
+      "label": "CIP-105",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "CIP-105 defines the Conway-era HD wallet key derivation paths for governance credentials. It specifies how wallets derive the key pairs used for DRep registration, vote delegation, and CC member credentials from a single master seed. This ensures that governance keys are deterministically recoverable from a wallet's mnemonic phrase, following the same BIP-32/BIP-44 patterns used for payment and staking keys.",
+      "links": [
+        { "label": "CIP-105 Specification", "url": "https://cips.cardano.org/cip/CIP-0105" }
+      ]
+    },
+    {
+      "id": "cip-108",
+      "label": "CIP-108",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "CIP-108 extends CIP-100 with a specific metadata format for governance actions. It defines required fields: title, abstract, motivation, rationale, and supporting references. This structured format ensures that voters have consistent, comparable information when evaluating proposals. GovTool and other governance interfaces render CIP-108 metadata to present proposals in a human-readable format.",
+      "links": [
+        { "label": "CIP-108 Specification", "url": "https://cips.cardano.org/cip/CIP-0108" }
+      ]
+    },
+    {
+      "id": "cip-129",
+      "label": "CIP-129",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "CIP-129 standardizes governance identifiers across the ecosystem. It defines canonical string representations for governance credentials (DRep IDs, CC member IDs, governance action IDs) that work consistently across wallets, explorers, and governance tools. Without this standard, different tools might represent the same DRep or action differently, causing confusion when sharing links or referencing proposals.",
+      "links": [
+        { "label": "CIP-129 Specification", "url": "https://cips.cardano.org/cip/CIP-0129" }
+      ]
+    },
+    {
+      "id": "cip-136",
+      "label": "CIP-136",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "CIP-136 defines the metadata standard for Constitutional Committee vote rationales. When CC members vote on governance actions, they are expected to explain their constitutional reasoning. CIP-136 provides a structured format for these rationales, including which constitutional articles were considered and why the action was deemed constitutional or not. This creates a public record of constitutional interpretation — effectively building governance case law over time.",
+      "links": [
+        { "label": "CIP-136 Specification", "url": "https://cips.cardano.org/cip/CIP-0136" }
       ]
     },
     {
@@ -512,7 +561,14 @@
     { "source": "cc", "target": "cc-threshold", "label": "subject to", "description": "CC uses one-member-one-vote with a configurable threshold (currently 2/3). Expired members cannot vote. Minimum committee size is 7 on mainnet. The threshold is changeable via the Update Committee governance action." },
     { "source": "governance-action", "target": "deposit-mechanism", "label": "requires", "description": "Submitting a governance action requires 100,000 ada (refundable). This anti-spam mechanism prevents frivolous proposals from flooding the chain. The amount is a Governance group parameter, also classified as security-relevant (requires SPO approval to change)." },
     { "source": "drep", "target": "deposit-mechanism", "label": "requires", "description": "DRep registration requires 500 ada (refundable on retirement). This prevents spam registrations while keeping registration accessible. The amount is a Governance group protocol parameter changeable with 75% DRep threshold." },
-    { "source": "governance-action", "target": "metadata-standards", "label": "follows", "description": "Governance actions include a metadata anchor (URL + hash) following CIP-100 and CIP-108. Metadata is stored off-chain but its hash is on-chain for integrity. CIP-129 standardizes governance identifiers for cross-tool interoperability." },
+    { "source": "governance-action", "target": "cip-100", "label": "metadata follows", "description": "Every governance action includes a metadata anchor (URL + hash) following CIP-100's general governance metadata format. The metadata is stored off-chain but its hash is recorded on-chain for integrity verification." },
+    { "source": "governance-action", "target": "cip-108", "label": "structured as", "description": "Governance action metadata is structured according to CIP-108, which defines required fields: title, abstract, motivation, rationale, and references. This ensures voters have consistent information when evaluating proposals." },
+    { "source": "cip-108", "target": "cip-100", "label": "extends", "description": "CIP-108 builds on CIP-100's base metadata format, adding governance-action-specific fields (title, abstract, motivation, rationale). CIP-100 defines the general anchor structure; CIP-108 defines what goes inside it for governance actions." },
+    { "source": "govtool", "target": "cip-95", "label": "connects wallets via", "description": "GovTool uses CIP-95 to connect to users' browser wallets. CIP-95 extends the CIP-30 wallet connector with governance capabilities: DRep registration, delegation, and voting transactions." },
+    { "source": "cc", "target": "cip-136", "label": "publishes rationales via", "description": "CC members publish structured vote rationales using CIP-136 metadata. This format requires citing specific constitutional articles, creating a public record of constitutional interpretation that builds governance case law." },
+    { "source": "cip-129", "target": "drep", "label": "standardizes IDs for", "description": "CIP-129 defines canonical string representations for DRep IDs, ensuring all tools display the same identifier for the same representative." },
+    { "source": "cip-129", "target": "governance-action", "label": "standardizes IDs for", "description": "CIP-129 defines canonical governance action IDs used across wallets, explorers, and governance tools for consistent cross-tool reference." },
+    { "source": "cip-105", "target": "drep", "label": "derives keys for", "description": "CIP-105 specifies how wallets derive governance key pairs (for DRep registration and voting) from a master seed, ensuring keys are recoverable from a mnemonic phrase." },
     { "source": "intersect", "target": "governance-model", "label": "facilitates", "description": "Intersect provides off-chain governance infrastructure: Parameter Committee, CC elections, working groups, hard fork coordination, CIP process, and GovTool. It fills the coordination gap between decentralized on-chain governance and the practical need for organized deliberation." },
     { "source": "cardano-foundation", "target": "drep", "label": "registered as", "description": "The CF registered as a DRep to actively participate in governance, bringing institutional expertise and a Governance Advisory Team. It publishes detailed vote rationales, setting a standard for transparent governance engagement." },
     { "source": "cardano-foundation", "target": "governance-action", "label": "evaluates and votes on", "description": "The CF evaluates governance actions for constitutional compliance and governance merit through its Governance Advisory Team. It publishes vote rationales and created the Proposal Examiner tool for structured evaluation." },
