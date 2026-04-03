@@ -11,17 +11,29 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: nixos
-    env:
-      PATH: /run/current-system/sw/bin:/usr/bin:/bin
+  validate:
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: cachix/cachix-action@v15
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          name: paolino
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix develop --quiet -c just ci
+          node-version: 22
+      - run: |
+          node -e "
+            const d=require('./data/graph.json');
+            const ids=new Set(d.nodes.map(n=>n.id));
+            let ok=true;
+            d.edges.forEach((e,i)=>{
+              if(!ids.has(e.source)){console.error('BAD source e'+i+': '+e.source);ok=false}
+              if(!ids.has(e.target)){console.error('BAD target e'+i+': '+e.target);ok=false}
+            });
+            if(!ok)process.exit(1);
+            console.log(d.nodes.length+' nodes, '+d.edges.length+' edges — OK');
+          "
       - name: Deploy PR preview
         if: github.event_name == 'pull_request'
-        run: npx surge dist ${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ github.event.number }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: |
+          curl -sL https://lambdasistemi.github.io/graph-browser/index.html -o dist/index.html
+          curl -sL https://lambdasistemi.github.io/graph-browser/index.js -o dist/index.js
+          cp -r data dist/data
+          npx surge dist ${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ github.event.number }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}

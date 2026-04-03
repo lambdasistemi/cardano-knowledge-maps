@@ -1,7 +1,6 @@
 WIP.md
 .llm/
-output/
-dist/index.js
-.spago/
 node_modules/
-purescript-overlay/
+dist/index.js
+dist/index.html
+dist/data/
