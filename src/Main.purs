@@ -326,7 +326,21 @@ renderTutorialContent state =
         stepNum = state.tutorialStep + 1
       in
         HH.div [ cls "tutorial-content" ]
-          [ HH.div [ cls "tutorial-progress" ]
+          [ let
+              onDetour = case state.selected of
+                Just sel -> sel.id /= stop.node
+                Nothing -> false
+            in
+              if onDetour then
+                HH.button
+                  [ cls "tutorial-nav-btn recenter"
+                  , HE.onClick \_ -> TutorialRecenter
+                  ]
+                  [ HH.text
+                      "\x2190 Back to current stop"
+                  ]
+              else HH.text ""
+          , HH.div [ cls "tutorial-progress" ]
               [ HH.text
                   ( show stepNum <> " / "
                       <> show total
@@ -361,18 +375,6 @@ renderTutorialContent state =
                     ]
                     [ HH.text "Finish" ]
               ]
-          , let
-              onDetour = case state.selected of
-                Just sel -> sel.id /= stop.node
-                Nothing -> false
-            in
-              if onDetour then
-                HH.button
-                  [ cls "tutorial-nav-btn recenter"
-                  , HE.onClick \_ -> TutorialRecenter
-                  ]
-                  [ HH.text "Back to stop" ]
-              else HH.text ""
           , HH.button
               [ cls "tutorial-exit"
               , HE.onClick \_ -> ExitTutorial
