@@ -381,6 +381,77 @@
     text-align: center;
   }
 
+  .tutorial-start-btn {
+    margin-top: 16px;
+    background: #1f3a5f;
+    border: 1px solid #58a6ff;
+    color: #58a6ff;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 14px;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+
+  .tutorial-start-btn:hover { background: #264a73; }
+
+  .tutorial-content {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+  }
+
+  .tutorial-progress {
+    font-size: 12px;
+    color: #8b949e;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+  }
+
+  .tutorial-narrative { line-height: 1.7; }
+
+  .tutorial-para {
+    font-size: 14px;
+    color: #c9d1d9;
+    margin-bottom: 12px;
+  }
+
+  .tutorial-nav {
+    display: flex;
+    gap: 8px;
+    justify-content: space-between;
+    margin-top: 8px;
+  }
+
+  .tutorial-nav-btn {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 8px 20px;
+    border-radius: 6px;
+    cursor: pointer;
+    font-size: 13px;
+    font-family: inherit;
+    transition: all 0.15s ease;
+  }
+
+  .tutorial-nav-btn:hover { background: #30363d; }
+  .tutorial-nav-btn.active { background: #1f3a5f; border-color: #58a6ff; color: #58a6ff; }
+
+  .tutorial-exit {
+    background: none;
+    border: none;
+    color: #8b949e;
+    cursor: pointer;
+    font-size: 12px;
+    font-family: inherit;
+    padding: 4px 0;
+    margin-top: 8px;
+  }
+
+  .tutorial-exit:hover { color: #c9d1d9; }
+
   @media (max-width: 768px) {
     .sidebar {
       width: 100%;

@@ -9,6 +9,7 @@ import Data.Foldable (foldl, for_)
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.Set as Set
+import Data.String as String
 import Data.Tuple (Tuple(..))
 import Effect (Effect)
 import Effect.Aff (Aff)
@@ -19,7 +20,9 @@ import Fetch (Method(..), fetch)
 import Graph.Cytoscape as GCy
 import Graph.Decode (decodeGraph)
 import Graph.Operations (neighborhood, subgraph)
+import Data.Argonaut.Parser as AP
 import Graph.Search (SearchResult(..), search)
+import Tutorial (Tutorial, TutorialStop, decodeTutorial)
 import Graph.Types
   ( Edge
   , Graph
@@ -58,6 +61,9 @@ type State =
   , depth :: Int
   , searchQuery :: String
   , searchResults :: Array SearchResult
+  , tutorial :: Maybe Tutorial
+  , tutorialStep :: Int
+  , tutorialActive :: Boolean
   , error :: Maybe String
   }
 
@@ -72,6 +78,10 @@ data Action
   | SelectSearchResult SearchResult
   | FitAll
   | NavigateTo String
+  | StartTutorial
+  | TutorialNext
+  | TutorialPrev
+  | ExitTutorial
 
 component
   :: forall q i o. H.Component q i o Aff
@@ -83,6 +93,9 @@ component = H.mkComponent
       , depth: 99
       , searchQuery: ""
       , searchResults: []
+      , tutorial: Nothing
+      , tutorialStep: 0
+      , tutorialActive: false
       , error: Nothing
       }
   , render
@@ -199,7 +212,9 @@ renderSidebar state =
         [ HH.h2_ [ HH.text sidebarTitle ]
         ]
     , HH.div [ cls "sidebar-content" ]
-        [ case state.hoveredEdge of
+        [ if state.tutorialActive then
+            renderTutorialContent state
+          else case state.hoveredEdge of
             Just edge -> renderEdgeDetail edge
             Nothing -> case state.selected of
               Nothing -> renderEmptyState
@@ -209,11 +224,16 @@ renderSidebar state =
         ]
     ]
   where
-  sidebarTitle = case state.hoveredEdge of
-    Just edge -> edge.label
-    Nothing -> case state.selected of
-      Nothing -> "Cardano Governance"
-      Just n -> n.label
+  sidebarTitle =
+    if state.tutorialActive then
+      case currentStop state of
+        Just stop -> stop.title
+        Nothing -> "Tutorial"
+    else case state.hoveredEdge of
+      Just edge -> edge.label
+      Nothing -> case state.selected of
+        Nothing -> "Cardano Governance"
+        Just n -> n.label
 
 renderEmptyState
   :: forall m. H.ComponentHTML Action () m
@@ -224,11 +244,94 @@ renderEmptyState =
     , HH.p_
         [ HH.text
             "Hover a node to see details. \
-            \Click to re-center. \
-            \Use depth buttons to control \
-            \neighborhood size."
+            \Click to re-center."
         ]
+    , HH.button
+        [ cls "tutorial-start-btn"
+        , HE.onClick \_ -> StartTutorial
+        ]
+        [ HH.text "Take the guided tour" ]
     ]
+
+renderTutorialContent
+  :: forall m. State -> H.ComponentHTML Action () m
+renderTutorialContent state =
+  case currentStop state of
+    Nothing -> HH.text ""
+    Just stop ->
+      let
+        total = case state.tutorial of
+          Just t -> Array.length t.stops
+          Nothing -> 0
+        stepNum = state.tutorialStep + 1
+      in
+        HH.div [ cls "tutorial-content" ]
+          [ HH.div [ cls "tutorial-progress" ]
+              [ HH.text
+                  ( show stepNum <> " / "
+                      <> show total
+                  )
+              ]
+          , HH.div [ cls "tutorial-narrative" ]
+              ( map
+                  ( \para ->
+                      HH.p [ cls "tutorial-para" ]
+                        [ HH.text para ]
+                  )
+                  (splitParagraphs stop.narrative)
+              )
+          , HH.div [ cls "tutorial-nav" ]
+              [ if state.tutorialStep > 0 then
+                  HH.button
+                    [ cls "tutorial-nav-btn"
+                    , HE.onClick \_ -> TutorialPrev
+                    ]
+                    [ HH.text "Previous" ]
+                else HH.text ""
+              , if stepNum < total then
+                  HH.button
+                    [ cls "tutorial-nav-btn active"
+                    , HE.onClick \_ -> TutorialNext
+                    ]
+                    [ HH.text "Next" ]
+                else
+                  HH.button
+                    [ cls "tutorial-nav-btn"
+                    , HE.onClick \_ -> ExitTutorial
+                    ]
+                    [ HH.text "Finish" ]
+              ]
+          , HH.button
+              [ cls "tutorial-exit"
+              , HE.onClick \_ -> ExitTutorial
+              ]
+              [ HH.text "Exit tour" ]
+          ]
+
+currentStop :: State -> Maybe TutorialStop
+currentStop state = do
+  t <- state.tutorial
+  Array.index t.stops state.tutorialStep
+
+splitParagraphs :: String -> Array String
+splitParagraphs s =
+  Array.filter (_ /= "")
+    (splitOn "\n\n" s)
+
+splitOn :: String -> String -> Array String
+splitOn sep str = go str []
+  where
+  sepLen = String.length sep
+  go "" acc = Array.reverse acc
+  go remaining acc =
+    case String.indexOf (String.Pattern sep) remaining of
+      Nothing -> Array.reverse (Array.cons remaining acc)
+      Just idx ->
+        let
+          before = String.take idx remaining
+          after = String.drop (idx + sepLen) remaining
+        in
+          go after (Array.cons before acc)
 
 renderEdgeDetail
   :: forall m. EdgeInfo -> H.ComponentHTML Action () m
@@ -460,6 +563,47 @@ handleAction = case _ of
   FitAll ->
     liftEffect Cy.fitAll
 
+  StartTutorial -> do
+    result <- liftAff loadTutorial
+    case result of
+      Left _ -> pure unit
+      Right tut -> do
+        H.modify_ _
+          { tutorial = Just tut
+          , tutorialStep = 0
+          , tutorialActive = true
+          }
+        applyTutorialStop
+
+  TutorialNext -> do
+    state <- H.get
+    case state.tutorial of
+      Just t ->
+        when
+          ( state.tutorialStep
+              < Array.length t.stops - 1
+          )
+          do
+            H.modify_ \s -> s
+              { tutorialStep = s.tutorialStep + 1
+              }
+            applyTutorialStop
+      Nothing -> pure unit
+
+  TutorialPrev -> do
+    state <- H.get
+    when (state.tutorialStep > 0) do
+      H.modify_ \s -> s
+        { tutorialStep = s.tutorialStep - 1 }
+      applyTutorialStop
+
+  ExitTutorial -> do
+    H.modify_ _
+      { tutorialActive = false
+      , depth = 99
+      }
+    renderGraph
+
   NavigateTo nodeId -> do
     state <- H.get
     let node = Map.lookup nodeId state.graph.nodes
@@ -518,6 +662,32 @@ mostConnectedNode graph =
       m2
   orZero Nothing = 0
   orZero (Just n) = n
+
+applyTutorialStop
+  :: forall o
+   . H.HalogenM State Action () o Aff Unit
+applyTutorialStop = do
+  state <- H.get
+  case currentStop state of
+    Nothing -> pure unit
+    Just stop -> do
+      let node = Map.lookup stop.node state.graph.nodes
+      H.modify_ _
+        { selected = node
+        , depth = stop.depth
+        , hoveredEdge = Nothing
+        }
+      renderGraph
+
+loadTutorial :: Aff (Either String Tutorial)
+loadTutorial = do
+  resp <- fetch
+    "data/tutorials/governance-basics.json"
+    { method: GET }
+  body <- resp.text
+  pure case AP.jsonParser body of
+    Left err -> Left err
+    Right json -> decodeTutorial json
 
 loadGraphData :: Aff (Either String Graph)
 loadGraphData = do
