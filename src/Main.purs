@@ -717,16 +717,29 @@ handleAction = case _ of
       tgtLabel = case tgtNode of
         Just n -> n.label
         Nothing -> tgtId
-    H.modify_ _
-      { hoveredNode = Nothing
-      , hoveredEdge = Just
-          { sourceLabel: srcLabel
-          , targetLabel: tgtLabel
-          , label: lbl
-          , description: desc
-          }
-      , selected = Nothing
-      }
+    state' <- H.get
+    if state'.tutorialActive then
+      -- Don't clear selected in tutorial mode
+      H.modify_ _
+        { hoveredNode = Nothing
+        , hoveredEdge = Just
+            { sourceLabel: srcLabel
+            , targetLabel: tgtLabel
+            , label: lbl
+            , description: desc
+            }
+        }
+    else
+      H.modify_ _
+        { hoveredNode = Nothing
+        , hoveredEdge = Just
+            { sourceLabel: srcLabel
+            , targetLabel: tgtLabel
+            , label: lbl
+            , description: desc
+            }
+        , selected = Nothing
+        }
 
   SetDepth d -> do
     H.modify_ _ { depth = d }
