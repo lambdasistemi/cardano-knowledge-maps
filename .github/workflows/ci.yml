@@ -35,5 +35,5 @@ jobs:
       - name: Deploy PR preview
         if: github.event_name == 'pull_request'
         run: |
-          cp -r result dist-preview
+          cp -rL result dist-preview
           npx surge dist-preview ${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ github.event.number }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
