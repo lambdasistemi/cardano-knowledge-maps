@@ -17,13 +17,14 @@ import Prelude
 import Effect (Effect)
 import Foreign (Foreign)
 
--- | Create an empty Cytoscape.js instance in the
--- | given container element.
+-- | Create a Cytoscape.js instance with kind styles.
+-- | First arg: container element ID.
+-- | Second arg: kind definitions as Foreign
+-- |   (object of { color, shape } keyed by kind ID).
 foreign import initCytoscape
-  :: String -> Effect Unit
+  :: String -> Foreign -> Effect Unit
 
 -- | Replace all elements and re-run layout.
--- | Edge labels hidden by default.
 foreign import setElements
   :: Foreign -> Effect Unit
 
@@ -41,7 +42,6 @@ foreign import onNodeHover
   :: (String -> Effect Unit) -> Effect Unit
 
 -- | Register a hover callback on edges.
--- | Receives source id, target id, label, description.
 foreign import onEdgeHover
   :: (String -> String -> String -> String -> Effect Unit)
   -> Effect Unit

@@ -18,21 +18,25 @@ import Effect.Class (liftEffect)
 import FFI.Cytoscape as Cy
 import Fetch (Method(..), fetch)
 import Graph.Cytoscape as GCy
-import Graph.Decode (decodeGraph)
 import Graph.Operations (neighborhood, subgraph)
 import Data.Argonaut.Decode.Class (decodeJson)
 import Data.Argonaut.Decode.Error (printJsonDecodeError)
 import Data.Argonaut.Parser as AP
+import Foreign (Foreign, unsafeToForeign)
+import Foreign.Object as FO
 import Graph.Search (SearchResult(..), search)
 import Tutorial (Tutorial, TutorialStop, decodeTutorial)
+import Graph.Decode (decodeConfig, decodeGraph)
 import Graph.Types
-  ( Edge
+  ( Config
+  , Edge
   , Graph
+  , KindDef
+  , KindId
   , Link
   , Node
-  , NodeKind(..)
+  , emptyConfig
   , emptyGraph
-  , kindLabel
   )
 import Halogen as H
 import Halogen.Aff as HA
@@ -65,7 +69,8 @@ type TutorialEntry =
 
 -- | Application state.
 type State =
-  { graph :: Graph
+  { config :: Config
+  , graph :: Graph
   , selected :: Maybe Node
   , hoveredNode :: Maybe Node
   , hoveredEdge :: Maybe EdgeInfo
@@ -102,7 +107,8 @@ component
   :: forall q i o. H.Component q i o Aff
 component = H.mkComponent
   { initialState: \_ ->
-      { graph: emptyGraph
+      { config: emptyConfig
+      , graph: emptyGraph
       , selected: Nothing
       , hoveredNode: Nothing
       , hoveredEdge: Nothing
@@ -130,7 +136,7 @@ render state =
         [ HH.div [ HP.id "cy" ] []
         , renderControls state
         , renderSearchBox state
-        , renderLegend
+        , renderLegend state.config
         ]
     , renderSidebar state
     ]
@@ -221,29 +227,31 @@ renderSearchBox state =
       else
         HH.div [ cls "search-results" ]
           (Array.take 12 state.searchResults
-            <#> renderSearchResult
+            <#> renderSearchResult state.config
           )
     ]
 
 renderSearchResult
   :: forall m
-   . SearchResult
+   . Config
+  -> SearchResult
   -> H.ComponentHTML Action () m
-renderSearchResult result = case result of
+renderSearchResult cfg result = case result of
   NodeResult node ->
     HH.div
       [ cls "search-result-item"
       , HE.onClick \_ -> SelectSearchResult result
       ]
       [ HH.span
-          [ cls ("search-dot"), HP.attr (HH.AttrName "style")
-              ("background:" <> kindColor node.kind)
+          [ cls "search-dot"
+          , HP.attr (HH.AttrName "style")
+              ("background:" <> kindColor cfg node.kind)
           ]
           []
       , HH.span [ cls "search-result-label" ]
           [ HH.text node.label ]
       , HH.span [ cls "search-result-kind" ]
-          [ HH.text (kindLabel node.kind) ]
+          [ HH.text (kindLabel cfg node.kind) ]
       ]
   EdgeResult { edge, sourceLabel, targetLabel } ->
     HH.div
@@ -277,8 +285,9 @@ renderSidebar state =
           else case state.hoveredEdge of
             Just edge -> renderEdgeDetail edge
             Nothing -> case state.selected of
-              Nothing -> renderEmptyState
+              Nothing -> renderEmptyState state.config
               Just node -> renderNodeDetail
+                state.config
                 state.graph
                 node
         ]
@@ -292,15 +301,15 @@ renderSidebar state =
     else case state.hoveredEdge of
       Just edge -> edge.label
       Nothing -> case state.selected of
-        Nothing -> "Cardano Governance"
+        Nothing -> state.config.title
         Just n -> n.label
 
 renderEmptyState
-  :: forall m. H.ComponentHTML Action () m
-renderEmptyState =
+  :: forall m. Config -> H.ComponentHTML Action () m
+renderEmptyState cfg =
   HH.div [ cls "empty-state" ]
     [ HH.h2_
-        [ HH.text "Cardano Governance" ]
+        [ HH.text cfg.title ]
     , HH.p_
         [ HH.text
             "Hover a node to see details. \
@@ -387,10 +396,11 @@ renderTutorialContent state =
                   , HH.span
                       [ cls
                           ( "badge badge-"
-                              <> show node.kind
+                              <> node.kind
                           )
                       ]
-                      [ HH.text (kindLabel node.kind)
+                      [ HH.text
+                          (kindLabel state.config node.kind)
                       ]
                   , HH.h3 [ cls "tutorial-hovered-label" ]
                       [ HH.text node.label ]
@@ -557,14 +567,15 @@ renderEdgeDetail edge =
 
 renderNodeDetail
   :: forall m
-   . Graph
+   . Config
+  -> Graph
   -> Node
   -> H.ComponentHTML Action () m
-renderNodeDetail graph node =
+renderNodeDetail cfg graph node =
   HH.div_
     [ HH.span
-        [ cls ("badge badge-" <> show node.kind) ]
-        [ HH.text (kindLabel node.kind) ]
+        [ cls ("badge badge-" <> node.kind) ]
+        [ HH.text (kindLabel cfg node.kind) ]
     , HH.p [ cls "description" ]
         [ HH.text node.description ]
     , renderLinks node.links
@@ -629,21 +640,22 @@ renderNodeDetail graph node =
             [ HH.text targetLabel ]
         ]
 
-renderLegend :: forall m. H.ComponentHTML Action () m
-renderLegend =
+renderLegend
+  :: forall m. Config -> H.ComponentHTML Action () m
+renderLegend cfg =
   HH.div [ cls "legend" ]
     [ HH.text
         "Hover to inspect. Click to \
         \re-center. "
-    , HH.a
-        [ HP.href
-            "https://github.com/lambdasistemi\
-            \/cardano-governance-graph"
-        , HP.target "_blank"
-        , HP.rel "noopener"
-        , cls "legend-link"
-        ]
-        [ HH.text "Source" ]
+    , if cfg.sourceUrl == "" then HH.text ""
+      else
+        HH.a
+          [ HP.href cfg.sourceUrl
+          , HP.target "_blank"
+          , HP.rel "noopener"
+          , cls "legend-link"
+          ]
+          [ HH.text "Source" ]
     ]
 
 handleAction
@@ -652,7 +664,15 @@ handleAction
   -> H.HalogenM State Action () o Aff Unit
 handleAction = case _ of
   Initialize -> do
+    -- Load config first
+    cfgResult <- liftAff loadConfig
+    case cfgResult of
+      Left _ -> pure unit
+      Right cfg ->
+        H.modify_ _ { config = cfg }
+    state <- H.get
     liftEffect $ Cy.initCytoscape "cy"
+      (kindsToForeign state.config)
     tapSub <- liftEffect HS.create
     liftEffect $ Cy.onNodeTap \nodeId ->
       HS.notify tapSub.listener
@@ -927,6 +947,14 @@ loadTutorialFile file = do
     Left err -> Left err
     Right json -> decodeTutorial json
 
+loadConfig :: Aff (Either String Config)
+loadConfig = do
+  resp <- fetch "data/config.json" { method: GET }
+  body <- resp.text
+  pure case AP.jsonParser body of
+    Left err -> Left err
+    Right json -> decodeConfig json
+
 loadGraphData :: Aff (Either String Graph)
 loadGraphData = do
   resp <- fetch "data/graph.json" { method: GET }
@@ -963,13 +991,27 @@ cls
   -> HH.IProp (class :: String | r) i
 cls = HP.class_ <<< HH.ClassName
 
-kindColor :: NodeKind -> String
-kindColor Actor = "#58a6ff"
-kindColor ActionType = "#d29922"
-kindColor Process = "#3fb950"
-kindColor Mechanism = "#bc8cff"
-kindColor Artifact = "#f778ba"
-kindColor Concept = "#79c0ff"
-kindColor ParamGroup = "#e3b341"
-kindColor Parameter = "#a5d6a7"
-kindColor Tool = "#56d4dd"
+lookupKind :: Config -> KindId -> KindDef
+lookupKind cfg kid = case Map.lookup kid cfg.kinds of
+  Just def -> def
+  Nothing ->
+    { label: kid, color: "#8b949e", shape: "ellipse" }
+
+kindColor :: Config -> KindId -> String
+kindColor cfg kid = (lookupKind cfg kid).color
+
+kindLabel :: Config -> KindId -> String
+kindLabel cfg kid = (lookupKind cfg kid).label
+
+-- | Convert config kinds map to Foreign for Cytoscape FFI.
+kindsToForeign :: Config -> Foreign
+kindsToForeign cfg =
+  unsafeToForeign $ FO.fromFoldable
+    ( map
+        ( \(Tuple k v) -> Tuple k
+            (unsafeToForeign v)
+        )
+        ( Map.toUnfoldable cfg.kinds
+            :: Array (Tuple String KindDef)
+        )
+    )

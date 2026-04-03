@@ -1,0 +1,52 @@
+{
+  "title": "Cardano Governance",
+  "description": "Interactive knowledge graph of Cardano's on-chain governance system (CIP-1694, Conway era).",
+  "sourceUrl": "https://github.com/lambdasistemi/cardano-governance-graph",
+  "kinds": {
+    "actor": {
+      "label": "Actor",
+      "color": "#58a6ff",
+      "shape": "ellipse"
+    },
+    "action-type": {
+      "label": "Action Type",
+      "color": "#d29922",
+      "shape": "round-rectangle"
+    },
+    "process": {
+      "label": "Process",
+      "color": "#3fb950",
+      "shape": "diamond"
+    },
+    "mechanism": {
+      "label": "Mechanism",
+      "color": "#bc8cff",
+      "shape": "round-hexagon"
+    },
+    "artifact": {
+      "label": "Artifact",
+      "color": "#f778ba",
+      "shape": "rectangle"
+    },
+    "concept": {
+      "label": "Concept",
+      "color": "#79c0ff",
+      "shape": "round-octagon"
+    },
+    "param-group": {
+      "label": "Param Group",
+      "color": "#e3b341",
+      "shape": "barrel"
+    },
+    "parameter": {
+      "label": "Parameter",
+      "color": "#a5d6a7",
+      "shape": "round-rectangle"
+    },
+    "tool": {
+      "label": "Tool",
+      "color": "#56d4dd",
+      "shape": "round-pentagon"
+    }
+  }
+}

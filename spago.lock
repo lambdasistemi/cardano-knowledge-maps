@@ -17,6 +17,7 @@
             "fetch",
             "foldable-traversable",
             "foreign",
+            "foreign-object",
             "halogen",
             "maybe",
             "ordered-collections",

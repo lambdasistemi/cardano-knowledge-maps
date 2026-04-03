@@ -10,7 +10,7 @@ import Data.Array as Array
 import Data.Map as Map
 import Data.Maybe (Maybe(..))
 import Data.String (Pattern(..), contains, toLower)
-import Graph.Types (Edge, Graph, Node, NodeId, kindLabel)
+import Graph.Types (Edge, Graph, Node, NodeId)
 
 -- | A search hit: either a node or an edge.
 data SearchResult
@@ -41,7 +41,7 @@ search rawQuery graph =
       matchesAny
         [ node.label
         , node.description
-        , kindLabel node.kind
+        , node.kind
         ] then Just (NodeResult node)
     else Nothing
 

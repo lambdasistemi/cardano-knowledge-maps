@@ -29,10 +29,10 @@ mkNodeEl node = unsafeToForeign
   , data:
       { id: node.id
       , label: node.label
-      , kind: show node.kind
+      , kind: node.kind
       , nodeGroup: node.group
       }
-  , classes: show node.kind
+  , classes: node.kind
   }
 
 mkEdgeEl :: Int -> Edge -> Foreign

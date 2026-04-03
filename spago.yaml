@@ -21,6 +21,7 @@ package:
     - aff-promise
     - web-events
     - foreign
+    - foreign-object
     - dom-indexed
     - fetch
   bundle:
