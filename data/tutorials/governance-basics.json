@@ -47,7 +47,7 @@
     },
     {
       "node": "action-param-change",
-      "depth": 2,
+      "depth": 1,
       "title": "Tuning the Protocol",
       "narrative": "Protocol Parameter Changes are the most common [governance action](node:governance-action) type. They modify the ~30 tunable parameters that control how Cardano works: block sizes, transaction fees, Plutus execution costs, staking rewards, and governance rules themselves.\n\nParameters are grouped into four categories, each with different voting thresholds. [Network](node:param-group-network), [Economic](node:param-group-economic), and [Technical](node:param-group-technical) groups need [DRep](node:drep) 67% + [CC](node:cc) 2/3. The [Governance group](node:param-group-governance) — parameters that control governance itself — needs the higher DRep 75% + CC 2/3, because changing the rules of the game is more consequential.\n\nSome parameters are classified as '[security-relevant](node:security-params)' and additionally require [SPO](node:spo) approval, giving node operators a veto over changes that could destabilize the network."
     },
@@ -59,7 +59,7 @@
     },
     {
       "node": "ratification",
-      "depth": 1,
+      "depth": 2,
       "title": "How Decisions Get Made",
       "narrative": "Ratification happens at epoch boundaries — roughly every 5 days. At each boundary, the system recalculates the vote tally using the current stake snapshot. An action can become ratified even without new votes if delegation changes shift the stake distribution.\n\nVotes are Yes, No, or Abstain. Registered stake that didn't vote counts as 'No'. Unregistered stake counts as 'Abstain'. This means apathy is not neutral — if you're registered and don't vote, you're effectively voting against everything.\n\nOnce all required thresholds are simultaneously met, the action is ratified. [Enactment](node:enactment) happens at the NEXT epoch boundary, giving the network a buffer to prepare."
     },

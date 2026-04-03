@@ -5,7 +5,7 @@
   "stops": [
     {
       "node": "constitution",
-      "depth": 1,
+      "depth": 2,
       "title": "A Constitution for a Blockchain",
       "narrative": "Cardano has an actual constitution — a written document that defines the shared values, principles, and rules of the ecosystem. It was ratified at the Buenos Aires Constitutional Convention in December 2024, after 63 workshops across 51 countries with 95% delegate approval.\n\nThe Constitution is stored off-chain (it's a text document, not code), but its hash is recorded on-chain. This means the on-chain reference is tamper-proof — any change to the document would change the hash.\n\nIt contains 10 Tenets (core principles), Articles covering governance procedures, and Appendix I with specific parameter ranges. The Preamble is explicitly NOT used for constitutionality assessments."
     },
@@ -17,7 +17,7 @@
     },
     {
       "node": "hot-cold-keys",
-      "depth": 1,
+      "depth": 2,
       "title": "Securing the Guardians",
       "narrative": "[CC](node:cc) members use a hot/cold key system borrowed from genesis delegation. The cold key is the member's identity — kept in secure offline storage. The hot key handles day-to-day voting.\n\nIf a hot key is compromised, the member rotates it by issuing a new authorization certificate from the cold key. This doesn't require a [governance action](node:governance-action) — it's an operational security measure.\n\nMembers can also use script credentials (native or Plutus) instead of key pairs. This enables multi-sig committee seats, where a seat is controlled by an organization rather than an individual."
     },
@@ -41,7 +41,7 @@
     },
     {
       "node": "action-update-committee",
-      "depth": 1,
+      "depth": 2,
       "title": "Rotating the Guard",
       "narrative": "Committee Updates handle both routine rotation and emergency replacement. The action can add new members (with specific term expiration epochs), remove existing members, and adjust the [CC](node:cc)'s internal approval threshold.\n\nMembers have individual term limits — they don't all expire at once, enabling staggered rotation for continuity. The committeeMaxTermLength parameter (currently 146 epochs, ~2 years) caps how long any member can serve.\n\nThe CC cannot vote on its own composition — that would be self-dealing. Only [DReps](node:drep) and [SPOs](node:spo) decide who sits on the committee."
     }

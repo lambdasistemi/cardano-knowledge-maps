@@ -5,13 +5,13 @@
   "stops": [
     {
       "node": "cost-models",
-      "depth": 1,
+      "depth": 2,
       "title": "What Are Cost Models?",
       "narrative": "Every time a Plutus smart contract runs on Cardano, the node must know how much to charge for each operation. This is what cost models define: a mapping from each builtin function (addition, division, hash comparison, etc.) to an abstract cost in CPU and memory units called ExUnits.\n\nThese abstract costs are consensus-critical — every node in the network must compute the EXACT same ExUnits for the same transaction, regardless of whether it's a Haskell node, a Rust node (Amaru), or anything else. If nodes disagree, the chain forks.\n\nThe cost model parameters are stored as protocol parameters, meaning they can only be changed through the [governance process](node:governance-action)."
     },
     {
       "node": "param-group-technical",
-      "depth": 1,
+      "depth": 2,
       "title": "Technical Parameters",
       "narrative": "[Cost models](node:cost-models) live in the Technical parameter group alongside poolPledgeInfluence, stakePoolTargetNum, and collateralPercentage.\n\nChanging any Technical parameter requires [CC](node:cc) approval at 2/3 majority and [DRep](node:drep) approval at 67%. This means a cost model update — like the recent +75% repricing of integer division — must go through the full governance process.\n\nThe benchmarking is done by the Plutus team, but the decision to apply those benchmarks on-chain is a community governance decision. The Plutus team can't unilaterally change what smart contracts cost."
     },
@@ -29,13 +29,13 @@
     },
     {
       "node": "constitution",
-      "depth": 1,
+      "depth": 2,
       "title": "Constitutional Limits",
       "narrative": "The Constitution's Appendix I defines the permitted ranges for all protocol parameters. For [cost models](node:cost-models), this creates a constitutional floor and ceiling on smart contract pricing.\n\nThe [CC](node:cc) evaluates cost model changes against these constitutional bounds. Even if the benchmarks say a function should cost X, the CC can vote against the change if it believes the impact would violate constitutional tenets — like Tenet 2 (predictable, reasonable transaction costs) or Tenet 3 (no unreasonable barriers to application development).\n\nThis is the human judgment layer on top of the automated [guardrails](node:guardrails-script)."
     },
     {
       "node": "ratification",
-      "depth": 1,
+      "depth": 2,
       "title": "When the Price Changes",
       "narrative": "A [cost model](node:cost-models) update gets ratified like any other [parameter change](node:action-param-change): [CC](node:cc) 2/3 + [DRep](node:drep) 67% at an epoch boundary.\n\nOnce ratified, the new costs take effect at the NEXT epoch boundary. This gives developers a window to check if their contracts still fit within budget. The recent van Rossem hard fork repricing explicitly warned about 'potentially breaking contracts' — existing scripts using heavy integer division may exceed their ExUnit budgets under the new pricing.\n\nThis is the tradeoff: honest pricing protects node operators from subsidizing underpriced computation, but retroactively increases costs for deployed contracts."
     }

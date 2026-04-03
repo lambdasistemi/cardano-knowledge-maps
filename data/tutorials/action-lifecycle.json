@@ -17,31 +17,31 @@
     },
     {
       "node": "voting",
-      "depth": 1,
+      "depth": 2,
       "title": "The Voting Window",
       "narrative": "Once on-chain, the action is open for voting for up to govActionLifetime epochs — currently 6 epochs, roughly 30 days.\n\n[DReps](node:drep), [SPOs](node:spo), and [CC](node:cc) members cast their votes as on-chain transactions: Yes, No, or Abstain. Votes can be changed at any time before [ratification](node:ratification) — if new information emerges, voters can update their position.\n\nImportantly: registered stake that doesn't vote counts as 'No'. This means every proposal faces headwind from passive stake. Active participation is necessary for anything to pass.\n\nThe CC votes are different — one member, one vote, not stake-weighted. CC members are expected to publish rationales citing specific constitutional articles."
     },
     {
       "node": "ratification",
-      "depth": 1,
+      "depth": 2,
       "title": "The Epoch Boundary Check",
       "narrative": "Ratification isn't continuous — it's checked at epoch boundaries (roughly every 5 days). At each boundary, the system takes a fresh snapshot of the stake distribution and recalculates all vote tallies.\n\nThis means an action can become ratified even if no new votes were cast — changes in delegation can shift the balance. If a large [DRep](node:drep) who voted No retires, their delegators' stake redistributes, potentially tipping the vote.\n\nAn action is ratified when ALL required thresholds are simultaneously met. For a [Hard Fork](node:action-hard-fork), that means [CC](node:cc) 2/3 AND DRep 60% AND [SPO](node:spo) 51% must all be true at the same epoch boundary."
     },
     {
       "node": "enactment",
-      "depth": 1,
+      "depth": 3,
       "title": "Enactment: Making It Real",
       "narrative": "Ratified actions are enacted at the epoch boundary FOLLOWING [ratification](node:ratification). There's always at least one epoch (5 days) between ratification and effect — a buffer for the network to prepare.\n\nWhen multiple actions are ratified in the same epoch, they're enacted in priority order:\n1. [No-Confidence](node:action-no-confidence)\n2. [Committee Update](node:action-update-committee)\n3. [New Constitution](node:action-new-constitution)\n4. [Hard Fork](node:action-hard-fork)\n5. [Parameter Changes](node:action-param-change)\n6. [Treasury Withdrawals](node:action-treasury)\n7. [Info](node:action-info) (no effect)\n\nThis ordering matters. A No-Confidence motion enacted before a Parameter Change means the new [CC](node:cc) gets to review remaining actions."
     },
     {
       "node": "action-chaining",
-      "depth": 1,
+      "depth": 2,
       "title": "What Happens When Actions Collide",
       "narrative": "Action chaining is the mechanism that prevents conflicting proposals from both passing. Each action (except [Treasury](node:action-treasury) and [Info](node:action-info)) references the most recently enacted action of its type.\n\nIf Action A is ratified and changes a parameter, then Action B (which was submitted before A was enacted and references the same predecessor as A) becomes invalid. Action B's chain reference is now stale — it assumed a state that no longer exists.\n\nThis sounds restrictive, but it's essential. Without it, two [parameter changes](node:action-param-change) could both be ratified assuming incompatible starting states, leading to unpredictable results."
     },
     {
       "node": "deposit-mechanism",
-      "depth": 1,
+      "depth": 2,
       "title": "Getting Your Deposit Back",
       "narrative": "The 100,000 ada deposit is returned regardless of outcome — whether the action is ratified, expires, or is superseded by a competing action that gets enacted first.\n\nThis is important: the deposit is anti-spam, not a fee. You're not paying for the privilege of proposing. The deposit is locked for the voting period and returned at finalization.\n\nThe deposit amount is itself a [Governance group](node:param-group-governance) parameter (changeable at 75% [DRep](node:drep) threshold) and is classified as [security-relevant](node:security-params) (requiring [SPO](node:spo) approval). This prevents governance insiders from lowering the deposit to flood the system with proposals."
     }
