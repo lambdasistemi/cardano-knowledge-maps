@@ -28,21 +28,15 @@ The graph covers:
 - **Fit View** re-fits the viewport to all visible nodes
 - Links in the sidebar open official Cardano documentation (CIPs, docs.cardano.org, developers.cardano.org, Cardano Foundation)
 
-## Tech stack
+## Architecture
 
-- **PureScript** + **Halogen** — typed functional UI
-- **Cytoscape.js** + **fCoSE** — graph visualization with force-directed layout
-- **Nix flake** — reproducible development environment
-- **Spago** — PureScript package manager and bundler
-- **GitHub Pages** — deployment via GitHub Actions
-- **Surge.sh** — PR preview deploys
+This repo is **data-only**. The graph browser app is provided by [lambdasistemi/graph-browser](https://github.com/lambdasistemi/graph-browser). CI fetches the browser bundle and combines it with the data for deployment.
 
 ## Development
 
 ```bash
-nix develop -c just ci      # lint + build + bundle
-nix develop -c just serve   # serve on port 10002
-nix develop -c just dev     # watch mode
+just validate   # check graph data integrity
+just serve      # fetch browser + serve locally on port 10001
 ```
 
 ## Data

@@ -18,16 +18,13 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: nixos
-    env:
-      PATH: /run/current-system/sw/bin:/usr/bin:/bin
+    runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v6
-      - uses: cachix/cachix-action@v15
-        with:
-          name: paolino
-          authToken: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix develop --quiet -c just bundle
+      - uses: actions/checkout@v4
+      - run: |
+          curl -sL https://lambdasistemi.github.io/graph-browser/index.html -o dist/index.html
+          curl -sL https://lambdasistemi.github.io/graph-browser/index.js -o dist/index.js
+          cp -r data dist/data
       - uses: actions/upload-pages-artifact@v4
         with:
           path: dist
