@@ -1,6 +1,6 @@
 WIP.md
 .llm/
 node_modules/
-dist/index.js
-dist/index.html
-dist/data/
+result
+dist/
+output/
