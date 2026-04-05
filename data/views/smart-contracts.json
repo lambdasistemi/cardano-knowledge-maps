@@ -286,19 +286,19 @@
       "stops": [
         {
           "node": "eutxo",
-          "depth": 2,
+          "depth": 1,
           "title": "The Extended UTxO Model",
           "narrative": "Cardano extends Bitcoin's UTxO model with three key additions: [datums](node:datum) for state, [redeemers](node:redeemer) for user actions, and [script context](node:script-context) for transaction introspection. This makes UTxOs programmable while keeping transactions deterministic — you know the outcome before submitting."
         },
         {
           "node": "datum",
-          "depth": 2,
+          "depth": 1,
           "title": "Datums: Contract State",
           "narrative": "A [datum](node:datum) is data attached to a UTxO locked by a script. It represents the contract's state. With [inline datums](node:inline-datums) (CIP-32), the full datum lives on-chain — anyone can read the contract state by querying the UTxO."
         },
         {
           "node": "plutus-core",
-          "depth": 2,
+          "depth": 1,
           "title": "On-Chain Execution",
           "narrative": "[Plutus Core](node:plutus-core) is the low-level lambda calculus that runs on-chain. The [CEK machine](node:cek-machine) evaluates it, tracking [ExUnits](node:exunits) (CPU + memory) against the transaction budget. Exceeding the budget = transaction fails."
         },
@@ -385,7 +385,7 @@
         },
         {
           "node": "oracle-pattern",
-          "depth": 2,
+          "depth": 3,
           "title": "Oracle Pattern",
           "narrative": "The [oracle pattern](node:oracle-pattern) uses [reference inputs](node:reference-inputs) to publish data that many contracts can read without spending. Price feeds, exchange rates, random numbers — all published as UTxO datums."
         },
@@ -410,13 +410,13 @@
       "stops": [
         {
           "node": "minswap",
-          "depth": 2,
+          "depth": 3,
           "title": "DEX: Minswap",
           "narrative": "[Minswap](node:minswap) is the largest Cardano DEX by TVL. Multi-pool AMM written in [Aiken](node:aiken). Batchers collect user swap orders and settle them against pool UTxOs — the standard DEX architecture on EUTxO."
         },
         {
           "node": "liqwid",
-          "depth": 2,
+          "depth": 3,
           "title": "Lending: Liqwid Finance",
           "narrative": "[Liqwid](node:liqwid) is the leading lending/borrowing protocol. Uses [Plutarch](node:plutarch) for performance-critical validators. DAO-governed. Demonstrates complex multi-contract DeFi on [EUTxO](node:eutxo)."
         },
