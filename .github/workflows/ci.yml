@@ -1,6 +1,7 @@
 name: CI
 
 on:
+  workflow_dispatch:
   push:
     branches: [main]
   pull_request:
@@ -11,18 +12,12 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
+  validate:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: paolino/dev-assets/setup-nix@v0.0.1
-        with:
-          cachix-auth-token: ${{ secrets.CACHIX_AUTH_TOKEN }}
-      - run: nix build
-      - name: Validate graph data
-        uses: lambdasistemi/graph-browser/validate-action@main
+      - uses: lambdasistemi/graph-browser/validate-action@main
+      - uses: lambdasistemi/graph-browser/build-action@main
       - name: Deploy PR preview
         if: github.event_name == 'pull_request'
-        run: |
-          cp -rL result dist-preview
-          npx surge dist-preview ${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ github.event.number }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
+        run: npx surge site ${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ github.event.number }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
