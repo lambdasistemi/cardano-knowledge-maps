@@ -717,7 +717,19 @@
       "links": [
         {
           "label": "Plutus Documentation",
-          "url": "https://plutus.readthedocs.io/"
+          "url": "https://plutus.cardano.intersectmbo.org/docs/"
+        },
+        {
+          "label": "Plutus Pioneer Program",
+          "url": "https://github.com/input-output-hk/plutus-pioneer-program"
+        },
+        {
+          "label": "Developer Portal",
+          "url": "https://developers.cardano.org/docs/smart-contracts/"
+        },
+        {
+          "label": "Plutus Core Spec",
+          "url": "https://plutus.cardano.intersectmbo.org/resources/plutus-core-spec.pdf"
         }
       ]
     },
@@ -731,6 +743,14 @@
         {
           "label": "Plutus Core Spec",
           "url": "https://plutus.cardano.intersectmbo.org/resources/plutus-core-spec.pdf"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/IntersectMBO/plutus"
+        },
+        {
+          "label": "Built-in Functions Reference",
+          "url": "https://plutus.cardano.intersectmbo.org/docs/reference/cardano/plutus-core-builtins-ref/"
         }
       ]
     },
@@ -740,7 +760,16 @@
       "kind": "runtime",
       "group": "smart-contracts",
       "description": "The abstract machine that evaluates Plutus Core on-chain. Tracks CPU and memory consumption using ExUnits budgets. If a script exceeds its budget, the transaction fails. The CEK machine is deterministic — same inputs always produce same outputs and same costs.",
-      "links": []
+      "links": [
+        {
+          "label": "CEK Machine Spec",
+          "url": "https://plutus.cardano.intersectmbo.org/resources/plutus-core-spec.pdf"
+        },
+        {
+          "label": "How Plutus Scripts Are Evaluated",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        }
+      ]
     },
     {
       "id": "exunits",
@@ -748,7 +777,20 @@
       "kind": "concept",
       "group": "smart-contracts",
       "description": "Execution units — the two-dimensional resource budget for Plutus scripts. CPU steps measure computation time, memory units measure peak memory usage. Every transaction specifies ExUnits for each script it runs. Fees are computed from ExUnits using protocol parameters (prices per step/unit).",
-      "links": []
+      "links": [
+        {
+          "label": "Understanding ExUnits",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        },
+        {
+          "label": "Fee Structure",
+          "url": "https://docs.cardano.org/about-cardano/explore-more/fee-structure/"
+        },
+        {
+          "label": "Script Cost Calculator",
+          "url": "https://plutus.cardano.intersectmbo.org/docs/reference/cardano/plutus-core-builtins-ref/"
+        }
+      ]
     },
     {
       "id": "datum",
@@ -756,7 +798,20 @@
       "kind": "concept",
       "group": "smart-contracts",
       "description": "Data attached to a UTxO that is locked by a Plutus script. The datum represents the state of the contract. When spending the UTxO, the datum is passed to the validator script along with a redeemer and the transaction context. Can be stored inline (CIP-32) or as a hash with the full datum provided in the transaction.",
-      "links": []
+      "links": [
+        {
+          "label": "Datums and Redeemers",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        },
+        {
+          "label": "CIP-32: Inline Datums",
+          "url": "https://cips.cardano.org/cip/CIP-32"
+        },
+        {
+          "label": "Aiken Tutorial: Datums",
+          "url": "https://aiken-lang.org/fundamentals/getting-started"
+        }
+      ]
     },
     {
       "id": "redeemer",
@@ -764,7 +819,16 @@
       "kind": "concept",
       "group": "smart-contracts",
       "description": "User-provided data included in a transaction to unlock a script-locked UTxO. The redeemer represents the action the user wants to perform. The validator script receives the datum, redeemer, and script context and decides whether to allow the spending.",
-      "links": []
+      "links": [
+        {
+          "label": "Datums and Redeemers",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        },
+        {
+          "label": "Aiken Tutorial",
+          "url": "https://aiken-lang.org/fundamentals/getting-started"
+        }
+      ]
     },
     {
       "id": "script-context",
@@ -772,7 +836,20 @@
       "kind": "concept",
       "group": "smart-contracts",
       "description": "The full transaction context passed to a Plutus validator. Includes all inputs, outputs, minting, certificates, withdrawals, validity range, signatories, and datum map. Scripts can inspect any part of the transaction to enforce arbitrary conditions.",
-      "links": []
+      "links": [
+        {
+          "label": "Script Context Reference",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        },
+        {
+          "label": "Aiken ScriptContext",
+          "url": "https://aiken-lang.org/fundamentals/getting-started"
+        },
+        {
+          "label": "Plutus Ledger API",
+          "url": "https://plutus.cardano.intersectmbo.org/docs/"
+        }
+      ]
     },
     {
       "id": "reference-scripts",
@@ -784,6 +861,14 @@
         {
           "label": "CIP-33",
           "url": "https://cips.cardano.org/cip/CIP-0033"
+        },
+        {
+          "label": "Developer Guide",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        },
+        {
+          "label": "Vasil Upgrade",
+          "url": "https://docs.cardano.org/about-cardano/evolution/upgrades/vasil/"
         }
       ]
     },
@@ -797,6 +882,14 @@
         {
           "label": "CIP-31",
           "url": "https://cips.cardano.org/cip/CIP-0031"
+        },
+        {
+          "label": "Developer Guide",
+          "url": "https://developers.cardano.org/docs/smart-contracts/plutus/"
+        },
+        {
+          "label": "Oracle Pattern with Ref Inputs",
+          "url": "https://github.com/Anastasia-Labs/design-patterns"
         }
       ]
     },
@@ -810,6 +903,10 @@
         {
           "label": "CIP-32",
           "url": "https://cips.cardano.org/cip/CIP-0032"
+        },
+        {
+          "label": "Vasil Upgrade",
+          "url": "https://docs.cardano.org/about-cardano/evolution/upgrades/vasil/"
         }
       ]
     },
@@ -819,7 +916,20 @@
       "kind": "concept",
       "group": "smart-contracts",
       "description": "A Plutus script that controls the creation and destruction of native tokens. The policy receives the script context and decides whether to allow minting or burning. The policy hash becomes the first part of the token's asset ID, cryptographically binding tokens to their minting rules.",
-      "links": []
+      "links": [
+        {
+          "label": "Minting Native Tokens",
+          "url": "https://developers.cardano.org/docs/native-tokens/minting/"
+        },
+        {
+          "label": "Aiken: Minting Policy",
+          "url": "https://aiken-lang.org/fundamentals/getting-started"
+        },
+        {
+          "label": "CIP-25: NFT Metadata",
+          "url": "https://cips.cardano.org/cip/CIP-25"
+        }
+      ]
     },
     {
       "id": "eutxo",
@@ -831,6 +941,18 @@
         {
           "label": "EUTxO Paper",
           "url": "https://iohk.io/en/research/library/papers/the-extended-utxo-model/"
+        },
+        {
+          "label": "Understanding EUTxO",
+          "url": "https://docs.cardano.org/about-cardano/learn/eutxo-explainer/"
+        },
+        {
+          "label": "Developer Portal",
+          "url": "https://developers.cardano.org/docs/smart-contracts/"
+        },
+        {
+          "label": "EUTxO Handbook",
+          "url": "https://ucarecdn.com/3da33f2f-73ac-4c9b-844b-f215dcce0628/EUTXOhandbook_for_ec.pdf"
         }
       ]
     },
@@ -848,6 +970,14 @@
         {
           "label": "GitHub",
           "url": "https://github.com/aiken-lang/aiken"
+        },
+        {
+          "label": "Getting Started",
+          "url": "https://aiken-lang.org/fundamentals/getting-started"
+        },
+        {
+          "label": "Standard Library",
+          "url": "https://aiken-lang.org/stdlib"
         }
       ]
     },
@@ -859,8 +989,16 @@
       "description": "Write smart contracts in a subset of Haskell, compiled to UPLC. Formerly PlutusTx, rebranded in February 2025. The original on-chain language maintained by IntersectMBO. Tight integration with the Haskell ecosystem and GHC type system.",
       "links": [
         {
-          "label": "Docs",
+          "label": "Plutus Docs",
           "url": "https://plutus.cardano.intersectmbo.org/docs/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/IntersectMBO/plutus"
+        },
+        {
+          "label": "Pioneer Program",
+          "url": "https://github.com/input-output-hk/plutus-pioneer-program"
         }
       ]
     },
@@ -878,6 +1016,10 @@
         {
           "label": "GitHub",
           "url": "https://github.com/OpShin/opshin"
+        },
+        {
+          "label": "PyCardano",
+          "url": "https://pycardano.readthedocs.io/"
         }
       ]
     },
@@ -891,6 +1033,10 @@
         {
           "label": "Helios",
           "url": "https://helios-lang.io/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/HeliosLang/compiler"
         }
       ]
     },
@@ -904,6 +1050,14 @@
         {
           "label": "Scalus",
           "url": "https://scalus.org/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/scalus3/scalus"
+        },
+        {
+          "label": "Design Patterns",
+          "url": "https://scalus.org/docs/design-patterns"
         }
       ]
     },
@@ -917,6 +1071,10 @@
         {
           "label": "GitHub",
           "url": "https://github.com/Plutonomicon/plutarch-plutus"
+        },
+        {
+          "label": "Plutonomicon",
+          "url": "https://github.com/Plutonomicon/plutonomicon"
         }
       ]
     },
@@ -930,6 +1088,14 @@
         {
           "label": "Marlowe",
           "url": "https://marlowe.iohk.io/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/marlowe-lang"
+        },
+        {
+          "label": "Developer Portal",
+          "url": "https://developers.cardano.org/docs/smart-contracts/smart-contract-languages/marlowe/"
         }
       ]
     },
@@ -943,6 +1109,10 @@
         {
           "label": "Docs",
           "url": "https://pluts.harmoniclabs.tech/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/HarmonicLabs/plu-ts"
         }
       ]
     },
@@ -954,8 +1124,12 @@
       "description": "Validators attached to staking credentials. The \"withdraw zero\" pattern delegates expensive validation logic to a staking validator (called once per transaction) instead of a spending validator (called per input), reducing cost from O(n²) to O(n). Key optimization pattern.",
       "links": [
         {
-          "label": "Design Patterns",
+          "label": "Withdraw Zero Pattern",
           "url": "https://github.com/Anastasia-Labs/design-patterns"
+        },
+        {
+          "label": "Anastasia Labs",
+          "url": "https://anastasia-labs.com/"
         }
       ]
     },
@@ -965,7 +1139,20 @@
       "kind": "concept",
       "group": "smart-contracts",
       "description": "Model contract state as a datum on a UTxO. The validator checks that input datum + redeemer produces a valid output datum, enforcing legal state transitions. Used for multi-step protocols: escrow, auctions, governance, DEX order matching.",
-      "links": []
+      "links": [
+        {
+          "label": "Design Patterns",
+          "url": "https://github.com/Anastasia-Labs/design-patterns"
+        },
+        {
+          "label": "Scalus: State Machines",
+          "url": "https://scalus.org/docs/design-patterns"
+        },
+        {
+          "label": "Plutus Pioneer: State Machines",
+          "url": "https://github.com/input-output-hk/plutus-pioneer-program"
+        }
+      ]
     },
     {
       "id": "oracle-pattern",
@@ -974,6 +1161,10 @@
       "group": "smart-contracts",
       "description": "Leverages CIP-31 reference inputs: an oracle publishes price/data in a UTxO datum, and multiple contracts read it simultaneously without spending it. Eliminates contention. Charli3 and Orcfax are the main Cardano oracle providers.",
       "links": [
+        {
+          "label": "Design Patterns",
+          "url": "https://github.com/Anastasia-Labs/design-patterns"
+        },
         {
           "label": "Charli3",
           "url": "https://charli3.io/"
@@ -994,6 +1185,10 @@
         {
           "label": "CIP-25",
           "url": "https://cips.cardano.org/cip/CIP-25"
+        },
+        {
+          "label": "Minting NFTs Guide",
+          "url": "https://developers.cardano.org/docs/native-tokens/minting-nfts/"
         }
       ]
     },
@@ -1007,6 +1202,10 @@
         {
           "label": "CIP-68",
           "url": "https://cips.cardano.org/cip/CIP-68"
+        },
+        {
+          "label": "Rich Metadata Explainer",
+          "url": "https://developers.cardano.org/docs/native-tokens/"
         }
       ]
     },
@@ -1020,6 +1219,10 @@
         {
           "label": "CIP-57",
           "url": "https://cips.cardano.org/cip/CIP-57"
+        },
+        {
+          "label": "Aiken Blueprint Docs",
+          "url": "https://aiken-lang.org/fundamentals/getting-started"
         }
       ]
     },
@@ -1033,6 +1236,14 @@
         {
           "label": "Minswap",
           "url": "https://minswap.org/"
+        },
+        {
+          "label": "Docs",
+          "url": "https://docs.minswap.org/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/minswap"
         }
       ]
     },
@@ -1046,6 +1257,10 @@
         {
           "label": "Liqwid",
           "url": "https://liqwid.finance/"
+        },
+        {
+          "label": "Docs",
+          "url": "https://docs.liqwid.finance/"
         }
       ]
     },
@@ -1059,6 +1274,14 @@
         {
           "label": "Hydra",
           "url": "https://hydra.family/head-protocol/"
+        },
+        {
+          "label": "Cardano Docs",
+          "url": "https://docs.cardano.org/developer-resources/scalability-solutions/hydra"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/cardano-scaling/hydra"
         }
       ]
     },
@@ -1072,6 +1295,10 @@
         {
           "label": "Djed",
           "url": "https://djed.xyz/"
+        },
+        {
+          "label": "Djed Paper",
+          "url": "https://eprint.iacr.org/2021/1069"
         }
       ]
     },
@@ -1089,6 +1316,10 @@
         {
           "label": "GitHub",
           "url": "https://github.com/Anastasia-Labs/lucid-evolution"
+        },
+        {
+          "label": "Anastasia Labs",
+          "url": "https://anastasia-labs.com/"
         }
       ]
     },
@@ -1102,6 +1333,10 @@
         {
           "label": "Mesh",
           "url": "https://meshjs.dev/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/MeshJS/mesh"
         }
       ]
     },
@@ -1115,6 +1350,14 @@
         {
           "label": "Blockfrost",
           "url": "https://blockfrost.io/"
+        },
+        {
+          "label": "API Docs",
+          "url": "https://docs.blockfrost.io/"
+        },
+        {
+          "label": "GitHub",
+          "url": "https://github.com/blockfrost"
         }
       ]
     },
@@ -1128,6 +1371,10 @@
         {
           "label": "Demeter",
           "url": "https://demeter.run/"
+        },
+        {
+          "label": "Docs",
+          "url": "https://docs.demeter.run/"
         }
       ]
     }
