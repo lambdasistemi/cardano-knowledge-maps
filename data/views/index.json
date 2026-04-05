@@ -1,0 +1,12 @@
+[
+  {
+    "name": "Cardano Governance",
+    "description": "CIP-1694 governance model — actors, voting, actions, ratification, and constitutional framework.",
+    "file": "governance.json"
+  },
+  {
+    "name": "Smart Contracts",
+    "description": "Plutus platform — EUTxO model, script execution, cost models, and CIP features.",
+    "file": "smart-contracts.json"
+  }
+]

@@ -1,6 +1,6 @@
 {
-  "title": "Cardano Governance",
-  "description": "Interactive knowledge graph of Cardano's on-chain governance system (CIP-1694, Conway era).",
+  "title": "Cardano Knowledge Maps",
+  "description": "Interactive knowledge maps of the Cardano ecosystem — governance, smart contracts, and more.",
   "sourceUrl": "https://github.com/lambdasistemi/cardano-governance-graph",
   "kinds": {
     "actor": {
@@ -46,6 +46,26 @@
     "tool": {
       "label": "Tool",
       "color": "#56d4dd",
+      "shape": "round-pentagon"
+    },
+    "runtime": {
+      "label": "Runtime",
+      "color": "#ff7b72",
+      "shape": "round-hexagon"
+    },
+    "language": {
+      "label": "Language",
+      "color": "#d2a8ff",
+      "shape": "diamond"
+    },
+    "protocol": {
+      "label": "Protocol",
+      "color": "#f0883e",
+      "shape": "barrel"
+    },
+    "standard": {
+      "label": "Standard",
+      "color": "#e3b341",
       "shape": "round-pentagon"
     }
   }

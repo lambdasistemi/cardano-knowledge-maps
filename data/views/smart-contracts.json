@@ -1,0 +1,438 @@
+{
+  "name": "Smart Contracts",
+  "description": "Plutus platform, on-chain languages, EUTxO model, patterns, protocols, tooling, and standards.",
+  "edges": [
+    [
+      "cc",
+      "action-param-change",
+      "votes on"
+    ],
+    [
+      "action-param-change",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-param-change",
+      "param-group-network",
+      "can change"
+    ],
+    [
+      "action-param-change",
+      "param-group-economic",
+      "can change"
+    ],
+    [
+      "action-param-change",
+      "param-group-technical",
+      "can change"
+    ],
+    [
+      "action-param-change",
+      "param-group-governance",
+      "can change"
+    ],
+    [
+      "param-group-technical",
+      "cost-models",
+      "contains"
+    ],
+    [
+      "guardrails-script",
+      "action-param-change",
+      "constrains"
+    ],
+    [
+      "guardrails-script",
+      "action-treasury",
+      "constrains"
+    ],
+    [
+      "constitution",
+      "guardrails-script",
+      "codified in"
+    ],
+    [
+      "action-new-constitution",
+      "guardrails-script",
+      "can update"
+    ],
+    [
+      "cost-models",
+      "action-param-change",
+      "updated via"
+    ],
+    [
+      "param-exceptions",
+      "action-param-change",
+      "modifies voting for"
+    ],
+    [
+      "guardrails-script",
+      "param-exceptions",
+      "enforces"
+    ],
+    [
+      "plutus",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "plutus-core",
+      "cek-machine",
+      "evaluated by"
+    ],
+    [
+      "cek-machine",
+      "exunits",
+      "consumes"
+    ],
+    [
+      "exunits",
+      "cost-models",
+      "priced by"
+    ],
+    [
+      "cost-models",
+      "param-group-technical",
+      "belongs to"
+    ],
+    [
+      "datum",
+      "eutxo",
+      "extends"
+    ],
+    [
+      "redeemer",
+      "eutxo",
+      "extends"
+    ],
+    [
+      "script-context",
+      "eutxo",
+      "provides"
+    ],
+    [
+      "eutxo",
+      "plutus",
+      "enables"
+    ],
+    [
+      "reference-scripts",
+      "plutus",
+      "optimizes"
+    ],
+    [
+      "reference-inputs",
+      "eutxo",
+      "extends"
+    ],
+    [
+      "inline-datums",
+      "datum",
+      "improves"
+    ],
+    [
+      "minting-policy",
+      "plutus",
+      "type of"
+    ],
+    [
+      "guardrails-script",
+      "plutus",
+      "written in"
+    ],
+    [
+      "action-param-change",
+      "cost-models",
+      "can modify"
+    ],
+    [
+      "action-param-change",
+      "exunits",
+      "affects"
+    ],
+    [
+      "aiken",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "plinth",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "opshin",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "helios",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "scalus",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "plutarch",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "plu-ts",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "marlowe",
+      "plutus-core",
+      "compiles to"
+    ],
+    [
+      "staking-validator",
+      "eutxo",
+      "optimizes"
+    ],
+    [
+      "state-machine",
+      "datum",
+      "uses"
+    ],
+    [
+      "oracle-pattern",
+      "reference-inputs",
+      "uses"
+    ],
+    [
+      "cip-25",
+      "minting-policy",
+      "extends"
+    ],
+    [
+      "cip-68",
+      "datum",
+      "uses"
+    ],
+    [
+      "cip-68",
+      "cip-25",
+      "succeeds"
+    ],
+    [
+      "cip-57",
+      "plutus",
+      "documents"
+    ],
+    [
+      "aiken",
+      "cip-57",
+      "generates"
+    ],
+    [
+      "minswap",
+      "aiken",
+      "written in"
+    ],
+    [
+      "liqwid",
+      "plutarch",
+      "written in"
+    ],
+    [
+      "hydra",
+      "eutxo",
+      "replicates"
+    ],
+    [
+      "djed",
+      "plutus",
+      "built on"
+    ],
+    [
+      "lucid-evolution",
+      "plutus",
+      "builds transactions for"
+    ],
+    [
+      "mesh-sdk",
+      "plutus",
+      "builds transactions for"
+    ],
+    [
+      "blockfrost",
+      "eutxo",
+      "indexes"
+    ],
+    [
+      "demeter",
+      "plutus",
+      "hosts infrastructure for"
+    ],
+    [
+      "lucid-evolution",
+      "cip-57",
+      "consumes"
+    ]
+  ],
+  "tours": [
+    {
+      "id": "eutxo-fundamentals",
+      "title": "EUTxO Fundamentals",
+      "description": "The transaction model that makes Cardano smart contracts work.",
+      "stops": [
+        {
+          "node": "eutxo",
+          "depth": 2,
+          "title": "The Extended UTxO Model",
+          "narrative": "Cardano extends Bitcoin's UTxO model with three key additions: [datums](node:datum) for state, [redeemers](node:redeemer) for user actions, and [script context](node:script-context) for transaction introspection. This makes UTxOs programmable while keeping transactions deterministic — you know the outcome before submitting."
+        },
+        {
+          "node": "datum",
+          "depth": 1,
+          "title": "Datums: Contract State",
+          "narrative": "A [datum](node:datum) is data attached to a UTxO locked by a script. It represents the contract's state. With [inline datums](node:inline-datums) (CIP-32), the full datum lives on-chain — anyone can read the contract state by querying the UTxO."
+        },
+        {
+          "node": "plutus-core",
+          "depth": 1,
+          "title": "On-Chain Execution",
+          "narrative": "[Plutus Core](node:plutus-core) is the low-level lambda calculus that runs on-chain. The [CEK machine](node:cek-machine) evaluates it, tracking [ExUnits](node:exunits) (CPU + memory) against the transaction budget. Exceeding the budget = transaction fails."
+        },
+        {
+          "node": "cost-models",
+          "depth": 1,
+          "title": "What Scripts Cost",
+          "narrative": "[Cost models](node:cost-models) assign costs to each Plutus built-in function. These are [protocol parameters](node:param-group-technical) that governance can update via [parameter change actions](node:action-param-change). ExUnits are converted to ada fees using price parameters."
+        }
+      ]
+    },
+    {
+      "id": "languages-tour",
+      "title": "Smart Contract Languages",
+      "description": "8 languages that compile to Plutus Core — pick the one that fits your team.",
+      "stops": [
+        {
+          "node": "aiken",
+          "depth": 1,
+          "title": "Aiken: The Popular Choice",
+          "narrative": "[Aiken](node:aiken) is used by 75%+ of Cardano developers. Rust-inspired syntax, purpose-built for smart contracts. Compiles to [UPLC](node:plutus-core) with aggressive optimization. Auto-generates [CIP-57](node:cip-57) blueprints. [Minswap](node:minswap) V2 is written in Aiken."
+        },
+        {
+          "node": "plinth",
+          "depth": 1,
+          "title": "Plinth: The Haskell Original",
+          "narrative": "[Plinth](node:plinth) (formerly PlutusTx) is the original on-chain language. Write in a subset of Haskell, get the full GHC type system. Maintained by IntersectMBO. [Plutarch](node:plutarch) offers a lower-level Haskell eDSL for performance-critical validators — used by [Liqwid](node:liqwid)."
+        },
+        {
+          "node": "opshin",
+          "depth": 1,
+          "title": "OpShin: Python for Cardano",
+          "narrative": "[OpShin](node:opshin) lets you write validators in 100% valid Python syntax. Strict typing enforced at compile time. Integrates with PyCardano for off-chain code. The lowest barrier to entry for Python developers."
+        },
+        {
+          "node": "marlowe",
+          "depth": 1,
+          "title": "Marlowe: Financial Contracts",
+          "narrative": "[Marlowe](node:marlowe) is a DSL for financial contracts — non-Turing-complete by design, so contracts can be exhaustively analyzed and formally verified. Think loans, escrows, and swaps with mathematical guarantees. Now community-owned."
+        },
+        {
+          "node": "helios",
+          "depth": 1,
+          "title": "The JS/TS Options",
+          "narrative": "[Helios](node:helios) and [plu-ts](node:plu-ts) target JavaScript/TypeScript developers. Helios has its own on-chain DSL plus off-chain tx building. plu-ts constructs UPLC AST directly in TypeScript. [Scalus](node:scalus) covers Scala developers."
+        }
+      ]
+    },
+    {
+      "id": "vasil-features",
+      "title": "Vasil / Babbage Features",
+      "description": "CIP-31, CIP-32, CIP-33 — the upgrades that made smart contracts practical.",
+      "stops": [
+        {
+          "node": "reference-scripts",
+          "depth": 1,
+          "title": "Reference Scripts (CIP-33)",
+          "narrative": "[Reference scripts](node:reference-scripts) store scripts on-chain in a UTxO. Transactions reference them instead of including the script body. Dramatically reduces fees — a popular contract is deployed once and reused by everyone."
+        },
+        {
+          "node": "reference-inputs",
+          "depth": 1,
+          "title": "Reference Inputs (CIP-31)",
+          "narrative": "[Reference inputs](node:reference-inputs) let transactions read UTxOs without spending them. This enables the [oracle pattern](node:oracle-pattern): publish price data once, read it from many contracts simultaneously without contention."
+        },
+        {
+          "node": "inline-datums",
+          "depth": 1,
+          "title": "Inline Datums (CIP-32)",
+          "narrative": "[Inline datums](node:inline-datums) store the full [datum](node:datum) directly in the UTxO. Before CIP-32, you had to manage datum hashes off-chain. Now contract state is visible to everyone on-chain — essential for composability."
+        }
+      ]
+    },
+    {
+      "id": "patterns-tour",
+      "title": "Smart Contract Patterns",
+      "description": "Common design patterns for building on EUTxO.",
+      "stops": [
+        {
+          "node": "state-machine",
+          "depth": 1,
+          "title": "State Machines",
+          "narrative": "The [state machine pattern](node:state-machine) models contract state as a [datum](node:datum). The validator checks that input datum + redeemer produces a valid output datum. Used for multi-step protocols: escrow, auctions, DEX order matching."
+        },
+        {
+          "node": "oracle-pattern",
+          "depth": 1,
+          "title": "Oracle Pattern",
+          "narrative": "The [oracle pattern](node:oracle-pattern) uses [reference inputs](node:reference-inputs) to publish data that many contracts can read without spending. Price feeds, exchange rates, random numbers — all published as UTxO datums."
+        },
+        {
+          "node": "staking-validator",
+          "depth": 1,
+          "title": "Withdraw Zero Trick",
+          "narrative": "The [withdraw zero pattern](node:staking-validator) is a key optimization. Instead of running a spending validator per input (O(n²) cost), delegate validation to a staking validator that runs once per transaction (O(n)). Documented by Anastasia Labs."
+        },
+        {
+          "node": "minting-policy",
+          "depth": 1,
+          "title": "Minting Policies & Token Standards",
+          "narrative": "[Minting policies](node:minting-policy) control token creation. [CIP-25](node:cip-25) defines immutable NFT metadata at mint time. [CIP-68](node:cip-68) adds mutable metadata via reference tokens — the standard for modern Cardano NFTs and rich fungible tokens."
+        }
+      ]
+    },
+    {
+      "id": "ecosystem-tour",
+      "title": "Protocols & Tooling",
+      "description": "What people are building and the tools they use.",
+      "stops": [
+        {
+          "node": "minswap",
+          "depth": 1,
+          "title": "DEX: Minswap",
+          "narrative": "[Minswap](node:minswap) is the largest Cardano DEX by TVL. Multi-pool AMM written in [Aiken](node:aiken). Batchers collect user swap orders and settle them against pool UTxOs — the standard DEX architecture on EUTxO."
+        },
+        {
+          "node": "liqwid",
+          "depth": 1,
+          "title": "Lending: Liqwid Finance",
+          "narrative": "[Liqwid](node:liqwid) is the leading lending/borrowing protocol. Uses [Plutarch](node:plutarch) for performance-critical validators. DAO-governed. Demonstrates complex multi-contract DeFi on [EUTxO](node:eutxo)."
+        },
+        {
+          "node": "hydra",
+          "depth": 1,
+          "title": "Scaling: Hydra L2",
+          "narrative": "[Hydra](node:hydra) is Cardano's Layer 2 — isomorphic state channels that [replicate the full EUTxO model](node:eutxo) off-chain. Sub-second latency, 1,000 TPS per head. Same smart contract model as L1, so existing contracts work."
+        },
+        {
+          "node": "lucid-evolution",
+          "depth": 1,
+          "title": "Off-Chain: Lucid & Mesh",
+          "narrative": "[Lucid Evolution](node:lucid-evolution) and [Mesh SDK](node:mesh-sdk) are the main TypeScript libraries for building transactions that interact with [Plutus](node:plutus) validators. [Blockfrost](node:blockfrost) provides chain indexing APIs. [Demeter](node:demeter) offers cloud infrastructure."
+        }
+      ]
+    }
+  ]
+}

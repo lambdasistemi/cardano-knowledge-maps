@@ -1,0 +1,677 @@
+{
+  "name": "Cardano Governance",
+  "description": "CIP-1694 governance model — actors, voting, actions, ratification, and constitutional framework.",
+  "edges": [
+    [
+      "ada-holder",
+      "drep",
+      "delegates voting power to"
+    ],
+    [
+      "ada-holder",
+      "abstain-option",
+      "can delegate to"
+    ],
+    [
+      "ada-holder",
+      "no-confidence-option",
+      "can delegate to"
+    ],
+    [
+      "ada-holder",
+      "spo",
+      "delegates stake to"
+    ],
+    [
+      "ada-holder",
+      "governance-action",
+      "submits"
+    ],
+    [
+      "ada-holder",
+      "drep",
+      "can register as"
+    ],
+    [
+      "drep",
+      "governance-action",
+      "votes on"
+    ],
+    [
+      "spo",
+      "action-no-confidence",
+      "votes on"
+    ],
+    [
+      "spo",
+      "action-update-committee",
+      "votes on"
+    ],
+    [
+      "spo",
+      "action-hard-fork",
+      "votes on"
+    ],
+    [
+      "spo",
+      "security-params",
+      "votes on changes to"
+    ],
+    [
+      "spo",
+      "action-info",
+      "votes on"
+    ],
+    [
+      "cc",
+      "action-new-constitution",
+      "votes on"
+    ],
+    [
+      "cc",
+      "action-hard-fork",
+      "votes on"
+    ],
+    [
+      "cc",
+      "action-param-change",
+      "votes on"
+    ],
+    [
+      "cc",
+      "action-treasury",
+      "votes on"
+    ],
+    [
+      "cc",
+      "action-info",
+      "votes on"
+    ],
+    [
+      "cc",
+      "constitution",
+      "evaluates actions against"
+    ],
+    [
+      "cc",
+      "hot-cold-keys",
+      "uses"
+    ],
+    [
+      "governance-action",
+      "ratification",
+      "undergoes"
+    ],
+    [
+      "ratification",
+      "enactment",
+      "leads to"
+    ],
+    [
+      "governance-action",
+      "voting",
+      "open for"
+    ],
+    [
+      "voting",
+      "ratification",
+      "determines"
+    ],
+    [
+      "governance-action",
+      "action-chaining",
+      "uses"
+    ],
+    [
+      "action-no-confidence",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-update-committee",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-new-constitution",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-hard-fork",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-param-change",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-treasury",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-info",
+      "governance-action",
+      "is a type of"
+    ],
+    [
+      "action-param-change",
+      "param-group-network",
+      "can change"
+    ],
+    [
+      "action-param-change",
+      "param-group-economic",
+      "can change"
+    ],
+    [
+      "action-param-change",
+      "param-group-technical",
+      "can change"
+    ],
+    [
+      "action-param-change",
+      "param-group-governance",
+      "can change"
+    ],
+    [
+      "param-group-technical",
+      "cost-models",
+      "contains"
+    ],
+    [
+      "param-group-network",
+      "security-params",
+      "some params are"
+    ],
+    [
+      "param-group-economic",
+      "security-params",
+      "some params are"
+    ],
+    [
+      "param-group-governance",
+      "security-params",
+      "some params are"
+    ],
+    [
+      "guardrails-script",
+      "action-param-change",
+      "constrains"
+    ],
+    [
+      "guardrails-script",
+      "action-treasury",
+      "constrains"
+    ],
+    [
+      "constitution",
+      "guardrails-script",
+      "codified in"
+    ],
+    [
+      "action-new-constitution",
+      "constitution",
+      "modifies"
+    ],
+    [
+      "action-new-constitution",
+      "guardrails-script",
+      "can update"
+    ],
+    [
+      "action-no-confidence",
+      "cc",
+      "puts into no-confidence state"
+    ],
+    [
+      "action-update-committee",
+      "cc",
+      "changes membership of"
+    ],
+    [
+      "governance-model",
+      "liquid-democracy",
+      "implements"
+    ],
+    [
+      "governance-model",
+      "drep",
+      "governance body"
+    ],
+    [
+      "governance-model",
+      "spo",
+      "governance body"
+    ],
+    [
+      "governance-model",
+      "cc",
+      "governance body"
+    ],
+    [
+      "cip-1694",
+      "governance-model",
+      "specifies"
+    ],
+    [
+      "cip-1694",
+      "conway-era",
+      "implemented in"
+    ],
+    [
+      "conway-era",
+      "bootstrap-phase",
+      "started with"
+    ],
+    [
+      "drep",
+      "drep-thresholds",
+      "subject to"
+    ],
+    [
+      "spo",
+      "spo-thresholds",
+      "subject to"
+    ],
+    [
+      "cc",
+      "cc-threshold",
+      "subject to"
+    ],
+    [
+      "governance-action",
+      "deposit-mechanism",
+      "requires"
+    ],
+    [
+      "drep",
+      "deposit-mechanism",
+      "requires"
+    ],
+    [
+      "governance-action",
+      "cip-100",
+      "metadata follows"
+    ],
+    [
+      "governance-action",
+      "cip-108",
+      "structured as"
+    ],
+    [
+      "cip-108",
+      "cip-100",
+      "extends"
+    ],
+    [
+      "govtool",
+      "cip-95",
+      "connects wallets via"
+    ],
+    [
+      "cc",
+      "cip-136",
+      "publishes rationales via"
+    ],
+    [
+      "cip-129",
+      "drep",
+      "standardizes IDs for"
+    ],
+    [
+      "cip-129",
+      "governance-action",
+      "standardizes IDs for"
+    ],
+    [
+      "cip-105",
+      "drep",
+      "derives keys for"
+    ],
+    [
+      "intersect",
+      "governance-model",
+      "facilitates"
+    ],
+    [
+      "cardano-foundation",
+      "drep",
+      "registered as"
+    ],
+    [
+      "cardano-foundation",
+      "governance-action",
+      "evaluates and votes on"
+    ],
+    [
+      "govtool",
+      "voting",
+      "enables"
+    ],
+    [
+      "govtool",
+      "drep",
+      "enables registration as"
+    ],
+    [
+      "sanchonet",
+      "conway-era",
+      "tested"
+    ],
+    [
+      "cost-models",
+      "action-param-change",
+      "updated via"
+    ],
+    [
+      "treasury-budgeting",
+      "action-treasury",
+      "gates"
+    ],
+    [
+      "action-info",
+      "treasury-budgeting",
+      "used for"
+    ],
+    [
+      "param-exceptions",
+      "param-group-governance",
+      "overrides thresholds from"
+    ],
+    [
+      "param-exceptions",
+      "action-param-change",
+      "modifies voting for"
+    ],
+    [
+      "guardrails-script",
+      "param-exceptions",
+      "enforces"
+    ],
+    [
+      "cost-models",
+      "param-group-technical",
+      "belongs to"
+    ],
+    [
+      "action-param-change",
+      "cost-models",
+      "can modify"
+    ]
+  ],
+  "tours": [
+    {
+      "id": "governance-basics",
+      "title": "How Cardano Governance Works",
+      "description": "A guided tour through Cardano's on-chain governance system, from the basics of who participates to how decisions are made and enacted.",
+      "stops": [
+        {
+          "node": "governance-model",
+          "depth": 1,
+          "title": "The Big Picture",
+          "narrative": "Cardano governance is a tricameral system — three separate bodies share the power to approve changes to the protocol. No single entity controls anything. This was introduced by [CIP-1694](node:cip-1694) as part of Cardano's Voltaire phase, making it one of the most decentralized governance systems in blockchain.\n\nThe three bodies you see connected here are [DReps](node:drep) (representing ada holders), [SPOs](node:spo) (infrastructure operators), and the [Constitutional Committee](node:cc) (constitutional guardians). Every [governance action](node:governance-action) needs approval from at least two of these three."
+        },
+        {
+          "node": "ada-holder",
+          "depth": 1,
+          "title": "It Starts With You",
+          "narrative": "Every ada holder has skin in the game. You can participate in governance in several ways: delegate your voting power to a [DRep](node:drep) you trust, register as a DRep yourself to vote directly, delegate to the pre-defined [Abstain](node:abstain-option) or [No Confidence](node:no-confidence-option) options, or even submit [governance actions](node:governance-action) (with a deposit).\n\nNotice the two separate delegations flowing from here: one to DReps (for voting) and one to [SPOs](node:spo) (for block production). These are independent choices — you pick who votes on your behalf and who runs the infrastructure separately."
+        },
+        {
+          "node": "drep",
+          "depth": 1,
+          "title": "Delegated Representatives",
+          "narrative": "DReps are the democratic heart of the system. Any [ada holder](node:ada-holder) can register as one (500 ada deposit, refundable). They vote on ALL seven types of [governance actions](node:governance-action) — the broadest mandate of any governance body.\n\nTheir voting power equals the total lovelace delegated to them. One lovelace = one vote. This is [liquid democracy](node:liquid-democracy): you can change your delegation at any time, and it takes effect immediately. If your DRep votes against your wishes, switch to someone else — no waiting period.\n\nDReps must stay active. If they don't vote within 20 epochs (~100 days), they become inactive and their delegated stake no longer counts."
+        },
+        {
+          "node": "spo",
+          "depth": 1,
+          "title": "The Infrastructure Voice",
+          "narrative": "Stake Pool Operators run the nodes that produce blocks and validate transactions. They got a new governance role in [Conway](node:conway-era): voting on matters that directly affect network operations.\n\nSPOs vote on a focused subset: [Hard Forks](node:action-hard-fork) (they must upgrade their software), [No-Confidence](node:action-no-confidence) motions (a broken [CC](node:cc) could block upgrades), [Committee Updates](node:action-update-committee), [security-critical parameter changes](node:security-params), and [Info actions](node:action-info). They don't vote on treasury withdrawals or non-security parameter changes — those are policy decisions, not infrastructure ones.\n\nTheir voting weight comes from the stake delegated to their pools — the same stake that determines block production."
+        },
+        {
+          "node": "cc",
+          "depth": 1,
+          "title": "Constitutional Guardians",
+          "narrative": "The Constitutional Committee is unlike the other two bodies. Its members use one-member-one-vote (not stake-weighted), and its job is purely to check constitutionality — not to judge whether a proposal is a good idea.\n\nThink of it as a constitutional court. The CC reviews [governance actions](node:governance-action) against the Cardano [Constitution](node:constitution) and votes on whether they comply. When CC members publish their vote rationale, they must cite specific constitutional articles.\n\nThe CC can be put into a 'no-confidence' state by the other two bodies, which blocks it from participating until a new committee is elected. This is the system's safety valve against a captured or dysfunctional CC."
+        },
+        {
+          "node": "governance-action",
+          "depth": 1,
+          "title": "Governance Actions: The Currency of Change",
+          "narrative": "Everything that changes in Cardano governance happens through governance actions — on-chain proposals submitted by any [ada holder](node:ada-holder). There are seven types, and each has different voting requirements.\n\nSubmitting one costs a refundable [deposit](node:deposit-mechanism) of 100,000 ada (the govActionDeposit). This isn't a fee — it's anti-spam. You get it back whether the action passes or expires. Each action lives for 6 epochs (~30 days) before it either gets ratified or expires.\n\nFrom here, you can see the seven action types branching out, plus the lifecycle: [voting](node:voting) → [ratification](node:ratification) → [enactment](node:enactment)."
+        },
+        {
+          "node": "action-hard-fork",
+          "depth": 2,
+          "title": "The Only Unanimous Action",
+          "narrative": "Hard Fork Initiation is special — it's the only [governance action](node:governance-action) that requires approval from ALL THREE bodies: [CC](node:cc) at 2/3 majority, [DReps](node:drep) at 60%, and [SPOs](node:spo) at 51%.\n\nWhy? Because a hard fork is a non-backwards-compatible protocol upgrade. Everyone has to agree: the constitutional guardians (it's legal), the community representatives (it's wanted), and the node operators (they'll actually implement it). The [guardrails](node:guardrails-script) even require that 85% of stake pools have already upgraded their software before enactment.\n\nA ratified hard fork also freezes everything else — all other pending governance actions are delayed until after the fork is enacted."
+        },
+        {
+          "node": "action-param-change",
+          "depth": 1,
+          "title": "Tuning the Protocol",
+          "narrative": "Protocol Parameter Changes are the most common [governance action](node:governance-action) type. They modify the ~30 tunable parameters that control how Cardano works: block sizes, transaction fees, Plutus execution costs, staking rewards, and governance rules themselves.\n\nParameters are grouped into four categories, each with different voting thresholds. [Network](node:param-group-network), [Economic](node:param-group-economic), and [Technical](node:param-group-technical) groups need [DRep](node:drep) 67% + [CC](node:cc) 2/3. The [Governance group](node:param-group-governance) — parameters that control governance itself — needs the higher DRep 75% + CC 2/3, because changing the rules of the game is more consequential.\n\nSome parameters are classified as '[security-relevant](node:security-params)' and additionally require [SPO](node:spo) approval, giving node operators a veto over changes that could destabilize the network."
+        },
+        {
+          "node": "cost-models",
+          "depth": 2,
+          "title": "Why Smart Contract Costs Change",
+          "narrative": "Plutus cost models are a specific protocol parameter that determines how much each smart contract operation costs. They're part of the [Technical group](node:param-group-technical).\n\nThe Plutus team benchmarks every builtin function on a reference machine, fits cost curves via R scripts, and the resulting coefficients become protocol parameters. When benchmarks show that certain operations are underpriced (like the recent +75% increase for integer division), the cost model gets updated through the same governance process as any other [parameter change](node:action-param-change).\n\nThese values are consensus-critical — every node must compute identical costs. The governance process ensures the community agrees before changing what developers pay to run smart contracts."
+        },
+        {
+          "node": "ratification",
+          "depth": 2,
+          "title": "How Decisions Get Made",
+          "narrative": "Ratification happens at epoch boundaries — roughly every 5 days. At each boundary, the system recalculates the vote tally using the current stake snapshot. An action can become ratified even without new votes if delegation changes shift the stake distribution.\n\nVotes are Yes, No, or Abstain. Registered stake that didn't vote counts as 'No'. Unregistered stake counts as 'Abstain'. This means apathy is not neutral — if you're registered and don't vote, you're effectively voting against everything.\n\nOnce all required thresholds are simultaneously met, the action is ratified. [Enactment](node:enactment) happens at the NEXT epoch boundary, giving the network a buffer to prepare."
+        },
+        {
+          "node": "constitution",
+          "depth": 2,
+          "title": "The Foundation",
+          "narrative": "The Cardano Constitution is an off-chain document whose hash is recorded on-chain. It was ratified at the Buenos Aires Constitutional Convention in December 2024 after 63 workshops across 51 countries, with 95% delegate approval.\n\nIt contains 10 Tenets (core principles like transaction freedom and the 45 billion ada cap), Articles covering governance procedures, and Appendix I with permitted parameter ranges. The [CC](node:cc) evaluates every [governance action](node:governance-action) against this document.\n\nThe Constitution's enforceable rules are codified in the [Guardrails Script](node:guardrails-script) — an on-chain Plutus script that automatically rejects parameter changes or treasury withdrawals that violate constitutional bounds. Human judgment (CC) plus automated enforcement (script) together protect the system."
+        },
+        {
+          "node": "treasury-budgeting",
+          "depth": 2,
+          "title": "Following the Money",
+          "narrative": "Treasury withdrawals follow a multi-step process. First, a Net Change Limit must be set via an [Info Action](node:action-info) ([DRep](node:drep) 50% + [CC](node:cc) 2/3) — this caps how much can be withdrawn in a period. Then individual Budget proposals are approved. Only after both are in place can actual [Treasury Withdrawal](node:action-treasury) actions be submitted.\n\nThis layered process prevents unchecked spending. The treasury is funded by transaction fees and monetary expansion, so it's community money. The [Constitution](node:constitution) requires that withdrawals specify purpose, expected costs, and provide for auditable accounts.\n\nThe [Guardrails Script](node:guardrails-script) enforces the withdrawal limits on-chain, providing automated protection alongside the governance vote."
+        }
+      ]
+    },
+    {
+      "id": "voting-thresholds",
+      "title": "Who Votes on What (and How Much)",
+      "description": "Deep dive into the voting mechanics: which bodies vote on which actions, what the thresholds are, and why they differ.",
+      "stops": [
+        {
+          "node": "governance-model",
+          "depth": 1,
+          "title": "Three Bodies, Different Roles",
+          "narrative": "Cardano governance has three voting bodies, but they don't all vote on everything. Each body has a specific mandate:\n\n- [DReps](node:drep) vote on ALL seven action types — they're the general-purpose democratic voice\n- [SPOs](node:spo) vote on five types — those affecting infrastructure and network security\n- The [Constitutional Committee](node:cc) votes on five types — those requiring constitutional review\n\nThe key design principle: every action needs at least two bodies to agree. This prevents any single body from unilaterally changing the protocol."
+        },
+        {
+          "node": "drep-thresholds",
+          "depth": 2,
+          "title": "DRep Thresholds: Not All Equal",
+          "narrative": "[DRep](node:drep) votes are counted as a fraction of 'active DRep voting stake' — all lovelace delegated to registered, active DReps, excluding [Abstain](node:abstain-option) delegations.\n\nThe thresholds vary by action significance:\n\n- 60% — [Hard Fork](node:action-hard-fork), [Committee Update](node:action-update-committee) (no-confidence state). Lower because these are recovery/upgrade actions that shouldn't be too hard to pass.\n- 67% — [No-Confidence](node:action-no-confidence), Committee Update (normal), Network/Economic/Technical params, [Treasury](node:action-treasury). The standard supermajority.\n- 75% — [New Constitution](node:action-new-constitution), [Governance params](node:param-group-governance). The highest bar, reserved for changing the foundational rules.\n- 100% — [Info Actions](node:action-info). Can never formally ratify (by design).\n\nThese thresholds are themselves protocol parameters in the Governance group, changeable at the 75% threshold."
+        },
+        {
+          "node": "spo-thresholds",
+          "depth": 2,
+          "title": "SPOs: Simple Majority on Infrastructure",
+          "narrative": "[SPO](node:spo) thresholds are simpler — all set at 51% of active pool stake. This is a basic majority requirement.\n\nSPOs vote on:\n- [No-Confidence](node:action-no-confidence) (Q1 = 51%) — a broken [CC](node:cc) could block upgrades\n- [Committee Updates](node:action-update-committee) (Q2a/Q2b = 51%) — they need a functioning CC for hard forks\n- [Hard Fork Initiation](node:action-hard-fork) (Q4 = 51%) — they implement the upgrade\n- [Security-relevant parameter changes](node:security-params) (Q5 = 51%) — these affect node operations\n- [Info Actions](node:action-info) (100%) — sentiment only\n\nSPOs do NOT vote on: [New Constitution](node:action-new-constitution), non-security parameter changes, or [Treasury Withdrawals](node:action-treasury). Those are governance policy decisions, not infrastructure concerns."
+        },
+        {
+          "node": "cc-threshold",
+          "depth": 2,
+          "title": "The Constitutional Committee: One Member, One Vote",
+          "narrative": "The [CC](node:cc) is fundamentally different from [DReps](node:drep) and [SPOs](node:spo). It uses one-member-one-vote — a CC member with zero ada has the same vote as one with millions. The threshold is currently 2/3 majority.\n\nThe CC votes on: [New Constitution](node:action-new-constitution), [Hard Fork](node:action-hard-fork), all [Parameter Changes](node:action-param-change), [Treasury Withdrawals](node:action-treasury), [Info](node:action-info). These are all actions that could violate constitutional principles.\n\nThe CC does NOT vote on: [No-Confidence](node:action-no-confidence) and [Committee Updates](node:action-update-committee) — because those are about the CC itself. Allowing the CC to vote on its own removal or replacement would be a conflict of interest.\n\nExpired members cannot vote. The minimum committee size is 7 on mainnet."
+        },
+        {
+          "node": "security-params",
+          "depth": 2,
+          "title": "The Security Parameter Exception",
+          "narrative": "Some parameters get an extra layer of protection. Parameters classified as 'security-relevant' require [SPO](node:spo) approval at 51% ON TOP of the normal [CC](node:cc) + [DRep](node:drep) requirements.\n\nThe security-relevant list: maxBlockBodySize, maxTxSize, maxBlockHeaderSize, maxValueSize, maxBlockExecutionUnits, txFeePerByte, txFeeFixed, utxoCostPerByte, govActionDeposit, minFeeRefScriptCostPerByte.\n\nWhy these specifically? They directly control how much data and computation each block can contain (affecting node resources), how much transactions cost (affecting spam resistance), and the governance deposit (affecting governance spam). Getting these wrong can destabilize the network or make it uneconomical to operate."
+        },
+        {
+          "node": "param-exceptions",
+          "depth": 2,
+          "title": "When Parameters Break the Rules",
+          "narrative": "Some parameters don't follow their group's default threshold. The [Constitution](node:constitution) defines exceptions:\n\n- committeeMaxTermLength: only needs [DRep](node:drep) 67%, no [CC](node:cc) vote. Why? Because the CC shouldn't vote on how long its own members can serve — that's a conflict of interest.\n\n- dRepDeposit, stakePoolDeposit, stakeAddressDeposit, minPoolCost, committeeMinSize: these use [Governance group](node:param-group-governance) thresholds (DRep 75% + CC 2/3) even though they technically belong to Economic or Technical groups. The Constitution treats them as governance-critical because they control who can participate.\n\nThese exceptions are enforced on-chain by the [Guardrails Script](node:guardrails-script)."
+        },
+        {
+          "node": "abstain-option",
+          "depth": 2,
+          "title": "The Math of Not Voting",
+          "narrative": "Understanding Abstain vs not voting vs [No Confidence](node:no-confidence-option) is crucial for the math:\n\n- Delegated to Abstain: your stake is EXCLUDED from the denominator. It's as if you don't exist for voting purposes. Thresholds are calculated against a smaller pool.\n\n- Registered but didn't vote: your stake counts as 'No'. This means apathy works against every proposal.\n\n- Delegated to No Confidence: your stake is INCLUDED in the denominator and automatically votes Yes on no-confidence motions, No on everything else.\n\n- Unregistered: counts as Abstain (excluded from denominator).\n\nThis design means that if most stake delegates to Abstain, a small active minority can pass [governance actions](node:governance-action). If most stake is registered but passive, nothing can pass. The incentive structure pushes toward active delegation."
+        }
+      ]
+    },
+    {
+      "id": "action-lifecycle",
+      "title": "Life of a Governance Action",
+      "description": "Follow a governance action from submission to enactment (or expiry), understanding each stage and what can go wrong.",
+      "stops": [
+        {
+          "node": "ada-holder",
+          "depth": 1,
+          "title": "Anyone Can Propose",
+          "narrative": "Governance starts with an ada holder who wants to change something. Maybe transaction fees are too high, maybe a hard fork is needed, maybe the treasury should fund a project.\n\nAny ada holder can submit a [governance action](node:governance-action). There's no committee that decides what gets proposed — it's permissionless. The only barrier is the govActionDeposit of 100,000 ada (refundable). This [deposit](node:deposit-mechanism) prevents spam without gatekeeping legitimate proposals.\n\nThe proposer must include metadata following [CIP-100](node:cip-100)/[CIP-108](node:cip-108): a title, abstract, motivation, and rationale. This ensures voters have context for what they're voting on."
+        },
+        {
+          "node": "governance-action",
+          "depth": 1,
+          "title": "On-Chain Submission",
+          "narrative": "The governance action is submitted as part of a transaction. It goes on-chain immediately and becomes visible to all governance tools ([GovTool](node:govtool), explorers, etc.).\n\nFor most action types, the proposal must reference the governance action ID of the most recently enacted action of the same type. This is [action chaining](node:action-chaining) — it prevents two competing proposals from both passing when they assume incompatible starting states.\n\nFor example, if two people submit parameter changes that both assume the current fee is 44 lovelace/byte, and one changes it to 50 and the other to 40, only the first one to be ratified can be valid. The second one's chain reference becomes stale."
+        },
+        {
+          "node": "voting",
+          "depth": 2,
+          "title": "The Voting Window",
+          "narrative": "Once on-chain, the action is open for voting for up to govActionLifetime epochs — currently 6 epochs, roughly 30 days.\n\n[DReps](node:drep), [SPOs](node:spo), and [CC](node:cc) members cast their votes as on-chain transactions: Yes, No, or Abstain. Votes can be changed at any time before [ratification](node:ratification) — if new information emerges, voters can update their position.\n\nImportantly: registered stake that doesn't vote counts as 'No'. This means every proposal faces headwind from passive stake. Active participation is necessary for anything to pass.\n\nThe CC votes are different — one member, one vote, not stake-weighted. CC members are expected to publish rationales citing specific constitutional articles."
+        },
+        {
+          "node": "ratification",
+          "depth": 2,
+          "title": "The Epoch Boundary Check",
+          "narrative": "Ratification isn't continuous — it's checked at epoch boundaries (roughly every 5 days). At each boundary, the system takes a fresh snapshot of the stake distribution and recalculates all vote tallies.\n\nThis means an action can become ratified even if no new votes were cast — changes in delegation can shift the balance. If a large [DRep](node:drep) who voted No retires, their delegators' stake redistributes, potentially tipping the vote.\n\nAn action is ratified when ALL required thresholds are simultaneously met. For a [Hard Fork](node:action-hard-fork), that means [CC](node:cc) 2/3 AND DRep 60% AND [SPO](node:spo) 51% must all be true at the same epoch boundary."
+        },
+        {
+          "node": "enactment",
+          "depth": 3,
+          "title": "Enactment: Making It Real",
+          "narrative": "Ratified actions are enacted at the epoch boundary FOLLOWING [ratification](node:ratification). There's always at least one epoch (5 days) between ratification and effect — a buffer for the network to prepare.\n\nWhen multiple actions are ratified in the same epoch, they're enacted in priority order:\n1. [No-Confidence](node:action-no-confidence)\n2. [Committee Update](node:action-update-committee)\n3. [New Constitution](node:action-new-constitution)\n4. [Hard Fork](node:action-hard-fork)\n5. [Parameter Changes](node:action-param-change)\n6. [Treasury Withdrawals](node:action-treasury)\n7. [Info](node:action-info) (no effect)\n\nThis ordering matters. A No-Confidence motion enacted before a Parameter Change means the new [CC](node:cc) gets to review remaining actions."
+        },
+        {
+          "node": "action-chaining",
+          "depth": 2,
+          "title": "What Happens When Actions Collide",
+          "narrative": "Action chaining is the mechanism that prevents conflicting proposals from both passing. Each action (except [Treasury](node:action-treasury) and [Info](node:action-info)) references the most recently enacted action of its type.\n\nIf Action A is ratified and changes a parameter, then Action B (which was submitted before A was enacted and references the same predecessor as A) becomes invalid. Action B's chain reference is now stale — it assumed a state that no longer exists.\n\nThis sounds restrictive, but it's essential. Without it, two [parameter changes](node:action-param-change) could both be ratified assuming incompatible starting states, leading to unpredictable results."
+        },
+        {
+          "node": "deposit-mechanism",
+          "depth": 2,
+          "title": "Getting Your Deposit Back",
+          "narrative": "The 100,000 ada deposit is returned regardless of outcome — whether the action is ratified, expires, or is superseded by a competing action that gets enacted first.\n\nThis is important: the deposit is anti-spam, not a fee. You're not paying for the privilege of proposing. The deposit is locked for the voting period and returned at finalization.\n\nThe deposit amount is itself a [Governance group](node:param-group-governance) parameter (changeable at 75% [DRep](node:drep) threshold) and is classified as [security-relevant](node:security-params) (requiring [SPO](node:spo) approval). This prevents governance insiders from lowering the deposit to flood the system with proposals."
+        }
+      ]
+    },
+    {
+      "id": "constitutional-framework",
+      "title": "The Constitution and Its Enforcement",
+      "description": "How the Cardano Constitution works: the document, the committee that interprets it, and the script that enforces it.",
+      "stops": [
+        {
+          "node": "constitution",
+          "depth": 2,
+          "title": "A Constitution for a Blockchain",
+          "narrative": "Cardano has an actual constitution — a written document that defines the shared values, principles, and rules of the ecosystem. It was ratified at the Buenos Aires Constitutional Convention in December 2024, after 63 workshops across 51 countries with 95% delegate approval.\n\nThe Constitution is stored off-chain (it's a text document, not code), but its hash is recorded on-chain. This means the on-chain reference is tamper-proof — any change to the document would change the hash.\n\nIt contains 10 Tenets (core principles), Articles covering governance procedures, and Appendix I with specific parameter ranges. The Preamble is explicitly NOT used for constitutionality assessments."
+        },
+        {
+          "node": "cc",
+          "depth": 1,
+          "title": "The Interpreters",
+          "narrative": "The Constitutional Committee interprets the [Constitution](node:constitution). When a [governance action](node:governance-action) is submitted, CC members review it against the constitutional text and vote on whether it complies.\n\nCrucially, the CC does NOT evaluate merit. A proposal can be a terrible idea but perfectly constitutional — the CC should vote Yes. Conversely, a great idea that violates a Tenet gets a No. This separation keeps the CC focused and prevents it from becoming a policy-making body.\n\nCC members must cite specific articles when voting against a proposal (via [CIP-136](node:cip-136) metadata). This creates a public record of constitutional interpretation, building case law over time."
+        },
+        {
+          "node": "hot-cold-keys",
+          "depth": 2,
+          "title": "Securing the Guardians",
+          "narrative": "[CC](node:cc) members use a hot/cold key system borrowed from genesis delegation. The cold key is the member's identity — kept in secure offline storage. The hot key handles day-to-day voting.\n\nIf a hot key is compromised, the member rotates it by issuing a new authorization certificate from the cold key. This doesn't require a [governance action](node:governance-action) — it's an operational security measure.\n\nMembers can also use script credentials (native or Plutus) instead of key pairs. This enables multi-sig committee seats, where a seat is controlled by an organization rather than an individual."
+        },
+        {
+          "node": "guardrails-script",
+          "depth": 2,
+          "title": "Automated Enforcement",
+          "narrative": "Not everything in the [Constitution](node:constitution) can be left to human interpretation. The Guardrails Script is an on-chain Plutus script that enforces the quantifiable rules — parameter ranges and treasury limits.\n\nWhen someone submits a [Parameter Change](node:action-param-change), the Guardrails Script checks: is maxBlockBodySize between 24,576 and 122,880 bytes? Is txFeePerByte between 30 and 1,000 lovelace? If any proposed value falls outside constitutional bounds, the transaction is rejected before it even enters the [voting](node:voting) stage.\n\nFor [Treasury Withdrawals](node:action-treasury), the script enforces limits defined by TREASURY-01a through TREASURY-04a.\n\nThis is belt-and-suspenders: the [CC](node:cc) provides human judgment, the script provides automated enforcement."
+        },
+        {
+          "node": "action-new-constitution",
+          "depth": 2,
+          "title": "Changing the Rules",
+          "narrative": "The [Constitution](node:constitution) isn't immutable. It can be amended through the New Constitution [governance action](node:governance-action) — but this has the highest bar: [DRep](node:drep) 75% + [CC](node:cc) 2/3.\n\nThe same action can update the [Guardrails Script](node:guardrails-script), ensuring the automated enforcement stays synchronized with the constitutional text. You wouldn't want to change a parameter range in the Constitution but leave the old script enforcing the previous limits.\n\nAmending the Constitution is rare and consequential. The 75% DRep threshold means three-quarters of the active, engaged ada stake must agree. This is deliberately harder than normal governance to prevent casual erosion of foundational principles."
+        },
+        {
+          "node": "action-no-confidence",
+          "depth": 2,
+          "title": "When Guardians Fail",
+          "narrative": "What if the [CC](node:cc) itself becomes the problem? The system has a safety valve: the Motion of No-Confidence.\n\nIf [DReps](node:drep) (67%) and [SPOs](node:spo) (51%) agree, the CC enters a no-confidence state. In this state, the CC cannot vote on anything — all action types requiring CC approval are effectively frozen.\n\nThe only way forward is to elect a new committee via an [Update Committee](node:action-update-committee) action. The DRep threshold for this is lowered to 60% (from 67%) in the no-confidence state, making recovery easier.\n\nThis mechanism ensures the CC serves at the pleasure of the community. Constitutional guardians who fail their mandate can be replaced."
+        },
+        {
+          "node": "action-update-committee",
+          "depth": 2,
+          "title": "Rotating the Guard",
+          "narrative": "Committee Updates handle both routine rotation and emergency replacement. The action can add new members (with specific term expiration epochs), remove existing members, and adjust the [CC](node:cc)'s internal approval threshold.\n\nMembers have individual term limits — they don't all expire at once, enabling staggered rotation for continuity. The committeeMaxTermLength parameter (currently 146 epochs, ~2 years) caps how long any member can serve.\n\nThe CC cannot vote on its own composition — that would be self-dealing. Only [DReps](node:drep) and [SPOs](node:spo) decide who sits on the committee."
+        }
+      ]
+    },
+    {
+      "id": "smart-contract-costs",
+      "title": "How Smart Contract Costs Are Set",
+      "description": "Follow the chain from Plutus benchmarks to on-chain cost model parameters — how the price of running a smart contract gets decided.",
+      "stops": [
+        {
+          "node": "cost-models",
+          "depth": 2,
+          "title": "What Are Cost Models?",
+          "narrative": "Every time a Plutus smart contract runs on Cardano, the node must know how much to charge for each operation. This is what cost models define: a mapping from each builtin function (addition, division, hash comparison, etc.) to an abstract cost in CPU and memory units called ExUnits.\n\nThese abstract costs are consensus-critical — every node in the network must compute the EXACT same ExUnits for the same transaction, regardless of whether it's a Haskell node, a Rust node (Amaru), or anything else. If nodes disagree, the chain forks.\n\nThe cost model parameters are stored as protocol parameters, meaning they can only be changed through the [governance process](node:governance-action)."
+        },
+        {
+          "node": "param-group-technical",
+          "depth": 2,
+          "title": "Technical Parameters",
+          "narrative": "[Cost models](node:cost-models) live in the Technical parameter group alongside poolPledgeInfluence, stakePoolTargetNum, and collateralPercentage.\n\nChanging any Technical parameter requires [CC](node:cc) approval at 2/3 majority and [DRep](node:drep) approval at 67%. This means a cost model update — like the recent +75% repricing of integer division — must go through the full governance process.\n\nThe benchmarking is done by the Plutus team, but the decision to apply those benchmarks on-chain is a community governance decision. The Plutus team can't unilaterally change what smart contracts cost."
+        },
+        {
+          "node": "action-param-change",
+          "depth": 1,
+          "title": "The Governance Path",
+          "narrative": "To update [cost models](node:cost-models), someone submits a Protocol Parameter Change [governance action](node:governance-action) specifying the new cost model coefficients. This costs 100,000 ada in refundable [deposit](node:deposit-mechanism).\n\nThe action goes through the standard lifecycle: up to 6 epochs of [voting](node:voting), [ratification](node:ratification) at an epoch boundary when thresholds are met, [enactment](node:enactment) at the following epoch boundary.\n\nThe [Guardrails Script](node:guardrails-script) checks that the proposed values fall within permitted ranges. This prevents someone from submitting a cost model that prices everything at zero (which would allow unlimited computation per block) or at infinity (which would make smart contracts unusable)."
+        },
+        {
+          "node": "guardrails-script",
+          "depth": 1,
+          "title": "Automated Safety Checks",
+          "narrative": "The Guardrails Script is the automated enforcement layer. For [parameter changes](node:action-param-change), it validates that proposed values stay within the constitutional bounds defined in Appendix I.\n\nFor [cost models](node:cost-models) specifically, this means the benchmark-derived coefficients must be reasonable — not so low that blocks become computationally overloaded, and not so high that smart contracts become prohibitively expensive.\n\nThe script runs as part of transaction validation. If a parameter change proposal violates the guardrails, the transaction is rejected before it even reaches the [voting](node:voting) stage."
+        },
+        {
+          "node": "constitution",
+          "depth": 2,
+          "title": "Constitutional Limits",
+          "narrative": "The Constitution's Appendix I defines the permitted ranges for all protocol parameters. For [cost models](node:cost-models), this creates a constitutional floor and ceiling on smart contract pricing.\n\nThe [CC](node:cc) evaluates cost model changes against these constitutional bounds. Even if the benchmarks say a function should cost X, the CC can vote against the change if it believes the impact would violate constitutional tenets — like Tenet 2 (predictable, reasonable transaction costs) or Tenet 3 (no unreasonable barriers to application development).\n\nThis is the human judgment layer on top of the automated [guardrails](node:guardrails-script)."
+        },
+        {
+          "node": "ratification",
+          "depth": 2,
+          "title": "When the Price Changes",
+          "narrative": "A [cost model](node:cost-models) update gets ratified like any other [parameter change](node:action-param-change): [CC](node:cc) 2/3 + [DRep](node:drep) 67% at an epoch boundary.\n\nOnce ratified, the new costs take effect at the NEXT epoch boundary. This gives developers a window to check if their contracts still fit within budget. The recent van Rossem hard fork repricing explicitly warned about 'potentially breaking contracts' — existing scripts using heavy integer division may exceed their ExUnit budgets under the new pricing.\n\nThis is the tradeoff: honest pricing protects node operators from subsidizing underpriced computation, but retroactively increases costs for deployed contracts."
+        }
+      ]
+    }
+  ]
+}
