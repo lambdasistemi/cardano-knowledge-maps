@@ -1,3 +1,93 @@
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-88 provides a standard for declaring token metadata linked to a minting policy, enabling verifiable token information." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <http://www.w3.org/2000/01/rdf-schema#label> "registers metadata for" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#registers%20metadata%20for> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/minting-policy> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "128"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/128> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <https://lambdasistemi.github.io/graph-browser/vocab/edges#registers%20metadata%20for> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/minting-policy> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-85 replaces Scott-encoded data with native sums-of-products in Plutus Core, reducing script size and execution cost." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <http://www.w3.org/2000/01/rdf-schema#label> "optimizes" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#optimizes> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus-core> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "127"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/127> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <https://lambdasistemi.github.io/graph-browser/vocab/edges#optimizes> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus-core> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-381 adds BLS12-381 curve operations as Plutus Core built-in functions for on-chain cryptographic verification." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <http://www.w3.org/2000/01/rdf-schema#label> "adds built-ins to" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#adds%20built-ins%20to> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus-core> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "126"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/126> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <https://lambdasistemi.github.io/graph-browser/vocab/edges#adds%20built-ins%20to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus-core> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-69 unifies the argument interface across all Plutus script purposes, enabling multi-purpose validators." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <http://www.w3.org/2000/01/rdf-schema#label> "unifies script types in" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#unifies%20script%20types%20in> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "125"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/125> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <https://lambdasistemi.github.io/graph-browser/vocab/edges#unifies%20script%20types%20in> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "GovTool reads and displays DRep profile metadata structured according to CIP-119." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <http://www.w3.org/2000/01/rdf-schema#label> "renders profiles from" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#renders%20profiles%20from> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/govtool> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "124"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/124> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/govtool> <https://lambdasistemi.github.io/graph-browser/vocab/edges#renders%20profiles%20from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "DReps publish their profile metadata following CIP-119, enabling voters to discover and evaluate representatives through governance tools." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <http://www.w3.org/2000/01/rdf-schema#label> "profile follows" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#profile%20follows> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/drep> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "123"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/123> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/drep> <https://lambdasistemi.github.io/graph-browser/vocab/edges#profile%20follows> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-119 builds on CIP-100's base governance metadata format, adding DRep-specific fields like display name, bio, motivations, and qualifications." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <http://www.w3.org/2000/01/rdf-schema#label> "extends" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#extends> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-100> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "122"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/122> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <https://lambdasistemi.github.io/graph-browser/vocab/edges#extends> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-100> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Mesh SDK uses CIP-30 to interact with browser-based Cardano wallets." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <http://www.w3.org/2000/01/rdf-schema#label> "uses" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/mesh-sdk> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "121"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/121> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/mesh-sdk> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Lucid Evolution uses CIP-30 to connect to browser wallets for transaction signing and submission." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <http://www.w3.org/2000/01/rdf-schema#label> "uses" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/lucid-evolution> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "120"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/120> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/lucid-evolution> <https://lambdasistemi.github.io/graph-browser/vocab/edges#uses> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-95 extends the CIP-30 wallet connector with Conway-era governance capabilities: DRep registration, vote delegation, and governance action submission." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <http://www.w3.org/2000/01/rdf-schema#label> "extends" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#extends> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#to> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#from> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-95> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeIndex> "119"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/119> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#EdgeAssertion> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-95> <https://lambdasistemi.github.io/graph-browser/vocab/edges#extends> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/118> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Lucid can auto-generate off-chain bindings from CIP-57 Plutus blueprints." .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/118> <http://www.w3.org/2000/01/rdf-schema#label> "consumes" .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/edge/118> <https://lambdasistemi.github.io/graph-browser/vocab/terms#predicate> <https://lambdasistemi.github.io/graph-browser/vocab/edges#consumes> .
@@ -1937,6 +2027,39 @@
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-95> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-95> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-95> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88/link/0> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0088"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-88 Specification" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88/link/0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Token Policy Registration — a metadata standard for registering information about a token's minting policy on-chain. Enables policy authors to declare the token's name, description, logo, decimals, and project details in a verifiable way. Helps wallets, explorers, and marketplaces display accurate token information without relying on centralized registries." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#standards> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-88" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cip-88" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#standard> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-88> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85/link/0> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0085"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-85 Specification" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85/link/0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Sums-of-Products (SOPs) for Plutus Core — replaces the Scott-encoded data representation with native constructor/case expressions. This makes compiled Plutus scripts significantly smaller and faster by eliminating the overhead of encoding algebraic data types as lambda terms. SOPs shipped with Plutus V3 and are a key driver of the script size and execution cost reductions in the Conway era." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#standards> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-85" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cip-85" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#standard> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-85> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69/link/0> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0069"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-69 Specification" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69/link/0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Plutus Script Type Uniformization — unifies the interface for all Plutus script purposes (spending, minting, certifying, rewarding) into a single uniform signature. Before CIP-69, minting policies received two arguments (redeemer, context) while spending validators received three (datum, redeemer, context). CIP-69 makes all script types take the same arguments, simplifying multi-purpose scripts and enabling a single validator to serve as both spending and minting script." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#standards> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-69" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cip-69" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#standard> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-69> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-68> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-68/link/1> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-68/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://developers.cardano.org/docs/native-tokens/"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-68/link/1> <http://www.w3.org/2000/01/rdf-schema#label> "Rich Metadata Explainer" .
@@ -1967,6 +2090,28 @@
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-57> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-57> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#standard> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-57> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381/link/0> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0381"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-381 Specification" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381/link/0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Adds BLS12-381 elliptic curve primitives as Plutus built-in functions. Enables zero-knowledge proofs (Groth16, PLONK), BLS signature verification, and advanced cryptographic protocols directly on-chain. These primitives support sidechains, bridges, and privacy-preserving applications on Cardano. Shipped with Plutus V3 in the Conway era." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#standards> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-381" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cip-381" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#standard> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-381> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30/link/0> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0030"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-30 Specification" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30/link/0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "Cardano dApp-Wallet Web Bridge — the original standard for connecting browser-based dApps to Cardano wallets. Defines a JavaScript API injected into window.cardano that lets dApps discover wallets, request access, query balances, submit transactions, and sign data. Nearly every Cardano dApp uses CIP-30 for wallet interaction. CIP-95 extends it with governance capabilities." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#standards> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-30" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cip-30" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#standard> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-30> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-25> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-25/link/1> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-25/link/1> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://developers.cardano.org/docs/native-tokens/minting-nfts/"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-25/link/1> <http://www.w3.org/2000/01/rdf-schema#label> "Minting NFTs Guide" .
@@ -2015,6 +2160,17 @@
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-129> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-129> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-129> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119/link/0> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0119"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-119 Specification" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119/link/0> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#ExternalLink> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#description> "CIP-119 defines the governance metadata standard for Delegated Representatives. It extends CIP-100 with DRep-specific fields: display name, bio, motivations, qualifications, payment address, and references. This structured profile metadata helps ada holders make informed delegation decisions. GovTool and other governance interfaces render CIP-119 metadata on DRep profile pages." .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#group> <https://lambdasistemi.github.io/graph-browser/vocab/groups#framework> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-119" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeId> "cip-119" .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <http://purl.org/dc/terms/isPartOf> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/kinds#artifact> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-119> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Node> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-108> <https://lambdasistemi.github.io/graph-browser/vocab/terms#externalLink> <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-108/link/0> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-108/link/0> <https://lambdasistemi.github.io/graph-browser/vocab/terms#url> "https://cips.cardano.org/cip/CIP-0108"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/cip-108/link/0> <http://www.w3.org/2000/01/rdf-schema#label> "CIP-108 Specification" .
@@ -2301,6 +2457,9 @@
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#updated%20via> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "updated via" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#updated%20via> <http://www.w3.org/2000/01/rdf-schema#label> "updated via" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#updated%20via> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#unifies%20script%20types%20in> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "unifies script types in" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#unifies%20script%20types%20in> <http://www.w3.org/2000/01/rdf-schema#label> "unifies script types in" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#unifies%20script%20types%20in> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#undergoes> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "undergoes" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#undergoes> <http://www.w3.org/2000/01/rdf-schema#label> "undergoes" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#undergoes> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
@@ -2340,6 +2499,12 @@
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#replicates> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "replicates" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#replicates> <http://www.w3.org/2000/01/rdf-schema#label> "replicates" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#replicates> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#renders%20profiles%20from> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "renders profiles from" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#renders%20profiles%20from> <http://www.w3.org/2000/01/rdf-schema#label> "renders profiles from" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#renders%20profiles%20from> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#registers%20metadata%20for> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "registers metadata for" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#registers%20metadata%20for> <http://www.w3.org/2000/01/rdf-schema#label> "registers metadata for" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#registers%20metadata%20for> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#registered%20as> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "registered as" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#registered%20as> <http://www.w3.org/2000/01/rdf-schema#label> "registered as" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#registered%20as> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
@@ -2352,6 +2517,9 @@
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#provides> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "provides" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#provides> <http://www.w3.org/2000/01/rdf-schema#label> "provides" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#provides> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#profile%20follows> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "profile follows" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#profile%20follows> <http://www.w3.org/2000/01/rdf-schema#label> "profile follows" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#profile%20follows> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#priced%20by> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "priced by" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#priced%20by> <http://www.w3.org/2000/01/rdf-schema#label> "priced by" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#priced%20by> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
@@ -2490,6 +2658,9 @@
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#affects> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "affects" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#affects> <http://www.w3.org/2000/01/rdf-schema#label> "affects" .
 <https://lambdasistemi.github.io/graph-browser/vocab/edges#affects> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#adds%20built-ins%20to> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeLabel> "adds built-ins to" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#adds%20built-ins%20to> <http://www.w3.org/2000/01/rdf-schema#label> "adds built-ins to" .
+<https://lambdasistemi.github.io/graph-browser/vocab/edges#adds%20built-ins%20to> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#Property> .
 <https://lambdasistemi.github.io/graph-browser/vocab/groups#tooling> <https://lambdasistemi.github.io/graph-browser/vocab/terms#groupId> "tooling" .
 <https://lambdasistemi.github.io/graph-browser/vocab/groups#tooling> <http://www.w3.org/2000/01/rdf-schema#label> "tooling" .
 <https://lambdasistemi.github.io/graph-browser/vocab/groups#tooling> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Group> .
@@ -2595,8 +2766,8 @@
 <https://lambdasistemi.github.io/graph-browser/vocab/kinds#action-type> <http://www.w3.org/2000/01/rdf-schema#label> "Action Type" .
 <https://lambdasistemi.github.io/graph-browser/vocab/kinds#action-type> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <http://www.w3.org/2000/01/rdf-schema#Class> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <https://lambdasistemi.github.io/graph-browser/vocab/terms#sourceRepository> "https://github.com/lambdasistemi/cardano-knowledge-maps"^^<http://www.w3.org/2001/XMLSchema#anyURI> .
-<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeCount> "119"^^<http://www.w3.org/2001/XMLSchema#integer> .
-<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeCount> "82"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <https://lambdasistemi.github.io/graph-browser/vocab/terms#edgeCount> "129"^^<http://www.w3.org/2001/XMLSchema#integer> .
+<https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <https://lambdasistemi.github.io/graph-browser/vocab/terms#nodeCount> "88"^^<http://www.w3.org/2001/XMLSchema#integer> .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <http://purl.org/dc/terms/description> "Interactive knowledge maps of the Cardano ecosystem — governance, smart contracts, and more." .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <http://purl.org/dc/terms/title> "Cardano Knowledge Maps" .
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> <http://www.w3.org/1999/02/22-rdf-syntax-ns#type> <https://lambdasistemi.github.io/graph-browser/vocab/terms#Dataset> .
