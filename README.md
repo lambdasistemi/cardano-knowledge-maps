@@ -8,13 +8,6 @@ Interactive knowledge maps of the Cardano ecosystem — governance, smart contra
 
 A browsable graph that maps the relationships between entities, processes, and concepts across the Cardano ecosystem. Click any node to see its description and links to source documentation. Use **Views** to focus on a specific topic.
 
-### Views
-
-- **Cardano Governance** — CIP-1694 governance model: actors, voting, actions, ratification, constitutional framework (48 nodes, 80 edges, 5 tours)
-- **Smart Contracts** — Plutus platform: EUTxO model, script execution, cost models, Vasil/Babbage features (25 nodes, 30 edges, 2 tours)
-
-Full catalog: 60 nodes, 94 edges across all topics.
-
 ## How to use
 
 - **Views** button — switch between topic-specific lenses
@@ -27,9 +20,17 @@ Full catalog: 60 nodes, 94 edges across all topics.
 
 This repo is **data-only**. The viewer is provided by [graph-browser](https://github.com/lambdasistemi/graph-browser). CI validates and deploys with zero build tools.
 
+### Data files
+
+- `data/rdf/graph.ttl` — the graph (Turtle RDF, source of truth)
+- `data/rdf/cardano.ttl` — Cardano domain ontology (W3C vocabularies)
+- `data/config.json` — viewer configuration (kinds, colors, shapes)
+- `data/queries.json` — SPARQL query catalog
+- `data/tutorials/` — guided tours
+
 ## Contributing
 
-Contributions from people with Cardano knowledge are welcome. Edit JSON files in `data/` — CI validates schemas and referential integrity automatically. Domain expertise matters more than code skills.
+Edit `data/rdf/graph.ttl` (Turtle RDF) to add or modify nodes and edges. Edit `data/queries.json` for queries, `data/tutorials/` for tours. CI validates schemas and RDF syntax automatically.
 
 ## Disclaimer
 

@@ -4,3 +4,5 @@ node_modules/
 result
 dist/
 output/
+.claude/
+.llm/

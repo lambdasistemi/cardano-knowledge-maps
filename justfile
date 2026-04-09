@@ -2,9 +2,9 @@
 build:
     nix build
 
-# Validate graph data integrity
+# Validate RDF graph parses correctly
 validate:
-    node -e "const d=require('./data/graph.json'); const ids=new Set(d.nodes.map(n=>n.id)); let ok=true; d.edges.forEach((e,i)=>{if(!ids.has(e.source)){console.error('BAD source e'+i+': '+e.source);ok=false}if(!ids.has(e.target)){console.error('BAD target e'+i+': '+e.target);ok=false}}); if(!ok)process.exit(1); console.log(d.nodes.length+' nodes, '+d.edges.length+' edges — OK')"
+    node -e "const fs=require('fs'); const ox=require('oxigraph'); const s=new ox.Store(); s.load(fs.readFileSync('data/rdf/graph.ttl','utf8'),{format:'text/turtle',base_iri:'https://graph-browser.invalid/'}); console.log('graph.ttl: '+s.size+' triples — OK')"
 
 ci: build validate
 
