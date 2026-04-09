@@ -1,0 +1,37 @@
+{
+  "id": "plutus-v3-cips",
+  "title": "Plutus V3 Upgrades",
+  "description": "CIP-69, CIP-85, CIP-381 — the Conway-era improvements to Plutus Core that make scripts smaller, faster, and more capable.",
+  "stops": [
+    {
+      "node": "plutus-core",
+      "depth": 2,
+      "title": "Plutus Core: The Target",
+      "narrative": "[Plutus Core](node:plutus-core) is the on-chain language that all smart contract languages compile to. It runs on the [CEK machine](node:cek-machine). Plutus V3, shipped with the Conway era, brought three major upgrades to this runtime."
+    },
+    {
+      "node": "cip-85",
+      "depth": 2,
+      "title": "CIP-85: Sums-of-Products",
+      "narrative": "[CIP-85](node:cip-85) replaces Scott-encoded algebraic data types with native constructor/case expressions in [Plutus Core](node:plutus-core). Scott encoding wrapped every data constructor in lambda terms — CIP-85 eliminates that overhead, making compiled scripts significantly smaller and cheaper to execute."
+    },
+    {
+      "node": "cip-69",
+      "depth": 2,
+      "title": "CIP-69: Script Type Uniformization",
+      "narrative": "[CIP-69](node:cip-69) unifies the interface for all [Plutus](node:plutus) script purposes. Before CIP-69, minting policies took two arguments while spending validators took three. Now all script types share the same signature, enabling a single validator to serve multiple purposes."
+    },
+    {
+      "node": "cip-381",
+      "depth": 2,
+      "title": "CIP-381: BLS12-381 Curves",
+      "narrative": "[CIP-381](node:cip-381) adds BLS12-381 elliptic curve operations as built-in functions in [Plutus Core](node:plutus-core). This enables zero-knowledge proofs (Groth16, PLONK), BLS signature verification, and advanced cryptographic protocols directly on-chain — critical for sidechains, bridges, and privacy applications."
+    },
+    {
+      "node": "exunits",
+      "depth": 2,
+      "title": "Impact on Execution Costs",
+      "narrative": "All three CIPs reduce [execution units](node:exunits). CIP-85 shrinks script size (fewer bytes on-chain). CIP-69 simplifies multi-purpose validators. CIP-381 moves cryptographic heavy lifting into optimized built-ins instead of expensive Plutus-level implementations. The [cost models](node:cost-models) price these new built-ins."
+    }
+  ]
+}

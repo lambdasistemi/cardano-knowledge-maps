@@ -180,5 +180,19 @@
     "description": "All governance actions and processes modeled as PROV-O activities.",
     "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:GovernanceAction }\n  UNION { ?node a cardano:GovernanceProcess }\n}",
     "tags": []
+  },
+  {
+    "id": "plutus-v3-features",
+    "name": "Plutus V3 Features",
+    "description": "CIPs that shipped with Plutus V3 in the Conway era: script uniformization, sums-of-products, BLS curves.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  VALUES ?id { \"cip-69\" \"cip-85\" \"cip-381\" \"plutus\" \"plutus-core\" \"cek-machine\" \"exunits\" \"cost-models\" }\n  ?node gb:nodeId ?id\n}",
+    "tags": []
+  },
+  {
+    "id": "wallet-and-metadata",
+    "name": "Wallet & Metadata Standards",
+    "description": "CIPs for wallet connectivity and governance metadata: CIP-30, CIP-95, CIP-100, CIP-108, CIP-119, CIP-88.",
+    "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  VALUES ?id { \"cip-30\" \"cip-95\" \"cip-100\" \"cip-108\" \"cip-119\" \"cip-88\" \"govtool\" \"drep\" \"lucid-evolution\" \"mesh-sdk\" }\n  ?node gb:nodeId ?id\n}",
+    "tags": []
   }
 ]

@@ -1,0 +1,43 @@
+{
+  "id": "wallet-metadata-cips",
+  "title": "Wallet & Metadata Standards",
+  "description": "CIP-30, CIP-95, CIP-100, CIP-108, CIP-119, CIP-88 — the standards that connect wallets to governance and give tokens identity.",
+  "stops": [
+    {
+      "node": "cip-30",
+      "depth": 2,
+      "title": "CIP-30: The Wallet Bridge",
+      "narrative": "[CIP-30](node:cip-30) is the foundation — every Cardano dApp uses it to connect to browser wallets. It injects a JavaScript API into `window.cardano` for discovering wallets, querying balances, and signing transactions. [Lucid Evolution](node:lucid-evolution) and [Mesh SDK](node:mesh-sdk) both build on CIP-30."
+    },
+    {
+      "node": "cip-95",
+      "depth": 2,
+      "title": "CIP-95: Governance Wallet Extension",
+      "narrative": "[CIP-95](node:cip-95) extends [CIP-30](node:cip-30) with Conway-era governance capabilities: DRep registration, vote delegation, and governance action submission. Without CIP-95, [GovTool](node:govtool) couldn't interact with wallets for governance."
+    },
+    {
+      "node": "cip-100",
+      "depth": 2,
+      "title": "CIP-100: Governance Metadata Anchors",
+      "narrative": "[CIP-100](node:cip-100) defines how governance metadata is anchored: a URL pointing to a JSON document plus its hash on-chain. Every governance action carries a CIP-100 anchor. The data lives off-chain to avoid bloat, but the hash makes it tamper-proof."
+    },
+    {
+      "node": "cip-108",
+      "depth": 2,
+      "title": "CIP-108: Governance Action Metadata",
+      "narrative": "[CIP-108](node:cip-108) extends [CIP-100](node:cip-100) with required fields for governance actions: title, abstract, motivation, rationale, and references. This ensures voters see consistent, comparable proposal information across all governance tools."
+    },
+    {
+      "node": "cip-119",
+      "depth": 2,
+      "title": "CIP-119: DRep Profiles",
+      "narrative": "[CIP-119](node:cip-119) extends [CIP-100](node:cip-100) for [DRep](node:drep) profiles: display name, bio, motivations, qualifications, and social links. [GovTool](node:govtool) renders these profiles so ada holders can evaluate who they're delegating to."
+    },
+    {
+      "node": "cip-88",
+      "depth": 2,
+      "title": "CIP-88: Token Policy Registration",
+      "narrative": "[CIP-88](node:cip-88) standardizes token metadata registration linked to [minting policies](node:minting-policy). Policy authors declare token name, description, logo, and decimals in a verifiable way — no centralized registry needed."
+    }
+  ]
+}

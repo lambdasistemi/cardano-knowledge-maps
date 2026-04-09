@@ -450,6 +450,42 @@ cardano:succeeds a owl:ObjectProperty ;
   rdfs:range cardano:CIP ;
   dcterms:description "A CIP that supersedes or extends a previous CIP." .
 
+cardano:profileFollows a owl:ObjectProperty ;
+  rdfs:label "profile follows" ;
+  rdfs:domain cardano:GovernanceActor ;
+  rdfs:range cardano:CIP ;
+  dcterms:description "An actor publishes profile metadata following a CIP standard." .
+
+cardano:rendersProfilesFrom a owl:ObjectProperty ;
+  rdfs:label "renders profiles from" ;
+  rdfs:domain cardano:DeveloperTool ;
+  rdfs:range cardano:CIP ;
+  dcterms:description "A tool renders actor profile data structured according to a CIP." .
+
+cardano:unifiesScriptTypesIn a owl:ObjectProperty ;
+  rdfs:label "unifies script types in" ;
+  rdfs:domain cardano:CIP ;
+  rdfs:range cardano:SmartContractConcept ;
+  dcterms:description "A CIP that unifies the script interface for a smart contract platform." .
+
+cardano:addsBuiltInsTo a owl:ObjectProperty ;
+  rdfs:label "adds built-ins to" ;
+  rdfs:domain cardano:CIP ;
+  rdfs:range cardano:SmartContractRuntime ;
+  dcterms:description "A CIP that adds new built-in functions to a runtime." .
+
+cardano:optimizes a owl:ObjectProperty ;
+  rdfs:label "optimizes" ;
+  rdfs:domain cardano:CIP ;
+  rdfs:range cardano:SmartContractRuntime ;
+  dcterms:description "A CIP that improves the performance of a runtime." .
+
+cardano:registersMetadataFor a owl:ObjectProperty ;
+  rdfs:label "registers metadata for" ;
+  rdfs:domain cardano:CIP ;
+  rdfs:range cardano:SmartContractConcept ;
+  dcterms:description "A CIP that standardizes metadata registration for a concept." .
+
 # ==============================================================================
 # Alignment — bridge gbkind: classes to cardano: classes
 # ==============================================================================
@@ -504,6 +540,13 @@ gbedge:enables                         owl:equivalentProperty cardano:enables .
 gbedge:facilitates                     owl:equivalentProperty cardano:facilitates .
 gbedge:documents                       owl:equivalentProperty cardano:documents .
 gbedge:succeeds                        owl:equivalentProperty cardano:succeeds .
+
+gbedge:profile%20follows               owl:equivalentProperty cardano:profileFollows .
+gbedge:renders%20profiles%20from       owl:equivalentProperty cardano:rendersProfilesFrom .
+gbedge:unifies%20script%20types%20in   owl:equivalentProperty cardano:unifiesScriptTypesIn .
+gbedge:adds%20built-ins%20to           owl:equivalentProperty cardano:addsBuiltInsTo .
+gbedge:optimizes                       owl:equivalentProperty cardano:optimizes .
+gbedge:registers%20metadata%20for      owl:equivalentProperty cardano:registersMetadataFor .
 
 # Edges that map directly to standard vocabulary properties
 gbedge:is%20a%20type%20of             owl:equivalentProperty rdfs:subClassOf .
@@ -574,6 +617,12 @@ n:cip-136   a cardano:CIP .
 n:cip-25    a cardano:CIP .
 n:cip-57    a cardano:CIP .
 n:cip-68    a cardano:CIP .
+n:cip-30    a cardano:CIP .
+n:cip-69    a cardano:CIP .
+n:cip-85    a cardano:CIP .
+n:cip-88    a cardano:CIP .
+n:cip-119   a cardano:CIP .
+n:cip-381   a cardano:CIP .
 
 # -- Protocol parameters ------------------------------------------------------
 n:cost-models             a cardano:ProtocolParameter .
