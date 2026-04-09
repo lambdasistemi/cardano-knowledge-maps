@@ -194,5 +194,41 @@
     "description": "CIPs for wallet connectivity and governance metadata: CIP-30, CIP-95, CIP-100, CIP-108, CIP-119, CIP-88.",
     "sparql": "PREFIX gb: <https://lambdasistemi.github.io/graph-browser/vocab/terms#>\nSELECT DISTINCT ?node WHERE {\n  VALUES ?id { \"cip-30\" \"cip-95\" \"cip-100\" \"cip-108\" \"cip-119\" \"cip-88\" \"govtool\" \"drep\" \"lucid-evolution\" \"mesh-sdk\" }\n  ?node gb:nodeId ?id\n}",
     "tags": []
+  },
+  {
+    "id": "ontology-classes",
+    "name": "Ontology Classes",
+    "description": "All OWL/RDFS classes rendered as ontology nodes.",
+    "sparql": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?node WHERE {\n  { ?class a owl:Class }\n  UNION { ?class a rdfs:Class }\n  BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?class), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?node)\n}",
+    "tags": ["view", "ontology"]
+  },
+  {
+    "id": "class-hierarchy",
+    "name": "Class Hierarchy",
+    "description": "Ontology classes that participate in subclass relationships.",
+    "sparql": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?node WHERE {\n  {\n    ?child rdfs:subClassOf ?parent .\n    BIND(?child AS ?class)\n  }\n  UNION {\n    ?child rdfs:subClassOf ?parent .\n    BIND(?parent AS ?class)\n  }\n  FILTER(isIRI(?class))\n  BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?class), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?node)\n}",
+    "tags": ["view", "ontology"]
+  },
+  {
+    "id": "ontology-subtree",
+    "name": "Ontology Subtree",
+    "description": "A class and all descendants beneath a selected ontology root.",
+    "sparql": "PREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?node WHERE {\n  ?class rdfs:subClassOf* ?ancestor .\n  FILTER(isIRI(?class) && isIRI(?ancestor))\n  BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?class), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?node)\n  BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?ancestor), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?ancestorNode)\n  FILTER(?ancestorNode = \"$root\")\n}",
+    "parameters": [{ "name": "root", "label": "Root Class", "type": "node" }],
+    "tags": ["view", "ontology", "parameterized"]
+  },
+  {
+    "id": "ontology-properties",
+    "name": "Ontology Properties",
+    "description": "Classes connected by object properties with declared domains and ranges.",
+    "sparql": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?node WHERE {\n  {\n    ?property a owl:ObjectProperty ; rdfs:domain ?class .\n    FILTER(isIRI(?class))\n    BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?class), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?node)\n  }\n  UNION\n  {\n    ?property a owl:ObjectProperty ; rdfs:range ?class .\n    FILTER(isIRI(?class))\n    BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?class), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?node)\n  }\n}",
+    "tags": ["view", "ontology"]
+  },
+  {
+    "id": "ontology-alignments",
+    "name": "Ontology Alignments",
+    "description": "Classes touched by equivalentClass or equivalentProperty mappings.",
+    "sparql": "PREFIX owl: <http://www.w3.org/2002/07/owl#>\nPREFIX rdfs: <http://www.w3.org/2000/01/rdf-schema#>\nSELECT DISTINCT ?node WHERE {\n  {\n    ?class owl:equivalentClass ?other .\n    FILTER(isIRI(?class))\n  }\n  UNION\n  {\n    ?other owl:equivalentClass ?class .\n    FILTER(isIRI(?class))\n  }\n  UNION\n  {\n    ?leftProp owl:equivalentProperty ?rightProp .\n    ?leftProp rdfs:domain ?class .\n    FILTER(isIRI(?class))\n  }\n  UNION\n  {\n    ?leftProp owl:equivalentProperty ?rightProp .\n    ?rightProp rdfs:domain ?class .\n    FILTER(isIRI(?class))\n  }\n  UNION\n  {\n    ?leftProp owl:equivalentProperty ?rightProp .\n    ?leftProp rdfs:range ?class .\n    FILTER(isIRI(?class))\n  }\n  UNION\n  {\n    ?leftProp owl:equivalentProperty ?rightProp .\n    ?rightProp rdfs:range ?class .\n    FILTER(isIRI(?class))\n  }\n  BIND(CONCAT(\"owl-\", LCASE(REPLACE(REPLACE(STR(?class), \"^.*(#|/)\", \"\"), \"[^A-Za-z0-9]+\", \"-\"))) AS ?node)\n}",
+    "tags": ["view", "ontology"]
   }
 ]

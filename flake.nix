@@ -25,7 +25,17 @@
             mkdir -p $out
             cp ${browser}/index.html $out/
             cp ${browser}/index.js $out/
-            cp -r ${./data} $out/data
+
+            # Copy data as writable so we can merge ontology triples
+            cp -r --no-preserve=mode ${./data} $out/data
+
+            # Merge ontology triples into graph.ttl so SPARQL queries
+            # using cardano: vocabulary work at runtime
+            cat ${./data/rdf/cardano.ttl} >> $out/data/rdf/graph.ttl
+
+            # Publish namespace document so ontology IRI is dereferenceable
+            mkdir -p $out/vocab
+            cp ${./data/rdf/cardano.ttl} $out/vocab/cardano
           '';
         }
       );
