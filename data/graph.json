@@ -1227,6 +1227,84 @@
       ]
     },
     {
+      "id": "cip-30",
+      "label": "CIP-30",
+      "kind": "standard",
+      "group": "standards",
+      "description": "Cardano dApp-Wallet Web Bridge — the original standard for connecting browser-based dApps to Cardano wallets. Defines a JavaScript API injected into window.cardano that lets dApps discover wallets, request access, query balances, submit transactions, and sign data. Nearly every Cardano dApp uses CIP-30 for wallet interaction. CIP-95 extends it with governance capabilities.",
+      "links": [
+        {
+          "label": "CIP-30 Specification",
+          "url": "https://cips.cardano.org/cip/CIP-0030"
+        }
+      ]
+    },
+    {
+      "id": "cip-119",
+      "label": "CIP-119",
+      "kind": "artifact",
+      "group": "framework",
+      "description": "CIP-119 defines the governance metadata standard for Delegated Representatives. It extends CIP-100 with DRep-specific fields: display name, bio, motivations, qualifications, payment address, and references. This structured profile metadata helps ada holders make informed delegation decisions. GovTool and other governance interfaces render CIP-119 metadata on DRep profile pages.",
+      "links": [
+        {
+          "label": "CIP-119 Specification",
+          "url": "https://cips.cardano.org/cip/CIP-0119"
+        }
+      ]
+    },
+    {
+      "id": "cip-69",
+      "label": "CIP-69",
+      "kind": "standard",
+      "group": "standards",
+      "description": "Plutus Script Type Uniformization — unifies the interface for all Plutus script purposes (spending, minting, certifying, rewarding) into a single uniform signature. Before CIP-69, minting policies received two arguments (redeemer, context) while spending validators received three (datum, redeemer, context). CIP-69 makes all script types take the same arguments, simplifying multi-purpose scripts and enabling a single validator to serve as both spending and minting script.",
+      "links": [
+        {
+          "label": "CIP-69 Specification",
+          "url": "https://cips.cardano.org/cip/CIP-0069"
+        }
+      ]
+    },
+    {
+      "id": "cip-381",
+      "label": "CIP-381",
+      "kind": "standard",
+      "group": "standards",
+      "description": "Adds BLS12-381 elliptic curve primitives as Plutus built-in functions. Enables zero-knowledge proofs (Groth16, PLONK), BLS signature verification, and advanced cryptographic protocols directly on-chain. These primitives support sidechains, bridges, and privacy-preserving applications on Cardano. Shipped with Plutus V3 in the Conway era.",
+      "links": [
+        {
+          "label": "CIP-381 Specification",
+          "url": "https://cips.cardano.org/cip/CIP-0381"
+        }
+      ]
+    },
+    {
+      "id": "cip-85",
+      "label": "CIP-85",
+      "kind": "standard",
+      "group": "standards",
+      "description": "Sums-of-Products (SOPs) for Plutus Core — replaces the Scott-encoded data representation with native constructor/case expressions. This makes compiled Plutus scripts significantly smaller and faster by eliminating the overhead of encoding algebraic data types as lambda terms. SOPs shipped with Plutus V3 and are a key driver of the script size and execution cost reductions in the Conway era.",
+      "links": [
+        {
+          "label": "CIP-85 Specification",
+          "url": "https://cips.cardano.org/cip/CIP-0085"
+        }
+      ]
+    },
+    {
+      "id": "cip-88",
+      "label": "CIP-88",
+      "kind": "standard",
+      "group": "standards",
+      "description": "Token Policy Registration — a metadata standard for registering information about a token's minting policy on-chain. Enables policy authors to declare the token's name, description, logo, decimals, and project details in a verifiable way. Helps wallets, explorers, and marketplaces display accurate token information without relying on centralized registries.",
+      "links": [
+        {
+          "label": "CIP-88 Specification",
+          "url": "https://cips.cardano.org/cip/CIP-0088"
+        }
+      ]
+    },
+    {
       "id": "minswap",
       "label": "Minswap",
       "kind": "protocol",
@@ -2093,6 +2171,66 @@
       "target": "cip-57",
       "label": "consumes",
       "description": "Lucid can auto-generate off-chain bindings from CIP-57 Plutus blueprints."
+    },
+    {
+      "source": "cip-95",
+      "target": "cip-30",
+      "label": "extends",
+      "description": "CIP-95 extends the CIP-30 wallet connector with Conway-era governance capabilities: DRep registration, vote delegation, and governance action submission."
+    },
+    {
+      "source": "lucid-evolution",
+      "target": "cip-30",
+      "label": "uses",
+      "description": "Lucid Evolution uses CIP-30 to connect to browser wallets for transaction signing and submission."
+    },
+    {
+      "source": "mesh-sdk",
+      "target": "cip-30",
+      "label": "uses",
+      "description": "Mesh SDK uses CIP-30 to interact with browser-based Cardano wallets."
+    },
+    {
+      "source": "cip-119",
+      "target": "cip-100",
+      "label": "extends",
+      "description": "CIP-119 builds on CIP-100's base governance metadata format, adding DRep-specific fields like display name, bio, motivations, and qualifications."
+    },
+    {
+      "source": "drep",
+      "target": "cip-119",
+      "label": "profile follows",
+      "description": "DReps publish their profile metadata following CIP-119, enabling voters to discover and evaluate representatives through governance tools."
+    },
+    {
+      "source": "govtool",
+      "target": "cip-119",
+      "label": "renders profiles from",
+      "description": "GovTool reads and displays DRep profile metadata structured according to CIP-119."
+    },
+    {
+      "source": "cip-69",
+      "target": "plutus",
+      "label": "unifies script types in",
+      "description": "CIP-69 unifies the argument interface across all Plutus script purposes, enabling multi-purpose validators."
+    },
+    {
+      "source": "cip-381",
+      "target": "plutus-core",
+      "label": "adds built-ins to",
+      "description": "CIP-381 adds BLS12-381 curve operations as Plutus Core built-in functions for on-chain cryptographic verification."
+    },
+    {
+      "source": "cip-85",
+      "target": "plutus-core",
+      "label": "optimizes",
+      "description": "CIP-85 replaces Scott-encoded data with native sums-of-products in Plutus Core, reducing script size and execution cost."
+    },
+    {
+      "source": "cip-88",
+      "target": "minting-policy",
+      "label": "registers metadata for",
+      "description": "CIP-88 provides a standard for declaring token metadata linked to a minting policy, enabling verifiable token information."
     }
   ]
 }

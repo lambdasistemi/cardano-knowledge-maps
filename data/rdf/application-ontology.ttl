@@ -157,6 +157,13 @@ gbgroup:tooling a gb:Group ;
   gb:groupId "tooling" .
 
 
+gbedge:adds%20built-ins%20to a owl:ObjectProperty ;
+  rdfs:label "adds built-ins to" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "adds built-ins to" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
 gbedge:affects a owl:ObjectProperty ;
   rdfs:label "affects" ;
   rdfs:subPropertyOf gb:EdgeRelation ;
@@ -479,6 +486,13 @@ gbedge:priced%20by a owl:ObjectProperty ;
   rdfs:domain gb:Node ;
   rdfs:range gb:Node .
 
+gbedge:profile%20follows a owl:ObjectProperty ;
+  rdfs:label "profile follows" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "profile follows" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
 gbedge:provides a owl:ObjectProperty ;
   rdfs:label "provides" ;
   rdfs:subPropertyOf gb:EdgeRelation ;
@@ -504,6 +518,20 @@ gbedge:registered%20as a owl:ObjectProperty ;
   rdfs:label "registered as" ;
   rdfs:subPropertyOf gb:EdgeRelation ;
   gb:edgeLabel "registered as" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:registers%20metadata%20for a owl:ObjectProperty ;
+  rdfs:label "registers metadata for" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "registers metadata for" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:renders%20profiles%20from a owl:ObjectProperty ;
+  rdfs:label "renders profiles from" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "renders profiles from" ;
   rdfs:domain gb:Node ;
   rdfs:range gb:Node .
 
@@ -595,6 +623,13 @@ gbedge:undergoes a owl:ObjectProperty ;
   rdfs:label "undergoes" ;
   rdfs:subPropertyOf gb:EdgeRelation ;
   gb:edgeLabel "undergoes" ;
+  rdfs:domain gb:Node ;
+  rdfs:range gb:Node .
+
+gbedge:unifies%20script%20types%20in a owl:ObjectProperty ;
+  rdfs:label "unifies script types in" ;
+  rdfs:subPropertyOf gb:EdgeRelation ;
+  gb:edgeLabel "unifies script types in" ;
   rdfs:domain gb:Node ;
   rdfs:range gb:Node .
 
