@@ -58,5 +58,17 @@
     "title": "Ecosystem Protocols",
     "description": "DEXes, lending, L2 scaling, and developer tools.",
     "file": "data/tutorials/ecosystem-tour.json"
+  },
+  {
+    "id": "wallet-metadata-cips",
+    "title": "Wallet & Metadata Standards",
+    "description": "CIP-30, CIP-95, CIP-100, CIP-108, CIP-119, CIP-88 — connecting wallets to governance and giving tokens identity.",
+    "file": "data/tutorials/wallet-metadata-cips.json"
+  },
+  {
+    "id": "plutus-v3-cips",
+    "title": "Plutus V3 Upgrades",
+    "description": "CIP-69, CIP-85, CIP-381 — smaller scripts, unified interfaces, and on-chain cryptography.",
+    "file": "data/tutorials/plutus-v3-cips.json"
   }
 ]
