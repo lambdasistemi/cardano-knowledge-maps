@@ -23,6 +23,11 @@ jobs:
       - uses: actions/checkout@v4
       - uses: lambdasistemi/graph-browser/validate-action@main
       - uses: lambdasistemi/graph-browser/build-action@main
+      - uses: lambdasistemi/graph-browser/vocab-publish-action@main
+        with:
+          sources: data/rdf/cardano.ttl
+          output-dir: site
+          site-base-path: /cardano-knowledge-maps
       - uses: actions/upload-pages-artifact@v4
         with:
           path: site
