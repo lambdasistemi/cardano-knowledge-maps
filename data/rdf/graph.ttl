@@ -921,7 +921,6 @@ n:ada-holder cardano:delegatesVotingPowerTo n:drep .
 # -- Nodes ----------------------------------------------------------------
 
 n:cip-88
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#registers%20metadata%20for> n:minting-policy ;
   dcterms:description "Token Policy Registration — a metadata standard for registering information about a token's minting policy on-chain. Enables policy authors to declare the token's name, description, logo, decimals, and project details in a verifiable way. Helps wallets, explorers, and marketplaces display accurate token information without relying on centralized registries." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-88" ;
@@ -945,7 +944,6 @@ n:cip-85
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0085> .
 
 n:cip-381
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#adds%20built-ins%20to> n:plutus-core ;
   dcterms:description "Adds BLS12-381 elliptic curve primitives as Plutus built-in functions. Enables zero-knowledge proofs (Groth16, PLONK), BLS signature verification, and advanced cryptographic protocols directly on-chain. These primitives support sidechains, bridges, and privacy-preserving applications on Cardano. Shipped with Plutus V3 in the Conway era." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-381" ;
@@ -957,7 +955,6 @@ n:cip-381
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0381> .
 
 n:cip-69
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#unifies%20script%20types%20in> n:plutus ;
   dcterms:description "Plutus Script Type Uniformization — unifies the interface for all Plutus script purposes (spending, minting, certifying, rewarding) into a single uniform signature. Before CIP-69, minting policies received two arguments (redeemer, context) while spending validators received three (datum, redeemer, context). CIP-69 makes all script types take the same arguments, simplifying multi-purpose scripts and enabling a single validator to serve as both spending and minting script." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-69" ;
@@ -969,10 +966,7 @@ n:cip-69
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069> .
 
 n:govtool
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#renders%20profiles%20from> n:cip-119 ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#enables%20registration%20as> n:drep ;
   gbedge:enables n:voting ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#connects%20wallets%20via> n:cip-95 ;
   dcterms:description "A web application for participating in Cardano governance. GovTool's four architectural pillars: Proposal Discussion, Delegation, Outcomes, and Voting. Users can delegate to DReps, register as DReps, view and vote on governance actions, and track outcomes. It connects to the user's wallet via CIP-95 (the Conway-era web-wallet bridge)." ;
   gb:group gbgroup:ecosystem ;
   rdfs:label "GovTool" ;
@@ -985,10 +979,7 @@ n:govtool
   rdfs:seeAlso <https://github.com/IntersectMBO/govtool> .
 
 n:drep
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#profile%20follows> n:cip-119 ;
   gbedge:requires n:deposit-mechanism ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#subject%20to> n:drep-thresholds ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:governance-action ;
   dcterms:description "Any ada holder can register as a DRep by paying a refundable deposit (currently 500 ada). DReps accumulate voting power from ada holders who delegate to them. Their vote weight equals the total lovelace delegated to them — one lovelace = one vote. DReps must vote regularly or they become inactive after the dRepActivity period (currently 20 epochs / 100 days). Inactive DReps do not count toward the active voting stake. DRep delegation is separate from stake pool delegation and takes effect immediately (no two-epoch lag). DReps are identified by a credential: an Ed25519 verification key or a native/Plutus script." ;
   gb:group gbgroup:actors ;
   rdfs:label "Delegated Representative (DRep)" ;
@@ -1016,7 +1007,6 @@ n:cip-119
 
 n:mesh-sdk
   gbedge:uses n:cip-30 ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#builds%20transactions%20for> n:plutus ;
   dcterms:description "TypeScript SDK with transaction builder, React components, wallet connectors, and smart contract integration. Higher-level alternative to Lucid with more out-of-the-box UI components." ;
   gb:group gbgroup:tooling ;
   rdfs:label "Mesh SDK" ;
@@ -1031,7 +1021,6 @@ n:mesh-sdk
 n:lucid-evolution
   gbedge:uses n:cip-30 ;
   gbedge:consumes n:cip-57 ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#builds%20transactions%20for> n:plutus ;
   dcterms:description "Production-ready TypeScript off-chain transaction builder. Successor to the original Lucid, maintained by Anastasia Labs. Supports Plutus V1/V2/V3, Conway hard fork ready. The standard choice for building Cardano dApp frontends." ;
   gb:group gbgroup:tooling ;
   rdfs:label "Lucid Evolution" ;
@@ -1057,7 +1046,6 @@ n:cip-95
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0095> .
 
 n:demeter
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#hosts%20infrastructure%20for> n:plutus ;
   dcterms:description "Cloud development platform for Cardano. Provides managed nodes, indexers, and Hydra infrastructure across mainnet/preprod/preview. No local infrastructure needed — develop and test in the cloud." ;
   gb:group gbgroup:tooling ;
   rdfs:label "Demeter.run" ;
@@ -1084,7 +1072,6 @@ n:blockfrost
   rdfs:seeAlso <https://github.com/blockfrost> .
 
 n:djed
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#built%20on> n:plutus ;
   dcterms:description "Overcollateralized algorithmic stablecoin. Maintained peg since January 2023 launch. Demonstrates formal verification applied to DeFi — the Djed paper provides mathematical proofs of peg stability under defined conditions." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Djed" ;
@@ -1097,7 +1084,6 @@ n:djed
   rdfs:seeAlso <https://docs.djed.one/> .
 
 n:hydra
-  gbedge:replicates n:eutxo ;
   dcterms:description "Layer 2 isomorphic state channels. Each \"head\" is a mini-ledger replicating Cardano's full functionality off-chain with sub-second latency and 1,000 TPS per head. Multiple heads scale linearly. Uses the same smart contract model as L1." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Hydra" ;
@@ -1111,7 +1097,6 @@ n:hydra
   rdfs:seeAlso <https://github.com/cardano-scaling/hydra> .
 
 n:liqwid
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#written%20in> n:plutarch ;
   dcterms:description "Leading lending/borrowing protocol on Cardano. Non-custodial, supports liquid staking. DAO-governed via LQ token. Uses Plutarch for performance-critical validators. Demonstrates complex multi-contract DeFi on EUTxO." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Liqwid Finance" ;
@@ -1124,7 +1109,6 @@ n:liqwid
   rdfs:seeAlso <https://docs.liqwid.finance/> .
 
 n:minswap
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#written%20in> n:aiken ;
   dcterms:description "Largest Cardano DEX by TVL and weekly volume. Multi-pool AMM using the constant-product formula. Written in Aiken. Demonstrates production-scale smart contract usage on Cardano with batched order settlement." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Minswap" ;
@@ -1139,7 +1123,6 @@ n:minswap
 
 n:aiken
   gbedge:generates n:cip-57 ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "Rust-inspired, purpose-built language for Cardano smart contracts. Most popular on-chain language — 75%+ of developers use it. Compiles directly to UPLC with excellent optimization. First-class Plutus blueprint (CIP-57) generation." ;
   gb:group gbgroup:languages ;
   rdfs:label "Aiken" ;
@@ -1235,7 +1218,6 @@ n:staking-validator
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#staking-validators> .
 
 n:marlowe
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "Domain-specific language for financial contracts. High-level, non-Turing-complete by design — contracts can be exhaustively analyzed and formally verified via Isabelle. Transitioned to community ownership (Marlowe Language CIC) in 2024." ;
   gb:group gbgroup:languages ;
   rdfs:label "Marlowe" ;
@@ -1249,7 +1231,6 @@ n:marlowe
   rdfs:seeAlso <https://docs.marlowe.iohk.io/> .
 
 n:plu-ts
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "TypeScript-embedded DSL for on-chain smart contracts plus off-chain transaction building. Constructs UPLC AST directly in TypeScript. Single-language stack for JS/TS developers. Maintained by Harmonic Labs." ;
   gb:group gbgroup:languages ;
   rdfs:label "plu-ts" ;
@@ -1262,7 +1243,6 @@ n:plu-ts
   rdfs:seeAlso <https://github.com/HarmonicLabs/plu-ts> .
 
 n:plutarch
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "Haskell eDSL giving fine-grained control over generated UPLC. Produces significantly more efficient validators than PlutusTx. Created by Liqwid Labs / MLabs. Used by several high-TVL protocols for performance-critical validators." ;
   gb:group gbgroup:languages ;
   rdfs:label "Plutarch" ;
@@ -1275,7 +1255,6 @@ n:plutarch
   rdfs:seeAlso <https://github.com/Plutonomicon/plutarch-plutus> .
 
 n:scalus
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "Write smart contracts in Scala 3, compiled to UPLC. Runs on JVM, JS, and Native. UPLC optimizer with compile-time partial evaluation produces competitive script sizes. Full ScalaTest/ScalaCheck support for property-based testing." ;
   gb:group gbgroup:languages ;
   rdfs:label "Scalus" ;
@@ -1289,7 +1268,6 @@ n:scalus
   rdfs:seeAlso <https://github.com/nau/scalus> .
 
 n:helios
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "JavaScript/TypeScript SDK with its own on-chain DSL — functional, strongly typed, curly-brace syntax. Compiles to Plutus Core. Also handles off-chain transaction building, making it an all-in-one toolkit for JS developers." ;
   gb:group gbgroup:languages ;
   rdfs:label "Helios" ;
@@ -1302,7 +1280,6 @@ n:helios
   rdfs:seeAlso <https://www.hyperion-bt.org/helios-book/> .
 
 n:opshin
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "Write Cardano smart contracts in 100% valid Python syntax. Enforces a strict type system on top of Python. Integrates with PyCardano for off-chain code. Lowers the barrier for Python developers entering the Cardano ecosystem." ;
   gb:group gbgroup:languages ;
   rdfs:label "OpShin" ;
@@ -1316,7 +1293,6 @@ n:opshin
   rdfs:seeAlso <https://github.com/OpShin/opshin> .
 
 n:plinth
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "Write smart contracts in a subset of Haskell, compiled to UPLC. Formerly PlutusTx, rebranded in February 2025. The original on-chain language maintained by IntersectMBO. Tight integration with the Haskell ecosystem and GHC type system." ;
   gb:group gbgroup:languages ;
   rdfs:label "Plinth" ;
@@ -1331,12 +1307,6 @@ n:plinth
 
 n:action-param-change
   gbedge:affects n:exunits ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20modify> n:cost-models ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20change> n:param-group-governance ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20change> n:param-group-technical ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20change> n:param-group-economic ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20change> n:param-group-network ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Changes one or more updatable protocol parameters. Parameters are grouped into four categories (Network, Economic, Technical, Governance), each with its own DRep voting threshold. Requires CC approval (2/3 majority) for all groups. If the change touches security-relevant parameters, SPOs must also approve at 51%. The Guardrails Script enforces permitted ranges for each parameter. This is the mechanism used for Plutus cost model updates — cost model parameters are part of the Technical group." ;
   gb:group gbgroup:actions ;
   rdfs:label "5. Protocol Parameter Changes" ;
@@ -1349,8 +1319,6 @@ n:action-param-change
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#protocol-parameter-change> .
 
 n:guardrails-script
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#written%20in> n:plutus ;
-  gbedge:enforces n:param-exceptions ;
   gbedge:constrains n:action-treasury ;
   gbedge:constrains n:action-param-change ;
   dcterms:description "An on-chain Plutus script that enforces specific constitutional rules programmatically. It applies ONLY to protocol parameter changes and treasury withdrawals — these are the two governance action types where automated enforcement is feasible. The script checks parameter bounds (e.g., maxBlockBodySize must be between 24,576 and 122,880 bytes) and treasury withdrawal limits. Named guardrails include PARAM-01 through PARAM-06a (parameter rules), TREASURY-01a through TREASURY-04a (withdrawal limits), HARDFORK-01 through HARDFORK-08, and committee/constitution update rules. The guardrails script can be updated via a New Constitution governance action." ;
@@ -1365,7 +1333,6 @@ n:guardrails-script
   rdfs:seeAlso <https://github.com/IntersectMBO/plutus/tree/master/cardano-constitution> .
 
 n:minting-policy
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#type%20of> n:plutus ;
   dcterms:description "A Plutus script that controls the creation and destruction of native tokens. The policy receives the script context and decides whether to allow minting or burning. The policy hash becomes the first part of the token's asset ID, cryptographically binding tokens to their minting rules." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Minting Policy" ;
@@ -1435,7 +1402,6 @@ n:eutxo
   rdfs:seeAlso <https://docs.cardano.org/about-cardano/learn/eutxo-explainer/> .
 
 n:script-context
-  gbedge:provides n:eutxo ;
   dcterms:description "The full transaction context passed to a Plutus validator. Includes all inputs, outputs, minting, certificates, withdrawals, validity range, signatories, and datum map. Scripts can inspect any part of the transaction to enforce arbitrary conditions." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Script Context" ;
@@ -1476,8 +1442,6 @@ n:datum
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#datums> .
 
 n:cost-models
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#belongs%20to> n:param-group-technical ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#updated%20via> n:action-param-change ;
   dcterms:description "Protocol parameters that assign abstract CPU and memory costs (ExUnits) to each Plutus builtin function. These are part of the Technical parameter group. Cost models are calibrated by benchmarking each builtin on a reference machine through the Haskell CEK machine, then fitting cost functions via R scripts. Coefficients are stored as 64-bit integers (picoseconds) for cross-platform reproducibility. The cost model ensures that maxBlockExUnits worth of abstract work fits within the real block validation time budget. Every node implementation (Haskell, Rust, etc.) must compute identical ExUnits — the abstract costs are consensus-critical. Updates go through the governance process as Protocol Parameter Changes." ;
   gb:group gbgroup:parameters ;
   rdfs:label "Plutus Cost Models" ;
@@ -1491,7 +1455,6 @@ n:cost-models
   rdfs:seeAlso <https://github.com/IntersectMBO/plutus/tree/master/plutus-core/cost-model> .
 
 n:exunits
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#priced%20by> n:cost-models ;
   dcterms:description "Execution units — the two-dimensional resource budget for Plutus scripts. CPU steps measure computation time, memory units measure peak memory usage. Every transaction specifies ExUnits for each script it runs. Fees are computed from ExUnits using protocol parameters (prices per step/unit)." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "ExUnits" ;
@@ -1518,7 +1481,6 @@ n:cek-machine
   rdfs:seeAlso <https://github.com/IntersectMBO/plutus/tree/master/plutus-core/untyped-plutus-core/src/UntypedPlutusCore/Evaluation/Machine> .
 
 n:plutus-core
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#evaluated%20by> n:cek-machine ;
   dcterms:description "The low-level language that Plutus scripts compile to. An untyped lambda calculus with built-in functions for cryptography, arithmetic, and data manipulation. Executed by the CEK machine on-chain. Each built-in function has an associated cost in CPU and memory units defined by the cost model." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Plutus Core" ;
@@ -1532,7 +1494,6 @@ n:plutus-core
   rdfs:seeAlso <https://github.com/IntersectMBO/plutus> .
 
 n:plutus
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#compiles%20to> n:plutus-core ;
   dcterms:description "The native smart contract platform for Cardano. Plutus scripts are written in PureScript-like Haskell, compiled to Plutus Core (an untyped lambda calculus), and executed on-chain by the Plutus evaluator. Scripts validate transactions — they receive a datum, redeemer, and script context, returning true or false." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Plutus" ;
@@ -1547,8 +1508,6 @@ n:plutus
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/> .
 
 n:param-exceptions
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#modifies%20voting%20for> n:action-param-change ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#overrides%20thresholds%20from> n:param-group-governance ;
   dcterms:description "Some protocol parameters have voting thresholds that differ from their group defaults, as defined in the Cardano Constitution and implemented in the Guardrails Script. For example: committeeMaxTermLength requires only DRep 67% with no CC vote; deposit parameters (dRepDeposit, stakePoolDeposit, stakeAddressDeposit, minPoolCost, committeeMinSize) use the Governance group threshold (DRep 75% + CC 2/3) rather than their native Economic/Technical group thresholds. These exceptions reflect the constitutional significance of these specific parameters." ;
   gb:group gbgroup:parameters ;
   rdfs:label "Per-Parameter Threshold Exceptions" ;
@@ -1561,8 +1520,6 @@ n:param-exceptions
   rdfs:seeAlso <https://docs.cardano.org/about-cardano/governance/cardano-constitution/> .
 
 n:action-info
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#used%20for> n:treasury-budgeting ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Has no on-chain effect — it's a mechanism for recording community sentiment on-chain. Requires 100% threshold from all three bodies (meaning it can never technically be 'ratified' in the normal sense, but serves as a signal). Info actions are useful for polling the community on proposals before committing to a binding governance action. They do not require chaining to previous actions." ;
   gb:group gbgroup:actions ;
   rdfs:label "7. Info Action" ;
@@ -1574,7 +1531,6 @@ n:action-info
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#info> .
 
 n:treasury-budgeting
-  gbedge:gates n:action-treasury ;
   dcterms:description "Treasury withdrawals follow a multi-step budgeting process defined by the Cardano Constitution. First, a Net Change Limit must be approved via an Info Action (DRep 50% + CC 2/3) to set the maximum amount that can be withdrawn in a period. Then, individual Budget proposals are approved (also Info Actions with DRep 50% + CC 2/3). Only after both are in place can Treasury Withdrawal governance actions be submitted against the approved budget. This layered process prevents unchecked treasury spending." ;
   gb:group gbgroup:lifecycle ;
   rdfs:label "Treasury Budgeting Process" ;
@@ -1587,7 +1543,6 @@ n:treasury-budgeting
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#treasury-withdrawal> .
 
 n:sanchonet
-  gbedge:tested n:conway-era ;
   dcterms:description "A dedicated governance testnet for experimenting with CIP-1694 features. Launched in 2023, it allowed the community to test DRep registration, voting, governance action submission, and the full lifecycle before Conway went live on mainnet. Named after Sancho Panza (Don Quixote's practical companion)." ;
   gb:group gbgroup:ecosystem ;
   rdfs:label "SanchoNet" ;
@@ -1600,8 +1555,6 @@ n:sanchonet
   rdfs:seeAlso <https://docs.sanchogov.tools/> .
 
 n:cardano-foundation
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#evaluates%20and%20votes%20on> n:governance-action ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#registered%20as> n:drep ;
   dcterms:description "One of the three founding entities of Cardano (alongside IOG and EMURGO). The CF is registered as a DRep on-chain and operates a Governance Advisory Team of subject-matter experts. It evaluates proposals on constitutional alignment and governance merit, publishing vote rationales with each governance action vote. The CF served on the interim Constitutional Committee during the bootstrap phase and created the Cardano Proposal Examiner tool. The founding entities relinquished their genesis keys, transitioning control to the community." ;
   gb:group gbgroup:ecosystem ;
   rdfs:label "Cardano Foundation" ;
@@ -1628,7 +1581,6 @@ n:intersect
   rdfs:seeAlso <https://github.com/IntersectMBO> .
 
 n:cip-105
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#derives%20keys%20for> n:drep ;
   dcterms:description "CIP-105 defines the Conway-era HD wallet key derivation paths for governance credentials. It specifies how wallets derive the key pairs used for DRep registration, vote delegation, and CC member credentials from a single master seed. This ensures that governance keys are deterministically recoverable from a wallet's mnemonic phrase, following the same BIP-32/BIP-44 patterns used for payment and staking keys." ;
   gb:group gbgroup:framework ;
   rdfs:label "CIP-105" ;
@@ -1640,8 +1592,6 @@ n:cip-105
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0105> .
 
 n:cip-129
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#standardizes%20IDs%20for> n:governance-action ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#standardizes%20IDs%20for> n:drep ;
   dcterms:description "CIP-129 standardizes governance identifiers across the ecosystem. It defines canonical string representations for governance credentials (DRep IDs, CC member IDs, governance action IDs) that work consistently across wallets, explorers, and governance tools. Without this standard, different tools might represent the same DRep or action differently, causing confusion when sharing links or referencing proposals." ;
   gb:group gbgroup:framework ;
   rdfs:label "CIP-129" ;
@@ -1653,15 +1603,7 @@ n:cip-129
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0129> .
 
 n:cc
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#publishes%20rationales%20via> n:cip-136 ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#subject%20to> n:cc-threshold ;
   gbedge:uses n:hot-cold-keys ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#evaluates%20actions%20against> n:constitution ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-info ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-treasury ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-param-change ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-hard-fork ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-new-constitution ;
   dcterms:description "A community-elected oversight body responsible for ensuring that governance actions respect the Cardano Constitution. Each CC member holds exactly one vote (not stake-weighted). The CC does NOT create proposals and does NOT evaluate merit — it reviews constitutionality only. Members use a hot/cold key credential system (like genesis delegation). Each member has an individual term expiration epoch; expired members cannot vote. Members can resign early. The CC can enter a 'no-confidence' state via a Motion of No-Confidence, which blocks it from participating in ratification until a new committee is elected. The CC does not vote on No-Confidence motions or Committee updates (since those are about the CC itself)." ;
   gb:group gbgroup:actors ;
   rdfs:label "Constitutional Committee (CC)" ;
@@ -1686,12 +1628,8 @@ n:cip-108
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0108> .
 
 n:governance-action
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#structured%20as> n:cip-108 ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#metadata%20follows> n:cip-100 ;
   gbedge:requires n:deposit-mechanism ;
   gbedge:uses n:action-chaining ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#open%20for> n:voting ;
-  gbedge:undergoes n:ratification ;
   dcterms:description "An on-chain event triggered by a transaction. Any ada holder can submit a governance action by paying the govActionDeposit (currently 100,000 ada, refundable). Every action includes: the deposit amount, a reward address for deposit return, a metadata anchor (URL + hash, following CIP-100/CIP-108 standards), and — for most types — a hash reference to the most recently enacted action of the same type (to prevent collisions). Actions have a lifespan of govActionLifetime epochs (currently 6 epochs / ~30 days). There are 7 types of governance actions." ;
   gb:group gbgroup:actions ;
   rdfs:label "Governance Action" ;
@@ -1705,12 +1643,6 @@ n:governance-action
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/> .
 
 n:spo
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#subject%20to> n:spo-thresholds ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-info ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on%20changes%20to> n:security-params ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-hard-fork ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-update-committee ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#votes%20on> n:action-no-confidence ;
   dcterms:description "Block producers who also participate in governance voting. SPOs vote on a specific subset of governance action types: No Confidence motions, Committee updates, Hard Fork Initiation, security-relevant protocol parameter changes, and Info actions. Their voting power is proportional to the total stake delegated to their pool. SPOs implement approved protocol upgrades (hard forks) on their infrastructure." ;
   gb:group gbgroup:actors ;
   rdfs:label "Stake Pool Operator (SPO)" ;
@@ -1723,7 +1655,6 @@ n:spo
   rdfs:seeAlso <https://cardano.org/stake-pool-operation/> .
 
 n:conway-era
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#started%20with> n:bootstrap-phase ;
   dcterms:description "The current Cardano ledger era that implements CIP-1694 governance. Named after mathematician John Horton Conway. Introduced via two hard forks: Chang #1 (August 2024) — bootstrap phase with limited governance (DRep registration, interim CC, parameter changes and hard forks only); and Plomin hard fork / Chang #2 (December 2024) — full governance activation with all 7 action types and treasury withdrawals. The bootstrap phase ended when the CC and SPOs ratified the Plomin hard fork." ;
   gb:group gbgroup:framework ;
   rdfs:label "Conway Ledger Era" ;
@@ -1736,7 +1667,6 @@ n:conway-era
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/> .
 
 n:cip-1694
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#implemented%20in> n:conway-era ;
   gbedge:specifies n:governance-model ;
   dcterms:description "The Cardano Improvement Proposal that specifies the on-chain governance mechanism. Authored by Jared Corduan and Andre Knispel, it defines the three governance bodies, seven action types, voting and ratification rules, the Constitutional Committee structure, DRep mechanics, and the full lifecycle of governance actions. CIP-1694 was implemented in the Conway ledger era (named after John Horton Conway)." ;
   gb:group gbgroup:framework ;
@@ -1750,10 +1680,6 @@ n:cip-1694
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/> .
 
 n:governance-model
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#governance%20body> n:cc ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#governance%20body> n:spo ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#governance%20body> n:drep ;
-  gbedge:implements n:liquid-democracy ;
   dcterms:description "Cardano uses a tricameral (three-body) governance model implementing liquid democracy, introduced by CIP-1694 as part of the Voltaire phase. Ada holders can vote directly on every governance matter or delegate their voting power to Delegated Representatives (DReps). Three governance bodies — DReps, Stake Pool Operators (SPOs), and the Constitutional Committee (CC) — each play distinct roles in reviewing and ratifying governance actions. Every governance action requires approval from at least two of the three bodies." ;
   gb:group gbgroup:core ;
   rdfs:label "Cardano Governance" ;
@@ -1767,8 +1693,6 @@ n:governance-model
   rdfs:seeAlso <https://docs.cardano.org/about-cardano/governance/> .
 
 n:action-update-committee
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#changes%20membership%20of> n:cc ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Changes the Constitutional Committee membership, its signature threshold, and/or member term limits. Can add new members (with term expiration epochs), remove existing members, and adjust the fraction of CC members required to approve actions. Thresholds differ depending on CC state: in normal state, requires DRep 67% + SPO 51%; in no-confidence state, DRep 60% + SPO 51% (lower DRep threshold to make it easier to replace a failed CC). The CC does not vote on this." ;
   gb:group gbgroup:actions ;
   rdfs:label "2. Update Committee / Threshold" ;
@@ -1780,8 +1704,6 @@ n:action-update-committee
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#update-committee> .
 
 n:action-no-confidence
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#puts%20into%20no-confidence%20state> n:cc ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Creates a state of no-confidence in the current Constitutional Committee. When ratified, the CC enters a no-confidence state and cannot participate in governance until a new committee is elected via an Update Committee action. This is the highest-priority governance action — if ratified in the same epoch as other actions, it is enacted first. Requires: DRep approval at 67% of active voting stake + SPO approval at 51% of active pool stake. The CC does not vote on this (since it's about them)." ;
   gb:group gbgroup:actions ;
   rdfs:label "1. Motion of No-Confidence" ;
@@ -1793,9 +1715,6 @@ n:action-no-confidence
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#no-confidence> .
 
 n:action-new-constitution
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20update> n:guardrails-script ;
-  gbedge:modifies n:constitution ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Modifies the Cardano Constitution and/or the on-chain Guardrails Script. The action includes an anchor to the new Constitution text and optionally a new script hash for the Guardrails Script. Requires: CC approval (2/3 majority) + DRep approval at 75% of active voting stake. SPOs do not vote on this. This is the action with the highest DRep threshold (alongside Governance group parameter changes), reflecting the significance of constitutional amendments." ;
   gb:group gbgroup:actions ;
   rdfs:label "3. New Constitution / Guardrails Script" ;
@@ -1807,7 +1726,6 @@ n:action-new-constitution
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#new-constitution> .
 
 n:constitution
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#codified%20in> n:guardrails-script ;
   dcterms:description "An off-chain text document whose hash is recorded on-chain. It defines shared values and guiding principles for Cardano governance. The current Constitution was ratified at the Buenos Aires Constitutional Convention (December 4-6, 2024) with 95% delegate approval after 63 workshops across 51 countries, and became effective on-chain on January 24, 2026. It contains: a Preamble (not used for constitutionality assessments), 10 Tenets (core principles including transaction freedom, predictable costs, ada supply cap at 45 billion), Articles covering community participation, decentralized governance, CC responsibilities, and treasury provisions, plus Appendix I with permitted parameter ranges. The on-chain version (hash) prevails over the documented version in case of conflict." ;
   gb:group gbgroup:framework ;
   rdfs:label "Cardano Constitution" ;
@@ -1820,7 +1738,6 @@ n:constitution
   rdfs:seeAlso <https://docs.cardano.org/about-cardano/governance/cardano-constitution/> .
 
 n:param-group-governance
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#some%20params%20are> n:security-params ;
   dcterms:description "Protocol parameters that govern governance itself. DRep voting threshold: 75% (P5d) — the highest threshold for parameter changes, reflecting the self-referential nature of changing governance rules. Includes: all 15 voting thresholds (P1–P6 for DReps, Q1–Q5 for SPOs), govActionLifetime (1–15 epochs), govActionDeposit (1M–10T lovelace), dRepDeposit (1M–100B lovelace), dRepActivity (13–37 epochs), committeeMinSize (3–10), committeeMaxTermLength (18–293 epochs)." ;
   gb:group gbgroup:parameters ;
   rdfs:label "Governance Parameter Group" ;
@@ -1832,7 +1749,6 @@ n:param-group-governance
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#governance-group> .
 
 n:param-group-economic
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#some%20params%20are> n:security-params ;
   dcterms:description "Protocol parameters related to transaction fees, deposits, and monetary policy. DRep voting threshold: 67% (P5b). Includes: txFeePerByte (30–1,000 lovelace), txFeeFixed (100,000–10,000,000 lovelace), stakeAddressDeposit, stakePoolDeposit, monetaryExpansion (0.001–0.005), treasuryCut (10%–30%), minPoolCost, utxoCostPerByte (3,000–6,500), executionUnitPrices (priceMemory and priceSteps), minFeeRefScriptCostPerByte." ;
   gb:group gbgroup:parameters ;
   rdfs:label "Economic Parameter Group" ;
@@ -1844,7 +1760,6 @@ n:param-group-economic
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#economic-group> .
 
 n:param-group-network
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#some%20params%20are> n:security-params ;
   dcterms:description "Protocol parameters related to network capacity and transaction limits. DRep voting threshold: 67% (P5a). Includes: maxBlockBodySize (24,576–122,880 bytes), maxTxSize (up to 32,768 bytes), maxBlockHeaderSize (up to 5,000 bytes), maxValueSize (up to 12,288 bytes), maxTxExecutionUnits (memory and steps), maxBlockExecutionUnits (memory and steps), maxCollateralInputs (minimum 1). Guardrail NETWORK-01: should not change more than once per 2 epochs. NETWORK-02: only one parameter should change per epoch unless correlated." ;
   gb:group gbgroup:parameters ;
   rdfs:label "Network Parameter Group" ;
@@ -1869,7 +1784,6 @@ n:param-group-technical
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#technical-group> .
 
 n:action-treasury
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Withdraws ada from the Cardano treasury. The action specifies a map from stake credentials to positive lovelace amounts. Requires: CC approval (2/3 majority) + DRep approval at 67%. SPOs do not vote on this. The Guardrails Script enforces withdrawal limits (TREASURY-01a through TREASURY-04a). Treasury withdrawals must specify purpose, expected costs, and provide for auditable accounts. This action type does NOT require chaining to previous actions of the same type (unlike most other types)." ;
   gb:group gbgroup:actions ;
   rdfs:label "6. Treasury Withdrawal" ;
@@ -1881,7 +1795,6 @@ n:action-treasury
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#treasury-withdrawal> .
 
 n:action-hard-fork
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#is%20a%20type%20of> n:governance-action ;
   dcterms:description "Triggers a non-backwards-compatible protocol upgrade. The action specifies a new major protocol version (must be exactly +1 from current). This is the only governance action that requires approval from ALL THREE bodies: CC (2/3 majority), DReps (60%), and SPOs (51%). Guardrail HARDFORK-04a requires at least 85% of stake pools by active stake to have upgraded their node software before enactment. A ratified hard fork delays ratification of all other pending actions until after enactment." ;
   gb:group gbgroup:actions ;
   rdfs:label "4. Hard Fork Initiation" ;
@@ -1894,7 +1807,6 @@ n:action-hard-fork
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#hard-fork-initiation> .
 
 n:voting
-  gbedge:determines n:ratification ;
   dcterms:description "Each governance body votes Yes, No, or Abstain on applicable governance actions. Votes are recorded on-chain via transactions. DRep and SPO votes are weighted by delegated stake; CC votes are one-member-one-vote. Votes can be changed at any time before the action is ratified. The voting period lasts up to govActionLifetime epochs (currently 6 epochs / ~30 days). Abstain votes are NOT counted in the active voting stake denominator. Post-bootstrap: ada holders must delegate to a DRep (or Abstain/No Confidence) to withdraw staking rewards." ;
   gb:group gbgroup:lifecycle ;
   rdfs:label "Voting" ;
@@ -1907,7 +1819,6 @@ n:voting
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/how-to-vote/> .
 
 n:ratification
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#leads%20to> n:enactment ;
   dcterms:description "The process by which a governance action accumulates enough votes to be approved. Ratification is checked ONLY at epoch boundaries — a new tally is calculated each epoch using the current stake snapshot. An action can become ratified even without new votes if delegation changes shift the stake distribution. Votes can be changed at any time before ratification. Registered stake that did not vote counts as 'No'. Unregistered stake counts as 'Abstain'. Each action type has specific thresholds for each governance body. A successful No-Confidence, Committee Update, New Constitution, or Hard Fork delays ratification of ALL other pending actions until after enactment." ;
   gb:group gbgroup:lifecycle ;
   rdfs:label "Ratification" ;
@@ -1919,12 +1830,7 @@ n:ratification
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#ratification> .
 
 n:ada-holder
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20register%20as> n:drep ;
   gbedge:submits n:governance-action ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#delegates%20stake%20to> n:spo ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20delegate%20to> n:no-confidence-option ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#can%20delegate%20to> n:abstain-option ;
-  <https://lambdasistemi.github.io/graph-browser/vocab/edges#delegates%20voting%20power%20to> n:drep ;
   dcterms:description "Any holder of ada. Ada holders are the foundation of Cardano governance — they have 'skin in the game' and can participate in governance in multiple ways: vote directly by registering as a DRep, delegate their voting power to a DRep (or to the pre-defined Abstain/No Confidence options), submit governance actions (with a deposit), and delegate stake to SPOs for block production. Voting power is proportional: one lovelace = one vote." ;
   gb:group gbgroup:actors ;
   rdfs:label "Ada Holder" ;
