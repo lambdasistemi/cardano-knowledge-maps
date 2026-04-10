@@ -932,7 +932,6 @@ n:cip-88
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0088> .
 
 n:cip-85
-  gbedge:optimizes n:plutus-core ;
   dcterms:description "Sums-of-Products (SOPs) for Plutus Core — replaces the Scott-encoded data representation with native constructor/case expressions. This makes compiled Plutus scripts significantly smaller and faster by eliminating the overhead of encoding algebraic data types as lambda terms. SOPs shipped with Plutus V3 and are a key driver of the script size and execution cost reductions in the Conway era." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-85" ;
@@ -966,7 +965,6 @@ n:cip-69
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0069> .
 
 n:govtool
-  gbedge:enables n:voting ;
   dcterms:description "A web application for participating in Cardano governance. GovTool's four architectural pillars: Proposal Discussion, Delegation, Outcomes, and Voting. Users can delegate to DReps, register as DReps, view and vote on governance actions, and track outcomes. It connects to the user's wallet via CIP-95 (the Conway-era web-wallet bridge)." ;
   gb:group gbgroup:ecosystem ;
   rdfs:label "GovTool" ;
@@ -979,7 +977,6 @@ n:govtool
   rdfs:seeAlso <https://github.com/IntersectMBO/govtool> .
 
 n:drep
-  gbedge:requires n:deposit-mechanism ;
   dcterms:description "Any ada holder can register as a DRep by paying a refundable deposit (currently 500 ada). DReps accumulate voting power from ada holders who delegate to them. Their vote weight equals the total lovelace delegated to them — one lovelace = one vote. DReps must vote regularly or they become inactive after the dRepActivity period (currently 20 epochs / 100 days). Inactive DReps do not count toward the active voting stake. DRep delegation is separate from stake pool delegation and takes effect immediately (no two-epoch lag). DReps are identified by a credential: an Ed25519 verification key or a native/Plutus script." ;
   gb:group gbgroup:actors ;
   rdfs:label "Delegated Representative (DRep)" ;
@@ -993,7 +990,6 @@ n:drep
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/drep-pioneer-program/> .
 
 n:cip-119
-  gbedge:extends n:cip-100 ;
   dcterms:description "CIP-119 defines the governance metadata standard for Delegated Representatives. It extends CIP-100 with DRep-specific fields: display name, bio, motivations, qualifications, payment address, and references. This structured profile metadata helps ada holders make informed delegation decisions. GovTool and other governance interfaces render CIP-119 metadata on DRep profile pages." ;
   gb:group gbgroup:framework ;
   rdfs:label "CIP-119" ;
@@ -1006,7 +1002,6 @@ n:cip-119
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/drep-pioneer-program/> .
 
 n:mesh-sdk
-  gbedge:uses n:cip-30 ;
   dcterms:description "TypeScript SDK with transaction builder, React components, wallet connectors, and smart contract integration. Higher-level alternative to Lucid with more out-of-the-box UI components." ;
   gb:group gbgroup:tooling ;
   rdfs:label "Mesh SDK" ;
@@ -1019,8 +1014,6 @@ n:mesh-sdk
   rdfs:seeAlso <https://github.com/MeshJS/mesh> .
 
 n:lucid-evolution
-  gbedge:uses n:cip-30 ;
-  gbedge:consumes n:cip-57 ;
   dcterms:description "Production-ready TypeScript off-chain transaction builder. Successor to the original Lucid, maintained by Anastasia Labs. Supports Plutus V1/V2/V3, Conway hard fork ready. The standard choice for building Cardano dApp frontends." ;
   gb:group gbgroup:tooling ;
   rdfs:label "Lucid Evolution" ;
@@ -1034,7 +1027,6 @@ n:lucid-evolution
   rdfs:seeAlso <https://github.com/Anastasia-Labs/lucid-evolution> .
 
 n:cip-95
-  gbedge:extends n:cip-30 ;
   dcterms:description "CIP-95 defines the web-wallet bridge for the Conway era. It extends the CIP-30 wallet connector with governance-specific capabilities: DRep registration, vote delegation, and governance action submission from browser-based wallets. Without CIP-95, governance tools like GovTool couldn't interact with users' wallets. It enables the 'connect wallet' flow that makes on-chain governance accessible to non-technical participants." ;
   gb:group gbgroup:framework ;
   rdfs:label "CIP-95" ;
@@ -1058,7 +1050,6 @@ n:demeter
   rdfs:seeAlso <https://github.com/demeter-run> .
 
 n:blockfrost
-  gbedge:indexes n:eutxo ;
   dcterms:description "Hosted REST API for Cardano blockchain data. Free tier available. SDKs in 15+ languages. The most common way dApps query chain state without running a full node. Also offers self-hosted option." ;
   gb:group gbgroup:tooling ;
   rdfs:label "Blockfrost" ;
@@ -1122,7 +1113,6 @@ n:minswap
   rdfs:seeAlso <https://github.com/minswap> .
 
 n:aiken
-  gbedge:generates n:cip-57 ;
   dcterms:description "Rust-inspired, purpose-built language for Cardano smart contracts. Most popular on-chain language — 75%+ of developers use it. Compiles directly to UPLC with excellent optimization. First-class Plutus blueprint (CIP-57) generation." ;
   gb:group gbgroup:languages ;
   rdfs:label "Aiken" ;
@@ -1137,7 +1127,6 @@ n:aiken
   rdfs:seeAlso <https://aiken-lang.org/fundamentals/getting-started> .
 
 n:cip-57
-  gbedge:documents n:plutus ;
   dcterms:description "Plutus Contract Blueprint — machine-readable JSON schema (plutus.json) documenting a smart contract's interface: validators, parameters, datum/redeemer types. Enables tooling to auto-generate off-chain bindings. Aiken generates blueprints automatically." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-57" ;
@@ -1150,8 +1139,6 @@ n:cip-57
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0057> .
 
 n:cip-68
-  gbedge:succeeds n:cip-25 ;
-  gbedge:uses n:datum ;
   dcterms:description "Rich, mutable metadata standard. Uses a reference NFT (label 100) carrying metadata in its datum, paired with a user token (label 222 for NFTs, 333 for FTs). Metadata can be updated by spending the reference UTxO. Successor to CIP-25." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-68" ;
@@ -1164,7 +1151,6 @@ n:cip-68
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0068> .
 
 n:cip-25
-  gbedge:extends n:minting-policy ;
   dcterms:description "Original NFT metadata standard. Metadata attached to minting transactions via transaction metadata label 721. Simple and widely adopted but metadata is immutable after minting. The foundation for Cardano's NFT ecosystem." ;
   gb:group gbgroup:standards ;
   rdfs:label "CIP-25" ;
@@ -1177,7 +1163,6 @@ n:cip-25
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0025> .
 
 n:oracle-pattern
-  gbedge:uses n:reference-inputs ;
   dcterms:description "Leverages CIP-31 reference inputs: an oracle publishes price/data in a UTxO datum, and multiple contracts read it simultaneously without spending it. Eliminates contention. Charli3 and Orcfax are the main Cardano oracle providers." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Oracle Pattern" ;
@@ -1191,7 +1176,6 @@ n:oracle-pattern
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/> .
 
 n:state-machine
-  gbedge:uses n:datum ;
   dcterms:description "Model contract state as a datum on a UTxO. The validator checks that input datum + redeemer produces a valid output datum, enforcing legal state transitions. Used for multi-step protocols: escrow, auctions, governance, DEX order matching." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "State Machine Pattern" ;
@@ -1205,7 +1189,6 @@ n:state-machine
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/> .
 
 n:staking-validator
-  gbedge:optimizes n:eutxo ;
   dcterms:description "Validators attached to staking credentials. The \"withdraw zero\" pattern delegates expensive validation logic to a staking validator (called once per transaction) instead of a spending validator (called per input), reducing cost from O(n²) to O(n). Key optimization pattern." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Staking Validators" ;
@@ -1306,7 +1289,6 @@ n:plinth
   rdfs:seeAlso <https://plutus.cardano.intersectmbo.org/> .
 
 n:action-param-change
-  gbedge:affects n:exunits ;
   dcterms:description "Changes one or more updatable protocol parameters. Parameters are grouped into four categories (Network, Economic, Technical, Governance), each with its own DRep voting threshold. Requires CC approval (2/3 majority) for all groups. If the change touches security-relevant parameters, SPOs must also approve at 51%. The Guardrails Script enforces permitted ranges for each parameter. This is the mechanism used for Plutus cost model updates — cost model parameters are part of the Technical group." ;
   gb:group gbgroup:actions ;
   rdfs:label "5. Protocol Parameter Changes" ;
@@ -1319,8 +1301,6 @@ n:action-param-change
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#protocol-parameter-change> .
 
 n:guardrails-script
-  gbedge:constrains n:action-treasury ;
-  gbedge:constrains n:action-param-change ;
   dcterms:description "An on-chain Plutus script that enforces specific constitutional rules programmatically. It applies ONLY to protocol parameter changes and treasury withdrawals — these are the two governance action types where automated enforcement is feasible. The script checks parameter bounds (e.g., maxBlockBodySize must be between 24,576 and 122,880 bytes) and treasury withdrawal limits. Named guardrails include PARAM-01 through PARAM-06a (parameter rules), TREASURY-01a through TREASURY-04a (withdrawal limits), HARDFORK-01 through HARDFORK-08, and committee/constitution update rules. The guardrails script can be updated via a New Constitution governance action." ;
   gb:group gbgroup:framework ;
   rdfs:label "Guardrails Script" ;
@@ -1346,7 +1326,6 @@ n:minting-policy
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#minting-policies> .
 
 n:inline-datums
-  gbedge:improves n:datum ;
   dcterms:description "CIP-32 feature that stores the full datum directly in the UTxO instead of just a hash. Eliminates the need for off-chain datum management — anyone can see the contract state by reading the UTxO. Essential for composability between protocols." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Inline Datums" ;
@@ -1359,7 +1338,6 @@ n:inline-datums
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#inline-datums> .
 
 n:reference-inputs
-  gbedge:extends n:eutxo ;
   dcterms:description "CIP-31 feature allowing transactions to read UTxOs without spending them. Enables oracle patterns, shared state, and read-only access to on-chain data. Referenced UTxOs appear in the script context but remain unspent." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Reference Inputs" ;
@@ -1373,7 +1351,6 @@ n:reference-inputs
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#reference-inputs> .
 
 n:reference-scripts
-  gbedge:optimizes n:plutus ;
   dcterms:description "CIP-33 feature allowing scripts to be stored on-chain in a UTxO and referenced by transactions without including the script in the transaction body. Dramatically reduces transaction size and fees for popular contracts. The reference script UTxO is not spent." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Reference Scripts" ;
@@ -1387,7 +1364,6 @@ n:reference-scripts
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#reference-scripts> .
 
 n:eutxo
-  gbedge:enables n:plutus ;
   dcterms:description "Extended UTxO — Cardano's transaction model that extends Bitcoin's UTxO with datum, redeemer, and script validation. Each UTxO can be locked by a validator script. Spending requires providing a redeemer that satisfies the validator. The model enables deterministic transaction validation — fees and outcomes are known before submission." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "EUTxO Model" ;
@@ -1415,7 +1391,6 @@ n:script-context
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#script-context> .
 
 n:redeemer
-  gbedge:extends n:eutxo ;
   dcterms:description "User-provided data included in a transaction to unlock a script-locked UTxO. The redeemer represents the action the user wants to perform. The validator script receives the datum, redeemer, and script context and decides whether to allow the spending." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Redeemer" ;
@@ -1428,7 +1403,6 @@ n:redeemer
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#redeemers> .
 
 n:datum
-  gbedge:extends n:eutxo ;
   dcterms:description "Data attached to a UTxO that is locked by a Plutus script. The datum represents the state of the contract. When spending the UTxO, the datum is passed to the validator script along with a redeemer and the transaction context. Can be stored inline (CIP-32) or as a hash with the full datum provided in the transaction." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "Datum" ;
@@ -1468,7 +1442,6 @@ n:exunits
   rdfs:seeAlso <https://developers.cardano.org/docs/smart-contracts/plutus/#execution-units> .
 
 n:cek-machine
-  gbedge:consumes n:exunits ;
   dcterms:description "The abstract machine that evaluates Plutus Core on-chain. Tracks CPU and memory consumption using ExUnits budgets. If a script exceeds its budget, the transaction fails. The CEK machine is deterministic — same inputs always produce same outputs and same costs." ;
   gb:group gbgroup:smart-contracts ;
   rdfs:label "CEK Machine" ;
@@ -1568,7 +1541,6 @@ n:cardano-foundation
   rdfs:seeAlso <https://cardanofoundation.org/> .
 
 n:intersect
-  gbedge:facilitates n:governance-model ;
   dcterms:description "A not-for-profit organization (registered in Wyoming, USA) that facilitates off-chain governance processes. Intersect manages the Parameter Committee, organizes elections, runs working groups, and coordinates the governance tooling ecosystem. It is NOT a governance body — it does not vote or ratify. Its role is facilitation and coordination: hosting discussions, managing the CIP process, coordinating hard fork readiness, and providing infrastructure like GovTool." ;
   gb:group gbgroup:ecosystem ;
   rdfs:label "Intersect" ;
@@ -1603,7 +1575,6 @@ n:cip-129
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0129> .
 
 n:cc
-  gbedge:uses n:hot-cold-keys ;
   dcterms:description "A community-elected oversight body responsible for ensuring that governance actions respect the Cardano Constitution. Each CC member holds exactly one vote (not stake-weighted). The CC does NOT create proposals and does NOT evaluate merit — it reviews constitutionality only. Members use a hot/cold key credential system (like genesis delegation). Each member has an individual term expiration epoch; expired members cannot vote. Members can resign early. The CC can enter a 'no-confidence' state via a Motion of No-Confidence, which blocks it from participating in ratification until a new committee is elected. The CC does not vote on No-Confidence motions or Committee updates (since those are about the CC itself)." ;
   gb:group gbgroup:actors ;
   rdfs:label "Constitutional Committee (CC)" ;
@@ -1616,7 +1587,6 @@ n:cc
   rdfs:seeAlso <https://docs.cardano.org/about-cardano/governance/constitutional-committee/> .
 
 n:cip-108
-  gbedge:extends n:cip-100 ;
   dcterms:description "CIP-108 extends CIP-100 with a specific metadata format for governance actions. It defines required fields: title, abstract, motivation, rationale, and supporting references. This structured format ensures that voters have consistent, comparable information when evaluating proposals. GovTool and other governance interfaces render CIP-108 metadata to present proposals in a human-readable format." ;
   gb:group gbgroup:framework ;
   rdfs:label "CIP-108" ;
@@ -1628,8 +1598,6 @@ n:cip-108
   rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/tree/master/CIP-0108> .
 
 n:governance-action
-  gbedge:requires n:deposit-mechanism ;
-  gbedge:uses n:action-chaining ;
   dcterms:description "An on-chain event triggered by a transaction. Any ada holder can submit a governance action by paying the govActionDeposit (currently 100,000 ada, refundable). Every action includes: the deposit amount, a reward address for deposit return, a metadata anchor (URL + hash, following CIP-100/CIP-108 standards), and — for most types — a hash reference to the most recently enacted action of the same type (to prevent collisions). Actions have a lifespan of govActionLifetime epochs (currently 6 epochs / ~30 days). There are 7 types of governance actions." ;
   gb:group gbgroup:actions ;
   rdfs:label "Governance Action" ;
@@ -1667,7 +1635,6 @@ n:conway-era
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/> .
 
 n:cip-1694
-  gbedge:specifies n:governance-model ;
   dcterms:description "The Cardano Improvement Proposal that specifies the on-chain governance mechanism. Authored by Jared Corduan and Andre Knispel, it defines the three governance bodies, seven action types, voting and ratification rules, the Constitutional Committee structure, DRep mechanics, and the full lifecycle of governance actions. CIP-1694 was implemented in the Conway ledger era (named after John Horton Conway)." ;
   gb:group gbgroup:framework ;
   rdfs:label "CIP-1694" ;
@@ -1771,7 +1738,6 @@ n:param-group-network
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#network-group> .
 
 n:param-group-technical
-  gbedge:contains n:cost-models ;
   dcterms:description "Protocol parameters related to stake pool mechanics, Plutus execution, and script validation. DRep voting threshold: 67% (P5c). Includes: poolPledgeInfluence (0.1–1.0), poolRetireMaxEpoch, stakePoolTargetNum (250–2,000), costModels (the Plutus cost model parameters — benchmarked values for each builtin function), collateralPercentage (100–200). The costModels parameter is what gets updated when the Plutus team reprices builtins based on new benchmarks." ;
   gb:group gbgroup:parameters ;
   rdfs:label "Technical Parameter Group" ;
@@ -1830,7 +1796,6 @@ n:ratification
   rdfs:seeAlso <https://developers.cardano.org/docs/governance/cardano-governance/governance-actions/#ratification> .
 
 n:ada-holder
-  gbedge:submits n:governance-action ;
   dcterms:description "Any holder of ada. Ada holders are the foundation of Cardano governance — they have 'skin in the game' and can participate in governance in multiple ways: vote directly by registering as a DRep, delegate their voting power to a DRep (or to the pre-defined Abstain/No Confidence options), submit governance actions (with a deposit), and delegate stake to SPOs for block production. Voting power is proportional: one lovelace = one vote." ;
   gb:group gbgroup:actors ;
   rdfs:label "Ada Holder" ;
