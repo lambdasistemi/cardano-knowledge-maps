@@ -102,6 +102,13 @@
     "tags": []
   },
   {
+    "id": "budget-2026",
+    "name": "Budget 2026 Proposals",
+    "description": "Cardano Budget 2026 — all submitted proposals with their proposers, deliverables, and treasury links.",
+    "sparql": "PREFIX gbkind: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbkind:proposal }\n  UNION { ?proposal a gbkind:proposal ; cardano:submittedBy ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:deliversArtifact ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:fundingFrom ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:runsIn ?node }\n}",
+    "tags": ["view", "budget-2026"]
+  },
+  {
     "id": "treasury-and-budgeting",
     "name": "Treasury & Budgeting",
     "description": "Treasury withdrawals, budgeting mechanism, and economic parameters.",
