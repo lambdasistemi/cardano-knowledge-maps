@@ -304,6 +304,41 @@ n:hydra-node gbedge:provides n:hydra-websocket-api .
   rdf:object n:hydra-websocket-api ;
   dcterms:description "The hydra-node process exposes a WebSocket API for clients to submit transactions and receive state updates." .
 
+n:hydra-head-validator cardano:writtenIn n:aiken .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-head-validator ;
+  rdf:predicate cardano:writtenIn ;
+  rdf:object n:aiken ;
+  dcterms:description "The commit validator was migrated from Plutus-Tx to Aiken (PlutusV3), reducing head-opening cost by 20% and abort cost by 50%. Other validators remain in Plutus-Tx." .
+
+n:hydra-snapshot gbedge:enables n:hydra-close .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-snapshot ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-close ;
+  dcterms:description "Closing a head requires submitting the latest confirmed multi-signed snapshot to L1. The snapshot hash is verified by the head validator." .
+
+n:hydra-commit gbedge:enables n:hydra-open .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-commit ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-open ;
+  dcterms:description "All participants must commit their UTxOs before the head can transition from Initial to Open via collectComTx." .
+
+n:hydra-open gbedge:enables n:hydra-close .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-open ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-close ;
+  dcterms:description "Any participant can unilaterally close an open head by posting the latest snapshot to L1." .
+
+n:hydra-contestation gbedge:enables n:hydra-fan-out .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-contestation ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-fan-out ;
+  dcterms:description "Fan-out becomes available only after the contestation period expires with no successful contest." .
+
 n:liqwid cardano:writtenIn n:plutarch .
 [] a rdf:Statement ;
   rdf:subject n:liqwid ;
@@ -2827,7 +2862,7 @@ gbkind:action-type
 
 <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf>
   gb:sourceRepository "https://github.com/lambdasistemi/cardano-knowledge-maps"^^<http://www.w3.org/2001/XMLSchema#anyURI> ;
-  gb:edgeCount 153 ;
+  gb:edgeCount 158 ;
   gb:nodeCount 103 ;
   dcterms:description "Interactive knowledge maps of the Cardano ecosystem — governance, smart contracts, and more." ;
   dcterms:title "Cardano Knowledge Maps" ;
