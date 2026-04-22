@@ -1,0 +1,43 @@
+{
+  "id": "hydra-overview",
+  "title": "Hydra: Cardano's Layer 2",
+  "description": "What Hydra is, how it scales Cardano, and why isomorphic state channels matter.",
+  "stops": [
+    {
+      "node": "hydra",
+      "depth": 2,
+      "title": "What Is Hydra?",
+      "narrative": "[Hydra](node:hydra) is Cardano's Layer 2 scaling solution — a protocol for creating off-chain mini-ledgers called \"heads.\" Each head [replicates the full EUTxO model](node:eutxo) with sub-second finality and near-zero fees. Multiple heads run independently and scale linearly.\n\nUnlike rollups that require adapted contracts, Hydra is *isomorphic*: the same [Plutus](node:plutus) scripts, the same transaction format, the same ledger rules work identically on L1 and inside a head. No modifications needed."
+    },
+    {
+      "node": "isomorphic-state-channel",
+      "depth": 2,
+      "title": "The Isomorphic Property",
+      "narrative": "The [isomorphic state channel](node:isomorphic-state-channel) concept is Hydra's theoretical foundation, introduced in the original [academic paper](https://iohk.io/en/research/library/papers/hydra-fast-isomorphic-state-channels/) by Chakravarty et al. (FC'21).\n\nIsomorphic means \"same shape\" — the L2 channel replicates L1's ledger rules *exactly*. Any validator, any transaction structure, any script that works on L1 works unmodified inside a [Hydra head](node:hydra-head). This is a fundamental design choice that sets Hydra apart from rollup-style L2s where contracts must be rewritten or adapted."
+    },
+    {
+      "node": "unanimous-consensus",
+      "depth": 2,
+      "title": "Unanimous Consensus",
+      "narrative": "[Unanimous consensus](node:unanimous-consensus) is the trade-off at the heart of Hydra. Every [snapshot](node:hydra-snapshot) — every state update inside a head — must be signed by *all* participants.\n\nThe upside: instant finality. Once all parties sign, the state is irrevocable — no confirmation delay, no rollback risk. The downside: a single unresponsive party blocks the entire head. This is mitigated by the ability to [close](node:hydra-close) unilaterally at any time."
+    },
+    {
+      "node": "hydra-head",
+      "depth": 2,
+      "title": "Inside a Head",
+      "narrative": "A [Hydra head](node:hydra-head) is an individual off-chain mini-ledger shared by a fixed set of participants. It maintains its own UTxO set and processes transactions locally with the same [Plutus](node:plutus) validation rules as L1.\n\nEach participant runs a [hydra-node](node:hydra-node), which manages the off-chain protocol, communicates with peers, and exposes a [WebSocket API](node:hydra-websocket-api) for client applications. Clients submit transactions using the exact same Cardano transaction format."
+    },
+    {
+      "node": "hydra-snapshot",
+      "depth": 2,
+      "title": "Snapshots: The State Record",
+      "narrative": "A [snapshot](node:hydra-snapshot) captures the agreed-upon UTxO state inside an open head at a point in time. It contains the full UTxO set and the transactions that produced it.\n\nSnapshots are the currency of consensus: they must be multi-signed by all participants. A confirmed snapshot is irrevocable — it cannot be rolled back. The latest confirmed snapshot is what gets posted to L1 when a head is [closed](node:hydra-close), and what [contestation](node:hydra-contestation) is judged against."
+    },
+    {
+      "node": "cardano-scaling",
+      "depth": 1,
+      "title": "Who Builds It",
+      "narrative": "[Cardano Scaling](node:cardano-scaling) is the team that develops and maintains the Hydra Head protocol. Formerly part of IOG, they maintain the [hydra repository](https://github.com/cardano-scaling/hydra), the documentation at [hydra.family](https://hydra.family/head-protocol/), and related tooling.\n\nThe on-chain validators are written in Plutus-Tx, with the commit validator recently [migrated to Aiken](node:aiken) for a 20-50% cost reduction."
+    }
+  ]
+}

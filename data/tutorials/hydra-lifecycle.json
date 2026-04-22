@@ -1,0 +1,49 @@
+{
+  "id": "hydra-lifecycle",
+  "title": "Life of a Hydra Head",
+  "description": "Follow a head from initialization through fan-out: the five phases, the on-chain state machine, and what happens when things go wrong.",
+  "stops": [
+    {
+      "node": "hydra-init",
+      "depth": 2,
+      "title": "1. Initialization",
+      "narrative": "A head begins with [Init](node:hydra-init). A participant posts an init transaction on L1, declaring the head parameters: who the participants are, and how long the [contestation](node:hydra-contestation) period lasts.\n\nThe [Head validator](node:hydra-head-validator) — a Plutus [state machine](node:state-machine) — mints [participation tokens](node:hydra-participation-token): one per participant plus one state token. These NFTs prove membership and track the head's on-chain state."
+    },
+    {
+      "node": "hydra-commit",
+      "depth": 2,
+      "title": "2. Committing UTxOs",
+      "narrative": "During [Commit](node:hydra-commit), each participant selects which L1 UTxOs to lock into the head. These are moved to the commit validator — they leave L1 and will only return at [fan-out](node:hydra-fan-out).\n\nAll participants must commit before the head can [open](node:hydra-open). If someone doesn't commit, the head can be aborted and UTxOs returned.\n\nIncremental commits allow adding UTxOs to an already-open head. Incremental decommits allow withdrawing — both without closing."
+    },
+    {
+      "node": "hydra-open",
+      "depth": 2,
+      "title": "3. Open: The Fast Lane",
+      "narrative": "Once all commits are collected, the head transitions to [Open](node:hydra-open). This is where the magic happens.\n\nTransactions are submitted via the [WebSocket API](node:hydra-websocket-api), validated against the head's local UTxO set using the same [Plutus](node:plutus) rules as L1, and confirmed via [unanimous multi-signature](node:unanimous-consensus) on [snapshots](node:hydra-snapshot). Finality is immediate — sub-second latency, bounded only by network round-trip time between participants."
+    },
+    {
+      "node": "hydra-close",
+      "depth": 2,
+      "title": "4. Closing: Back to L1",
+      "narrative": "Any participant can unilaterally [close](node:hydra-close) the head at any time by posting the latest confirmed [snapshot](node:hydra-snapshot) to L1. This is the safety guarantee: you never need the other parties' cooperation to exit.\n\nThe [Head validator](node:hydra-head-validator) verifies the snapshot's multi-signature before accepting the close. The on-chain state transitions from Open to Closed, and the [contestation](node:hydra-contestation) period begins."
+    },
+    {
+      "node": "hydra-contestation",
+      "depth": 2,
+      "title": "Contestation: The Dispute Window",
+      "narrative": "[Contestation](node:hydra-contestation) is Hydra's dispute resolution mechanism. After a head is closed, a timer starts (configurable, minimum 12 hours on mainnet). During this window, any participant can *contest* by presenting a more recent multi-signed [snapshot](node:hydra-snapshot).\n\nThis prevents a malicious party from closing with an outdated snapshot to steal funds. The contestation deadline extends with each successful contest (at worst `(1+n) * period` where n = participants), ensuring everyone gets a fair chance to respond.\n\nIf no one contests, the posted snapshot stands as final."
+    },
+    {
+      "node": "hydra-fan-out",
+      "depth": 2,
+      "title": "5. Fan-Out: Settlement",
+      "narrative": "After the contestation period expires, any participant can post a [fan-out](node:hydra-fan-out) transaction. This distributes the head's final UTxO set back to L1 — each UTxO inside the head becomes a real L1 UTxO.\n\n[Participation tokens](node:hydra-participation-token) are burned, ensuring the head can only be finalized once. The head ceases to exist. The full cycle is complete: L1 → head → L1, with all intermediate transactions processed off-chain at L2 speed.\n\nThe on-chain [state machine](node:state-machine) transitions through Initial → Open → Closed → Final, enforced by the [Head validator](node:hydra-head-validator) at every step."
+    },
+    {
+      "node": "hydra-head-validator",
+      "depth": 2,
+      "title": "The On-Chain Guardian",
+      "narrative": "The [Head validator](node:hydra-head-validator) is the Plutus smart contract that governs the entire lifecycle on L1. It [implements a state machine](node:state-machine) with states Initial, Open, and Closed.\n\nAt each transition it verifies multi-signatures, snapshot hashes, and contestation logic. Originally written entirely in Plutus-Tx, the commit validator was migrated to [Aiken](node:aiken) (PlutusV3), reducing head-opening cost by 20% and abort cost by 50%.\n\nThe validator uses [reference inputs](node:reference-inputs) to read L1 state without consuming UTxOs, keeping contention low."
+    }
+  ]
+}

@@ -70,5 +70,17 @@
     "title": "Plutus V3 Upgrades",
     "description": "CIP-69, CIP-85, CIP-381 — smaller scripts, unified interfaces, and on-chain cryptography.",
     "file": "data/tutorials/plutus-v3-cips.json"
+  },
+  {
+    "id": "hydra-overview",
+    "title": "Hydra: Cardano's Layer 2",
+    "description": "What Hydra is, how it scales Cardano, and why isomorphic state channels matter.",
+    "file": "data/tutorials/hydra-overview.json"
+  },
+  {
+    "id": "hydra-lifecycle",
+    "title": "Life of a Hydra Head",
+    "description": "Follow a head from initialization through fan-out: the five phases, the on-chain state machine, and what happens when things go wrong.",
+    "file": "data/tutorials/hydra-lifecycle.json"
   }
 ]
