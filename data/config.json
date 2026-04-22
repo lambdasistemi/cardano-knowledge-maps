@@ -78,7 +78,7 @@
     "proposal": {
       "label": "Budget Proposal",
       "color": "#ffa657",
-      "shape": "tag"
+      "shape": "star"
     }
   }
 }
