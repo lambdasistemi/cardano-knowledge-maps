@@ -16,8 +16,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - uses: lambdasistemi/graph-browser/validate-action@main
-      - uses: lambdasistemi/graph-browser/build-action@main
+      - uses: lambdasistemi/graph-browser/validate-action@v1.0.0
+        with:
+          version: v1.0.0
+      - uses: lambdasistemi/graph-browser/build-action@v1.0.0
+        with:
+          version: v1.0.0
       - name: Deploy PR preview
         if: github.event_name == 'pull_request'
         run: npx surge site ${{ github.repository_owner }}-${{ github.event.repository.name }}-pr-${{ github.event.number }}.surge.sh --token ${{ secrets.SURGE_TOKEN }}
