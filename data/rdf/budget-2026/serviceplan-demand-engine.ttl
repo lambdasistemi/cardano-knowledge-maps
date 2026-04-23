@@ -284,7 +284,72 @@ n:org-serviceplan-group a cardano:Proposer ;
   gb:group gbgroup:organizations ;
   dcterms:description "Serviceplan Group — Europe's largest owner-managed agency group, 6,500 employees in 40+ countries, €866M revenue. Cannes Lions 2025 Independent Network of the Year (19 lions). Ad Age 2025 Independent Agency Network of the Year. Built the Masumi Network with NMKR (live on Cardano mainnet since November 2024, 25,000+ on-chain transactions, Cardano Foundation endorsement at WEF Davos 2025). Prior Cardano funding: Catalyst Fund 13 #1300132 (Masumi, 1.53M ADA distributed, complete) and Fund 14 #1400079 (Masumi 2.0, in progress)." ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
-  foaf:page <https://www.serviceplan.com/> .
+  foaf:page <https://www.serviceplan.com/> ;
+  rdfs:seeAlso <https://www.masumi.network/> ;
+  rdfs:seeAlso <https://milestones.projectcatalyst.io/projects/1300132> ;
+  rdfs:seeAlso <https://milestones.projectcatalyst.io/projects/1400079> .
+
+# -- Companion ecosystem nodes referenced by the proposal -----------------
+
+n:masumi-network a cardano:DApp ;
+  a gb:Node ;
+  a gbkind:protocol ;
+  gb:nodeId "masumi-network" ;
+  rdfs:label "Masumi Network" ;
+  gb:group gbgroup:protocols ;
+  dcterms:description "Decentralised AI-agent protocol on Cardano mainnet. Built by Serviceplan Group with NMKR; live since November 2024. 25,000+ on-chain transactions; the Cardano Foundation publicly endorsed it at WEF Davos 2025. Funded through Catalyst Fund 13 (#1300132, complete) and Fund 14 (#1400079, in progress)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.masumi.network/> ;
+  rdfs:seeAlso <https://milestones.projectcatalyst.io/projects/1300132> ;
+  rdfs:seeAlso <https://milestones.projectcatalyst.io/projects/1400079> .
+
+n:masumi-network cardano:maintainedBy n:org-serviceplan-group .
+n:masumi-network cardano:maintainedBy n:nmkr .
+
+n:nmkr a cardano:DeveloperTool ;
+  a gb:Node ;
+  a gbkind:tool ;
+  gb:nodeId "nmkr" ;
+  rdfs:label "NMKR" ;
+  gb:group gbgroup:tooling ;
+  dcterms:description "NFT-as-a-service platform on Cardano. Co-built the Masumi Network with Serviceplan Group; cited in the Serviceplan proposal as the technical credibility anchor for the agency's Cardano on-chain track record." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.nmkr.io/> ;
+  rdfs:seeAlso <https://docs.nmkr.io/> .
+
+n:money-2020 a cardano:GovernanceArtifact ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "money-2020" ;
+  rdfs:label "Money20/20 (Amsterdam)" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Premier European fintech and payments-industry conference. The Serviceplan proposal models the WP2 Kick-off campaign as event-centric orchestration around a Money20/20-Amsterdam-comparable anchor: pre-event LinkedIn targeting, in-event OOH and roundtables, post-event editorial flywheel via the Cardano Hub." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://europe.money2020.com/> .
+
+n:gartner-summit-london a cardano:GovernanceArtifact ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "gartner-summit-london" ;
+  rdfs:label "Gartner Application & Business Solutions Summit (London, 14-15 Sep 2026)" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Anchor event for the Serviceplan WP4 V2 Supply Chain Traceability vertical. Targets enterprise application leaders, supply-chain heads, and ESG/compliance decision-makers." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.gartner.com/en/conferences/emea/applications-uk> .
+
+n:wef-davos a cardano:GovernanceArtifact ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wef-davos" ;
+  rdfs:label "World Economic Forum Annual Meeting (Davos, 19-23 Jan 2027)" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "The Serviceplan WP3 Scale package funds a WEF Davos billboard placement as a general Cardano credibility signal — not vertical-specific. The Cardano Foundation has previously endorsed the Masumi Network at WEF Davos 2025." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.weforum.org/events/world-economic-forum-annual-meeting> .
+
+n:wp-serviceplan-kickoff cardano:runsIn n:money-2020 .
+n:wp-serviceplan-supply-chain cardano:runsIn n:gartner-summit-london .
+n:wp-serviceplan-scale cardano:runsIn n:wef-davos .
 
 n:demand-engine
   dcterms:description "Enterprise demand-generation system: the top-level artifact of the Serviceplan proposal. Drives the three-stage Attention → Proof → Qualified Leads funnel across pilot verticals and markets." ;

@@ -143,7 +143,11 @@ n:cardano-budget-2026 a cardano:BudgetProcess ;
   gb:group gbgroup:processes ;
   dcterms:description "The 2026 cycle of Cardano's CIP-1694 treasury budgeting process. Submission window opened 16 April 2026 and closes 8 May 2026 (UTC). Approved proposals enact via Treasury Withdrawal governance actions gated by Net Change Limit and Budget Info Actions (DRep 50% + CC 2/3)." ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
-  foaf:page <https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026> .
+  foaf:page <https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026> ;
+  rdfs:seeAlso <https://www.intersectmbo.org/> ;
+  rdfs:seeAlso <https://cips.cardano.org/cip/CIP-1694> .
+
+n:cardano-budget-2026 cardano:codifiedIn n:cardano-2030-strategy .
 
 n:cardano-budget-2026 cardano:succeeds n:treasury-budgeting .
 [] a rdf:Statement ;
@@ -161,7 +165,9 @@ n:pillar-1-infrastructure a cardano:StrategicPillar ;
   rdfs:label "Pillar 1 — Infrastructure & Research Excellence" ;
   gb:group gbgroup:concepts ;
   dcterms:description "Keep Cardano secure, fast, and interoperable so it can host more economic activity. Covers L1 protocol improvements, L2/cross-chain interop, formal methods, and research-led delivery." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> ;
+  rdfs:seeAlso <https://iohk.io/en/research/library/> .
 
 n:pillar-2-adoption a cardano:StrategicPillar ;
   a gb:Node ;
@@ -170,7 +176,8 @@ n:pillar-2-adoption a cardano:StrategicPillar ;
   rdfs:label "Pillar 2 — Adoption & Utility" ;
   gb:group gbgroup:concepts ;
   dcterms:description "Drive widespread, non-speculative utility by focusing on high-value industry verticals (DeFi, RWA, Supply Chain, Payments), superior UX, and enterprise-grade security." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
 
 n:pillar-3-talent a cardano:StrategicPillar ;
   a gb:Node ;
@@ -179,7 +186,8 @@ n:pillar-3-talent a cardano:StrategicPillar ;
   rdfs:label "Pillar 3 — Talent & Builder Ecosystem" ;
   gb:group gbgroup:concepts ;
   dcterms:description "Cultivate a skilled developer base and the tooling, documentation, and onboarding pathways that retain and grow it." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
 
 n:pillar-4-community a cardano:StrategicPillar ;
   a gb:Node ;
@@ -188,7 +196,8 @@ n:pillar-4-community a cardano:StrategicPillar ;
   rdfs:label "Pillar 4 — Community & Ecosystem Growth" ;
   gb:group gbgroup:concepts ;
   dcterms:description "Drive global engagement through a market-centric approach, cultivate a skilled developer base, and proactively demonstrate ecosystem value." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
 
 n:pillar-5-sustainability a cardano:StrategicPillar ;
   a gb:Node ;
@@ -197,7 +206,15 @@ n:pillar-5-sustainability a cardano:StrategicPillar ;
   rdfs:label "Pillar 5 — Ecosystem Sustainability & Resilience" ;
   gb:group gbgroup:concepts ;
   dcterms:description "Ensure the long-term financial health and operational integrity of the network: structural ADA demand, treasury sustainability, diversified SPO economics, L2/L1 value retention." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
+
+# Each pillar is a constituent of the Cardano 2030 Strategy Framework.
+n:pillar-1-infrastructure cardano:codifiedIn n:cardano-2030-strategy .
+n:pillar-2-adoption       cardano:codifiedIn n:cardano-2030-strategy .
+n:pillar-3-talent         cardano:codifiedIn n:cardano-2030-strategy .
+n:pillar-4-community      cardano:codifiedIn n:cardano-2030-strategy .
+n:pillar-5-sustainability cardano:codifiedIn n:cardano-2030-strategy .
 
 # -- Cardano 2030 framework KPIs ------------------------------------------
 
@@ -210,7 +227,11 @@ n:kpi-tvl a cardano:StrategyKPI ;
   cardano:kpiCurrentValue "$200M" ;
   cardano:kpiTargetValue "$3B by 2030" ;
   dcterms:description "Total Value Locked across Cardano DeFi and RWA protocols. Adoption KPI in the Cardano 2030 Strategy Framework." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> ;
+  rdfs:seeAlso <https://defillama.com/chain/Cardano> .
+
+n:kpi-tvl cardano:codifiedIn n:cardano-2030-strategy .
 
 n:kpi-monthly-transactions a cardano:StrategyKPI ;
   a gb:Node ;
@@ -221,7 +242,11 @@ n:kpi-monthly-transactions a cardano:StrategyKPI ;
   cardano:kpiCurrentValue "800k" ;
   cardano:kpiTargetValue "27M by 2030" ;
   dcterms:description "Monthly on-chain transactions on Cardano mainnet. Adoption KPI in the Cardano 2030 Strategy Framework." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> ;
+  rdfs:seeAlso <https://cexplorer.io/> .
+
+n:kpi-monthly-transactions cardano:codifiedIn n:cardano-2030-strategy .
 
 n:kpi-mau a cardano:StrategyKPI ;
   a gb:Node ;
@@ -232,7 +257,10 @@ n:kpi-mau a cardano:StrategyKPI ;
   cardano:kpiCurrentValue "100k–300k" ;
   cardano:kpiTargetValue "1M by 2030" ;
   dcterms:description "Monthly active users (distinct active wallets) on Cardano. Adoption KPI in the Cardano 2030 Strategy Framework." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
+
+n:kpi-mau cardano:codifiedIn n:cardano-2030-strategy .
 
 n:kpi-annual-protocol-revenue a cardano:StrategyKPI ;
   a gb:Node ;
@@ -243,7 +271,10 @@ n:kpi-annual-protocol-revenue a cardano:StrategyKPI ;
   cardano:kpiCurrentValue "3.5M ADA" ;
   cardano:kpiTargetValue "≥16M ADA by 2030" ;
   dcterms:description "Annual protocol fee revenue. Primary KPI in the Cardano 2030 Strategy Framework — implies ~4.6× growth from the current baseline." ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
+
+n:kpi-annual-protocol-revenue cardano:codifiedIn n:cardano-2030-strategy .
 
 # -- Budget cost categories ----------------------------------------------
 
@@ -311,4 +342,68 @@ n:org-intersect a cardano:GovernanceOrganization ;
   gb:group gbgroup:actors ;
   dcterms:description "The Intersect member-based organisation: the canonical administrator for Cardano Budget 2026 proposals. Provides milestone oversight, smart-contract-based disbursement, third-party reviews and reporting; takes a percentage budget administration fee on each proposal it administers." ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
-  foaf:page <https://www.intersectmbo.org/> .
+  foaf:page <https://www.intersectmbo.org/> ;
+  rdfs:seeAlso <https://docs.intersectmbo.org/> .
+
+# =========================================================================
+#  Cross-cutting reference concepts (Cardano 2030 framework, partner-chain
+#  ecosystem peers, Cardano scaling research)
+# =========================================================================
+
+n:cardano-2030-strategy a cardano:GovernanceArtifact ;
+  a gb:Node ;
+  a gbkind:artifact ;
+  gb:nodeId "cardano-2030-strategy" ;
+  rdfs:label "Cardano 2030 Strategy Framework" ;
+  gb:group gbgroup:framework ;
+  dcterms:description "The Intersect-published strategic framework that every Cardano Budget proposal must align with. Defines five pillars (Infrastructure & Research Excellence, Adoption & Utility, Talent & Builder Ecosystem, Community & Ecosystem Growth, Ecosystem Sustainability & Resilience), the four headline KPIs (TVL → $3B, Monthly Transactions → 27M, MAU → 1M, Annual Protocol Revenue → ≥16M ADA), and the four high-value verticals (DeFi, RWA, Supply Chain, Payments)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> ;
+  rdfs:seeAlso <https://docs.intersectmbo.org/> ;
+  rdfs:seeAlso <https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026> .
+
+n:ouroboros-leios a cardano:L2Protocol ;
+  a gb:Node ;
+  a gbkind:protocol ;
+  gb:nodeId "ouroboros-leios" ;
+  rdfs:label "Ouroboros Leios" ;
+  gb:group gbgroup:protocols ;
+  dcterms:description "Throughput-focused extension of the Ouroboros family that decouples transaction diffusion (input blocks), endorsement (endorsement blocks) and ranking (ranking blocks) into separate concurrent pipelines. Designed to push Cardano mainnet toward thousands of TPS without changing the underlying security model. Composes with Praos, Peras and Tachýs." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://iohk.io/en/research/library/> ;
+  rdfs:seeAlso <https://docs.cardano.org/> .
+
+n:ouroboros-peras a cardano:L2Protocol ;
+  a gb:Node ;
+  a gbkind:protocol ;
+  gb:nodeId "ouroboros-peras" ;
+  rdfs:label "Ouroboros Peras" ;
+  gb:group gbgroup:protocols ;
+  dcterms:description "Fast-finality extension to Ouroboros that adds a voting layer on top of Praos. Existing slot-leadership remains unchanged, but a quorum of stakeholders signs blocks shortly after they appear, giving sub-minute settlement assurance instead of the multi-epoch security delay of pure Praos. Composes with Leios and Tachýs." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://iohk.io/en/research/library/> ;
+  rdfs:seeAlso <https://docs.cardano.org/> .
+
+n:midnight a cardano:L2Protocol ;
+  a gb:Node ;
+  a gbkind:protocol ;
+  gb:nodeId "midnight" ;
+  rdfs:label "Midnight" ;
+  gb:group gbgroup:protocols ;
+  dcterms:description "Cardano's data-protection partner chain. Uses zero-knowledge proofs (Halo 2 / shielded transactions) to give applications selective disclosure: confidential by default, with controlled, regulator-compatible exposure when needed. Launched March 2026 as the first production Cardano partner chain focused on confidentiality. The shielded-iAsset deliverable in the Indigo proposal is built to run here." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://midnight.network/> ;
+  rdfs:seeAlso <https://docs.midnight.network/> .
+
+n:apex-fusion a cardano:GovernanceOrganization ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "apex-fusion" ;
+  rdfs:label "Apex Fusion Foundation" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Builder of the Vector chain — the first Cardano-derived high-performance partner chain in production (late 2025). Apex Fusion is the institutional partner backing Vector and a co-proposer (via AFF) on the Partner Chain Factory submission to Cardano Budget 2026." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://apexfusion.org/> ;
+  rdfs:seeAlso <https://foundation.apexfusion.org/> .
+
+n:apex-fusion cardano:maintainedBy n:org-apex-fusion-foundation .
