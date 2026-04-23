@@ -1,5 +1,6 @@
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
 @prefix gb:      <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
@@ -11,109 +12,458 @@
 
 # =========================================================================
 #  Cardano Budget 2026 — Proposal: Partner Chain Factory (Ouroboros Tachýs)
-#  Proposer: Ensurable Systems Ltd  |  Request: 13,150,479 ADA
+#  Proposer: Ensurable Systems Ltd (lead, six-partner consortium)
+#  Request: 13,150,479 ADA
 #  https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026/69e8c0e2ae91c89d305701f5
 # =========================================================================
 
-# -- Edges ----------------------------------------------------------------
+# -- Proposal-level facts --------------------------------------------------
 
-n:bp-partner-chain-factory cardano:submittedBy n:org-ensurable-systems .
+n:bp-partner-chain-factory a cardano:BudgetProposal ;
+  a gb:Node ;
+  a gbkind:proposal ;
+  gb:nodeId "bp-partner-chain-factory" ;
+  rdfs:label "Budget 2026 Proposal — Partner Chain Factory (Ouroboros Tachýs)" ;
+  gb:group gbgroup:proposals ;
+  cardano:proposalIdentifier "69e8c0e2ae91c89d305701f5" ;
+  cardano:requestedAdaAmount "13150479"^^xsd:decimal ;
+  cardano:requestedUsdAmount "3287620"^^xsd:decimal ;
+  cardano:adaUsdRate "0.25"^^xsd:decimal ;
+  cardano:estimatedDurationMonths "15"^^xsd:integer ;
+  cardano:submittedOn "2026-04-22T12:36:00Z"^^xsd:dateTime ;
+  cardano:applicantType "Company" ;
+  dcterms:description "15-month, six-partner consortium delivering an open-source Partner Chain Factory built on the Ouroboros Tachýs consensus variant: 1-2s confirmation, ~40× mainnet throughput, formal security analysis, automated deployment ≤4h, Cardano⇄partner-chain bridge with independent security audit, complete tooling and documentation, and two demonstrators (Vector internal testnet then Vector mainnet). Toolkit handed over to Intersect-maintained Cardano repositories at project close. Surplus ADA from FX above $0.25 returned to treasury." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026/69e8c0e2ae91c89d305701f5> ;
+  rdfs:seeAlso <https://github.com/cardano-foundation/CIPs/pull/1149> .
+
+n:bp-partner-chain-factory cardano:partOfBudgetProcess n:cardano-budget-2026 .
+n:bp-partner-chain-factory cardano:proposedBy n:org-ensurable-systems .
+n:bp-partner-chain-factory cardano:administeredBy n:org-intersect .
+
+n:bp-partner-chain-factory cardano:alignsWithPillar n:pillar-1-infrastructure .
+n:bp-partner-chain-factory cardano:alignsWithPillar n:pillar-2-adoption .
+n:bp-partner-chain-factory cardano:alignsWithPillar n:pillar-4-community .
+n:bp-partner-chain-factory cardano:alignsWithPillar n:pillar-5-sustainability .
+
+n:bp-partner-chain-factory cardano:supportsKPI n:kpi-tvl .
+n:bp-partner-chain-factory cardano:supportsKPI n:kpi-monthly-transactions .
+n:bp-partner-chain-factory cardano:supportsKPI n:kpi-mau .
+n:bp-partner-chain-factory cardano:supportsKPI n:kpi-annual-protocol-revenue .
 [] a rdf:Statement ;
   rdf:subject n:bp-partner-chain-factory ;
-  rdf:predicate cardano:submittedBy ;
-  rdf:object n:org-ensurable-systems ;
-  dcterms:description "Ensurable Systems Ltd submitted the Partner Chain Factory proposal to Cardano Budget 2026 on 2026-04-22." .
+  rdf:predicate cardano:supportsKPI ;
+  rdf:object n:kpi-annual-protocol-revenue ;
+  dcterms:description "Five active partner chains at base estimate would contribute 150,000-250,000 ADA annually in direct mainnet fee revenue (4-7% of the current 3.5M ADA baseline). Bridge transactions, settlement anchoring and SPO registration are the three structural channels." .
 
-n:bp-partner-chain-factory cardano:fundingFrom n:treasury-budgeting .
-[] a rdf:Statement ;
-  rdf:subject n:bp-partner-chain-factory ;
-  rdf:predicate cardano:fundingFrom ;
-  rdf:object n:treasury-budgeting ;
-  dcterms:description "The proposal requests 13,150,479 ADA (~USD 3.29M at 0.25) from the Cardano Treasury via the Budget 2026 process." .
+# -- New KPIs proposed by this proposal -----------------------------------
+
+n:bp-partner-chain-factory cardano:proposesNewKPI n:kpi-active-partner-chains .
+n:bp-partner-chain-factory cardano:proposesNewKPI n:kpi-cross-chain-bridge-volume .
+n:bp-partner-chain-factory cardano:proposesNewKPI n:kpi-ecosystem-builder-pipeline .
+
+n:kpi-active-partner-chains a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-active-partner-chains" ;
+  rdfs:label "KPI — Active Partner Chains" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "2 (Vector and Midnight)" ;
+  cardano:kpiTargetValue "10 by 2030" ;
+  dcterms:description "Number of monthly active Cardano-derived partner chains. Proposed by the Partner Chain Factory proposal as a missing framework KPI." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:kpi-cross-chain-bridge-volume a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-cross-chain-bridge-volume" ;
+  rdfs:label "KPI — Cross-chain Bridge Volume (monthly)" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "Not systematically tracked" ;
+  cardano:kpiTargetValue "≥$50M monthly by 2030" ;
+  dcterms:description "Total ADA-equivalent value bridged between Cardano mainnet and partner chains or external chains per month. Required so the framework can distinguish a thriving partner-chain ecosystem from a fragmented one where value leaks rather than recirculates." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:kpi-ecosystem-builder-pipeline a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-ecosystem-builder-pipeline" ;
+  rdfs:label "KPI — Ecosystem Builder Pipeline" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "1 (AFF/Vector)" ;
+  cardano:kpiTargetValue "20 by 2030" ;
+  dcterms:description "Number of distinct partner-chain builder teams in active engagement with the Cardano partner-chain ecosystem." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+# -- Six-partner consortium ------------------------------------------------
+
+n:org-ensurable-systems a cardano:Proposer ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-ensurable-systems" ;
+  rdfs:label "Ensurable Systems (ES)" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Lead entity for the Partner Chain Factory consortium. Founders: Kevin Hammond PhD (Technical Delivery Lead) and Philipp Kant PhD. Team experience: built the Cardano node, implemented Ouroboros, delivered every hard fork from Byron through Plomin." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://ensurable.systems> .
+
+n:org-well-typed a cardano:Proposer ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-well-typed" ;
+  rdfs:label "Well Typed (WT)" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Consortium partner. Lead: Duncan Coutts. Long-standing Haskell consultancy with deep IOG codebase familiarity; leads WP2 (Tachýs design and implementation)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://well-typed.com/> .
+
+n:org-pnsol a cardano:Proposer ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-pnsol" ;
+  rdfs:label "Predictable Network Solutions (PNSol)" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Consortium partner. Network performance and adversarial-robustness specialists; leads WP3 (system integration, deployment automation, DDoS validation)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.pnsol.com/> .
+
+n:org-apex-fusion-foundation a cardano:Proposer ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-apex-fusion-foundation" ;
+  rdfs:label "Apex Fusion Foundation (AFF)" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Consortium partner. Christopher Greenwood (Programme Delivery Lead, COO). Operator of the Vector chain — launched late 2025 as the first Cardano-derived partner chain in production. Has previously received Cardano ecosystem funding for Vector." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://foundation.apexfusion.org/> .
+
+n:org-hal8 a cardano:Proposer ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-hal8" ;
+  rdfs:label "HAL8" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Consortium partner. Leads WP5 (tooling standards), WP6 (documentation/knowledge management), WP7 (demonstrators) and WP8 (dissemination)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://hal8.io/> .
+
+n:org-ethernal a cardano:Proposer ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-ethernal" ;
+  rdfs:label "Ethernal (ETNL)" ;
+  gb:group gbgroup:organizations ;
+  dcterms:description "Consortium partner. Leads WP4 (Cardano ⇄ Tachýs ⇄ EVM bridge). Existing relationships across Polygon, Avail and Cosmos for EVM-side ecosystem outreach." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://ethernal.tech/> .
+
+# -- Programme milestones MS1-MS9 (month markers) -------------------------
+
+n:pcf-ms1 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms1" ;
+  rdfs:label "PCF Programme Milestone MS1 (M1)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "1"^^xsd:integer ;
+  dcterms:description "Project kickoff: integrated delivery plan, partner support environment, dissemination website live." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms2 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms2" ;
+  rdfs:label "PCF Programme Milestone MS2 (M3)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "3"^^xsd:integer ;
+  dcterms:description "Tachýs CIP accepted; cardano-ledger spec PR submitted; bridge architecture D4.1 published." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms3 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms3" ;
+  rdfs:label "PCF Programme Milestone MS3 (M5)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "5"^^xsd:integer ;
+  dcterms:description "Tooling-incompatibilities CPS published (D5.1); first CF outreach session for wallet/explorer teams." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms4 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms4" ;
+  rdfs:label "PCF Programme Milestone MS4 (M6)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "6"^^xsd:integer ;
+  dcterms:description "First builder workshop; UTXO-to-UTXO bridge operational; PNSol no-Praos-regression report." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms5 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms5" ;
+  rdfs:label "PCF Programme Milestone MS5 (M8)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "8"^^xsd:integer ;
+  dcterms:description "Genesis quick-start ≤4h: end-to-end automated deployment of a new Tachýs partner chain in the current Cardano era." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms6 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms6" ;
+  rdfs:label "PCF Programme Milestone MS6 (M9)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "9"^^xsd:integer ;
+  dcterms:description "Mid-programme review (D1.2 quarterly DRep report); UTXO-to-EVM bridge for EVM builder access." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms7 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms7" ;
+  rdfs:label "PCF Programme Milestone MS7 (M12)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "12"^^xsd:integer ;
+  dcterms:description "Implementation merged with no Praos regressions; bridge audited (all critical/high resolved); Tachýs formal security analysis published; tooling CIP accepted." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms8 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms8" ;
+  rdfs:label "PCF Programme Milestone MS8 (M13)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "13"^^xsd:integer ;
+  dcterms:description "Vector internal testnet running Tachýs: deployment ≤4h; throughput ≥10× mainnet; finality ≤5s; slot fill rate ≥95%; second builder workshop." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pcf-ms9 a cardano:WorkPackageMilestone ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pcf-ms9" ;
+  rdfs:label "PCF Programme Milestone MS9 (M15)" ;
+  gb:group gbgroup:concepts ;
+  cardano:milestoneMonth "15"^^xsd:integer ;
+  dcterms:description "Project close: Tachýs deployed to Vector mainnet (no unplanned downtime); upstream PR submitted to Intersect-maintained node repo; institutional reference configuration reviewed; documentation portal handed over to Intersect; ≥3 external builder teams engaged; surplus ADA from FX returned to treasury." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+# -- Work packages and budget --------------------------------------------
+
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-1-management .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-2-tachys-design .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-3-system-integration .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-4-bridging .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-5-tooling-standards .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-6-documentation .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-7-demonstrators .
+n:bp-partner-chain-factory cardano:hasWorkPackage n:wp-pcf-8-dissemination .
+
+n:wp-pcf-1-management a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-1-management" ;
+  rdfs:label "PCF WP1 — Project Management and Evaluation" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "2105828.9"^^xsd:decimal ;
+  cardano:proposalNature "Non-technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "Delivery coordination across six partners and 15 months: integrated delivery plan, RAID log, monthly Cardano Forum updates, quarterly DRep reports, Intersect upstream contribution management, builder ecosystem engagement, final evaluation. 28.30 person-months — 16% of total project effort, framed as the insurance premium on a 12.7M ADA technical investment." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-1-management cardano:hasWorkPackageMilestone n:pcf-ms1 .
+n:wp-pcf-1-management cardano:hasWorkPackageMilestone n:pcf-ms2 .
+n:wp-pcf-1-management cardano:hasWorkPackageMilestone n:pcf-ms6 .
+n:wp-pcf-1-management cardano:hasWorkPackageMilestone n:pcf-ms9 .
+
+n:wp-pcf-2-tachys-design a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-2-tachys-design" ;
+  rdfs:label "PCF WP2 — Ouroboros Tachýs Design and Implementation" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "1333328"^^xsd:decimal ;
+  cardano:proposalNature "Technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "CIP accepted by M3; production-quality implementation; consensus selection mechanism (Praos/Tachýs toggle) with no Praos regressions; stabilised parameter surface; genesis quick-start in current era; formal security analysis. Led by Well Typed." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-2-tachys-design cardano:hasWorkPackageMilestone n:pcf-ms1 .
+n:wp-pcf-2-tachys-design cardano:hasWorkPackageMilestone n:pcf-ms2 .
+n:wp-pcf-2-tachys-design cardano:hasWorkPackageMilestone n:pcf-ms4 .
+n:wp-pcf-2-tachys-design cardano:hasWorkPackageMilestone n:pcf-ms5 .
+n:wp-pcf-2-tachys-design cardano:hasWorkPackageMilestone n:pcf-ms7 .
+
+n:wp-pcf-3-system-integration a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-3-system-integration" ;
+  rdfs:label "PCF WP3 — System Integration" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "1569994"^^xsd:decimal ;
+  cardano:proposalNature "Technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "Automated deployment tooling (local + AWS) in <4h; clean integration into Cardano node; Intersect CI/CD conformance; integration test suite; performance validation; empirical validation of DDoS mitigations; production-readiness knowledge base. Led by PNSol." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-3-system-integration cardano:hasWorkPackageMilestone n:pcf-ms4 .
+n:wp-pcf-3-system-integration cardano:hasWorkPackageMilestone n:pcf-ms5 .
+n:wp-pcf-3-system-integration cardano:hasWorkPackageMilestone n:pcf-ms7 .
+
+n:wp-pcf-4-bridging a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-4-bridging" ;
+  rdfs:label "PCF WP4 — Cardano Bridging Technology" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "3316655"^^xsd:decimal ;
+  cardano:proposalNature "Technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "The largest WP at 35 person-months. Production-grade open-source Cardano⇄Tachýs⇄EVM bridge: lock/burn + mint/unlock logic reviewed by ES/WT, protocol-level threat model, independent security audit with all critical/high resolved, UTXO-to-EVM to open EVM-builder access. All code open-sourced. Bridge latency target ≤60s. Led by Ethernal." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-4-bridging cardano:hasWorkPackageMilestone n:pcf-ms2 .
+n:wp-pcf-4-bridging cardano:hasWorkPackageMilestone n:pcf-ms4 .
+n:wp-pcf-4-bridging cardano:hasWorkPackageMilestone n:pcf-ms6 .
+n:wp-pcf-4-bridging cardano:hasWorkPackageMilestone n:pcf-ms7 .
+
+n:wp-pcf-5-tooling-standards a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-5-tooling-standards" ;
+  rdfs:label "PCF WP5 — Partner Chain Tooling Standards and Ecosystem Integration" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "1166662"^^xsd:decimal ;
+  cardano:proposalNature "Technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "CPS describing tooling incompatibilities; CIP defining a machine-readable network configuration schema; interface conventions; bridge integration conventions (based on D4.1); conformance checklist; validate against Vector testnet demonstrator. ≥3 wallet/explorer teams engaged. Led by HAL8." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-5-tooling-standards cardano:hasWorkPackageMilestone n:pcf-ms3 .
+n:wp-pcf-5-tooling-standards cardano:hasWorkPackageMilestone n:pcf-ms7 .
+
+n:wp-pcf-6-documentation a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-6-documentation" ;
+  rdfs:label "PCF WP6 — Documentation and Knowledge Management" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "562497.75"^^xsd:decimal ;
+  cardano:proposalNature "Non-technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "Unified documentation portal from M1; formal spec PR to cardano-ledger; protocol design docs; developer/implementation docs in machine-readable formats (for agentic AI); end-to-end builder manuals (D6.5) tested by an external builder; portal handover to Intersect at project close. Led by HAL8." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-6-documentation cardano:hasWorkPackageMilestone n:pcf-ms2 .
+n:wp-pcf-6-documentation cardano:hasWorkPackageMilestone n:pcf-ms3 .
+n:wp-pcf-6-documentation cardano:hasWorkPackageMilestone n:pcf-ms7 .
+n:wp-pcf-6-documentation cardano:hasWorkPackageMilestone n:pcf-ms9 .
+
+n:wp-pcf-7-demonstrators a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-7-demonstrators" ;
+  rdfs:label "PCF WP7 — Tachýs Demonstrators" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "1903326"^^xsd:decimal ;
+  cardano:proposalNature "Technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "Integrate Tachýs into Vector internal testnet (validate KPIs); public testnet on PreProd/Preview with explorer/bridge/CLI; gate T7.2 on ≥95% slot fill over 4 weeks + no critical RAID + audit complete; deploy to Vector mainnet; institutional reference configuration reviewed by external institutional contact. Led by HAL8." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-7-demonstrators cardano:hasWorkPackageMilestone n:pcf-ms8 .
+n:wp-pcf-7-demonstrators cardano:hasWorkPackageMilestone n:pcf-ms9 .
+
+n:wp-pcf-8-dissemination a cardano:WorkPackage ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "wp-pcf-8-dissemination" ;
+  rdfs:label "PCF WP8 — Dissemination, Exploitation and Sustainability" ;
+  gb:group gbgroup:concepts ;
+  cardano:wpAdaAmount "809164.15"^^xsd:decimal ;
+  cardano:proposalNature "Non-technical" ;
+  cardano:initiativeStatus "New Initiative" ;
+  dcterms:description "Upstream PR to Intersect-maintained node repo; open-source bridge/tooling release; website + content programme + Cardano Foundation as amplification partner; two builder workshops (M6, M13); EVM ecosystem outreach via ETNL's Polygon/Avail/Cosmos relationships; structured exploitation analysis (RWA, DeFi, supply chain provenance, payments) reviewed externally; four-condition toolkit handover to Intersect. Led by HAL8 (T8.1 ES/WT)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:wp-pcf-8-dissemination cardano:hasWorkPackageMilestone n:pcf-ms1 .
+n:wp-pcf-8-dissemination cardano:hasWorkPackageMilestone n:pcf-ms2 .
+n:wp-pcf-8-dissemination cardano:hasWorkPackageMilestone n:pcf-ms4 .
+n:wp-pcf-8-dissemination cardano:hasWorkPackageMilestone n:pcf-ms6 .
+n:wp-pcf-8-dissemination cardano:hasWorkPackageMilestone n:pcf-ms7 .
+n:wp-pcf-8-dissemination cardano:hasWorkPackageMilestone n:pcf-ms9 .
+
+n:bp-partner-chain-factory cardano:hasBudgetLineItem n:bli-pcf-intersect-fee .
+n:bli-pcf-intersect-fee a cardano:BudgetLineItem ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "bli-pcf-intersect-fee" ;
+  rdfs:label "PCF line — Intersect Budget Administration fee" ;
+  gb:group gbgroup:concepts ;
+  cardano:lineItemAdaAmount "383024"^^xsd:decimal ;
+  dcterms:description "Intersect Budget Administration fee: 383,024 ADA / $95,756 (ADA/USD 0.25)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:bli-pcf-intersect-fee cardano:lineItemPerformedBy n:org-intersect .
+
+# -- Repayment clause -----------------------------------------------------
+
+n:bp-partner-chain-factory cardano:hasRepaymentClause n:repay-pcf-fx-and-unspent .
+
+n:repay-pcf-fx-and-unspent a cardano:RepaymentClause ;
+  a gb:Node ;
+  a gbkind:mechanism ;
+  gb:nodeId "repay-pcf-fx-and-unspent" ;
+  rdfs:label "PCF — surplus from FX above $0.25 + unspent ADA" ;
+  gb:group gbgroup:mechanisms ;
+  dcterms:description "Drawdown happens at actual conversion rates. Any positive difference between the assumed $0.25 rate and the rate at drawdown is identified at final reconciliation and returned in full at project close. Unspent ADA is returned at the same time." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+n:repay-pcf-fx-and-unspent cardano:repaysToTreasury n:treasury-budgeting .
+
+# -- Comment thread -------------------------------------------------------
+
+n:bp-partner-chain-factory cardano:hasComment n:comment-pcf-1 .
+
+n:comment-pcf-1 a cardano:ProposalComment ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "comment-pcf-1" ;
+  rdfs:label "Comment — Nimuë DRep on PCF (in favour)" ;
+  gb:group gbgroup:concepts ;
+  cardano:commentBy "Nimuë Lady of the Lake Pool (drep1y...6xdgl4)" ;
+  cardano:commentPostedOn "2026-04-22T13:00:00Z"^^xsd:dateTime ;
+  dcterms:description "In favor of this!" ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+# -- Domain anchors and deliverables (existing structure preserved) -------
 
 n:bp-partner-chain-factory cardano:deliversArtifact n:partner-chain-factory-toolkit .
 [] a rdf:Statement ;
   rdf:subject n:bp-partner-chain-factory ;
   rdf:predicate cardano:deliversArtifact ;
   rdf:object n:partner-chain-factory-toolkit ;
-  dcterms:description "Deliverable is an open-source, Intersect-governed toolkit that lets builders deploy new Cardano-derived partner chains in hours rather than months." .
+  dcterms:description "Open-source toolkit that lets builders deploy new Cardano-derived partner chains in hours rather than months. Maintained inside the Intersect-governed Cardano codebase." .
 
 n:partner-chain-factory-toolkit cardano:builtOn n:ouroboros-tachys .
 [] a rdf:Statement ;
   rdf:subject n:partner-chain-factory-toolkit ;
   rdf:predicate cardano:builtOn ;
   rdf:object n:ouroboros-tachys ;
-  dcterms:description "The toolkit produces chains running Ouroboros Tachýs — a high-performance variant delivering 1–2 second block confirmation and ~40× mainnet throughput." .
+  dcterms:description "Toolkit ships chains running Ouroboros Tachýs — 1-2s confirmation, ~40× mainnet throughput." .
 
 n:ouroboros-tachys cardano:variantOf n:ouroboros-praos .
 [] a rdf:Statement ;
   rdf:subject n:ouroboros-tachys ;
   rdf:predicate cardano:variantOf ;
   rdf:object n:ouroboros-praos ;
-  dcterms:description "Ouroboros Tachýs is a performance-oriented variant of Ouroboros Praos, retaining Praos-equivalent security properties while increasing throughput and reducing confirmation latency." .
+  dcterms:description "Performance-oriented variant of Ouroboros Praos retaining Praos-equivalent security." .
 
 n:vector-chain cardano:builtOn n:ouroboros-tachys .
 [] a rdf:Statement ;
   rdf:subject n:vector-chain ;
   rdf:predicate cardano:builtOn ;
   rdf:object n:ouroboros-tachys ;
-  dcterms:description "Vector, launched late 2025 as the first Cardano-derived partner chain in production, is the reference validation of the Ouroboros Tachýs design the factory industrialises." .
+  dcterms:description "Vector — first Cardano-derived partner chain in production, late 2025; reference validation for the Tachýs design." .
 
 n:partner-chain-factory-toolkit cardano:produces n:partner-chain .
-[] a rdf:Statement ;
-  rdf:subject n:partner-chain-factory-toolkit ;
-  rdf:predicate cardano:produces ;
-  rdf:object n:partner-chain ;
-  dcterms:description "The factory emits partner-chain instances: application-specific chains that settle to Cardano mainnet and connect via production-grade bridging infrastructure." .
-
 n:partner-chain cardano:settlesOn n:cardano-mainnet .
-[] a rdf:Statement ;
-  rdf:subject n:partner-chain ;
-  rdf:predicate cardano:settlesOn ;
-  rdf:object n:cardano-mainnet ;
-  dcterms:description "Partner chains use Cardano mainnet as their settlement layer; their security is ultimately anchored to Cardano's consensus." .
-
 n:partner-chain cardano:requiresStakeIn n:ada .
-[] a rdf:Statement ;
-  rdf:subject n:partner-chain ;
-  rdf:predicate cardano:requiresStakeIn ;
-  rdf:object n:ada ;
-  dcterms:description "Partner chains built by the factory require ADA for stake, generating structural ADA demand independent of L1 transaction volume." .
-
 n:partner-chain cardano:connectsVia n:cardano-bridge .
-[] a rdf:Statement ;
-  rdf:subject n:partner-chain ;
-  rdf:predicate cardano:connectsVia ;
-  rdf:object n:cardano-bridge ;
-  dcterms:description "Partner chains produced by the factory ship with production-grade bridging infrastructure to move assets and messages between the partner chain and Cardano mainnet." .
-
 n:cardano-bridge gbedge:generates n:treasury-budgeting .
-[] a rdf:Statement ;
-  rdf:subject n:cardano-bridge ;
-  rdf:predicate gbedge:generates ;
-  rdf:object n:treasury-budgeting ;
-  dcterms:description "Bridging activity between partner chains and mainnet generates fees, contributing to treasury sustainability — part of the proposal's treasury-return argument." .
 
-# -- Nodes ----------------------------------------------------------------
-
-n:bp-partner-chain-factory
-  dcterms:description "Cardano Budget 2026 proposal requesting 13,150,479 ADA (USD ~3.29M @ 0.25) to build a reusable, open-source Partner Chain Factory. The factory bundles the Ouroboros Tachýs consensus variant, chain-bootstrapping tooling, and production-grade bridging so new partner chains can be deployed in hours rather than months, and started directly in the current Cardano era. The deliverable is to be open-source and maintained inside the Intersect-governed Cardano codebase. Submitted on 22/04/2026. Read Proposal: https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026/69e8c0e2ae91c89d305701f5" ;
-  gb:group gbgroup:proposals ;
-  rdfs:label "Budget 2026 Proposal — Partner Chain Factory" ;
-  gb:nodeId "bp-partner-chain-factory" ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
-  a gbkind:proposal ;
-  a gb:Node ;
-  foaf:page <https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026/69e8c0e2ae91c89d305701f5> .
-
-n:org-ensurable-systems
-  dcterms:description "Ensurable Systems Ltd — proposer of the Partner Chain Factory proposal (Budget 2026). The team states it built the Cardano node, implemented Ouroboros, and delivered every hard fork from Byron through Plomin." ;
-  gb:group gbgroup:organizations ;
-  rdfs:label "Ensurable Systems Ltd" ;
-  gb:nodeId "org-ensurable-systems" ;
-  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
-  a gbkind:actor ;
-  a gb:Node .
+# -- Domain nodes ---------------------------------------------------------
 
 n:partner-chain-factory-toolkit
   dcterms:description "Open-source toolkit delivered by the proposal: chain-bootstrapping templates, the Ouroboros Tachýs consensus implementation, and bridging infrastructure. Maintained within the Intersect-governed Cardano codebase; available to any builder without licence fee." ;
@@ -125,7 +475,7 @@ n:partner-chain-factory-toolkit
   a gb:Node .
 
 n:ouroboros-tachys
-  dcterms:description "A high-performance Ouroboros consensus variant targeting 1–2 second confirmation latency and ~40× Cardano mainnet throughput, while retaining Ouroboros security properties. Intended as the consensus engine for Cardano-derived partner chains produced by the factory." ;
+  dcterms:description "A high-performance Ouroboros consensus variant targeting 1-2 second confirmation latency and ~40× Cardano mainnet throughput. Designed to compose with Peras, Leios and Phalanx. Intended as the consensus engine for Cardano-derived partner chains produced by the factory." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Ouroboros Tachýs" ;
   gb:nodeId "ouroboros-tachys" ;
@@ -153,7 +503,7 @@ n:partner-chain
   a gb:Node .
 
 n:vector-chain
-  dcterms:description "Vector — launched in late 2025 as the first Cardano-derived partner chain in production. Cited in the Partner Chain Factory proposal as the existence proof for the Ouroboros Tachýs design the factory industrialises." ;
+  dcterms:description "Vector — launched in late 2025 as the first Cardano-derived partner chain in production. Operated by Apex Fusion Foundation; the existence proof for the Ouroboros Tachýs design the factory industrialises." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Vector Chain" ;
   gb:nodeId "vector-chain" ;
