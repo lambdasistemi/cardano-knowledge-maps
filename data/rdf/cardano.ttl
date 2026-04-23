@@ -1,687 +1,128 @@
-@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
 @prefix foaf:    <http://xmlns.com/foaf/0.1/> .
-@prefix org:     <http://www.w3.org/ns/org#> .
 @prefix prov:    <http://www.w3.org/ns/prov#> .
 @prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
-@prefix time:    <http://www.w3.org/2006/time#> .
-
-# -- Bridge prefixes (graph-browser vocabulary) --------------------------------
 @prefix gb:      <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
 @prefix gbkind:  <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
+@prefix gbgroup: <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
 @prefix gbedge:  <https://lambdasistemi.github.io/graph-browser/vocab/edges#> .
+@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
 @prefix n:       <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/> .
 
-# ==============================================================================
-# Ontology header
-# ==============================================================================
-
-<https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano> a owl:Ontology ;
-  rdfs:label "Cardano Domain Ontology" ;
-  dcterms:description "Cardano blockchain concepts grounded in standard W3C vocabularies (PROV-O, ORG, SKOS, OWL-Time, FOAF, Dublin Core). Designed for interoperability: the same triples can be queried by graph-browser, Protege, Oxigraph, or any SPARQL endpoint." ;
-  owl:versionInfo "0.1.0" ;
-  owl:imports
-    <http://www.w3.org/ns/prov-o#> ,
-    <http://www.w3.org/ns/org#> ,
-    <http://xmlns.com/foaf/0.1/> .
-
-# ==============================================================================
-# SKOS Concept Scheme — the Cardano governance taxonomy
-# ==============================================================================
-
-cardano:CardanoGovernanceScheme a skos:ConceptScheme ;
-  rdfs:label "Cardano Governance" ;
-  dcterms:description "Top-level concept scheme for CIP-1694 on-chain governance." .
-
-cardano:CardanoSmartContractScheme a skos:ConceptScheme ;
-  rdfs:label "Cardano Smart Contracts" ;
-  dcterms:description "Plutus platform, languages, EUTxO model, and tooling." .
-
-# ==============================================================================
-# Classes — Governance domain
-# ==============================================================================
-
-# -- Actors --------------------------------------------------------------------
-
-cardano:GovernanceActor a owl:Class ;
-  rdfs:label "Governance Actor" ;
-  rdfs:subClassOf foaf:Agent ;
-  dcterms:description "An entity that participates in Cardano on-chain governance." .
-
-cardano:DRep a owl:Class ;
-  rdfs:label "Delegated Representative" ;
-  rdfs:subClassOf cardano:GovernanceActor , org:Role ;
-  dcterms:description "A registered delegate who votes on governance actions on behalf of ada holders." .
-
-cardano:SPO a owl:Class ;
-  rdfs:label "Stake Pool Operator" ;
-  rdfs:subClassOf cardano:GovernanceActor , org:Role ;
-  dcterms:description "An operator of a Cardano stake pool who votes on hard forks and security-relevant parameter changes." .
-
-cardano:ConstitutionalCommittee a owl:Class ;
-  rdfs:label "Constitutional Committee" ;
-  rdfs:subClassOf cardano:GovernanceActor , org:FormalOrganization ;
-  dcterms:description "A body that evaluates governance actions for constitutional compliance." .
-
-cardano:AdaHolder a owl:Class ;
-  rdfs:label "Ada Holder" ;
-  rdfs:subClassOf cardano:GovernanceActor ;
-  dcterms:description "A holder of ada who can delegate voting power, delegate stake, submit governance actions, and register as a DRep." .
-
-cardano:GovernanceOrganization a owl:Class ;
-  rdfs:label "Governance Organization" ;
-  rdfs:subClassOf cardano:GovernanceActor , org:Organization ;
-  dcterms:description "An off-chain organization that supports governance (e.g. Intersect, Cardano Foundation)." .
-
-# -- Governance actions --------------------------------------------------------
-
-cardano:GovernanceAction a owl:Class ;
-  rdfs:label "Governance Action" ;
-  rdfs:subClassOf prov:Activity ;
-  dcterms:description "An on-chain proposal submitted by an ada holder that undergoes voting, ratification, and enactment." .
-
-cardano:GovernanceActionType a owl:Class ;
-  rdfs:label "Governance Action Type" ;
-  rdfs:subClassOf skos:Concept ;
-  skos:inScheme cardano:CardanoGovernanceScheme ;
-  dcterms:description "One of the seven categories of governance action defined by CIP-1694." .
-
-cardano:MotionOfNoConfidence a owl:Class ;
-  rdfs:label "Motion of No-Confidence" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:UpdateCommittee a owl:Class ;
-  rdfs:label "Update Committee / Threshold" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:NewConstitution a owl:Class ;
-  rdfs:label "New Constitution / Guardrails Script" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:HardForkInitiation a owl:Class ;
-  rdfs:label "Hard Fork Initiation" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:ProtocolParameterChange a owl:Class ;
-  rdfs:label "Protocol Parameter Changes" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:TreasuryWithdrawal a owl:Class ;
-  rdfs:label "Treasury Withdrawal" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:InfoAction a owl:Class ;
-  rdfs:label "Info Action" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-# -- Governance processes ------------------------------------------------------
-
-cardano:GovernanceProcess a owl:Class ;
-  rdfs:label "Governance Process" ;
-  rdfs:subClassOf prov:Activity ;
-  dcterms:description "A stage in the governance action lifecycle." .
-
-cardano:VotingProcess a owl:Class ;
-  rdfs:label "Voting" ;
-  rdfs:subClassOf cardano:GovernanceProcess .
-
-cardano:RatificationProcess a owl:Class ;
-  rdfs:label "Ratification" ;
-  rdfs:subClassOf cardano:GovernanceProcess .
-
-cardano:EnactmentProcess a owl:Class ;
-  rdfs:label "Enactment" ;
-  rdfs:subClassOf cardano:GovernanceProcess .
-
-cardano:BootstrapPhase a owl:Class ;
-  rdfs:label "Bootstrap Phase" ;
-  rdfs:subClassOf cardano:GovernanceProcess ;
-  dcterms:description "Initial governance phase where DRep participation was not required. Ended with Plomin hard fork." .
-
-cardano:TreasuryBudgeting a owl:Class ;
-  rdfs:label "Treasury Budgeting Process" ;
-  rdfs:subClassOf cardano:GovernanceProcess .
-
-# -- Mechanisms ----------------------------------------------------------------
-
-cardano:GovernanceMechanism a owl:Class ;
-  rdfs:label "Governance Mechanism" ;
-  dcterms:description "A rule or structure that governs how governance actions are evaluated, constrained, or ordered." .
-
-cardano:VotingThreshold a owl:Class ;
-  rdfs:label "Voting Threshold" ;
-  rdfs:subClassOf cardano:GovernanceMechanism ;
-  dcterms:description "A quorum or approval threshold required for ratification, specific to a governance body and action type." .
-
-cardano:DepositMechanism a owl:Class ;
-  rdfs:label "Deposit Mechanism" ;
-  rdfs:subClassOf cardano:GovernanceMechanism .
-
-cardano:ActionChaining a owl:Class ;
-  rdfs:label "Action Chaining" ;
-  rdfs:subClassOf cardano:GovernanceMechanism .
-
-cardano:HotColdKeySystem a owl:Class ;
-  rdfs:label "Hot/Cold Key System" ;
-  rdfs:subClassOf cardano:GovernanceMechanism .
-
-cardano:PredefinedDRep a owl:Class ;
-  rdfs:label "Pre-defined DRep Option" ;
-  rdfs:subClassOf cardano:GovernanceMechanism ;
-  dcterms:description "A pre-defined delegation target (Abstain or No Confidence) that ada holders can delegate to." .
-
-# -- Artifacts -----------------------------------------------------------------
-
-cardano:GovernanceArtifact a owl:Class ;
-  rdfs:label "Governance Artifact" ;
-  rdfs:subClassOf foaf:Document , prov:Entity ;
-  dcterms:description "A document or on-chain script that defines or constrains governance behavior." .
-
-cardano:Constitution a owl:Class ;
-  rdfs:label "Cardano Constitution" ;
-  rdfs:subClassOf cardano:GovernanceArtifact .
-
-cardano:GuardrailsScript a owl:Class ;
-  rdfs:label "Guardrails Script" ;
-  rdfs:subClassOf cardano:GovernanceArtifact ;
-  dcterms:description "On-chain Plutus script that encodes constitutional constraints on parameter changes and treasury withdrawals." .
-
-# -- Protocol parameters -------------------------------------------------------
-
-cardano:ProtocolParameter a owl:Class ;
-  rdfs:label "Protocol Parameter" ;
-  rdfs:subClassOf skos:Concept ;
-  skos:inScheme cardano:CardanoGovernanceScheme ;
-  dcterms:description "A configurable parameter of the Cardano protocol." .
-
-cardano:ParameterGroup a owl:Class ;
-  rdfs:label "Parameter Group" ;
-  rdfs:subClassOf skos:Collection ;
-  dcterms:description "A grouping of protocol parameters (Network, Economic, Technical, Governance)." .
-
-cardano:SecurityRelevantParameter a owl:Class ;
-  rdfs:label "Security-Relevant Parameter" ;
-  rdfs:subClassOf cardano:GovernanceMechanism ;
-  dcterms:description "Parameters whose changes require SPO approval in addition to DRep approval." .
-
-# -- Standards -----------------------------------------------------------------
-
-cardano:CIP a owl:Class ;
-  rdfs:label "Cardano Improvement Proposal" ;
-  rdfs:subClassOf foaf:Document , skos:Concept ;
-  dcterms:description "A formal specification document in the CIP process." .
-
-# -- Ledger eras ---------------------------------------------------------------
-
-cardano:LedgerEra a owl:Class ;
-  rdfs:label "Ledger Era" ;
-  rdfs:subClassOf time:ProperInterval ;
-  dcterms:description "A major version of the Cardano ledger rules, bounded by hard forks." .
-
-# ==============================================================================
-# Classes — Smart contract domain
-# ==============================================================================
-
-cardano:SmartContractConcept a owl:Class ;
-  rdfs:label "Smart Contract Concept" ;
-  rdfs:subClassOf skos:Concept ;
-  skos:inScheme cardano:CardanoSmartContractScheme .
-
-cardano:SmartContractLanguage a owl:Class ;
-  rdfs:label "Smart Contract Language" ;
-  rdfs:subClassOf cardano:SmartContractConcept ;
-  dcterms:description "A programming language that targets Plutus Core for on-chain execution." .
-
-cardano:SmartContractRuntime a owl:Class ;
-  rdfs:label "Smart Contract Runtime" ;
-  rdfs:subClassOf cardano:SmartContractConcept ;
-  dcterms:description "An execution environment for Cardano smart contracts." .
-
-cardano:SmartContractPattern a owl:Class ;
-  rdfs:label "Smart Contract Pattern" ;
-  rdfs:subClassOf cardano:SmartContractConcept ;
-  dcterms:description "A design pattern for building Cardano smart contracts." .
-
-cardano:TransactionComponent a owl:Class ;
-  rdfs:label "Transaction Component" ;
-  rdfs:subClassOf cardano:SmartContractConcept ;
-  dcterms:description "A component of a Cardano transaction (datum, redeemer, script context, etc.)." .
-
-cardano:DApp a owl:Class ;
-  rdfs:label "Decentralized Application" ;
-  rdfs:subClassOf prov:SoftwareAgent ;
-  dcterms:description "A decentralized application built on the Cardano platform." .
-
-cardano:DeveloperTool a owl:Class ;
-  rdfs:label "Developer Tool" ;
-  rdfs:subClassOf prov:SoftwareAgent ;
-  dcterms:description "A tool or SDK for building on Cardano." .
-
-cardano:VasilFeature a owl:Class ;
-  rdfs:label "Vasil-Era Feature" ;
-  rdfs:subClassOf cardano:GovernanceMechanism ;
-  dcterms:description "A ledger feature introduced in the Vasil/Babbage hard fork." .
-
-# -- Layer 2 / Scaling ---------------------------------------------------------
-
-cardano:L2Protocol a owl:Class ;
-  rdfs:label "Layer 2 Protocol" ;
-  rdfs:subClassOf cardano:DApp ;
-  dcterms:description "A scaling protocol that processes transactions off-chain while inheriting L1 security." .
-
-cardano:L2Component a owl:Class ;
-  rdfs:label "Layer 2 Component" ;
-  rdfs:subClassOf cardano:SmartContractConcept ;
-  dcterms:description "A component of a Layer 2 scaling protocol." .
-
-cardano:L2Lifecycle a owl:Class ;
-  rdfs:label "Layer 2 Lifecycle Phase" ;
-  rdfs:subClassOf cardano:SmartContractConcept ;
-  dcterms:description "A phase in the lifecycle of a Layer 2 head or channel." .
-
-# ==============================================================================
-# Properties — Governance
-# ==============================================================================
-
-cardano:votesOn a owl:ObjectProperty ;
-  rdfs:label "votes on" ;
-  rdfs:domain cardano:GovernanceActor ;
-  rdfs:range cardano:GovernanceActionType ;
-  rdfs:subPropertyOf prov:influenced ;
-  dcterms:description "Indicates which governance action types an actor body votes on." .
-
-cardano:evaluatesAndVotesOn a owl:ObjectProperty ;
-  rdfs:label "evaluates and votes on" ;
-  rdfs:subPropertyOf cardano:votesOn ;
-  rdfs:domain cardano:ConstitutionalCommittee ;
-  dcterms:description "CC evaluates actions for constitutionality before casting a vote." .
-
-cardano:delegatesVotingPowerTo a owl:ObjectProperty ;
-  rdfs:label "delegates voting power to" ;
-  rdfs:domain cardano:AdaHolder ;
-  rdfs:range cardano:GovernanceActor ;
-  dcterms:description "Ada holder delegates governance voting power to a DRep or pre-defined option." .
-
-cardano:delegatesStakeTo a owl:ObjectProperty ;
-  rdfs:label "delegates stake to" ;
-  rdfs:domain cardano:AdaHolder ;
-  rdfs:range cardano:SPO ;
-  dcterms:description "Ada holder delegates stake to a stake pool for block production rewards." .
-
-cardano:submits a owl:ObjectProperty ;
-  rdfs:label "submits" ;
-  rdfs:domain cardano:GovernanceActor ;
-  rdfs:range cardano:GovernanceAction ;
-  rdfs:subPropertyOf prov:wasStartedBy ;
-  dcterms:description "Actor submits a governance action on-chain." .
-
-cardano:constrains a owl:ObjectProperty ;
-  rdfs:label "constrains" ;
-  rdfs:domain [ a owl:Class ; owl:unionOf ( cardano:GovernanceArtifact cardano:GovernanceMechanism ) ] ;
-  rdfs:range cardano:GovernanceAction ;
-  dcterms:description "A rule or artifact that limits what a governance action can do." .
-
-cardano:evaluatesAgainst a owl:ObjectProperty ;
-  rdfs:label "evaluates actions against" ;
-  rdfs:domain cardano:ConstitutionalCommittee ;
-  rdfs:range cardano:Constitution ;
-  dcterms:description "CC evaluates governance actions for compliance with the Constitution." .
-
-cardano:leadsTo a owl:ObjectProperty ;
-  rdfs:label "leads to" ;
-  rdfs:domain cardano:GovernanceProcess ;
-  rdfs:range cardano:GovernanceProcess ;
-  dcterms:description "Governance lifecycle sequencing (voting leads to ratification leads to enactment)." .
-
-cardano:requires a owl:ObjectProperty ;
-  rdfs:label "requires" ;
-  rdfs:range cardano:GovernanceMechanism ;
-  dcterms:description "A concept or action that depends on a governance mechanism (e.g. deposit)." .
-
-cardano:subjectTo a owl:ObjectProperty ;
-  rdfs:label "subject to" ;
-  rdfs:range cardano:VotingThreshold ;
-  dcterms:description "A governance body whose votes are governed by a threshold." .
-
-cardano:canDelegateTo a owl:ObjectProperty ;
-  rdfs:label "can delegate to" ;
-  rdfs:domain cardano:AdaHolder ;
-  rdfs:range cardano:PredefinedDRep ;
-  dcterms:description "Ada holder can delegate to a pre-defined DRep option." .
-
-cardano:canRegisterAs a owl:ObjectProperty ;
-  rdfs:label "can register as" ;
-  rdfs:domain cardano:AdaHolder ;
-  rdfs:range cardano:DRep ;
-  dcterms:description "Any ada holder can register as a DRep." .
-
-cardano:changesMembershipOf a owl:ObjectProperty ;
-  rdfs:label "changes membership of" ;
-  rdfs:domain cardano:UpdateCommittee ;
-  rdfs:range cardano:ConstitutionalCommittee .
-
-cardano:putsIntoNoConfidenceState a owl:ObjectProperty ;
-  rdfs:label "puts into no-confidence state" ;
-  rdfs:domain cardano:MotionOfNoConfidence ;
-  rdfs:range cardano:ConstitutionalCommittee .
-
-cardano:codifiedIn a owl:ObjectProperty ;
-  rdfs:label "codified in" ;
-  rdfs:domain cardano:Constitution ;
-  rdfs:range cardano:GuardrailsScript ;
-  dcterms:description "Constitutional constraints encoded as on-chain Plutus script." .
-
-cardano:modifiesVotingFor a owl:ObjectProperty ;
-  rdfs:label "modifies voting for" ;
-  rdfs:domain cardano:GovernanceMechanism ;
-  rdfs:range cardano:GovernanceActionType ;
-  dcterms:description "A threshold exception that modifies voting requirements for specific action types." .
-
-# -- Protocol parameters -------------------------------------------------------
-
-cardano:belongsToGroup a owl:ObjectProperty ;
-  rdfs:label "belongs to" ;
-  rdfs:domain cardano:ProtocolParameter ;
-  rdfs:range cardano:ParameterGroup .
-
-cardano:canChange a owl:ObjectProperty ;
-  rdfs:label "can change" ;
-  rdfs:domain cardano:GovernanceActionType ;
-  rdfs:range cardano:ParameterGroup ;
-  dcterms:description "Protocol Parameter Changes action type can modify parameters in this group." .
-
-cardano:affects a owl:ObjectProperty ;
-  rdfs:label "affects" ;
-  rdfs:range cardano:ProtocolParameter .
-
-# ==============================================================================
-# Properties — Smart contracts
-# ==============================================================================
-
-cardano:compilesTo a owl:ObjectProperty ;
-  rdfs:label "compiles to" ;
-  rdfs:domain cardano:SmartContractLanguage ;
-  rdfs:range cardano:SmartContractRuntime ;
-  dcterms:description "Language compilation target (e.g. Aiken compiles to UPLC via Plutus Core)." .
-
-cardano:evaluatedBy a owl:ObjectProperty ;
-  rdfs:label "evaluated by" ;
-  rdfs:range cardano:SmartContractRuntime .
-
-cardano:pricedBy a owl:ObjectProperty ;
-  rdfs:label "priced by" ;
-  rdfs:range cardano:ProtocolParameter ;
-  dcterms:description "Execution cost determined by a protocol parameter (cost model)." .
-
-cardano:builtOn a owl:ObjectProperty ;
-  rdfs:label "built on" ;
-  rdfs:domain cardano:DApp ;
-  dcterms:description "A dApp built on a smart contract platform." .
-
-cardano:writtenIn a owl:ObjectProperty ;
-  rdfs:label "written in" ;
-  rdfs:domain cardano:DApp ;
-  rdfs:range cardano:SmartContractLanguage .
-
-cardano:buildsTransactionsFor a owl:ObjectProperty ;
-  rdfs:label "builds transactions for" ;
-  rdfs:domain cardano:DeveloperTool ;
-  dcterms:description "Tool constructs off-chain transactions for a platform." .
-
-cardano:indexes a owl:ObjectProperty ;
-  rdfs:label "indexes" ;
-  rdfs:domain cardano:DeveloperTool ;
-  dcterms:description "Tool indexes chain data." .
-
-# -- Standards / general -------------------------------------------------------
-
-cardano:specifies a owl:ObjectProperty ;
-  rdfs:label "specifies" ;
-  rdfs:domain cardano:CIP ;
-  dcterms:description "A CIP that defines or specifies a concept." .
-
-cardano:implementedIn a owl:ObjectProperty ;
-  rdfs:label "implemented in" ;
-  rdfs:range cardano:LedgerEra .
-
-cardano:enables a owl:ObjectProperty ;
-  rdfs:label "enables" ;
-  dcterms:description "A tool or feature that enables a capability." .
-
-cardano:facilitates a owl:ObjectProperty ;
-  rdfs:label "facilitates" ;
-  rdfs:domain cardano:GovernanceOrganization .
-
-cardano:documents a owl:ObjectProperty ;
-  rdfs:label "documents" ;
-  rdfs:domain cardano:CIP ;
-  dcterms:description "A CIP documenting a platform or protocol feature." .
-
-cardano:succeeds a owl:ObjectProperty ;
-  rdfs:label "succeeds" ;
-  rdfs:domain cardano:CIP ;
-  rdfs:range cardano:CIP ;
-  dcterms:description "A CIP that supersedes or extends a previous CIP." .
-
-cardano:profileFollows a owl:ObjectProperty ;
-  rdfs:label "profile follows" ;
-  rdfs:domain cardano:GovernanceActor ;
-  rdfs:range cardano:CIP ;
-  dcterms:description "An actor publishes profile metadata following a CIP standard." .
-
-cardano:rendersProfilesFrom a owl:ObjectProperty ;
-  rdfs:label "renders profiles from" ;
-  rdfs:domain cardano:DeveloperTool ;
-  rdfs:range cardano:CIP ;
-  dcterms:description "A tool renders actor profile data structured according to a CIP." .
-
-cardano:unifiesScriptTypesIn a owl:ObjectProperty ;
-  rdfs:label "unifies script types in" ;
-  rdfs:domain cardano:CIP ;
-  rdfs:range cardano:SmartContractConcept ;
-  dcterms:description "A CIP that unifies the script interface for a smart contract platform." .
-
-cardano:addsBuiltInsTo a owl:ObjectProperty ;
-  rdfs:label "adds built-ins to" ;
-  rdfs:domain cardano:CIP ;
-  rdfs:range cardano:SmartContractRuntime ;
-  dcterms:description "A CIP that adds new built-in functions to a runtime." .
-
-cardano:optimizes a owl:ObjectProperty ;
-  rdfs:label "optimizes" ;
-  rdfs:domain cardano:CIP ;
-  rdfs:range cardano:SmartContractRuntime ;
-  dcterms:description "A CIP that improves the performance of a runtime." .
-
-cardano:registersMetadataFor a owl:ObjectProperty ;
-  rdfs:label "registers metadata for" ;
-  rdfs:domain cardano:CIP ;
-  rdfs:range cardano:SmartContractConcept .
-
-cardano:settlesOn a owl:ObjectProperty ;
-  rdfs:label "settles on" ;
-  rdfs:domain cardano:L2Protocol ;
-  rdfs:range cardano:SmartContractConcept ;
-  dcterms:description "An L2 protocol that settles state transitions on an L1 ledger." .
-
-cardano:lifecyclePhaseOf a owl:ObjectProperty ;
-  rdfs:label "lifecycle phase of" ;
-  rdfs:domain cardano:L2Lifecycle ;
-  rdfs:range cardano:L2Protocol ;
-  dcterms:description "A lifecycle phase belonging to an L2 protocol." .
-
-cardano:componentOf a owl:ObjectProperty ;
-  rdfs:label "component of" ;
-  rdfs:domain cardano:L2Component ;
-  rdfs:range cardano:L2Protocol ;
-  dcterms:description "A component belonging to an L2 protocol." .
-
-cardano:maintainedBy a owl:ObjectProperty ;
-  rdfs:label "maintained by" ;
-  rdfs:range foaf:Agent ;
-  dcterms:description "An entity that maintains a project or tool." .
-
-# ==============================================================================
-# Alignment — bridge gbkind: classes to cardano: classes
-# ==============================================================================
-
-gbkind:actor         owl:equivalentClass  cardano:GovernanceActor .
-gbkind:action-type   owl:equivalentClass  cardano:GovernanceActionType .
-gbkind:process       owl:equivalentClass  cardano:GovernanceProcess .
-gbkind:mechanism     owl:equivalentClass  cardano:GovernanceMechanism .
-gbkind:artifact      owl:equivalentClass  cardano:GovernanceArtifact .
-gbkind:concept       owl:equivalentClass  cardano:SmartContractConcept .
-gbkind:param-group   owl:equivalentClass  cardano:ParameterGroup .
-gbkind:parameter     owl:equivalentClass  cardano:ProtocolParameter .
-gbkind:tool          owl:equivalentClass  cardano:DeveloperTool .
-gbkind:language      owl:equivalentClass  cardano:SmartContractLanguage .
-gbkind:protocol      owl:equivalentClass  cardano:DApp .
-gbkind:runtime       owl:equivalentClass  cardano:SmartContractRuntime .
-gbkind:standard      owl:equivalentClass  cardano:CIP .
-
-# Note: owl:equivalentProperty mappings removed — graph.ttl now uses
-# cardano: and standard predicates directly (see #35).
-
-# ==============================================================================
-# Instance typing — give existing nodes their cardano: types
-# (additive: nodes keep gb:Node + gbkind:X, gain cardano:Y)
-# ==============================================================================
-
-# -- Governance actors ---------------------------------------------------------
-n:ada-holder           a cardano:AdaHolder .
-n:drep                 a cardano:DRep .
-n:spo                  a cardano:SPO .
-n:cc                   a cardano:ConstitutionalCommittee .
-n:intersect            a cardano:GovernanceOrganization .
-n:cardano-foundation   a cardano:GovernanceOrganization .
-
-# -- Action types --------------------------------------------------------------
-n:action-no-confidence    a cardano:MotionOfNoConfidence .
-n:action-update-committee a cardano:UpdateCommittee .
-n:action-new-constitution a cardano:NewConstitution .
-n:action-hard-fork        a cardano:HardForkInitiation .
-n:action-param-change     a cardano:ProtocolParameterChange .
-n:action-treasury         a cardano:TreasuryWithdrawal .
-n:action-info             a cardano:InfoAction .
-
-# -- Processes -----------------------------------------------------------------
-n:voting             a cardano:VotingProcess .
-n:ratification       a cardano:RatificationProcess .
-n:enactment          a cardano:EnactmentProcess .
-n:bootstrap-phase    a cardano:BootstrapPhase .
-n:treasury-budgeting a cardano:TreasuryBudgeting .
-
-# -- Mechanisms ----------------------------------------------------------------
-n:drep-thresholds       a cardano:VotingThreshold .
-n:spo-thresholds        a cardano:VotingThreshold .
-n:cc-threshold          a cardano:VotingThreshold .
-n:deposit-mechanism     a cardano:DepositMechanism .
-n:action-chaining       a cardano:ActionChaining .
-n:hot-cold-keys         a cardano:HotColdKeySystem .
-n:abstain-option        a cardano:PredefinedDRep .
-n:no-confidence-option  a cardano:PredefinedDRep .
-n:param-exceptions      a cardano:GovernanceMechanism .
-n:security-params       a cardano:SecurityRelevantParameter .
-n:reference-scripts     a cardano:VasilFeature .
-n:reference-inputs      a cardano:VasilFeature .
-n:inline-datums         a cardano:VasilFeature .
-
-# -- Artifacts -----------------------------------------------------------------
-n:constitution       a cardano:Constitution .
-n:guardrails-script  a cardano:GuardrailsScript .
-
-# -- CIPs (standards and artifacts) -------------------------------------------
-n:cip-1694  a cardano:CIP .
-n:cip-95    a cardano:CIP .
-n:cip-100   a cardano:CIP .
-n:cip-105   a cardano:CIP .
-n:cip-108   a cardano:CIP .
-n:cip-129   a cardano:CIP .
-n:cip-136   a cardano:CIP .
-n:cip-25    a cardano:CIP .
-n:cip-57    a cardano:CIP .
-n:cip-68    a cardano:CIP .
-n:cip-30    a cardano:CIP .
-n:cip-69    a cardano:CIP .
-n:cip-85    a cardano:CIP .
-n:cip-88    a cardano:CIP .
-n:cip-119   a cardano:CIP .
-n:cip-381   a cardano:CIP .
-
-# -- Protocol parameters ------------------------------------------------------
-n:cost-models             a cardano:ProtocolParameter .
-n:param-group-network     a cardano:ParameterGroup .
-n:param-group-economic    a cardano:ParameterGroup .
-n:param-group-technical   a cardano:ParameterGroup .
-n:param-group-governance  a cardano:ParameterGroup .
-
-# -- Ledger eras ---------------------------------------------------------------
-n:conway-era  a cardano:LedgerEra .
-
-# -- Smart contract concepts ---------------------------------------------------
-n:governance-model   a cardano:SmartContractConcept ; skos:inScheme cardano:CardanoGovernanceScheme .
-n:governance-action  a cardano:GovernanceAction .
-n:liquid-democracy   a cardano:SmartContractConcept ; skos:inScheme cardano:CardanoGovernanceScheme .
-n:plutus             a cardano:SmartContractConcept ; skos:inScheme cardano:CardanoSmartContractScheme .
-n:eutxo              a cardano:SmartContractConcept ; skos:inScheme cardano:CardanoSmartContractScheme .
-n:datum              a cardano:TransactionComponent .
-n:redeemer           a cardano:TransactionComponent .
-n:script-context     a cardano:TransactionComponent .
-n:exunits            a cardano:TransactionComponent .
-n:minting-policy     a cardano:SmartContractConcept .
-n:staking-validator  a cardano:SmartContractConcept .
-n:state-machine      a cardano:SmartContractPattern .
-n:oracle-pattern     a cardano:SmartContractPattern .
-
-# -- Languages -----------------------------------------------------------------
-n:aiken       a cardano:SmartContractLanguage .
-n:helios      a cardano:SmartContractLanguage .
-n:marlowe     a cardano:SmartContractLanguage .
-n:opshin      a cardano:SmartContractLanguage .
-n:plinth      a cardano:SmartContractLanguage .
-n:plutarch    a cardano:SmartContractLanguage .
-n:plu-ts      a cardano:SmartContractLanguage .
-n:scalus      a cardano:SmartContractLanguage .
-
-# -- Runtimes ------------------------------------------------------------------
-n:plutus-core  a cardano:SmartContractRuntime .
-n:cek-machine  a cardano:SmartContractRuntime .
-
-# -- DApps / Protocols ---------------------------------------------------------
-n:djed     a cardano:DApp .
-n:hydra    a cardano:L2Protocol .
-n:liqwid   a cardano:DApp .
-n:minswap  a cardano:DApp .
-
-# -- Hydra components ---------------------------------------------------------
-n:hydra-head                a cardano:L2Component .
-n:hydra-node                a cardano:DeveloperTool .
-n:hydra-snapshot            a cardano:L2Component .
-n:hydra-head-validator      a cardano:L2Component .
-n:hydra-participation-token a cardano:L2Component .
-n:hydra-websocket-api       a cardano:L2Component .
-n:hydra-contestation        a cardano:L2Component .
-n:isomorphic-state-channel  a cardano:SmartContractConcept .
-n:unanimous-consensus       a cardano:SmartContractConcept .
-
-# -- Hydra lifecycle -----------------------------------------------------------
-n:hydra-init    a cardano:L2Lifecycle .
-n:hydra-commit  a cardano:L2Lifecycle .
-n:hydra-open    a cardano:L2Lifecycle .
-n:hydra-close   a cardano:L2Lifecycle .
-n:hydra-fan-out a cardano:L2Lifecycle .
-
-# -- Hydra organization -------------------------------------------------------
-n:cardano-scaling a cardano:GovernanceOrganization .
-
-# -- Tools ---------------------------------------------------------------------
-n:blockfrost       a cardano:DeveloperTool .
-n:demeter          a cardano:DeveloperTool .
-n:govtool          a cardano:DeveloperTool .
-n:lucid-evolution  a cardano:DeveloperTool .
-n:mesh-sdk         a cardano:DeveloperTool .
-n:sanchonet        a cardano:DeveloperTool .
+# -- Edges ----------------------------------------------------------------
+
+# Shared cross-cutting Cardano concepts
+# Auto-split from graph.ttl on 2026-04-23.
+# Edit this file directly; do not regenerate without intent.
+
+[] a rdf:Statement ;
+  rdf:subject n:govtool ;
+  rdf:predicate cardano:rendersProfilesFrom ;
+  rdf:object n:cip-119 ;
+  dcterms:description "GovTool reads and displays DRep profile metadata structured according to CIP-119." .
+
+n:drep cardano:profileFollows n:cip-119 .
+[] a rdf:Statement ;
+  rdf:subject n:cip-95 ;
+  rdf:predicate dcterms:requires ;
+  rdf:object n:cip-30 ;
+  dcterms:description "CIP-95 extends the CIP-30 wallet connector with Conway-era governance capabilities: DRep registration, vote delegation, and governance action submission." .
+
+n:lucid-evolution prov:used n:cip-57 .
+[] a rdf:Statement ;
+  rdf:subject n:hydra ;
+  rdf:predicate gbedge:replicates ;
+  rdf:object n:eutxo ;
+  dcterms:description "Hydra L2 heads replicate the full EUTxO model off-chain with the same smart contract semantics." .
+
+# -- Hydra ecosystem edges -----------------------------------------------------
+
+n:hydra cardano:settlesOn n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:hydra ;
+  rdf:predicate cardano:settlesOn ;
+  rdf:object n:eutxo ;
+  dcterms:description "Hydra heads settle their final state back to the Cardano L1 EUTxO ledger via fan-out transactions." .
+
+n:hydra-head cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra ;
+  rdf:predicate gbedge:uses ;
+  rdf:object n:plutus ;
+  dcterms:description "Hydra's isomorphic design means the same Plutus scripts run identically on L1 and inside a head. No script modification needed." .
+
+n:isomorphic-state-channel gbedge:enables n:hydra-head .
+[] a rdf:Statement ;
+  rdf:subject n:hydra ;
+  rdf:predicate cardano:maintainedBy ;
+  rdf:object n:cardano-scaling ;
+  dcterms:description "Hydra is developed and maintained by the Cardano Scaling team (formerly IOG Hydra team)." .
+
+n:hydra-close gbedge:enables n:hydra-contestation .
+[] a rdf:Statement ;
+  rdf:subject n:cost-models ;
+  rdf:predicate cardano:belongsToGroup ;
+  rdf:object n:param-group-technical ;
+  dcterms:description "Cost model parameters are part of the technical parameter group." .
+
+n:exunits cardano:pricedBy n:cost-models .
+[] a rdf:Statement ;
+  rdf:subject n:exunits ;
+  rdf:predicate cardano:pricedBy ;
+  rdf:object n:cost-models ;
+  dcterms:description "ExUnits are converted to ada fees using price parameters from the cost model." .
+
+n:cek-machine prov:used n:exunits .
+[] a rdf:Statement ;
+  rdf:subject n:plutus-core ;
+  rdf:predicate cardano:evaluatedBy ;
+  rdf:object n:cek-machine ;
+  dcterms:description "Plutus Core programs are evaluated by the CEK machine, which tracks resource consumption." .
+
+n:plutus cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:plutus ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Plutus Tx (Haskell) compiles to Plutus Core, the on-chain language executed by the CEK machine." .
+
+n:guardrails-script gbedge:enforces n:param-exceptions .
+[] a rdf:Statement ;
+  rdf:subject n:cost-models ;
+  rdf:predicate <https://lambdasistemi.github.io/graph-browser/vocab/edges#updated%20via> ;
+  rdf:object n:action-param-change ;
+  dcterms:description "Cost model updates go through Protocol Parameter Change governance: the Plutus team benchmarks builtins, fits cost functions via R scripts, and the new coefficients are submitted as a governance action requiring CC 2/3 and DRep 67% (Technical group threshold)." .
+
+n:sanchonet gbedge:tested n:conway-era .
+[] a rdf:Statement ;
+  rdf:subject n:govtool ;
+  rdf:predicate <https://lambdasistemi.github.io/graph-browser/vocab/edges#enables%20registration%20as> ;
+  rdf:object n:drep ;
+  dcterms:description "GovTool provides a web interface for DRep registration and delegation, handling certificate submission and deposit payment without CLI tools." .
+
+n:govtool cardano:enables n:voting .
+[] a rdf:Statement ;
+  rdf:subject n:govtool ;
+  rdf:predicate cardano:enables ;
+  rdf:object n:voting ;
+  dcterms:description "GovTool connects to wallets via CIP-95 and enables viewing governance actions, reading metadata, and casting votes on-chain. It makes governance accessible to non-technical participants." .
+
+n:cardano-foundation cardano:evaluatesAndVotesOn n:governance-action .
+[] a rdf:Statement ;
+  rdf:subject n:govtool ;
+  rdf:predicate <https://lambdasistemi.github.io/graph-browser/vocab/edges#connects%20wallets%20via> ;
+  rdf:object n:cip-95 ;
+  dcterms:description "GovTool uses CIP-95 to connect to users' browser wallets. CIP-95 extends the CIP-30 wallet connector with governance capabilities: DRep registration, delegation, and voting transactions." .
+
+n:cip-108 dcterms:requires n:cip-100 .
+[] a rdf:Statement ;
+  rdf:subject n:conway-era ;
+  rdf:predicate <https://lambdasistemi.github.io/graph-browser/vocab/edges#started%20with> ;
+  rdf:object n:bootstrap-phase ;
+  dcterms:description "Conway began with a bootstrap phase where only CC could approve parameter changes and CC + SPOs could approve hard forks. DRep participation was not required. This phased rollout prevented governance deadlocks while DRep registration ramped up. Ended with the Plomin hard fork in December 2024." .
+
+n:cip-1694 cardano:implementedIn n:conway-era .

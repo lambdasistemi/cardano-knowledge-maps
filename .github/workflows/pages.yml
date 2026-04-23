@@ -25,7 +25,7 @@ jobs:
       - uses: lambdasistemi/graph-browser/build-action@main
       - uses: lambdasistemi/graph-browser/vocab-publish-action@main
         with:
-          sources: data/rdf/cardano.ttl
+          sources: data/rdf/cardano.ontology.ttl
           output-dir: site
           site-base-path: /cardano-knowledge-maps
       - uses: actions/upload-pages-artifact@v4

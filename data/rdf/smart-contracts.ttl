@@ -1,0 +1,477 @@
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix xsd:     <http://www.w3.org/2001/XMLSchema#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix foaf:    <http://xmlns.com/foaf/0.1/> .
+@prefix prov:    <http://www.w3.org/ns/prov#> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
+@prefix gb:      <https://lambdasistemi.github.io/graph-browser/vocab/terms#> .
+@prefix gbkind:  <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
+@prefix gbgroup: <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
+@prefix gbedge:  <https://lambdasistemi.github.io/graph-browser/vocab/edges#> .
+@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
+@prefix n:       <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/> .
+
+# -- Edges ----------------------------------------------------------------
+
+# Cardano Smart Contracts — instance graph
+# Auto-split from graph.ttl on 2026-04-23.
+# Edit this file directly; do not regenerate without intent.
+
+n:cip-88 cardano:registersMetadataFor n:minting-policy .
+[] a rdf:Statement ;
+  rdf:subject n:cip-88 ;
+  rdf:predicate cardano:registersMetadataFor ;
+  rdf:object n:minting-policy ;
+  dcterms:description "CIP-88 provides a standard for declaring token metadata linked to a minting policy, enabling verifiable token information." .
+
+n:cip-85 cardano:optimizes n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:cip-85 ;
+  rdf:predicate cardano:optimizes ;
+  rdf:object n:plutus-core ;
+  dcterms:description "CIP-85 replaces Scott-encoded data with native sums-of-products in Plutus Core, reducing script size and execution cost." .
+
+n:cip-381 cardano:addsBuiltInsTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:cip-381 ;
+  rdf:predicate cardano:addsBuiltInsTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "CIP-381 adds BLS12-381 curve operations as Plutus Core built-in functions for on-chain cryptographic verification." .
+
+n:cip-69 cardano:unifiesScriptTypesIn n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:cip-69 ;
+  rdf:predicate cardano:unifiesScriptTypesIn ;
+  rdf:object n:plutus ;
+  dcterms:description "CIP-69 unifies the argument interface across all Plutus script purposes, enabling multi-purpose validators." .
+
+n:govtool cardano:rendersProfilesFrom n:cip-119 .
+[] a rdf:Statement ;
+  rdf:subject n:mesh-sdk ;
+  rdf:predicate prov:used ;
+  rdf:object n:cip-30 ;
+  dcterms:description "Mesh SDK uses CIP-30 to interact with browser-based Cardano wallets." .
+
+n:lucid-evolution prov:used n:cip-30 .
+[] a rdf:Statement ;
+  rdf:subject n:lucid-evolution ;
+  rdf:predicate prov:used ;
+  rdf:object n:cip-30 ;
+  dcterms:description "Lucid Evolution uses CIP-30 to connect to browser wallets for transaction signing and submission." .
+
+n:cip-95 dcterms:requires n:cip-30 .
+[] a rdf:Statement ;
+  rdf:subject n:lucid-evolution ;
+  rdf:predicate prov:used ;
+  rdf:object n:cip-57 ;
+  dcterms:description "Lucid can auto-generate off-chain bindings from CIP-57 Plutus blueprints." .
+
+n:demeter <https://lambdasistemi.github.io/graph-browser/vocab/edges#hosts%20infrastructure%20for> n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:demeter ;
+  rdf:predicate <https://lambdasistemi.github.io/graph-browser/vocab/edges#hosts%20infrastructure%20for> ;
+  rdf:object n:plutus ;
+  dcterms:description "Demeter provides cloud infrastructure for developing, testing, and deploying Plutus-based dApps." .
+
+n:blockfrost cardano:indexes n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:blockfrost ;
+  rdf:predicate cardano:indexes ;
+  rdf:object n:eutxo ;
+  dcterms:description "Blockfrost indexes the UTxO set and provides REST APIs for querying chain state, script datums, and transaction history." .
+
+n:mesh-sdk cardano:buildsTransactionsFor n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:mesh-sdk ;
+  rdf:predicate cardano:buildsTransactionsFor ;
+  rdf:object n:plutus ;
+  dcterms:description "Mesh SDK provides high-level TypeScript APIs for building transactions that interact with smart contracts." .
+
+n:lucid-evolution cardano:buildsTransactionsFor n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:lucid-evolution ;
+  rdf:predicate cardano:buildsTransactionsFor ;
+  rdf:object n:plutus ;
+  dcterms:description "Lucid Evolution constructs off-chain transactions that interact with Plutus validators, handling datum/redeemer serialization." .
+
+n:djed cardano:builtOn n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:djed ;
+  rdf:predicate cardano:builtOn ;
+  rdf:object n:plutus ;
+  dcterms:description "Djed stablecoin uses Plutus validators with formally verified peg stability properties." .
+
+n:hydra gbedge:replicates n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-head ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "A Hydra head is an individual state channel instance managed by a fixed set of participants." .
+
+n:hydra-node cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-node ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "The hydra-node binary is the off-chain software that runs the Head protocol, manages consensus, and exposes the WebSocket API." .
+
+n:hydra-snapshot cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-snapshot ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Snapshots capture agreed-upon UTxO state inside a head. All participants must multi-sign each snapshot." .
+
+n:hydra-head-validator cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-head-validator ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "The on-chain Head validator is a Plutus state machine that governs the lifecycle: Init, Open, Closed, Final." .
+
+n:hydra-participation-token cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-participation-token ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Participation tokens (PTs) are minted during head initialization. Each participant holds one PT, proving membership." .
+
+n:hydra-websocket-api cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-websocket-api ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "The WebSocket API is the primary interface for submitting transactions to a head and observing state changes." .
+
+n:hydra-contestation cardano:componentOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-contestation ;
+  rdf:predicate cardano:componentOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Contestation is the dispute resolution mechanism: after a head closes, participants can contest with a more recent snapshot during the contestation period." .
+
+n:hydra-init cardano:lifecyclePhaseOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-init ;
+  rdf:predicate cardano:lifecyclePhaseOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Initialization posts the head parameters and mints participation tokens on L1. Each participant commits UTxOs." .
+
+n:hydra-commit cardano:lifecyclePhaseOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-commit ;
+  rdf:predicate cardano:lifecyclePhaseOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Commit locks UTxOs from L1 into the head. All participants must commit before the head opens. Incremental commits allow adding UTxOs to an already-open head." .
+
+n:hydra-open cardano:lifecyclePhaseOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-open ;
+  rdf:predicate cardano:lifecyclePhaseOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Open phase: the head processes transactions off-chain with sub-second finality. Transactions are confirmed when all participants sign the resulting snapshot." .
+
+n:hydra-close cardano:lifecyclePhaseOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-close ;
+  rdf:predicate cardano:lifecyclePhaseOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Close posts the latest snapshot to L1 and starts the contestation period. Any participant can close unilaterally." .
+
+n:hydra-fan-out cardano:lifecyclePhaseOf n:hydra .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-fan-out ;
+  rdf:predicate cardano:lifecyclePhaseOf ;
+  rdf:object n:hydra ;
+  dcterms:description "Fan-out distributes the head's final UTxO set back to L1 after the contestation period expires. Each committed UTxO becomes a real L1 UTxO." .
+
+n:hydra-head-validator gbedge:implements n:state-machine .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-head-validator ;
+  rdf:predicate gbedge:implements ;
+  rdf:object n:state-machine ;
+  dcterms:description "The Head validator is a Plutus state machine with states: Initial, Open, Closed. Transitions are governed by multi-signed snapshots." .
+
+n:hydra-head gbedge:uses n:reference-inputs .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-head ;
+  rdf:predicate gbedge:uses ;
+  rdf:object n:reference-inputs ;
+  dcterms:description "Hydra heads use CIP-31 reference inputs to read L1 state (e.g. script references, protocol parameters) without consuming UTxOs." .
+
+n:hydra gbedge:uses n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:isomorphic-state-channel ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-head ;
+  dcterms:description "Isomorphic state channels are the theoretical foundation: L2 replicates L1's ledger rules exactly, so any L1 validator works unmodified in a head." .
+
+n:unanimous-consensus gbedge:enables n:hydra-snapshot .
+[] a rdf:Statement ;
+  rdf:subject n:unanimous-consensus ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-snapshot ;
+  dcterms:description "All head participants must sign every snapshot. This gives instant finality within the head but means any single party can block progress." .
+
+n:hydra-contestation gbedge:requires n:hydra-snapshot .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-contestation ;
+  rdf:predicate gbedge:requires ;
+  rdf:object n:hydra-snapshot ;
+  dcterms:description "Contestation requires presenting a more recent multi-signed snapshot than the one used to close the head." .
+
+n:hydra-init gbedge:generates n:hydra-participation-token .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-init ;
+  rdf:predicate gbedge:generates ;
+  rdf:object n:hydra-participation-token ;
+  dcterms:description "Head initialization mints one participation token per participant, locked in the head validator." .
+
+n:hydra-fan-out gbedge:consumes n:hydra-participation-token .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-fan-out ;
+  rdf:predicate gbedge:consumes ;
+  rdf:object n:hydra-participation-token ;
+  dcterms:description "Fan-out burns participation tokens and distributes the final UTxO set to L1." .
+
+n:hydra cardano:maintainedBy n:cardano-scaling .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-close ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-contestation ;
+  dcterms:description "Closing a head starts the contestation period, during which any participant can contest with a newer snapshot." .
+
+n:hydra-node gbedge:provides n:hydra-websocket-api .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-node ;
+  rdf:predicate gbedge:provides ;
+  rdf:object n:hydra-websocket-api ;
+  dcterms:description "The hydra-node process exposes a WebSocket API for clients to submit transactions and receive state updates." .
+
+n:hydra-head-validator cardano:writtenIn n:aiken .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-head-validator ;
+  rdf:predicate cardano:writtenIn ;
+  rdf:object n:aiken ;
+  dcterms:description "The commit validator was migrated from Plutus-Tx to Aiken (PlutusV3), reducing head-opening cost by 20% and abort cost by 50%. Other validators remain in Plutus-Tx." .
+
+n:hydra-snapshot gbedge:enables n:hydra-close .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-snapshot ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-close ;
+  dcterms:description "Closing a head requires submitting the latest confirmed multi-signed snapshot to L1. The snapshot hash is verified by the head validator." .
+
+n:hydra-commit gbedge:enables n:hydra-open .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-commit ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-open ;
+  dcterms:description "All participants must commit their UTxOs before the head can transition from Initial to Open via collectComTx." .
+
+n:hydra-open gbedge:enables n:hydra-close .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-open ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-close ;
+  dcterms:description "Any participant can unilaterally close an open head by posting the latest snapshot to L1." .
+
+n:hydra-contestation gbedge:enables n:hydra-fan-out .
+[] a rdf:Statement ;
+  rdf:subject n:hydra-contestation ;
+  rdf:predicate gbedge:enables ;
+  rdf:object n:hydra-fan-out ;
+  dcterms:description "Fan-out becomes available only after the contestation period expires with no successful contest." .
+
+n:liqwid cardano:writtenIn n:plutarch .
+[] a rdf:Statement ;
+  rdf:subject n:liqwid ;
+  rdf:predicate cardano:writtenIn ;
+  rdf:object n:plutarch ;
+  dcterms:description "Liqwid uses Plutarch for performance-critical lending/borrowing validators." .
+
+n:minswap cardano:writtenIn n:aiken .
+[] a rdf:Statement ;
+  rdf:subject n:minswap ;
+  rdf:predicate cardano:writtenIn ;
+  rdf:object n:aiken ;
+  dcterms:description "Minswap V2 validators are written in Aiken for production-grade AMM DEX." .
+
+n:aiken prov:generated n:cip-57 .
+[] a rdf:Statement ;
+  rdf:subject n:aiken ;
+  rdf:predicate prov:generated ;
+  rdf:object n:cip-57 ;
+  dcterms:description "Aiken automatically generates CIP-57 Plutus blueprints from contract source code." .
+
+n:cip-57 cardano:documents n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:cip-57 ;
+  rdf:predicate cardano:documents ;
+  rdf:object n:plutus ;
+  dcterms:description "CIP-57 blueprints provide machine-readable interface documentation for Plutus contracts." .
+
+n:cip-68 cardano:succeeds n:cip-25 .
+[] a rdf:Statement ;
+  rdf:subject n:cip-68 ;
+  rdf:predicate cardano:succeeds ;
+  rdf:object n:cip-25 ;
+  dcterms:description "CIP-68 is the successor to CIP-25, adding mutability and richer metadata capabilities." .
+
+n:cip-68 prov:used n:datum .
+[] a rdf:Statement ;
+  rdf:subject n:cip-68 ;
+  rdf:predicate prov:used ;
+  rdf:object n:datum ;
+  dcterms:description "CIP-68 stores rich metadata in UTxO datums, enabling mutable token metadata." .
+
+n:cip-25 dcterms:requires n:minting-policy .
+[] a rdf:Statement ;
+  rdf:subject n:cip-25 ;
+  rdf:predicate dcterms:requires ;
+  rdf:object n:minting-policy ;
+  dcterms:description "CIP-25 defines how NFT metadata is attached to minting transactions via label 721." .
+
+n:oracle-pattern prov:used n:reference-inputs .
+[] a rdf:Statement ;
+  rdf:subject n:oracle-pattern ;
+  rdf:predicate prov:used ;
+  rdf:object n:reference-inputs ;
+  dcterms:description "Oracles publish data in UTxO datums; consumers read via reference inputs without contention." .
+
+n:state-machine prov:used n:datum .
+[] a rdf:Statement ;
+  rdf:subject n:state-machine ;
+  rdf:predicate prov:used ;
+  rdf:object n:datum ;
+  dcterms:description "State machines store contract state in the datum, with validators enforcing valid transitions." .
+
+n:staking-validator cardano:optimizes n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:staking-validator ;
+  rdf:predicate cardano:optimizes ;
+  rdf:object n:eutxo ;
+  dcterms:description "The withdraw-zero pattern reduces validation cost from O(n²) to O(n) by consolidating logic in a staking validator." .
+
+n:marlowe cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:marlowe ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Marlowe financial contracts compile to Plutus Core validators with formal verification guarantees." .
+
+n:plu-ts cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:plu-ts ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "plu-ts constructs UPLC AST directly in TypeScript." .
+
+n:plutarch cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:plutarch ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Plutarch generates UPLC with fine-grained control, producing highly optimized validators." .
+
+n:scalus cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:scalus ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Scalus compiles Scala 3 to UPLC with compile-time partial evaluation." .
+
+n:helios cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:helios ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Helios compiles its TypeScript-embedded DSL to Plutus Core." .
+
+n:opshin cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:opshin ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "OpShin compiles Python syntax to UPLC, enforcing a strict type system at compile time." .
+
+n:plinth cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:plinth ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Plinth (formerly PlutusTx) compiles a Haskell subset to Plutus Core via GHC plugin." .
+
+n:aiken cardano:compilesTo n:plutus-core .
+[] a rdf:Statement ;
+  rdf:subject n:aiken ;
+  rdf:predicate cardano:compilesTo ;
+  rdf:object n:plutus-core ;
+  dcterms:description "Aiken compiles directly to UPLC (Untyped Plutus Core) with aggressive optimization passes." .
+
+n:action-param-change cardano:affects n:exunits .
+[] a rdf:Statement ;
+  rdf:subject n:minting-policy ;
+  rdf:predicate <https://lambdasistemi.github.io/graph-browser/vocab/edges#type%20of> ;
+  rdf:object n:plutus ;
+  dcterms:description "Minting policies are Plutus scripts that control native token creation and destruction." .
+
+n:inline-datums dcterms:relation n:datum .
+[] a rdf:Statement ;
+  rdf:subject n:inline-datums ;
+  rdf:predicate dcterms:relation ;
+  rdf:object n:datum ;
+  dcterms:description "Inline datums store the full datum in the UTxO, eliminating off-chain datum management." .
+
+n:reference-inputs dcterms:requires n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:reference-inputs ;
+  rdf:predicate dcterms:requires ;
+  rdf:object n:eutxo ;
+  dcterms:description "Reference inputs add read-only UTxO access to the EUTxO model, enabling oracle and shared state patterns." .
+
+n:reference-scripts cardano:optimizes n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:reference-scripts ;
+  rdf:predicate cardano:optimizes ;
+  rdf:object n:plutus ;
+  dcterms:description "Reference scripts reduce costs by allowing scripts to be stored on-chain once and reused across transactions." .
+
+n:eutxo cardano:enables n:plutus .
+[] a rdf:Statement ;
+  rdf:subject n:eutxo ;
+  rdf:predicate cardano:enables ;
+  rdf:object n:plutus ;
+  dcterms:description "The EUTxO model is what makes Plutus smart contracts possible — validators receive datum, redeemer, and context." .
+
+n:script-context gbedge:provides n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:script-context ;
+  rdf:predicate gbedge:provides ;
+  rdf:object n:eutxo ;
+  dcterms:description "The script context gives validators full visibility into the transaction being validated." .
+
+n:redeemer dcterms:requires n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:redeemer ;
+  rdf:predicate dcterms:requires ;
+  rdf:object n:eutxo ;
+  dcterms:description "Redeemers provide the action/input mechanism for EUTxO script validation." .
+
+n:datum dcterms:requires n:eutxo .
+[] a rdf:Statement ;
+  rdf:subject n:datum ;
+  rdf:predicate dcterms:requires ;
+  rdf:object n:eutxo ;
+  dcterms:description "Datums are the key extension that transforms the UTxO model into EUTxO, enabling stateful contracts." .
+
+n:cost-models cardano:belongsToGroup n:param-group-technical .
+[] a rdf:Statement ;
+  rdf:subject n:cek-machine ;
+  rdf:predicate prov:used ;
+  rdf:object n:exunits ;
+  dcterms:description "The CEK machine tracks CPU steps and memory units during script evaluation, enforcing ExUnits budgets." .
+
+n:plutus-core cardano:evaluatedBy n:cek-machine .
