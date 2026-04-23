@@ -126,3 +126,189 @@ n:cip-108 dcterms:requires n:cip-100 .
   dcterms:description "Conway began with a bootstrap phase where only CC could approve parameter changes and CC + SPOs could approve hard forks. DRep participation was not required. This phased rollout prevented governance deadlocks while DRep registration ramped up. Ended with the Plomin hard fork in December 2024." .
 
 n:cip-1694 cardano:implementedIn n:conway-era .
+
+# =========================================================================
+#  Cardano Budget 2026 — process anchors shared by every proposal TTL
+#  (process node, strategic pillars, framework KPIs, cost categories,
+#  the Intersect administrator)
+# =========================================================================
+
+# -- Process node ---------------------------------------------------------
+
+n:cardano-budget-2026 a cardano:BudgetProcess ;
+  a gb:Node ;
+  a gbkind:process ;
+  gb:nodeId "cardano-budget-2026" ;
+  rdfs:label "Cardano Budget 2026" ;
+  gb:group gbgroup:processes ;
+  dcterms:description "The 2026 cycle of Cardano's CIP-1694 treasury budgeting process. Submission window opened 16 April 2026 and closes 8 May 2026 (UTC). Approved proposals enact via Treasury Withdrawal governance actions gated by Net Change Limit and Budget Info Actions (DRep 50% + CC 2/3)." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://hydra-voting.intersectmbo.org/votes/cardano-budget-2026> .
+
+n:cardano-budget-2026 cardano:succeeds n:treasury-budgeting .
+[] a rdf:Statement ;
+  rdf:subject n:cardano-budget-2026 ;
+  rdf:predicate cardano:succeeds ;
+  rdf:object n:treasury-budgeting ;
+  dcterms:description "The 2026 cycle is one instance of the broader Cardano Treasury Budgeting process formalised by CIP-1694." .
+
+# -- Cardano 2030 strategic pillars ---------------------------------------
+
+n:pillar-1-infrastructure a cardano:StrategicPillar ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pillar-1-infrastructure" ;
+  rdfs:label "Pillar 1 — Infrastructure & Research Excellence" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Keep Cardano secure, fast, and interoperable so it can host more economic activity. Covers L1 protocol improvements, L2/cross-chain interop, formal methods, and research-led delivery." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pillar-2-adoption a cardano:StrategicPillar ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pillar-2-adoption" ;
+  rdfs:label "Pillar 2 — Adoption & Utility" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Drive widespread, non-speculative utility by focusing on high-value industry verticals (DeFi, RWA, Supply Chain, Payments), superior UX, and enterprise-grade security." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pillar-3-talent a cardano:StrategicPillar ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pillar-3-talent" ;
+  rdfs:label "Pillar 3 — Talent & Builder Ecosystem" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Cultivate a skilled developer base and the tooling, documentation, and onboarding pathways that retain and grow it." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pillar-4-community a cardano:StrategicPillar ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pillar-4-community" ;
+  rdfs:label "Pillar 4 — Community & Ecosystem Growth" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Drive global engagement through a market-centric approach, cultivate a skilled developer base, and proactively demonstrate ecosystem value." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:pillar-5-sustainability a cardano:StrategicPillar ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "pillar-5-sustainability" ;
+  rdfs:label "Pillar 5 — Ecosystem Sustainability & Resilience" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Ensure the long-term financial health and operational integrity of the network: structural ADA demand, treasury sustainability, diversified SPO economics, L2/L1 value retention." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+# -- Cardano 2030 framework KPIs ------------------------------------------
+
+n:kpi-tvl a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-tvl" ;
+  rdfs:label "KPI — Total Value Locked" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "$200M" ;
+  cardano:kpiTargetValue "$3B by 2030" ;
+  dcterms:description "Total Value Locked across Cardano DeFi and RWA protocols. Adoption KPI in the Cardano 2030 Strategy Framework." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:kpi-monthly-transactions a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-monthly-transactions" ;
+  rdfs:label "KPI — Monthly Transactions" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "800k" ;
+  cardano:kpiTargetValue "27M by 2030" ;
+  dcterms:description "Monthly on-chain transactions on Cardano mainnet. Adoption KPI in the Cardano 2030 Strategy Framework." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:kpi-mau a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-mau" ;
+  rdfs:label "KPI — Monthly Active Users" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "100k–300k" ;
+  cardano:kpiTargetValue "1M by 2030" ;
+  dcterms:description "Monthly active users (distinct active wallets) on Cardano. Adoption KPI in the Cardano 2030 Strategy Framework." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:kpi-annual-protocol-revenue a cardano:StrategyKPI ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "kpi-annual-protocol-revenue" ;
+  rdfs:label "KPI — Annual Protocol Revenue" ;
+  gb:group gbgroup:concepts ;
+  cardano:kpiCurrentValue "3.5M ADA" ;
+  cardano:kpiTargetValue "≥16M ADA by 2030" ;
+  dcterms:description "Annual protocol fee revenue. Primary KPI in the Cardano 2030 Strategy Framework — implies ~4.6× growth from the current baseline." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+# -- Budget cost categories ----------------------------------------------
+
+n:cost-category-labor a cardano:CostCategory ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "cost-category-labor" ;
+  rdfs:label "Cost Category — Resources (Labor)" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Person-time spent by named contributors. The dominant cost category in technical proposals." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:cost-category-development a cardano:CostCategory ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "cost-category-development" ;
+  rdfs:label "Cost Category — Development" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Development effort, treated as a single line by some proposals (e.g. Indigo) instead of broken out as Labor." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:cost-category-infrastructure a cardano:CostCategory ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "cost-category-infrastructure" ;
+  rdfs:label "Cost Category — Infrastructure" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Hosting, build/test platforms, hardware-equivalent infrastructure spend." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:cost-category-security-audits a cardano:CostCategory ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "cost-category-security-audits" ;
+  rdfs:label "Cost Category — Security & Audits" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Independent security reviews and audits of the deliverables." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:cost-category-legal-compliance a cardano:CostCategory ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "cost-category-legal-compliance" ;
+  rdfs:label "Cost Category — Legal & Compliance" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Legal, regulatory and compliance work — including third-party audit oversight." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+n:cost-category-engagement-ecosystem a cardano:CostCategory ;
+  a gb:Node ;
+  a gbkind:concept ;
+  gb:nodeId "cost-category-engagement-ecosystem" ;
+  rdfs:label "Cost Category — Engagement & Ecosystem support" ;
+  gb:group gbgroup:concepts ;
+  dcterms:description "Workshops, community events, marketing, ecosystem outreach. The umbrella category for the Serviceplan marketing proposal." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> .
+
+# -- Administrator: Intersect --------------------------------------------
+
+n:org-intersect a cardano:GovernanceOrganization ;
+  a gb:Node ;
+  a gbkind:actor ;
+  gb:nodeId "org-intersect" ;
+  rdfs:label "Intersect" ;
+  gb:group gbgroup:actors ;
+  dcterms:description "The Intersect member-based organisation: the canonical administrator for Cardano Budget 2026 proposals. Provides milestone oversight, smart-contract-based disbursement, third-party reviews and reporting; takes a percentage budget administration fee on each proposal it administers." ;
+  dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
+  foaf:page <https://www.intersectmbo.org/> .
