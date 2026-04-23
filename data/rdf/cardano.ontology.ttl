@@ -284,6 +284,62 @@ cardano:L2Lifecycle a owl:Class ;
   dcterms:description "A phase in the lifecycle of a Layer 2 head or channel." .
 
 # ==============================================================================
+# Classes — Budget proposal domain
+#
+# Models the structural requirements every Cardano Budget 2026 proposal must
+# satisfy: proposer, requested amount, duration, administrator, strategic
+# pillar alignment, supported KPIs, work packages with milestones and budget
+# breakdowns, repayment terms, and community comments.
+# ==============================================================================
+
+cardano:BudgetProcess a owl:Class ;
+  rdfs:label "Cardano Budget Process" ;
+  rdfs:subClassOf cardano:TreasuryBudgeting ;
+  dcterms:description "A multi-cycle treasury budgeting process running under CIP-1694 governance — for example Cardano Budget 2026. Aggregates submitted proposals, defines submission/voting windows, and gates Treasury Withdrawal actions." .
+
+cardano:BudgetProposal a owl:Class ;
+  rdfs:label "Budget Proposal" ;
+  rdfs:subClassOf cardano:GovernanceArtifact ;
+  dcterms:description "A proposal submitted to a BudgetProcess. Carries an applicant identity, a requested ADA amount, an estimated duration, an administrator, alignment with one or more Cardano 2030 strategic pillars, the KPIs it claims to support, a structured set of work packages, and treasury repayment terms. Approved proposals are enacted via Treasury Withdrawal governance actions." .
+
+cardano:Proposer a owl:Class ;
+  rdfs:label "Proposer" ;
+  rdfs:subClassOf org:Organization ;
+  dcterms:description "The applicant submitting a Budget Proposal. May be a Company or an Individual; recorded via cardano:applicantType on the proposal." .
+
+cardano:WorkPackage a owl:Class ;
+  rdfs:label "Work Package" ;
+  dcterms:description "A discrete delivery unit within a Budget Proposal with its own budget, cost categories, milestones, and success criteria. Approved budget for the next work package is typically gated by demonstrated delivery of the previous one." .
+
+cardano:WorkPackageMilestone a owl:Class ;
+  rdfs:label "Work Package Milestone" ;
+  dcterms:description "A milestone inside a Work Package, marked by a month offset (M1, M3, M15, ...) from project start. Distinct from cardano:GovernanceAction milestones." .
+
+cardano:CostCategory a owl:Class ;
+  rdfs:label "Cost Category" ;
+  dcterms:description "A budget category used by Intersect's Budget process: Labor, Infrastructure, Security & Audits, Legal & Compliance, Engagement & Ecosystem support, Development." .
+
+cardano:BudgetLineItem a owl:Class ;
+  rdfs:label "Budget Line Item" ;
+  dcterms:description "One row in a Work Package's budget breakdown: an ADA amount in a specific Cost Category, optionally attributed to a partner organisation or named role." .
+
+cardano:StrategicPillar a owl:Class ;
+  rdfs:label "Cardano 2030 Strategic Pillar" ;
+  dcterms:description "One of the five strategic pillars of the Cardano 2030 Strategy Framework. A Budget Proposal declares which pillars it advances and explains the rationale." .
+
+cardano:StrategyKPI a owl:Class ;
+  rdfs:label "Cardano 2030 Strategy KPI" ;
+  dcterms:description "A measurable target defined by the Cardano 2030 Strategy Framework — e.g. Total Value Locked, Monthly Transactions, Annual Protocol Revenue. Proposals declare which KPIs they support and may propose new ones." .
+
+cardano:RepaymentClause a owl:Class ;
+  rdfs:label "Treasury Repayment Clause" ;
+  dcterms:description "A commitment a proposal makes about returning value to the Cardano Treasury — for example a percentage of future protocol revenue, a buffer surplus return on FX-rate movement, or unused budget at project close." .
+
+cardano:ProposalComment a owl:Class ;
+  rdfs:label "Budget Proposal Comment" ;
+  dcterms:description "A community comment posted on a Budget Proposal's discussion thread. Carries author stake or DRep ID and a timestamp." .
+
+# ==============================================================================
 # Properties — Governance
 # ==============================================================================
 
@@ -524,6 +580,192 @@ cardano:maintainedBy a owl:ObjectProperty ;
   rdfs:label "maintained by" ;
   rdfs:range foaf:Agent ;
   dcterms:description "An entity that maintains a project or tool." .
+
+# ==============================================================================
+# Properties — Budget proposal domain
+# ==============================================================================
+
+cardano:partOfBudgetProcess a owl:ObjectProperty ;
+  rdfs:label "part of budget process" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:BudgetProcess ;
+  dcterms:description "Identifies which annual budget process a proposal was submitted to." .
+
+cardano:proposedBy a owl:ObjectProperty ;
+  rdfs:label "proposed by" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:Proposer ;
+  dcterms:description "The applicant submitting the proposal." .
+
+cardano:administeredBy a owl:ObjectProperty ;
+  rdfs:label "administered by" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range org:Organization ;
+  dcterms:description "The organisation responsible for milestone oversight, smart-contract disbursement, third-party reviews and reporting (e.g. Intersect)." .
+
+cardano:alignsWithPillar a owl:ObjectProperty ;
+  rdfs:label "aligns with strategic pillar" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:StrategicPillar ;
+  dcterms:description "A Cardano 2030 Strategy Framework pillar the proposal claims to advance." .
+
+cardano:supportsKPI a owl:ObjectProperty ;
+  rdfs:label "supports KPI" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:StrategyKPI ;
+  dcterms:description "An existing Cardano 2030 Strategy Framework KPI the proposal claims to contribute to." .
+
+cardano:proposesNewKPI a owl:ObjectProperty ;
+  rdfs:label "proposes new KPI" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:StrategyKPI ;
+  dcterms:description "A novel KPI introduced by the proposal beyond the framework's defined set." .
+
+cardano:hasWorkPackage a owl:ObjectProperty ;
+  rdfs:label "has work package" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:WorkPackage ;
+  dcterms:description "A work package belonging to the proposal." .
+
+cardano:hasWorkPackageMilestone a owl:ObjectProperty ;
+  rdfs:label "has milestone" ;
+  rdfs:domain cardano:WorkPackage ;
+  rdfs:range cardano:WorkPackageMilestone ;
+  dcterms:description "A delivery milestone inside a work package." .
+
+cardano:hasBudgetLineItem a owl:ObjectProperty ;
+  rdfs:label "has budget line item" ;
+  rdfs:domain cardano:WorkPackage ;
+  rdfs:range cardano:BudgetLineItem ;
+  dcterms:description "A line in the work package's budget breakdown." .
+
+cardano:lineItemCategory a owl:ObjectProperty ;
+  rdfs:label "line item category" ;
+  rdfs:domain cardano:BudgetLineItem ;
+  rdfs:range cardano:CostCategory ;
+  dcterms:description "The cost category an individual budget line falls under." .
+
+cardano:lineItemPerformedBy a owl:ObjectProperty ;
+  rdfs:label "line item performed by" ;
+  rdfs:domain cardano:BudgetLineItem ;
+  rdfs:range foaf:Agent ;
+  dcterms:description "The partner organisation or named role responsible for delivering this line item." .
+
+cardano:hasRepaymentClause a owl:ObjectProperty ;
+  rdfs:label "has repayment clause" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:RepaymentClause ;
+  dcterms:description "A repayment commitment the proposal makes to the Cardano Treasury." .
+
+cardano:repaysToTreasury a owl:ObjectProperty ;
+  rdfs:label "repays to treasury" ;
+  rdfs:domain cardano:RepaymentClause ;
+  rdfs:range cardano:TreasuryBudgeting ;
+  dcterms:description "The treasury process that receives repaid value." .
+
+cardano:hasComment a owl:ObjectProperty ;
+  rdfs:label "has comment" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range cardano:ProposalComment ;
+  dcterms:description "A community comment on the proposal's discussion thread." .
+
+# -- Datatype properties for budget proposals ----------------------------------
+
+cardano:requestedAdaAmount a owl:DatatypeProperty ;
+  rdfs:label "requested ADA amount" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:decimal ;
+  dcterms:description "ADA amount requested from the treasury." .
+
+cardano:requestedUsdAmount a owl:DatatypeProperty ;
+  rdfs:label "requested USD equivalent" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:decimal ;
+  dcterms:description "USD equivalent of the requested ADA amount, computed at the proposer-specified ADA/USD rate." .
+
+cardano:adaUsdRate a owl:DatatypeProperty ;
+  rdfs:label "ADA/USD conversion rate" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:decimal ;
+  dcterms:description "Conversion rate (USD per 1 ADA) the proposer used to derive the USD equivalent." .
+
+cardano:estimatedDurationMonths a owl:DatatypeProperty ;
+  rdfs:label "estimated duration (months)" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:integer ;
+  dcterms:description "Total project duration in months." .
+
+cardano:submittedOn a owl:DatatypeProperty ;
+  rdfs:label "submitted on" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:dateTime ;
+  dcterms:description "Submission timestamp on the Hydra Voting site." .
+
+cardano:proposalIdentifier a owl:DatatypeProperty ;
+  rdfs:label "proposal identifier" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:string ;
+  dcterms:description "Stable identifier on the Hydra Voting site." .
+
+cardano:applicantType a owl:DatatypeProperty ;
+  rdfs:label "applicant type" ;
+  rdfs:domain cardano:BudgetProposal ;
+  rdfs:range xsd:string ;
+  dcterms:description "Whether the applicant is registered as a Company or as an Individual." .
+
+cardano:proposalNature a owl:DatatypeProperty ;
+  rdfs:label "proposal nature" ;
+  rdfs:domain cardano:WorkPackage ;
+  rdfs:range xsd:string ;
+  dcterms:description "Whether the work package is Technical or Non-technical, per the application form." .
+
+cardano:initiativeStatus a owl:DatatypeProperty ;
+  rdfs:label "initiative status" ;
+  rdfs:domain cardano:WorkPackage ;
+  rdfs:range xsd:string ;
+  dcterms:description "Whether the work is a 'New Initiative' or a 'Continuation of existing work', per the application form." .
+
+cardano:wpAdaAmount a owl:DatatypeProperty ;
+  rdfs:label "work package ADA amount" ;
+  rdfs:domain cardano:WorkPackage ;
+  rdfs:range xsd:decimal ;
+  dcterms:description "Total ADA budget for a work package." .
+
+cardano:lineItemAdaAmount a owl:DatatypeProperty ;
+  rdfs:label "line item ADA amount" ;
+  rdfs:domain cardano:BudgetLineItem ;
+  rdfs:range xsd:decimal ;
+  dcterms:description "ADA amount for a single budget line item." .
+
+cardano:milestoneMonth a owl:DatatypeProperty ;
+  rdfs:label "milestone month" ;
+  rdfs:domain cardano:WorkPackageMilestone ;
+  rdfs:range xsd:integer ;
+  dcterms:description "Month offset (M1, M3, M15) from project start at which the milestone is due." .
+
+cardano:kpiCurrentValue a owl:DatatypeProperty ;
+  rdfs:label "KPI current value" ;
+  rdfs:domain cardano:StrategyKPI ;
+  rdfs:range xsd:string ;
+  dcterms:description "Current measured value of the KPI, as cited in the proposal." .
+
+cardano:kpiTargetValue a owl:DatatypeProperty ;
+  rdfs:label "KPI target value" ;
+  rdfs:domain cardano:StrategyKPI ;
+  rdfs:range xsd:string ;
+  dcterms:description "Target value the KPI is meant to reach (typically by 2030)." .
+
+cardano:commentBy a owl:DatatypeProperty ;
+  rdfs:label "comment by" ;
+  rdfs:domain cardano:ProposalComment ;
+  rdfs:range xsd:string ;
+  dcterms:description "Display name or stake/DRep alias of the commenter." .
+
+cardano:commentPostedOn a owl:DatatypeProperty ;
+  rdfs:label "comment posted on" ;
+  rdfs:domain cardano:ProposalComment ;
+  rdfs:range xsd:dateTime ;
+  dcterms:description "Timestamp at which the comment was posted." .
 
 # ==============================================================================
 # Alignment — bridge gbkind: classes to cardano: classes
