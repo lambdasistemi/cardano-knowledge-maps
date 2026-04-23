@@ -82,5 +82,29 @@
     "title": "Life of a Hydra Head",
     "description": "Follow a head from initialization through fan-out: the five phases, the on-chain state machine, and what happens when things go wrong.",
     "file": "data/tutorials/hydra-lifecycle.json"
+  },
+  {
+    "id": "budget-2026-overview",
+    "title": "Cardano Budget 2026 — the Process and the Slate",
+    "description": "How Cardano's CIP-1694 treasury budgeting process works, and a quick tour of the three proposals submitted to the 2026 cycle.",
+    "file": "data/tutorials/budget-2026-overview.json"
+  },
+  {
+    "id": "budget-2026-partner-chain-factory",
+    "title": "Partner Chain Factory — Deep Dive",
+    "description": "What the Partner Chain Factory proposal is actually building, why it matters for Cardano's competitive position, who's building it, and what could go wrong.",
+    "file": "data/tutorials/budget-2026-partner-chain-factory.json"
+  },
+  {
+    "id": "budget-2026-indigo-v2030rs",
+    "title": "Indigo V2030RS — Deep Dive",
+    "description": "What Indigo Foundation is asking the Treasury to fund, the four products that come out of it, the perpetual revenue-share that frames the ask, and the timing concern the community has raised.",
+    "file": "data/tutorials/budget-2026-indigo-v2030rs.json"
+  },
+  {
+    "id": "budget-2026-serviceplan-demand-engine",
+    "title": "Serviceplan Demand Engine — Deep Dive",
+    "description": "What the Marketing Powered Demand Engine proposal actually delivers, why it's the largest ADA ask on the slate despite being non-technical, and the substantive criticisms that have already landed.",
+    "file": "data/tutorials/budget-2026-serviceplan-demand-engine.json"
   }
 ]

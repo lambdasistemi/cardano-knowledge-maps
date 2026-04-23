@@ -475,13 +475,19 @@ n:partner-chain-factory-toolkit
   a gb:Node .
 
 n:ouroboros-tachys
-  dcterms:description "A high-performance Ouroboros consensus variant targeting 1-2 second confirmation latency and ~40× Cardano mainnet throughput. Designed to compose with Peras, Leios and Phalanx. Intended as the consensus engine for Cardano-derived partner chains produced by the factory." ;
+  dcterms:description "A high-performance Ouroboros consensus variant targeting 1-2 second confirmation latency and ~40× Cardano mainnet throughput. Designed to compose with Peras, Leios and Phalanx. Intended as the consensus engine for Cardano-derived partner chains produced by the factory. CIP submission: cardano-foundation/CIPs PR #1149 (CIP-0177)." ;
   gb:group gbgroup:protocols ;
   rdfs:label "Ouroboros Tachýs" ;
   gb:nodeId "ouroboros-tachys" ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
   a gbkind:protocol ;
-  a gb:Node .
+  a gb:Node ;
+  foaf:page <https://github.com/cardano-foundation/CIPs/pull/1149> ;
+  rdfs:seeAlso <https://apexfusion.org/> ;
+  rdfs:seeAlso <https://ensurable.systems> .
+
+n:ouroboros-tachys cardano:builtOn n:ouroboros-leios .
+n:ouroboros-tachys cardano:builtOn n:ouroboros-peras .
 
 n:ouroboros-praos
   dcterms:description "The production Cardano consensus protocol. Proof-of-stake protocol in the Ouroboros family with provable security under semi-synchronous network assumptions. Used by Cardano mainnet; the baseline against which Ouroboros Tachýs is described as a performance-oriented variant." ;
@@ -494,13 +500,16 @@ n:ouroboros-praos
   foaf:page <https://iohk.io/en/research/library/papers/ouroboros-praos-an-adaptively-secure-semi-synchronous-proof-of-stake-protocol/> .
 
 n:partner-chain
-  dcterms:description "A Cardano-derived application chain that settles to Cardano mainnet, requires ADA stake, and connects to mainnet through bridging infrastructure. Distinct from Layer 2 constructions (e.g. Hydra heads): partner chains are sovereign chains that inherit Cardano tooling and security anchoring rather than running inside a Cardano state channel." ;
+  dcterms:description "A Cardano-derived application chain that settles to Cardano mainnet, requires ADA stake, and connects to mainnet through bridging infrastructure. Distinct from Layer 2 constructions (e.g. Hydra heads): partner chains are sovereign chains that inherit Cardano tooling and security anchoring rather than running inside a Cardano state channel. Today's production examples: Midnight (confidentiality, March 2026) and Vector (high-performance, late 2025)." ;
   gb:group gbgroup:concepts ;
   rdfs:label "Partner Chain" ;
   gb:nodeId "partner-chain" ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
   a gbkind:concept ;
-  a gb:Node .
+  a gb:Node ;
+  foaf:page <https://docs.cardano.org/> ;
+  rdfs:seeAlso <https://midnight.network/> ;
+  rdfs:seeAlso <https://apexfusion.org/> .
 
 n:vector-chain
   dcterms:description "Vector — launched in late 2025 as the first Cardano-derived partner chain in production. Operated by Apex Fusion Foundation; the existence proof for the Ouroboros Tachýs design the factory industrialises." ;
@@ -509,16 +518,23 @@ n:vector-chain
   gb:nodeId "vector-chain" ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
   a gbkind:protocol ;
-  a gb:Node .
+  a gb:Node ;
+  foaf:page <https://apexfusion.org/> ;
+  rdfs:seeAlso <https://foundation.apexfusion.org/> .
+
+n:vector-chain cardano:maintainedBy n:apex-fusion .
+n:vector-chain cardano:maintainedBy n:org-apex-fusion-foundation .
 
 n:cardano-bridge
-  dcterms:description "Production-grade bridging infrastructure between Cardano mainnet and partner chains produced by the factory: asset transfers, message passing, and the fee flow that supports the treasury-return argument of the proposal." ;
+  dcterms:description "Production-grade bridging infrastructure between Cardano mainnet and partner chains produced by the factory: asset transfers, message passing, and the fee flow that supports the treasury-return argument of the proposal. PCF WP4 funds an open-source implementation built and audited by Ethernal." ;
   gb:group gbgroup:concepts ;
   rdfs:label "Cardano Bridge" ;
   gb:nodeId "cardano-bridge" ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
   a gbkind:concept ;
-  a gb:Node .
+  a gb:Node ;
+  foaf:page <https://docs.cardano.org/> ;
+  rdfs:seeAlso <https://ethernal.tech/> .
 
 n:cardano-mainnet
   dcterms:description "The Cardano layer-1 settlement chain running Ouroboros Praos. Referenced as the settlement layer for partner chains produced by the factory." ;
@@ -537,4 +553,11 @@ n:ada
   gb:nodeId "ada" ;
   dcterms:isPartOf <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf> ;
   a gbkind:concept ;
-  a gb:Node .
+  a gb:Node ;
+  foaf:page <https://cardano.org/> ;
+  rdfs:seeAlso <https://docs.cardano.org/> .
+
+n:partner-chain-factory-toolkit
+  foaf:page <https://github.com/cardano-foundation/CIPs/pull/1149> ;
+  rdfs:seeAlso <https://ensurable.systems> ;
+  rdfs:seeAlso <https://apexfusion.org/> .

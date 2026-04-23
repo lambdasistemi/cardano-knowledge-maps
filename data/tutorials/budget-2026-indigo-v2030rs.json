@@ -1,0 +1,67 @@
+{
+  "id": "budget-2026-indigo-v2030rs",
+  "title": "Indigo V2030RS — Deep Dive",
+  "description": "What Indigo Foundation is asking the Treasury to fund, the four products that come out of it, the perpetual revenue-share that frames the ask, and the timing concern the community has raised.",
+  "stops": [
+    {
+      "node": "bp-indigo-v2030rs",
+      "depth": 1,
+      "title": "The pitch in one sentence",
+      "narrative": "**3.97M ADA, 12 months, one work package** to deliver four interlocking products — and to commit, perpetually, to returning **10% of all net protocol revenue** from those products to the Cardano Treasury via the [V2030RS](node:v2030rs-revenue-share) framework.\n\nThe ADA ask is the third-smallest on the slate (after PCF and Serviceplan), but the framing is unusual: Indigo isn't asking for a grant, it's asking the Treasury to become a **perpetual co-beneficiary** of the products it's funding. That framing matters more than the dollar amount."
+    },
+    {
+      "node": "org-indigo-foundation",
+      "depth": 1,
+      "title": "Why Indigo is the proposer",
+      "narrative": "[Indigo Foundation](node:org-indigo-foundation) operates Indigo Protocol on Cardano: an over-collateralised synthetic-asset platform that has, since the launch of Indigo 2.0 in April 2024, generated **>$8.55M USD in cumulative protocol revenue** from mint/burn fees, redemptions, and loan-interest payments. That revenue stream is what makes the V2030RS commitment credible — Indigo isn't promising to share future hypothetical revenue, it's pointing at an existing stream and saying 'we'll route 10% of the new product revenue through that same machinery'.\n\nIndigo has also previously received funding through Cardano Catalyst across multiple rounds. That is both a credibility signal (the team has shipped before) and a concern (some past Catalyst projects sit at 'awaiting final milestone approval', as the proposal acknowledges)."
+    },
+    {
+      "node": "iusdt",
+      "depth": 1,
+      "title": "Product 1 — iUSDt, Cardano's first institutional RWA stablecoin",
+      "narrative": "[iUSDt](node:iusdt) is the central deliverable: an institutional-grade stablecoin backed not by on-chain over-collateralisation (like [Djed](node:djed)) but by **short-duration U.S. Treasuries** held through institutional liquidity funds. The proposal positions this as filling Cardano's RWA gap — today, a corporate treasury or DAO that wants tokenised yield-bearing dollar exposure has to leave Cardano to get it.\n\nThe entire WP1 (Legal & Compliance) exists because tokenising real treasuries means setting up Indigo Finance Corp and any subsidiaries, securing jurisdictional licensing, building compliant custody and Proof-of-Reserves structures. **2.3M of the 3.85M work-package budget is Legal & Compliance**, not engineering. That ratio tells you what kind of proposal this really is."
+    },
+    {
+      "node": "btc-fi-market",
+      "depth": 1,
+      "title": "Product 2 — BTC-Fi via xBTC collateral",
+      "narrative": "The [BTC-Fi market](node:btc-fi-market) is the second product: an Indigo-hosted DeFi venue where positions are denominated in [BTC](node:btc), brought into the Cardano stack via xBTC collateral.\n\nThis is the proposal's bid to **bring external Bitcoin liquidity into Cardano DeFi** — the argument being that BTC holders looking for yield currently leave for Ethereum/Solana, and a Cardano-native BTC venue closes that leak. The ecosystem case is that BTC liquidity follows venue, not chain loyalty, and Cardano needs the venue."
+    },
+    {
+      "node": "shielded-iasset",
+      "depth": 1,
+      "title": "Product 3 — Shielded iAssets on partner chains",
+      "narrative": "The third product is privacy: [shielded iAssets](node:shielded-iasset) deployed on partner-chain ecosystems (Midnight specifically, per the proposal text). These are confidentiality-preserving synthetic assets — institutional participants want the public verifiability of on-chain settlement without exposing position sizes, counterparties or trading patterns to public mempool observers.\n\nThis stop also creates a **cross-proposal dependency** that's worth pausing on: shielded iAssets need [partner chains](node:partner-chain), which (in the high-performance variant) is what the [Partner Chain Factory](node:bp-partner-chain-factory) proposal is funding. In the merged graph store, that dependency is a real edge — both proposals failing or both passing changes Indigo's delivery picture."
+    },
+    {
+      "node": "v2030rs-revenue-share",
+      "depth": 1,
+      "title": "Product 4 — V2030RS, the framing piece",
+      "narrative": "[V2030RS](node:v2030rs-revenue-share) is the fourth and most distinctive deliverable. It is **not a product** in the technical sense — it's a **structural commitment** to route 10% of net protocol revenue from the funded products (iUSDt, BTC-Fi, shielded iAssets) back to the Cardano Treasury **perpetually from day one of each product go-live**, via quarterly auditable on-chain transfers, with no sunset clause and no cap.\n\nThe proposal explicitly claims this 'shifts the Treasury from passive funder to active beneficiary'. The mechanism leverages Indigo's existing yield-distribution architecture (which currently distributes to INDY stakers and stability providers, primarily in ADA). V2030RS extends the same pipe to a new beneficiary: the [Treasury budgeting process](node:treasury-budgeting) itself."
+    },
+    {
+      "node": "wp-indigo-rwa-compliance",
+      "depth": 1,
+      "title": "Why there is only one work package",
+      "narrative": "Unlike PCF (8 WPs) and Serviceplan (4 WPs), Indigo bundles everything under a single work package: [WP1 — RWA Compliance: Legal, Compliance & Entity Setup](node:wp-indigo-rwa-compliance), at 3.85M ADA. The cost split:\n\n- **Legal & Compliance**: 2.3M ADA / $690,000 (60% of WP)\n- **Development**: 1.55M ADA / $465,000 (40% of WP)\n\nThis single-WP structure is honest about where the risk is. The technical work (RWA core, BTC DeFi, Midnight integration, audits, open tooling) is all rolled into the Development line — Indigo is treating the engineering as well-understood, with the entity-formation and licensing as the unknown. That's the opposite of how PCF distributes risk."
+    },
+    {
+      "node": "kpi-annual-protocol-revenue",
+      "depth": 1,
+      "title": "The KPI argument",
+      "narrative": "The proposal supports four framework KPIs ([TVL](node:kpi-tvl), [Monthly Transactions](node:kpi-monthly-transactions), [MAU](node:kpi-mau), [Annual Protocol Revenue](node:kpi-annual-protocol-revenue)) but the central one is the last. Indigo's existing protocol generates ~4.66M ADA average annual revenue. **10% of that, routed via V2030RS, is by itself ~466k ADA/year** to the Treasury — measurable against a current 3.5M ADA total annual protocol revenue.\n\nIf the new products (iUSDt, BTC-Fi, shielded iAssets) reach even modest scale, the share grows proportionally. The proposal provides per-scenario forecasts (V2030RS Forecast Summary) showing payback paths from base to growth scenarios. The community can disagree on the forecast inputs, but the mechanism — quarterly auditable on-chain transfers — is verifiable from day one."
+    },
+    {
+      "node": "repay-indigo-v2030rs",
+      "depth": 1,
+      "title": "The repayment commitment in clause form",
+      "narrative": "[V2030RS as a repayment clause](node:repay-indigo-v2030rs) has three commitments worth distinguishing:\n\n1. **10% of net new protocol revenue** from the funded products — not gross, not gated by payback completion\n2. **Perpetually from day one of each product go-live** — no sunset clause, no cap\n3. **Quarterly auditable on-chain transfers** — the mechanism is verifiable each quarter, not at year-end\n\nThe contrast with PCF's repayment is sharp. PCF returns the *FX surplus and unspent ADA* — a one-time true-up. Indigo returns *protocol revenue forever*. That difference is the proposal's distinguishing feature on the slate."
+    },
+    {
+      "node": "comment-indigo-1",
+      "depth": 1,
+      "title": "The substantive critique — timing",
+      "narrative": "The single comment so far (commenter [-256](node:comment-indigo-1), 21 Apr 2026) acknowledges the proposal is 'much needed' and that BTC-Fi integration could bring liquidity — but argues the **timing is wrong**:\n\n> 'ADA is at multiyear low and selling ADA at these levels to fund these developments will be throwing away money. I think we should wait at least for next year when prices are little improved.'\n\nThis is a structural objection that affects every Budget 2026 proposal at $0.30 or below: every ADA the Treasury disburses for fiat-denominated work is being sold (or hedged via forward contracts, with their own costs) into a depressed market. The proposal's repayment clause partially counters this — perpetual 10% revenue share *is* upside if ADA recovers — but it doesn't undo the immediate ADA outflow. This will be the cycle's most-debated question, and it's not specific to Indigo."
+    }
+  ]
+}
