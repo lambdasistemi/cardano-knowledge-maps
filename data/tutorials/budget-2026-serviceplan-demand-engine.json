@@ -1,0 +1,73 @@
+{
+  "id": "budget-2026-serviceplan-demand-engine",
+  "title": "Serviceplan Demand Engine — Deep Dive",
+  "description": "What the Marketing Powered Demand Engine proposal actually delivers, why it's the largest ADA ask on the slate despite being non-technical, and the substantive criticisms that have already landed.",
+  "stops": [
+    {
+      "node": "bp-serviceplan-demand-engine",
+      "depth": 1,
+      "title": "The pitch in one sentence",
+      "narrative": "**20.87M ADA, 12 months, four work packages** to run an enterprise marketing pilot in three European markets that repositions Cardano as 'The Blockchain for Serious Business' — the high-integrity, mission-critical blockchain network for systems that must not fail.\n\nThis is the **largest ADA ask on the Budget 2026 slate**. It is also the only **non-technical** proposal: every cost line falls under [Engagement & Ecosystem support](node:cost-category-engagement-ecosystem) — there is no Labor line, no Development line, no Audit line. Every dollar is enterprise-marketing spend, split 53% media to 47% agency services."
+    },
+    {
+      "node": "org-serviceplan-group",
+      "depth": 1,
+      "title": "Why Serviceplan",
+      "narrative": "[Serviceplan Group](node:org-serviceplan-group) is Europe's largest owner-managed agency group: 6,500 employees in 40+ countries, €866M revenue, Cannes Lions 2025 Independent Network of the Year. Their unique credibility for *this* proposal is that they're the only major marketing agency that has actually **shipped Cardano infrastructure**: the [Masumi Network](node:demand-engine), built with NMKR, has been live on Cardano mainnet since November 2024 with 25,000+ on-chain transactions and a Cardano Foundation endorsement at WEF Davos 2025.\n\nPrior Cardano funding through Catalyst: Fund 13 #1300132 (Masumi, 1.53M ADA distributed, complete) and Fund 14 #1400079 (Masumi 2.0, in progress). Both were technology grants — this proposal is the agency saying 'we already proved we can build on Cardano; now let us run the *marketing*'."
+    },
+    {
+      "node": "demand-funnel",
+      "depth": 1,
+      "title": "The architecture — Attention → Proof → Qualified Leads",
+      "narrative": "The system the proposal builds is a [three-stage demand funnel](node:demand-funnel):\n\n- **Attention**: paid media (LinkedIn, OOH, podcasts, native advertising), event-centric activation around enterprise venues like Money20/20 and Gartner summits\n- **Proof**: the [Cardano Hub](node:cardano-hub) — a central evidence-and-engagement environment built around four enterprise questions: *Why Cardano? Why for me? Under which conditions? With which next steps?*\n- **Qualified Leads**: enterprise-sales hand-off into Intersect's Enterprise Working Group, partner matching, structured discussions\n\nEach vertical journey through the funnel follows: *Problem → Capability → Proof → Next Step*. The proposal's central claim is that Cardano's enterprise problem isn't technical capability but **demand-side legibility** — enterprises can't tell if Cardano is for them, and the Hub is the bet on fixing that."
+    },
+    {
+      "node": "wp-serviceplan-enable",
+      "depth": 1,
+      "title": "WP1 — Enable: build the foundation, gate everything else",
+      "narrative": "[WP1 Enable](node:wp-serviceplan-enable) at **3.82M ADA / $649k** is the foundation that every other work package depends on: brand positioning, Hub architecture, creative concept and visual identity, vertical journeys for the two pilot verticals.\n\nThis is the only WP funded *unconditionally* — the rest are explicitly gated:\n- WP1 → released upon DRep approval\n- WP2 → requires GMC sign-off on WP1\n- WP3 → requires demonstrated WP2 performance\n- WP4 → requires a passed KPI checkpoint\n\nThe accountability ladder is tight by construction. If the Hub doesn't ship, nothing else triggers. If WP2's first event activation doesn't demonstrate funnel performance, WP3's optimisation budget doesn't unlock."
+    },
+    {
+      "node": "wp-serviceplan-kickoff",
+      "depth": 1,
+      "title": "WP2 — Kick-off: the V1 DeFi event-centric blueprint",
+      "narrative": "[WP2 Kick-off](node:wp-serviceplan-kickoff) at **3.29M ADA / $560k** activates the first vertical (Institutional DeFi) with paid media and event-centric orchestration. The proposal models the activation around **Money20/20 Amsterdam** as a blueprint, with three phases: before (LinkedIn targeting, Hub pages live, SEA), during (venue-proximate OOH, geo-targeted ads, executive roundtables), after (4+ weeks of retargeting, whitepaper distribution, native recap articles).\n\nProjected reach for a Money20/20-comparable event: 9.6M LinkedIn impressions, 76,000 clicks, 3.6M OOH impressions, 80,000 native views. The 'flywheel' the proposal describes: on-site CTO interviews → published Hub case studies within a week → paid native advertorials on premium publishers → drive qualified traffic back to Hub → routing logic converts visitors to leads. By week eight post-event, third-party editorial coverage exists that compliance teams can reference."
+    },
+    {
+      "node": "wp-serviceplan-scale",
+      "depth": 1,
+      "title": "WP3 — Scale: the Q3 KPI checkpoint",
+      "narrative": "[WP3 Scale](node:wp-serviceplan-scale) at **3.92M ADA / $666k** is the optimisation phase: refine V1 DeFi based on Phase 2 data, deliver whitepapers, prepare the **WEF Davos billboard placement (19–23 January 2027)** as a general Cardano credibility signal — *not* vertical-specific.\n\nMost importantly, WP3 contains the **Q3 KPI checkpoint**: KPIs and routing performance are evaluated, and only then is budget unlocked for Verticals 3 and 4 (AI Business and Real World Assets, recommended for Year 2). Read this carefully — **WP4's 9.23M ADA is itself gated by this checkpoint**, even though it's in the proposal as a fully-funded line. Approval funds the *option* on V2; passing the checkpoint funds the *exercise*."
+    },
+    {
+      "node": "wp-serviceplan-supply-chain",
+      "depth": 1,
+      "title": "WP4 — V2 Supply Chain Traceability — the contested package",
+      "narrative": "[WP4 V2 Supply Chain](node:wp-serviceplan-supply-chain) at **9.23M ADA / $1.57M** — by far the largest WP — activates the second vertical end-to-end (Enable → Kick-off → Scale). Anchor event: **Gartner Application & Business Solutions Summit, London, 14–15 September 2026**.\n\nThe proposal claims a **16% efficiency gain vs. baseline** because the foundational system established in WP1 is reused. The targeting: global manufacturers, logistics providers, retail networks, ESG-driven brands. This is also the work package the community has explicitly criticised — see the comment thread in the next stop."
+    },
+    {
+      "node": "comment-serviceplan-2",
+      "depth": 1,
+      "title": "The substantive critique — wrong vertical",
+      "narrative": "The most substantive comment ([crowned](node:comment-serviceplan-2), 20 Apr 2026) supports Serviceplan as a marketing firm but objects sharply to the V2 Supply Chain Traceability vertical:\n\n> 'The verticals proposed are insane and would provide no value to the ecosystem. The bulk of the funding is for marketing V2 Supply Chain Traceability solutions on Cardano which is insane since there is zero market for this, our supply chain tracking solutions are stone-age crap and it's competing against chains that are designed from the ground up with supply chain traceability as the core use case.'\n\nThe critique is directional: it's not against the funnel architecture or the agency, it's that **9.23M ADA — the biggest line item on the slate — is being aimed at a vertical where Cardano has no competitive product**. Restructuring to focus everything on Institutional DeFi would address this critique without rewriting the rest of the proposal."
+    },
+    {
+      "node": "comment-serviceplan-3",
+      "depth": 1,
+      "title": "The other critique — market scope",
+      "narrative": "A DRep ([Nimuë Lady of the Lake Pool](node:comment-serviceplan-3)) asked: *'This proposal only targets the UK, Germany and Switzerland?'*\n\nThe pilot markets are explicitly UK / Germany / Switzerland (Brazil and Argentina noted on a LATAM watchlist for Year 2). The proposal's defence is that enterprise marketing is hub-centric and these are the highest-density enterprise-decision-maker markets in Europe. The implicit acknowledgement is that **a 12-month Treasury investment funds three rich markets**, deferring the global majority to whether the Year 2 verticals (V3/V4) get funded at all.\n\nThis is a real strategic question for ada holders: is enterprise marketing in three rich markets the right shape of bet? Or should the same ADA fund a less ambitious campaign across more markets?"
+    },
+    {
+      "node": "kpi-hub-traffic-engagement",
+      "depth": 1,
+      "title": "The new marketing KPI framework",
+      "narrative": "Beyond supporting all four [framework](node:kpi-tvl) [KPIs](node:kpi-monthly-transactions), the proposal introduces a **marketing-specific KPI framework** because the Strategy Framework explicitly notes that 'Marketing KPIs to broaden reach and engagement' are expected to be developed.\n\nThe four new KPIs:\n- [Hub Traffic & Engagement](node:kpi-hub-traffic-engagement) — qualified actions, downloads, click-depth\n- [Qualified Leads](node:kpi-qualified-leads) — handovers to Enterprise Working Group\n- [Enterprise Conversations](node:kpi-enterprise-conversations) — retargeting uplift, meeting conversions\n- [Brand & Perception](node:kpi-brand-perception) — sentiment in X/Reddit/dev communities, share-of-voice\n\nThese are operationally tractable and let the community measure whether the funnel is delivering. Whether they should be elevated to Strategy Framework Primary KPIs is a separate governance question."
+    },
+    {
+      "node": "repay-serviceplan-fx-buffer",
+      "depth": 1,
+      "title": "The FX-buffer repayment",
+      "narrative": "The 20.87M ADA request includes a **30% conversion buffer** applied to the current ADA/EUR rate. Should ADA and FX rates remain stable, **any surplus ADA beyond €2,978,738 / $3,518,917 will be returned to the Treasury**, minus documented ADA-to-EUR conversion costs (exchange fees, transaction fees, slippage, banking transfer costs).\n\nThis is the same pattern as PCF's repayment — a buffer-surplus return — but with a much larger buffer (30%) because all the spend is fiat-denominated agency and media work. If ADA strengthens during the campaign, that whole buffer comes back. If ADA weakens, the buffer covers the shortfall and nothing returns. This is the proposal's structural answer to the 'selling ADA at multi-year low' concern that hits every fiat-denominated proposal in the cycle."
+    }
+  ]
+}
