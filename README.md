@@ -22,15 +22,20 @@ This repo is **data-only**. The viewer is provided by [graph-browser](https://gi
 
 ### Data files
 
-- `data/rdf/graph.ttl` — the graph (Turtle RDF, source of truth)
-- `data/rdf/cardano.ttl` — Cardano domain ontology (W3C vocabularies)
-- `data/config.json` — viewer configuration (kinds, colors, shapes)
+The instance graph is split by topic; the runtime composes them through `graphSources` in `data/config.json`.
+
+- `data/rdf/cardano.ontology.ttl` — Cardano domain ontology (OWL classes + object properties, W3C vocabularies)
+- `data/rdf/cardano.ttl` — shared cross-cutting instance nodes (Plutus, Conway era, ExUnits, ...) referenced by both governance and smart-contracts focuses
+- `data/rdf/governance.ttl` — CIP-1694 governance: actors, action types, processes, treasury, parameters
+- `data/rdf/smart-contracts.ttl` — Plutus stack, languages, runtimes, dApps, Vasil features, Hydra L2
+- `data/rdf/budget-2026/*.ttl` — one TTL per Cardano Budget 2026 proposal
+- `data/config.json` — viewer configuration (kinds, colors, shapes, source labels)
 - `data/queries.json` — SPARQL query catalog
 - `data/tutorials/` — guided tours
 
 ## Contributing
 
-Edit `data/rdf/graph.ttl` (Turtle RDF) to add or modify nodes and edges. Edit `data/queries.json` for queries, `data/tutorials/` for tours. CI validates schemas and RDF syntax automatically.
+Edit the topic TTL whose subject your statements concern. If a node is genuinely shared between focuses (referenced as a subject from one and as a target from another, or both), promote it to `cardano.ttl`. Edit `data/queries.json` for queries, `data/tutorials/` for tours. CI validates schemas and RDF syntax automatically.
 
 ## Disclaimer
 

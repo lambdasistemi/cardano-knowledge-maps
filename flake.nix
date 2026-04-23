@@ -26,16 +26,13 @@
             cp ${browser}/index.html $out/
             cp ${browser}/index.js $out/
 
-            # Copy data as writable so we can merge ontology triples
+            # Copy data as writable; the importer loads each graphSource
+            # listed in data/config.json directly, no concatenation needed.
             cp -r --no-preserve=mode ${./data} $out/data
 
-            # Merge ontology triples into graph.ttl so SPARQL queries
-            # using cardano: vocabulary work at runtime
-            cat ${./data/rdf/cardano.ttl} >> $out/data/rdf/graph.ttl
-
-            # Publish namespace document so ontology IRI is dereferenceable
+            # Publish namespace document so the ontology IRI is dereferenceable
             mkdir -p $out/vocab
-            cp ${./data/rdf/cardano.ttl} $out/vocab/cardano
+            cp ${./data/rdf/cardano.ontology.ttl} $out/vocab/cardano
           '';
         }
       );
