@@ -1,0 +1,73 @@
+{
+  "id": "budget-2026-partner-chain-factory",
+  "title": "Partner Chain Factory — Deep Dive",
+  "description": "What the Partner Chain Factory proposal is actually building, why it matters for Cardano's competitive position, who's building it, and what could go wrong.",
+  "stops": [
+    {
+      "node": "bp-partner-chain-factory",
+      "depth": 1,
+      "title": "The pitch in one sentence",
+      "narrative": "**13.15M ADA, 15 months, six partners** to make 'spin up a new Cardano-derived chain' a sub-day toolkit operation rather than a multi-year, multi-million-dollar project.\n\nThe proposal's core argument is structural: today, building a high-performance partner chain on Cardano means independently solving every problem that the first team (Apex Fusion's [Vector chain](node:vector-chain), late 2025) solved — consensus tuning, deployment automation, bridging, observability. Builders on Ethereum have Optimism Stack and Polygon CDK; on Cosmos they have Cosmos SDK; on Polkadot they have Substrate. **Cardano has nothing equivalent**. The factory is meant to fix that."
+    },
+    {
+      "node": "ouroboros-tachys",
+      "depth": 1,
+      "title": "Ouroboros Tachýs — what makes the chains different",
+      "narrative": "Cardano mainnet runs [Ouroboros Praos](node:ouroboros-praos), with a 20-second block time and a public mempool. That's a deliberate design — those parameters give Cardano its security guarantees and its predictable settlement. But they make mainnet **unsuitable as the execution layer for sub-2-second institutional settlement** (RWA, securities, regulated treasuries).\n\n[Ouroboros Tachýs](node:ouroboros-tachys) is a high-performance Ouroboros variant that aims for **1–2 second confirmation** and **~40× mainnet throughput**, while retaining the underlying security properties. It is designed to compose with Peras, Leios and Phalanx. The proposal does *not* propose changing mainnet — it proposes making Tachýs available as the consensus engine for partner chains that anchor back to mainnet."
+    },
+    {
+      "node": "vector-chain",
+      "depth": 1,
+      "title": "Why this isn't speculative — Vector already exists",
+      "narrative": "Apex Fusion launched [Vector](node:vector-chain) in late 2025 as the first Cardano-derived partner chain in production. The core ideas the proposal is asking funding to *industrialise* have been validated through a chain that real users use today.\n\nThis is the proposal's strongest credibility anchor. The team behind it — Ensurable Systems, Well Typed, PNSol, HAL8, Ethernal, plus AFF (which operates Vector) — has experience including: building the Cardano node, implementing Ouroboros, delivering every hard fork from Byron through Plomin, and running Vector in production. The treasury is being asked to fund the **toolkit** that turns a one-off success into a repeatable platform."
+    },
+    {
+      "node": "partner-chain",
+      "depth": 1,
+      "title": "What 'partner chain' actually means here",
+      "narrative": "[Partner chains](node:partner-chain) are not Layer 2s. They are sovereign chains derived from the Cardano codebase that:\n\n- **Settle to mainnet** for finality and dispute resolution\n- **Require ADA for stake** (the SPO economics flow back to mainnet)\n- **Connect to mainnet via a bridge** for asset and message transfer\n\nThe bridge is critical and is funded as its own work package — see [PCF WP4](node:wp-pcf-4-bridging). The economic argument the proposal makes is that partner chains create **structural ADA demand** even though they execute application traffic off mainnet: every chain that exists adds ADA stake requirements, mainnet bridging fees, and mainnet settlement transactions."
+    },
+    {
+      "node": "wp-pcf-4-bridging",
+      "depth": 1,
+      "title": "WP4 — the most expensive work package, for good reason",
+      "narrative": "**3,316,655 ADA / 35 person-months** — this is by far the largest work package, and it builds the production-grade Cardano⇄Tachýs⇄EVM bridge. Lock/burn + mint/unlock logic reviewed by Ensurable Systems and Well Typed; protocol-level threat model; **independent security audit with all critical/high resolved by M12**; UTXO-to-EVM path to give EVM-builders direct access; bridge latency target ≤60s.\n\nAll bridge code is open-sourced. The audit is line-itemed at $100,000. This is the work package that determines whether partner chains are a real ecosystem extension or a sandbox curiosity — without a trustworthy bridge, value can flow in but not back out, and the proposal's whole 'capture not cannibalise' argument collapses."
+    },
+    {
+      "node": "wp-pcf-2-tachys-design",
+      "depth": 1,
+      "title": "WP2 — getting the consensus protocol right",
+      "narrative": "The technical heart: [WP2](node:wp-pcf-2-tachys-design) at **1.33M ADA**, led by Well Typed. Outputs: a CIP for Tachýs accepted by M3; a production-quality implementation that compiles into the existing node; a Praos↔Tachýs consensus selector with **no Praos regressions**; and — crucially — a **formal security analysis (D2.7) published by M12**.\n\nA new consensus variant on a chain like Cardano is a high-stakes technical claim. The proposal acknowledges this by gating Vector mainnet deployment ([MS9 — M15](node:pcf-ms9)) on having both the formal analysis and PNSol's empirical adversarial validation in hand. The risk of being wrong here doesn't shrink because the team is experienced — it just means the verification cost is built into the budget."
+    },
+    {
+      "node": "pcf-ms9",
+      "depth": 1,
+      "title": "The 9-milestone delivery rhythm",
+      "narrative": "The 15-month programme is structured against nine programme milestones (MS1–MS9). Each work package's internal milestones map to these — so [MS1](node:pcf-ms1) at M1 is project kickoff for everyone, MS5 at M8 is when genesis quick-start has to work, **MS9 at M15** is project close: Tachýs deployed to Vector mainnet, upstream PR submitted to the Intersect-maintained node repo, documentation portal handed over, ≥3 external builder teams engaged.\n\nThe milestones create a coordination contract across six partners. If MS5 slips, MS7 (audit complete) slips, which slips MS8 (testnet KPIs validated), which slips MS9 (mainnet deployment). The proposal's [WP1 (Project Management)](node:wp-pcf-1-management) is explicitly framed as the 16% insurance premium that keeps that coordination from collapsing — multi-partner technical programmes 'fail through under-resourced coordination, not under-resourced engineering'."
+    },
+    {
+      "node": "kpi-active-partner-chains",
+      "depth": 1,
+      "title": "The KPIs the proposal asks the framework to adopt",
+      "narrative": "The Cardano 2030 Strategy Framework defines KPIs like [TVL](node:kpi-tvl), [MAU](node:kpi-mau) and [Annual Protocol Revenue](node:kpi-annual-protocol-revenue). The proposal supports all of those, but argues the framework **lacks the KPIs needed to track partner-chain ecosystem health**:\n\n- [Active Partner Chains](node:kpi-active-partner-chains) — currently 2 (Vector, Midnight); target 10 by 2030\n- [Cross-chain Bridge Volume](node:kpi-cross-chain-bridge-volume) — currently not tracked; target ≥$50M monthly by 2030\n- [Ecosystem Builder Pipeline](node:kpi-ecosystem-builder-pipeline) — currently 1 (AFF/Vector); target 20 by 2030\n\nThe Bridge Volume KPI is the substantive one: without it, the framework cannot tell a thriving partner-chain ecosystem from one where value leaks to fragmented L2s. This is a deliberate ask — adopt these and you can measure whether the factory worked."
+    },
+    {
+      "node": "kpi-annual-protocol-revenue",
+      "depth": 1,
+      "title": "The financial argument — does this pay back?",
+      "narrative": "The framework targets [≥16M ADA in annual protocol revenue](node:kpi-annual-protocol-revenue) by 2030, up from 3.5M today (~4.6× growth). The proposal's direct contribution per active partner chain: bridge transactions, settlement anchoring, SPO registration. A chain processing 100,000 bridge+settlement transactions per month — conservative for an institutional RWA chain — generates ~30,000–50,000 ADA in additional annual mainnet fee revenue.\n\n**Five active partner chains at the base estimate would contribute 150,000–250,000 ADA annually in direct fee revenue** — 4–7% of the current baseline as a floor that grows non-linearly with chain activity. The broader ADA-demand case (staking requirements, ecosystem capture, RWA market participation) is bigger but harder to quantify; the proposal puts the quantifiable floor on the table and argues the rest qualitatively."
+    },
+    {
+      "node": "repay-pcf-fx-and-unspent",
+      "depth": 1,
+      "title": "What goes back to the Treasury",
+      "narrative": "This proposal does *not* commit to a perpetual revenue share like Indigo's V2030RS. Its repayment commitment is narrower but unconditional:\n\n- ADA is drawn down at actual rates, not the assumed $0.25\n- Any positive difference between $0.25 and the rate at drawdown is identified at final reconciliation and **returned in full at project close (M15)**\n- Unspent ADA is returned at the same time\n\nThis is a pure conservative-buffer return — it doesn't promise Cardano upside if Tachýs becomes a hit, but it forecloses the FX-windfall scenario where ADA appreciates and the proposers keep the surplus."
+    },
+    {
+      "node": "comment-pcf-1",
+      "depth": 1,
+      "title": "What the community has said so far",
+      "narrative": "At the time of writing, one comment: a DRep ('Nimuë Lady of the Lake Pool') saying 'In favor of this!'. The proposal was submitted late in the cycle (22 April vs. an 8 May close), so substantive comment has not yet accumulated.\n\nThe critical questions to expect, given the structure: (1) Why is WP4 (bridging) so much larger than the others — is the audit cost realistic? (2) Does formal security analysis at M12 give the community enough time to scrutinise before mainnet deployment at M15? (3) How does this proposal coordinate with Midnight, the *other* in-production partner chain — is Midnight's bridge being deprecated or supported?"
+    }
+  ]
+}

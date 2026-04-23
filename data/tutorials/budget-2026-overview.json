@@ -1,0 +1,43 @@
+{
+  "id": "budget-2026-overview",
+  "title": "Cardano Budget 2026 — the Process and the Slate",
+  "description": "How Cardano's CIP-1694 treasury budgeting process works, and a quick tour of the three proposals submitted to the 2026 cycle.",
+  "stops": [
+    {
+      "node": "cardano-budget-2026",
+      "depth": 1,
+      "title": "What Cardano Budget 2026 actually is",
+      "narrative": "Before there were Cardano Budgets, there was [CIP-1694](node:cip-1694) — Cardano's on-chain governance constitution — which defined a [Treasury Withdrawal](node:action-treasury) governance action but said nothing about how the community should *plan* what to ask for. Cardano Budget 2026 is the second annual cycle of a process layered *on top* of CIP-1694 to make those treasury asks coherent.\n\nThe cycle this tour follows runs from **16 April → 8 May 2026 (UTC)** for submissions. Anyone can submit a proposal through Intersect's Hydra Voting site. After submission, every proposal goes through public comment, DRep review, and a vote. Approved proposals are then enacted via [Treasury Withdrawal](node:action-treasury) actions that are themselves gated by Net Change Limit and Budget [Info Actions](node:action-info) — the on-chain mechanism the [Constitution](node:constitution) requires before any ada leaves the treasury."
+    },
+    {
+      "node": "treasury-budgeting",
+      "depth": 1,
+      "title": "Why budget proposals exist at all",
+      "narrative": "On the Cardano ledger, the treasury is just a pool of ADA. The [TreasuryBudgeting](node:treasury-budgeting) process exists because a Treasury Withdrawal alone is too coarse: it says 'send N ADA to address X', and that's it. There is no on-chain way to express 'this is funding a 15-month engineering programme with eight work packages and a 60-second bridge latency target'.\n\nThe Cardano Budget process is the off-chain layer that produces those structured commitments — proposers, work packages, milestones, KPIs, repayment terms — and then derives the on-chain Treasury Withdrawal once the community ratifies them. The 2026 cycle adds an explicit revenue-share track (proposals can commit to returning a share of future protocol revenue), a strategic-pillar alignment requirement, and Intersect-mediated milestone disbursement."
+    },
+    {
+      "node": "bp-partner-chain-factory",
+      "depth": 1,
+      "title": "Proposal 1 — Partner Chain Factory (Ouroboros Tachýs)",
+      "narrative": "**Ensurable Systems Ltd**, leading a consortium of six engineering organisations, asks for **13,150,479 ADA** ($3.29M @ $0.25) over **15 months** to build a reusable, open-source toolkit that lets any builder spin up a Cardano-derived partner chain in hours instead of months. The technical foundation is [Ouroboros Tachýs](node:ouroboros-tachys) — a high-performance variant of [Ouroboros Praos](node:ouroboros-praos) targeting 1–2 second confirmation and ~40× mainnet throughput.\n\nThis is the largest, most technical proposal of the slate. It is also the most architecturally consequential: if it lands, Cardano gains the same kind of builder framework that Substrate gave Polkadot and Cosmos SDK gave Cosmos. There is a dedicated tour for this proposal — load **Partner Chain Factory — Deep Dive**."
+    },
+    {
+      "node": "bp-indigo-v2030rs",
+      "depth": 1,
+      "title": "Proposal 2 — Indigo V2030RS / iUSDt / BTC-Fi / Privacy",
+      "narrative": "**Indigo Foundation** asks for **3,965,500 ADA** ($1.19M @ $0.30) over **12 months** to deliver four interlocking products: [iUSDt](node:iusdt) (Cardano's first institutional-grade RWA stablecoin backed by short-duration U.S. Treasuries), a Bitcoin-DeFi market on Indigo, [shielded iAssets](node:shielded-iasset) on Midnight, and — the framing piece — [V2030RS](node:v2030rs-revenue-share), a perpetual 10% revenue share back to the Cardano Treasury.\n\nThe proposal's pitch is not 'fund our product' — it's 'fund our product and the Treasury becomes a perpetual revenue beneficiary, not a one-shot grantmaker'. There is a dedicated tour for this proposal — load **Indigo V2030RS — Deep Dive**."
+    },
+    {
+      "node": "bp-serviceplan-demand-engine",
+      "depth": 1,
+      "title": "Proposal 3 — Serviceplan Marketing Powered Demand Engine",
+      "narrative": "**Serviceplan Group** — Europe's largest owner-managed agency group, and the team that built the [Masumi Network](node:demand-engine) on Cardano — asks for **20,871,418 ADA** ($3.55M @ $0.17) over **12 months** to run an enterprise marketing pilot that repositions Cardano as 'The Blockchain for Serious Business'.\n\nThis is the largest ADA ask on the slate. It is also the only non-technical proposal: every cost line is **Engagement & Ecosystem support**, not Labor or Development. The work splits into four packages around two pilot verticals (Institutional DeFi, Supply Chain Traceability) and three pilot markets (UK, Germany, Switzerland). Load **Serviceplan Demand Engine — Deep Dive** for the full picture, including the substantive critique it received."
+    },
+    {
+      "node": "org-intersect",
+      "depth": 1,
+      "title": "Why every proposal lists the same administrator",
+      "narrative": "Every Budget 2026 proposal names [Intersect](node:org-intersect) as its administrator. This isn't decoration — Intersect is the member-based organisation that operates the canonical milestone-oversight, smart-contract-based disbursement, and third-party-review service for the Cardano budget process. Each proposal pays a percentage fee for this oversight (3% on Serviceplan, ~3% on Indigo, ~3% on PCF).\n\nIntersect's role is structural: it gates the next work package's funding on demonstrated delivery of the previous one. WP1 → WP2 → WP3 → WP4 only progresses when the previous work package's success criteria are documented and signed off. This is how the process turns a single Treasury Withdrawal into something that resembles staged contract work."
+    }
+  ]
+}
