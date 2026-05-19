@@ -1,0 +1,12 @@
+PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>
+PREFIX owl:     <http://www.w3.org/2002/07/owl#>
+PREFIX :        <https://example.org/smoke/sameas-key#>
+
+# EXPECT: true
+# The owl:hasKey axiom unifies :id1 and :id2 because they share
+# leafType + bytesHex; EYE's owl-hasKey.n3 rule deduces owl:sameAs.
+ASK { :id1 owl:sameAs :id2 }
+
+# EXPECT: false
+# Sanity: no spurious sameAs to an unrelated URI.
+ASK { :id1 owl:sameAs <https://example.org/smoke/sameas-key#unrelated> }

@@ -255,7 +255,7 @@ Report back:
 - diff stats (added-lines only; deletion count = 0)
 ```
 
-### [ ] T007 — Add OWL 2 RL reasoning axioms + smoke fixture
+### [X] T007 — Add OWL 2 RL reasoning axioms + smoke fixture
 
 - **Slice**: B3 — `feat(vocab): add OWL 2 RL reasoning axioms (hasKey, inverseOf)`.
 - **Owner**: Subagent. **This is the live-boundary slice.**

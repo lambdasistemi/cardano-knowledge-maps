@@ -279,3 +279,25 @@ cardano:AssetClass a skos:Concept , rdfs:Class ;
 cardano:PaymentKey skos:related cardano:PaymentScript .
 cardano:StakeKey   skos:related cardano:StakeScript .
 cardano:DRepKey    skos:related cardano:DRepScript .
+
+# ==============================================================================
+# OWL 2 RL reasoning axioms
+# ==============================================================================
+#
+# Note on `owl:hasKey`: the kmaps#53 issue body and the parent
+# cardano-tx-tools#46 epic spec both describe this axiom with the
+# subject `cardano:hasIdentifier`. OWL 2 RL defines `owl:hasKey` on a
+# class (an instance-equality key), not on a property; applied to the
+# property `cardano:hasIdentifier` the standard rule does not fire.
+# The English description in both sources — "same type + same bytes =
+# same identifier" — matches the form below (key on the class). The
+# epic orchestrator confirmed this interpretation (Q-001).
+#
+# cardano:Identifier owl:hasKey ( cardano:leafType cardano:bytesHex )
+# says: two Identifier instances with matching leafType and bytesHex
+# are the same individual — which drives owl:sameAs propagation in
+# the downstream emitter (cardano-tx-tools#47).
+
+cardano:Identifier owl:hasKey ( cardano:leafType cardano:bytesHex ) .
+
+cardano:resolvedTo  owl:inverseOf  cardano:hasResolution .
