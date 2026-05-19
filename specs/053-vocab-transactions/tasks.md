@@ -150,7 +150,7 @@ Report back:
 
 ## Phase B — Full vocabulary + reasoning
 
-### [ ] T004 — Package EYE reasoner via Nix
+### [X] T004 — Package EYE reasoner via Nix
 
 - **Slice**: B0 — `chore: package EYE reasoner via Nix`.
 - **Owner**: Orchestrator (direct).
