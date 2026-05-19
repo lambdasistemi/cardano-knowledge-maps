@@ -19,7 +19,7 @@ Each behaviour-changing task lists the slice it belongs to, its proof, and (for 
 - **Commit subject**: `chore: validate every graphSources entry via rdflib in nix dev shell`
 - **Commit body MUST include**: `Tasks: T001`.
 
-### [ ] T002 — Phase A vocab publication: declarations only
+### [X] T002 — Phase A vocab publication: declarations only
 
 - **Slice**: A1 — `feat(vocab): publish transactions.ttl Phase A — class/property declarations`.
 - **Owner**: Subagent.

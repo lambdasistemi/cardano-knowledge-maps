@@ -1,0 +1,207 @@
+@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
+@prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
+@prefix owl:     <http://www.w3.org/2002/07/owl#> .
+@prefix dcterms: <http://purl.org/dc/terms/> .
+
+# ==============================================================================
+# Ontology header
+# ==============================================================================
+
+<https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano/transactions>
+  a owl:Ontology ;
+  rdfs:label "Cardano Transaction Vocabulary (Phase A)" ;
+  dcterms:description "Class and property declarations for Conway-tx RDF emission. Extends the cardano: namespace defined in cardano.ontology.ttl. Phase A: declarations only; SKOS LeafType ConceptScheme and OWL 2 RL reasoning axioms ship in later commits on the same PR." ;
+  owl:versionInfo "0.1.0-phaseA" ;
+  owl:imports
+    <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano> .
+
+# ==============================================================================
+# Classes
+# ==============================================================================
+
+cardano:Transaction a rdfs:Class ;
+  rdfs:label "Transaction" ;
+  dcterms:description "A Cardano transaction in the Conway era: inputs, outputs, fee, validity interval, certificates, withdrawals, governance proposals, mint, witness set." .
+
+cardano:Input a rdfs:Class ;
+  rdfs:label "Input" ;
+  dcterms:description "A spent UTxO reference; resolves to an Output from the resolved UTxO context." .
+
+cardano:Output a rdfs:Class ;
+  rdfs:label "Output" ;
+  dcterms:description "A UTxO produced by a transaction: address, value, optional datum and reference script." .
+
+cardano:Address a rdfs:Class ;
+  rdfs:label "Address" ;
+  dcterms:description "A Cardano address decomposed into its payment credential, optional stake credential, and bech32 form." .
+
+cardano:Credential a rdfs:Class ;
+  rdfs:label "Credential" ;
+  dcterms:description "Abstract credential carried by an address; subclasses distinguish payment vs stake." .
+
+cardano:PaymentCredential a rdfs:Class ;
+  rdfs:subClassOf cardano:Credential ;
+  rdfs:label "PaymentCredential" ;
+  dcterms:description "The payment credential of an address (key or script hash)." .
+
+cardano:StakeCredential a rdfs:Class ;
+  rdfs:subClassOf cardano:Credential ;
+  rdfs:label "StakeCredential" ;
+  dcterms:description "The stake credential of an address (key or script hash); absent for enterprise addresses." .
+
+cardano:Identifier a rdfs:Class ;
+  rdfs:label "Identifier" ;
+  dcterms:description "A hashed leaf carrying its role-class type and canonical hex bytes; the OWL key (leafType, bytesHex) declared in Phase B unifies identifiers across leaves." .
+
+cardano:Entity a rdfs:Class ;
+  rdfs:label "Entity" ;
+  dcterms:description "An operator-declared on-chain identity; bound to one or more Identifier instances via cardano:hasIdentifier." .
+
+cardano:Asset a rdfs:Class ;
+  rdfs:label "Asset" ;
+  dcterms:description "A Cardano native asset: policy + asset name." .
+
+cardano:Datum a rdfs:Class ;
+  rdfs:label "Datum" ;
+  dcterms:description "A datum attached to a script-locked output, by hash or inline." .
+
+cardano:Redeemer a rdfs:Class ;
+  rdfs:label "Redeemer" ;
+  dcterms:description "The redeemer fed into a Plutus script during transaction validation." .
+
+cardano:Script a rdfs:Class ;
+  rdfs:label "Script" ;
+  dcterms:description "A script witness — Plutus V1/V2/V3 or native — identified by its hash." .
+
+# ==============================================================================
+# Properties — Transaction shape
+# ==============================================================================
+
+cardano:hasInput a rdf:Property ;
+  rdfs:label "hasInput" ;
+  dcterms:description "Relates a transaction to one of its consumed UTxO inputs." .
+
+cardano:hasOutput a rdf:Property ;
+  rdfs:label "hasOutput" ;
+  dcterms:description "Relates a transaction to one of its produced UTxO outputs." .
+
+cardano:hasFee a rdf:Property ;
+  rdfs:label "hasFee" ;
+  dcterms:description "The fee paid by a transaction, in lovelace." .
+
+cardano:hasValidityInterval a rdf:Property ;
+  rdfs:label "hasValidityInterval" ;
+  dcterms:description "The validity interval (invalidBefore, invalidHereafter) bounding when the transaction may be included on chain." .
+
+cardano:hasCertificate a rdf:Property ;
+  rdfs:label "hasCertificate" ;
+  dcterms:description "A certificate carried by the transaction (stake registration, delegation, pool operations, governance certificates)." .
+
+cardano:hasWithdrawal a rdf:Property ;
+  rdfs:label "hasWithdrawal" ;
+  dcterms:description "A reward-account withdrawal carried by the transaction." .
+
+cardano:hasProposal a rdf:Property ;
+  rdfs:label "hasProposal" ;
+  dcterms:description "A Conway governance proposal submitted by the transaction." .
+
+cardano:hasMint a rdf:Property ;
+  rdfs:label "hasMint" ;
+  dcterms:description "A native-asset mint or burn entry attached to the transaction." .
+
+cardano:hasCollateralInput a rdf:Property ;
+  rdfs:label "hasCollateralInput" ;
+  dcterms:description "A collateral input pledged by the transaction in case of Plutus script failure." .
+
+cardano:hasReferenceInput a rdf:Property ;
+  rdfs:label "hasReferenceInput" ;
+  dcterms:description "A reference input observed but not spent by the transaction." .
+
+cardano:hasWitnessSet a rdf:Property ;
+  rdfs:label "hasWitnessSet" ;
+  dcterms:description "The witness set bundled with the transaction (keys, scripts, datums, redeemers)." .
+
+# ==============================================================================
+# Properties — Per-leaf
+# ==============================================================================
+
+cardano:atAddress a rdf:Property ;
+  rdfs:label "atAddress" ;
+  dcterms:description "The address at which an output sits." .
+
+cardano:hasPaymentCredential a rdf:Property ;
+  rdfs:label "hasPaymentCredential" ;
+  dcterms:description "The payment credential decomposed out of an address." .
+
+cardano:hasStakeCredential a rdf:Property ;
+  rdfs:label "hasStakeCredential" ;
+  dcterms:description "The stake credential decomposed out of an address (absent for enterprise addresses)." .
+
+cardano:bytesHex a rdf:Property ;
+  rdfs:label "bytesHex" ;
+  dcterms:description "The canonical hex-encoded bytes of a hashed leaf." .
+
+cardano:leafType a rdf:Property ;
+  rdfs:label "leafType" ;
+  dcterms:description "The role-class type of a hashed leaf (e.g. payment-key-hash, script-hash, pool-id, drep-id)." .
+
+cardano:hasIdentifier a rdf:Property ;
+  rdfs:label "hasIdentifier" ;
+  dcterms:description "Binds an operator-declared Entity to one of its on-chain Identifier instances." .
+
+cardano:bech32 a rdf:Property ;
+  rdfs:label "bech32" ;
+  dcterms:description "The bech32 string form of an address or hashed identifier." .
+
+# ==============================================================================
+# Properties — Asset
+# ==============================================================================
+
+cardano:hasPolicy a rdf:Property ;
+  rdfs:label "hasPolicy" ;
+  dcterms:description "The minting policy script hash governing a native asset." .
+
+cardano:hasAssetName a rdf:Property ;
+  rdfs:label "hasAssetName" ;
+  dcterms:description "The asset-name byte string distinguishing assets under a common minting policy." .
+
+# ==============================================================================
+# Properties — Datum / Redeemer / Script
+# ==============================================================================
+
+cardano:hasDatum a rdf:Property ;
+  rdfs:label "hasDatum" ;
+  dcterms:description "Relates an output to its attached datum (by hash or inline)." .
+
+cardano:hasReferenceScript a rdf:Property ;
+  rdfs:label "hasReferenceScript" ;
+  dcterms:description "Relates an output to a reference script attached to it." .
+
+cardano:hasRawBytes a rdf:Property ;
+  rdfs:label "hasRawBytes" ;
+  dcterms:description "The raw CBOR/bytes payload of a datum, redeemer, or script." .
+
+cardano:decodedAs a rdf:Property ;
+  rdfs:label "decodedAs" ;
+  dcterms:description "The decoded structured form of a datum or redeemer, when available." .
+
+cardano:hasHash a rdf:Property ;
+  rdfs:label "hasHash" ;
+  dcterms:description "The hash of a datum, redeemer, script, or other hashable artifact." .
+
+cardano:hasVersion a rdf:Property ;
+  rdfs:label "hasVersion" ;
+  dcterms:description "The Plutus language version of a script (V1, V2, V3) or analogous version tag." .
+
+# ==============================================================================
+# Properties — Resolved-input
+# ==============================================================================
+
+cardano:resolvedTo a rdf:Property ;
+  rdfs:label "resolvedTo" ;
+  dcterms:description "Relates a transaction input to the Output it resolves to under the resolved UTxO context." .
+
+cardano:hasResolution a rdf:Property ;
+  rdfs:label "hasResolution" ;
+  dcterms:description "The inverse direction of cardano:resolvedTo: relates an Output to the Input that consumes it. Declared in Phase A so the Phase B owl:inverseOf axiom can reference a published term." .
