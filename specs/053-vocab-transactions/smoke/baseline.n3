@@ -1,0 +1,23 @@
+@prefix : <https://example.org/smoke/baseline#> .
+@prefix rdf: <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
+@prefix rdfs: <http://www.w3.org/2000/01/rdf-schema#> .
+
+# Trivial subClassOf transitivity check.
+# Proves the harness pipeline end-to-end: union ontology + this fixture
+# fed to EYE, the deductive closure parsed by rdflib, the companion
+# baseline.ask exercised over the closure.
+#
+# This fixture does NOT exercise the cardano: vocabulary; it exists so
+# that adding the harness in this slice is bisect-safe (the harness
+# fails non-trivially if the EYE/rdflib glue breaks, even before the
+# Phase B OWL axioms land).
+
+:A rdfs:subClassOf :B .
+:B rdfs:subClassOf :C .
+
+:thing a :A .
+
+# Subsumption rules (EYE has no built-in RDFS closure; declare what we
+# rely on here so the smoke is self-contained).
+{ ?S rdf:type ?X . ?X rdfs:subClassOf ?Y } => { ?S rdf:type ?Y } .
+{ ?X rdfs:subClassOf ?Y . ?Y rdfs:subClassOf ?Z } => { ?X rdfs:subClassOf ?Z } .

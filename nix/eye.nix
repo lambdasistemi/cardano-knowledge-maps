@@ -41,6 +41,10 @@ pkgs.stdenv.mkDerivation {
     # The launcher invokes `swipl`; wrap so it's reachable at runtime.
     wrapProgram $out/bin/eye \
       --prefix PATH : ${pkgs.lib.makeBinPath [ pkgs.swi-prolog ]}
+    # Install the bundled OWL 2 RL rule fragments so downstream gates
+    # can reference them by absolute path under the dev shell's PATH.
+    mkdir -p $out/share/eye/rpo
+    cp reasoning/rpo/*.n3 $out/share/eye/rpo/
     runHook postInstall
   '';
 

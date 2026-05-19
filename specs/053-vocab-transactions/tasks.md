@@ -165,7 +165,7 @@ Report back:
 - **Commit subject**: `chore: package EYE reasoner via Nix for OWL 2 RL smoke`
 - **Commit body MUST include**: `Tasks: T004`.
 
-### [ ] T005 — Extend gate.sh with OWL 2 RL inference harness
+### [X] T005 — Extend gate.sh with OWL 2 RL inference harness
 
 - **Slice**: B1 — `chore: extend gate.sh — OWL 2 RL inference smoke via EYE`.
 - **Owner**: Orchestrator (direct).

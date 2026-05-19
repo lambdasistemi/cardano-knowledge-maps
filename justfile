@@ -8,7 +8,13 @@ build:
 validate:
     python3 .specify/scripts/validate-graph-sources.py
 
-ci: build validate
+# Run OWL 2 RL inference smoke fixtures via EYE; see
+# specs/053-vocab-transactions/smoke/ for fixtures + companion .ask
+# files. Skipped automatically if the smoke directory is absent.
+owl-smoke:
+    python3 .specify/scripts/owl-smoke.py
+
+ci: build validate owl-smoke
 
 # Serve locally
 serve: build
