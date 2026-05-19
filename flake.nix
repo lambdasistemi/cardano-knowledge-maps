@@ -42,6 +42,7 @@
         let
           pkgs = import nixpkgs { inherit system; };
           pythonEnv = pkgs.python3.withPackages (ps: [ ps.rdflib ]);
+          eye = pkgs.callPackage ./nix/eye.nix { };
         in
         {
           default = pkgs.mkShellNoCC {
@@ -49,6 +50,7 @@
               pythonEnv
               pkgs.just
               pkgs.jq
+              eye
             ];
           };
         }
