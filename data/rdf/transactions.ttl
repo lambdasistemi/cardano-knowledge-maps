@@ -3,6 +3,7 @@
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
 @prefix dcterms: <http://purl.org/dc/terms/> .
+@prefix skos:    <http://www.w3.org/2004/02/skos/core#> .
 
 # ==============================================================================
 # Ontology header
@@ -205,3 +206,76 @@ cardano:resolvedTo a rdf:Property ;
 cardano:hasResolution a rdf:Property ;
   rdfs:label "hasResolution" ;
   dcterms:description "The inverse direction of cardano:resolvedTo: relates an Output to the Input that consumes it. Declared in Phase A so the Phase B owl:inverseOf axiom can reference a published term." .
+
+# ==============================================================================
+# SKOS — LeafType ConceptScheme
+# ==============================================================================
+
+cardano:LeafType a skos:ConceptScheme ;
+  rdfs:label "Cardano Leaf Type" ;
+  dcterms:description "Role classes for typed-leaf identifiers (credentials, script hashes, pool IDs, policy IDs, asset classes). Each member is both a SKOS concept (taxonomy) and an OWL/RDFS class (so `_:leaf a cardano:PaymentScript` is a valid role-class typing of an Identifier instance)." .
+
+# -- Role-class concepts ------------------------------------------------------
+# Each is dual-typed: a skos:Concept (member of cardano:LeafType) AND an
+# rdfs:Class so it can type Identifier instances at the data layer.
+
+cardano:PaymentKey a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Payment Key" ;
+  rdfs:label "PaymentKey" ;
+  dcterms:description "Hashed Ed25519 public key authorising spending at an address." .
+
+cardano:PaymentScript a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Payment Script" ;
+  rdfs:label "PaymentScript" ;
+  dcterms:description "Plutus or native-script hash governing spending at an address." .
+
+cardano:StakeKey a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Stake Key" ;
+  rdfs:label "StakeKey" ;
+  dcterms:description "Hashed Ed25519 public key holding stake delegation rights." .
+
+cardano:StakeScript a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Stake Script" ;
+  rdfs:label "StakeScript" ;
+  dcterms:description "Script hash holding stake delegation rights (script-based reward accounts)." .
+
+cardano:DRepKey a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "DRep Key" ;
+  rdfs:label "DRepKey" ;
+  dcterms:description "Hashed Ed25519 public key registered as a delegated representative under Conway-era governance." .
+
+cardano:DRepScript a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "DRep Script" ;
+  rdfs:label "DRepScript" ;
+  dcterms:description "Script hash registered as a delegated representative (multi-sig or contract DRep)." .
+
+cardano:PoolId a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Pool ID" ;
+  rdfs:label "PoolId" ;
+  dcterms:description "VRF hash identifying a stake pool." .
+
+cardano:Policy a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Minting Policy" ;
+  rdfs:label "Policy" ;
+  dcterms:description "Hashed minting policy script governing a native asset." .
+
+cardano:AssetClass a skos:Concept , rdfs:Class ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Asset Class" ;
+  rdfs:label "AssetClass" ;
+  dcterms:description "Composite identifier (policy + asset name) for a native asset." .
+
+# -- Kin links ----------------------------------------------------------------
+# `skos:related` is symmetric in SKOS semantics; declare each pair once.
+
+cardano:PaymentKey skos:related cardano:PaymentScript .
+cardano:StakeKey   skos:related cardano:StakeScript .
+cardano:DRepKey    skos:related cardano:DRepScript .

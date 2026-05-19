@@ -178,7 +178,7 @@ Report back:
 - **Commit subject**: `chore: extend gate.sh — OWL 2 RL inference smoke via EYE`
 - **Commit body MUST include**: `Tasks: T005`.
 
-### [ ] T006 — Add `cardano:LeafType` SKOS ConceptScheme
+### [X] T006 — Add `cardano:LeafType` SKOS ConceptScheme
 
 - **Slice**: B2 — `feat(vocab): add cardano:LeafType ConceptScheme + SKOS role-class concepts`.
 - **Owner**: Subagent.
