@@ -6,7 +6,7 @@ Each behaviour-changing task lists the slice it belongs to, its proof, and (for 
 
 ## Phase A — Synchronization point
 
-### [ ] T001 — Fix `just validate` so gate.sh actually validates Turtle
+### [X] T001 — Fix `just validate` so gate.sh actually validates Turtle
 
 - **Slice**: A0 — `chore: fix just validate — parse all graphSources via rdflib`.
 - **Owner**: Orchestrator (direct, mechanical edit).

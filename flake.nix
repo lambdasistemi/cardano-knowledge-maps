@@ -36,5 +36,22 @@
           '';
         }
       );
+
+      devShells = forAllSystems (
+        system:
+        let
+          pkgs = import nixpkgs { inherit system; };
+          pythonEnv = pkgs.python3.withPackages (ps: [ ps.rdflib ]);
+        in
+        {
+          default = pkgs.mkShellNoCC {
+            packages = [
+              pythonEnv
+              pkgs.just
+              pkgs.jq
+            ];
+          };
+        }
+      );
     };
 }
