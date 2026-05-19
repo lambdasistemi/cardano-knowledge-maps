@@ -141,7 +141,7 @@ Report back:
 - residual risks (none expected)
 ```
 
-### [ ] T003 — Push Phase A and synchronize with epic
+### [X] T003 — Push Phase A and synchronize with epic
 
 - **Slice**: orchestration glue (not a commit).
 - **Owner**: Orchestrator.
@@ -280,7 +280,7 @@ The brief is written by the orchestrator just before dispatch, once T005's harne
 - **When**: after T002 (Phase A) lands; rerun after T007 (before finalization).
 - **Output**: `specs/053-vocab-transactions/analysis.md` committed as `docs:`.
 
-### [ ] T009 — Finalization
+### [X] T009 — Finalization
 
 - **Owner**: Orchestrator (direct).
 - **Steps**: finalization audit; `chore: drop gate.sh (ready for review)`; `gh pr ready 54 --repo lambdasistemi/cardano-knowledge-maps`.
