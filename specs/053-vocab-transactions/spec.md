@@ -53,7 +53,7 @@ A reviewer loads the union of `cardano.ontology.ttl + smart-contracts.ttl + tran
 
 **Why this priority**: P1 because this is the load-bearing semantic property the parent epic relies on. The emitter does not engineer cross-leaf identity at render time; OWL deduction does. The vocabulary must carry the axiom.
 
-**Independent Test**: A smoke fixture `specs/053-vocab-transactions/contracts/sameas-key.smoke.n3` declares two identifier blank nodes with matching `leafType` + `bytesHex`. `gate.sh` runs `eye --nope --quiet --pass` against `(ontology union) + smoke`, then SPARQL-ASKs for `?a owl:sameAs ?b` between the two identifiers. ASK returns true.
+**Independent Test**: A smoke fixture `specs/053-vocab-transactions/smoke/sameas-key.n3` declares two identifier blank nodes with matching `leafType` + `bytesHex`. `gate.sh` runs `eye --nope --quiet --pass` against `(ontology union) + smoke`, then SPARQL-ASKs for `?a owl:sameAs ?b` between the two identifiers. ASK returns true.
 
 **Acceptance Scenarios**:
 
@@ -120,7 +120,7 @@ When an operator writes a Turtle rule declaring an entity, they refer to a role 
 - **FR-006** — `data/rdf/transactions.ttl` MUST declare `cardano:LeafType` as a `skos:ConceptScheme` and the nine role-class concepts (PaymentKey, PaymentScript, StakeKey, StakeScript, DRepKey, DRepScript, PoolId, Policy, AssetClass) as `skos:Concept` instances with `skos:inScheme cardano:LeafType`.
 - **FR-007** — The role-class concepts MUST also be declared as `owl:Class` / `rdfs:Class` (their dual role as classes is what lets a triple like `_:cred1 a cardano:PaymentScript` express role-class typing).
 - **FR-008** — SKOS `skos:related` links MUST be declared between key/script siblings (PaymentKey ↔ PaymentScript, StakeKey ↔ StakeScript, DRepKey ↔ DRepScript).
-- **FR-009** — `data/rdf/transactions.ttl` MUST declare `cardano:hasIdentifier owl:hasKey (cardano:leafType cardano:bytesHex)`.
+- **FR-009** — `data/rdf/transactions.ttl` MUST declare an `owl:hasKey` axiom that unifies `cardano:Identifier` instances sharing `cardano:leafType` + `cardano:bytesHex`. Published form: `cardano:Identifier owl:hasKey ( cardano:leafType cardano:bytesHex ) .` (OWL 2 RL defines `owl:hasKey` on a class; the literal `cardano:hasIdentifier owl:hasKey ...` form named in the issue/epic body is on a property and does not fire under the standard rule. The English description in both sources — "same type + same bytes = same identifier" — matches the class form, which is what ships. Confirmed with the epic orchestrator via Q-001 before T007 authored.)
 - **FR-010** — `data/rdf/transactions.ttl` MUST declare `cardano:resolvedTo owl:inverseOf cardano:hasResolution`.
 - **FR-011** — `gate.sh` MUST run an OWL 2 RL inference smoke over the union of the published ontology + a small fixture, and SPARQL-ASK that the expected `owl:sameAs` is deduced (per User Story 2). The reasoner used is EYE (parent epic's choice), packaged via this repo's flake.
 - **FR-012** — Property chain axioms named in the issue ("TBD in PR refinement") are NOT in scope for this PR. They are tracked as a follow-up; the current PR adds only the named-by-issue load-bearing axioms (FR-009, FR-010).

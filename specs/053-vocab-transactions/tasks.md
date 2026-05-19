@@ -274,7 +274,7 @@ Report back:
 
 The brief is written by the orchestrator just before dispatch, once T005's harness path is concrete.
 
-### [ ] T008 — Run Analyzer pass
+### [X] T008 — Run Analyzer pass
 
 - **Owner**: Orchestrator (dispatches Analyzer Subagent per resolve-ticket).
 - **When**: after T002 (Phase A) lands; rerun after T007 (before finalization).
