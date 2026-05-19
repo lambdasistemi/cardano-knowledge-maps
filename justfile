@@ -2,9 +2,11 @@
 build:
     nix build
 
-# Validate RDF graph parses correctly
+# Validate every Turtle file listed in data/config.json::graphSources.
+# Mirrors graph-browser's validate-action — parses each TTL via rdflib
+# in the nix dev shell (no npm install needed for local gate).
 validate:
-    node -e "const fs=require('fs'); const ox=require('oxigraph'); const s=new ox.Store(); s.load(fs.readFileSync('data/rdf/graph.ttl','utf8'),{format:'text/turtle',base_iri:'https://graph-browser.invalid/'}); console.log('graph.ttl: '+s.size+' triples — OK')"
+    python3 .specify/scripts/validate-graph-sources.py
 
 ci: build validate
 
