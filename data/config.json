@@ -5,6 +5,7 @@
   "graphSources": [
     { "label": "Cardano Ontology",                        "format": "text/turtle", "path": "data/rdf/cardano.ontology.ttl",            "background": true },
     { "label": "Cardano Domain",                          "format": "text/turtle", "path": "data/rdf/cardano.ttl",                     "background": true },
+    { "label": "Cardano Transactions (vocab)",            "format": "text/turtle", "path": "data/rdf/transactions.ttl",                "background": true },
     { "label": "Governance",                              "format": "text/turtle", "path": "data/rdf/governance.ttl",                  "background": true },
     { "label": "Smart Contracts",                         "format": "text/turtle", "path": "data/rdf/smart-contracts.ttl",              "background": true },
     { "label": "Budget 2026 — Proposers",                 "format": "text/turtle", "path": "data/rdf/budget-2026/proposers.ttl",        "background": true },
