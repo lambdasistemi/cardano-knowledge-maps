@@ -333,6 +333,12 @@ cardano:mintsAsset a rdf:Property ;
   dcterms:description "Binds a mint entry to the (policy, asset-name) pair it touches." .
 
 # ==============================================================================
+
+cardano:hasAssetValue a rdf:Property ;
+  rdfs:label "hasAssetValue" ;
+  rdfs:domain cardano:Output ;
+  dcterms:description "Binds an Output (or any value-bearing subject) to its multi-asset value list head (an rdf:List of asset-quantity entries). Distinct from cardano:mintsAsset which is mint-context-scoped." .
+
 # Properties — Reward-account / Withdrawal (Phase A.1)
 # ==============================================================================
 
