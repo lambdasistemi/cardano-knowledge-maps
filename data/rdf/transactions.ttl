@@ -301,3 +301,82 @@ cardano:DRepKey    skos:related cardano:DRepScript .
 cardano:Identifier owl:hasKey ( cardano:leafType cardano:bytesHex ) .
 
 cardano:resolvedTo  owl:inverseOf  cardano:hasResolution .
+
+# ==============================================================================
+# Properties — Input position (Phase A.1)
+# ==============================================================================
+
+cardano:fromTxOutRef a rdf:Property ;
+  rdfs:label "fromTxOutRef" ;
+  rdfs:domain cardano:Input ;
+  rdfs:range  rdfs:Literal ;
+  dcterms:description "The TxIn reference '<txid>#<ix>' for a spending or reference or collateral input." .
+
+# ==============================================================================
+# Properties — Value semantics (Phase A.1)
+# ==============================================================================
+
+cardano:lovelace a rdf:Property ;
+  rdfs:label "lovelace" ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "An ADA-denominated value, in lovelace (1 ADA = 1_000_000 lovelace). Used on Output, Withdrawal, and any value-bearing subject." .
+
+cardano:quantity a rdf:Property ;
+  rdfs:label "quantity" ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "A signed integer quantity (negative values denote burns in a mint context)." .
+
+cardano:mintsAsset a rdf:Property ;
+  rdfs:label "mintsAsset" ;
+  rdfs:domain cardano:Mint ;
+  dcterms:description "Binds a mint entry to the (policy, asset-name) pair it touches." .
+
+# ==============================================================================
+# Properties — Reward-account / Withdrawal (Phase A.1)
+# ==============================================================================
+
+cardano:withdrawalAccount a rdf:Property ;
+  rdfs:label "withdrawalAccount" ;
+  rdfs:domain cardano:Withdrawal ;
+  dcterms:description "Binds a withdrawal to its reward-account identifier (a stake credential)." .
+
+# ==============================================================================
+# Properties — Body-root extra fields (Phase A.1)
+# ==============================================================================
+
+cardano:networkId a rdf:Property ;
+  rdfs:label "networkId" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The network id (0 = testnet, 1 = mainnet) declared on the transaction body when present." .
+
+cardano:scriptDataHash a rdf:Property ;
+  rdfs:label "scriptDataHash" ;
+  rdfs:domain cardano:Transaction ;
+  dcterms:description "The script-data hash declared on the transaction body when any Plutus scripts are exercised." .
+
+cardano:auxiliaryDataHash a rdf:Property ;
+  rdfs:label "auxiliaryDataHash" ;
+  rdfs:domain cardano:Transaction ;
+  dcterms:description "The auxiliary-data hash declared on the transaction body when metadata or auxiliary data is attached." .
+
+# ==============================================================================
+# Properties — Validity interval sub-fields (Phase A.1)
+# ==============================================================================
+#
+# Per D-001 in cardano-tx-tools specs/070-body-emit-conway-semantic/plan.md,
+# the validity interval emits as an object-shape sub-block under the existing
+# cardano:hasValidityInterval predicate:
+#   _:tx cardano:hasValidityInterval _:interval1 .
+#   _:interval1 cardano:intervalStart <slot> ;
+#               cardano:intervalEnd   <slot> .
+
+cardano:intervalStart a rdf:Property ;
+  rdfs:label "intervalStart" ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The inclusive lower slot bound of a validity interval (Conway 'validityIntervalStart')." .
+
+cardano:intervalEnd a rdf:Property ;
+  rdfs:label "intervalEnd" ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The exclusive upper slot bound of a validity interval (Conway 'invalidHereafter' / TTL)." .
