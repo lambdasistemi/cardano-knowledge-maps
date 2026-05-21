@@ -188,6 +188,11 @@ cardano:decodedAs a rdf:Property ;
   rdfs:label "decodedAs" ;
   dcterms:description "The decoded structured form of a datum or redeemer, when available." .
 
+cardano:decodeError a owl:DatatypeProperty ;
+  rdfs:label "decodeError" ;
+  rdfs:range  xsd:string ;
+  dcterms:description "Human-readable error message attached to a subject whose CBOR payload was present but failed CIP-57 blueprint typed-decoding (malformed bytes, wrong shape, missing schema, or unresolved $ref). Emitted alongside the opaque-bytes fallback (cardano:hasRawBytes) so a SPARQL view can detect decode failures without parsing emitter logs. Domain intentionally left open: any subject that could carry an opaque-bytes payload (Datum, Redeemer, Script, OpaqueLeaf, …) may also carry a decodeError when blueprint decoding fails — mirrors the permissive shape of cardano:hasRawBytes." .
+
 cardano:hasHash a rdf:Property ;
   rdfs:label "hasHash" ;
   dcterms:description "The hash of a datum, redeemer, script, or other hashable artifact." .
