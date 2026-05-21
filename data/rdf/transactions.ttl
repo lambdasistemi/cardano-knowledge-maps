@@ -387,3 +387,175 @@ cardano:intervalEnd a rdf:Property ;
   rdfs:label "intervalEnd" ;
   rdfs:range  xsd:integer ;
   dcterms:description "The exclusive upper slot bound of a validity interval (Conway 'invalidHereafter' / TTL)." .
+
+# ==============================================================================
+# Phase A.2 — exhaustive Conway body coverage + drift declarations
+# Derived from cardano-tx-tools `Cardano.Tx.Graph.Emit.Vocab`; descriptions
+# authored by kmaps maintainers. Terms duplicated from Phase A.1 are omitted.
+# ==============================================================================
+
+# ----- Classes (17) ---------------------------------------------------------
+
+cardano:Script a rdfs:Class ;
+  rdfs:label "Script" ;
+  dcterms:description "An on-chain script — a program that runs at transaction-validation time to authorize spending of script-locked outputs, minting under a policy, or evaluation of a staking-credential / DRep / committee role. Discriminated by language subclass (PlutusScript / NativeScript)." .
+
+cardano:Voter a rdfs:Class ;
+  rdfs:label "Voter" ;
+  dcterms:description "A governance voter — a DRep, a stake pool, or a constitutional-committee member casting verdicts on governance actions. Discriminated by role subclass (VoterDRep / VoterStakePool / VoterCommitteeCold)." .
+
+cardano:Certificate a rdfs:Class ;
+  rdfs:label "Certificate" ;
+  dcterms:description "An on-chain certificate carried by a transaction body — stake key registration / deregistration, stake delegation, vote delegation, pool registration / retirement, DRep registration / unregistration / update, committee key resignation, committee hot-key authorization, etc. Discriminated by subclass." .
+
+cardano:DRep a rdfs:Class ;
+  rdfs:label "DRep" ;
+  dcterms:description "A Delegated Representative (CIP-1694). The on-chain identity an ada-holder may delegate voting power to in Conway-era governance." .
+
+cardano:Mint a rdfs:Class ;
+  rdfs:label "Mint" ;
+  dcterms:description "A single mint entry — one (policy, asset name, signed quantity) triple inside a transaction's mint field. Negative quantities denote burns." .
+
+cardano:NativeScript a rdfs:Class ;
+  rdfs:label "NativeScript" ;
+  rdfs:subClassOf cardano:Script ;
+  dcterms:description "A reference script whose language is native Cardano multi-sig (timelock + key combinators). Distinct from Plutus scripts; carries the raw script body as CBOR." .
+
+cardano:OpaqueLeaf a rdfs:Class ;
+  rdfs:label "OpaqueLeaf" ;
+  dcterms:description "A Conway-era field whose canonical RDF shape has not yet been designed. Carries cardano:leafType (the Conway constructor name) + cardano:hasRawBytes (CBOR-encoded body) so the operator can read the field even before it gets a proper modelling. Used as the fallback in exhaustive Conway pattern-matching so the emitter never crashes on novel constructors." .
+
+cardano:PlutusScript a rdfs:Class ;
+  rdfs:label "PlutusScript" ;
+  rdfs:subClassOf cardano:Script ;
+  dcterms:description "A reference script whose language is a Plutus version (V1, V2, V3, …). Carries cardano:hasVersion in addition to the hash + raw bytes." .
+
+cardano:Pool a rdfs:Class ;
+  rdfs:label "Pool" ;
+  dcterms:description "A stake pool — the on-chain identity an ada-holder may delegate stake to for block production rewards." .
+
+cardano:StakeDelegation a rdfs:Class ;
+  rdfs:label "StakeDelegation" ;
+  rdfs:subClassOf cardano:Certificate ;
+  dcterms:description "A certificate delegating a stake credential's voting / reward share to a stake pool. Carries cardano:onCredential (the delegator stake credential) + cardano:toPool (the target pool)." .
+
+cardano:TxOutRef a rdfs:Class ;
+  rdfs:label "TxOutRef" ;
+  dcterms:description "A reference to a specific output of a previously-submitted transaction — the tuple of a transaction id and an output index. Used everywhere an Input names what it spends, references, or holds as collateral. Decomposed into cardano:hasTxId (an Identifier node) + cardano:hasIndex (a non-negative integer)." .
+
+cardano:Vote a rdfs:Class ;
+  rdfs:label "Vote" ;
+  dcterms:description "A single voting-procedure entry: one voter casting one verdict on one governance action. Carries cardano:hasVoter, cardano:hasVotingAction, cardano:hasVerdict, and optional cardano:hasAnchor for justifying metadata." .
+
+cardano:VoteDelegation a rdfs:Class ;
+  rdfs:label "VoteDelegation" ;
+  rdfs:subClassOf cardano:Certificate ;
+  dcterms:description "A certificate delegating a stake credential's voting power to a DRep (or to one of the pre-defined voting targets: always-abstain, always-no-confidence). Carries cardano:onCredential + cardano:toDRep." .
+
+cardano:VoterDRep a rdfs:Class ;
+  rdfs:label "VoterDRep" ;
+  rdfs:subClassOf cardano:Voter ;
+  dcterms:description "A voter acting in the DRep role. The voter's identity is a DRep credential (key or script)." .
+
+cardano:VoterStakePool a rdfs:Class ;
+  rdfs:label "VoterStakePool" ;
+  rdfs:subClassOf cardano:Voter ;
+  dcterms:description "A voter acting in the stake-pool role. The voter's identity is a stake-pool cold key hash." .
+
+cardano:VoterCommitteeCold a rdfs:Class ;
+  rdfs:label "VoterCommitteeCold" ;
+  rdfs:subClassOf cardano:Voter ;
+  dcterms:description "A voter acting in the constitutional-committee role. The voter's identity is the committee cold key hash." .
+
+cardano:Withdrawal a rdfs:Class ;
+  rdfs:label "Withdrawal" ;
+  dcterms:description "A single withdrawal entry — taking accumulated rewards out of a reward account back into the spendable UTxO. Carries cardano:withdrawalAccount (a stake credential identifier) + cardano:lovelace (the amount withdrawn)." .
+
+# ----- Properties (16) ------------------------------------------------------
+
+cardano:hasRequiredSigner a rdf:Property ;
+  rdfs:label "hasRequiredSigner" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a transaction to a payment-key Identifier whose signature the script-validation phase requires. One triple per entry in the body's required-signers Set. Object is an Identifier node (sharing identity with any other position naming the same key) — never a literal." .
+
+cardano:totalCollateral a rdf:Property ;
+  rdfs:label "totalCollateral" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The total collateral declared on a Plutus-bearing transaction body, in lovelace. The ledger seizes this amount if the script-validation phase fails. Elided when no Plutus scripts are exercised." .
+
+cardano:hasCollateralReturn a rdf:Property ;
+  rdfs:label "hasCollateralReturn" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:Output ;
+  dcterms:description "Binds a transaction to the output where unspent collateral returns when script-validation succeeds (collateral minus totalCollateral)." .
+
+cardano:hasTxId a rdf:Property ;
+  rdfs:label "hasTxId" ;
+  rdfs:domain cardano:TxOutRef ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a TxOutRef to its transaction-id Identifier (a 32-byte hash carried via cardano:bytesHex)." .
+
+cardano:hasIndex a rdf:Property ;
+  rdfs:label "hasIndex" ;
+  rdfs:domain cardano:TxOutRef ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The zero-based output index inside the referenced transaction's outputs list." .
+
+cardano:hasAsset a rdf:Property ;
+  rdfs:label "hasAsset" ;
+  dcterms:description "Binds a value-bearing subject to a single asset entry — one cardano:Asset node carrying a (policy, asset name) pair plus its quantity. Used in mint clusters and resolved multi-asset values." .
+
+cardano:hasVote a rdf:Property ;
+  rdfs:label "hasVote" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:Vote ;
+  dcterms:description "Binds a transaction to a single Vote it casts in its votingProcedures block. One triple per (voter, governance-action) entry." .
+
+cardano:hasVoter a rdf:Property ;
+  rdfs:label "hasVoter" ;
+  rdfs:domain cardano:Vote ;
+  dcterms:description "Binds a Vote to the voter identity casting it. Object is a subclass of cardano:Voter — VoterDRep / VoterStakePool / VoterCommitteeCold." .
+
+cardano:hasVotingAction a rdf:Property ;
+  rdfs:label "hasVotingAction" ;
+  rdfs:domain cardano:Vote ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a Vote to the governance-action identifier it votes on (a TxOutRef-shaped pair on chain; surfaced as an Identifier node here)." .
+
+cardano:hasVerdict a rdf:Property ;
+  rdfs:label "hasVerdict" ;
+  rdfs:domain cardano:Vote ;
+  rdfs:range  xsd:string ;
+  dcterms:description "The verdict carried by a vote: \"Yes\", \"No\", or \"Abstain\"." .
+
+cardano:hasAnchor a rdf:Property ;
+  rdfs:label "hasAnchor" ;
+  dcterms:description "Binds a governance-bearing subject (Vote, Proposal, certain certificates) to its anchor — an off-chain pointer to justifying metadata. Anchor decomposes into cardano:anchorUrl + cardano:anchorHash." .
+
+cardano:anchorUrl a rdf:Property ;
+  rdfs:label "anchorUrl" ;
+  rdfs:range  xsd:anyURI ;
+  dcterms:description "The HTTP(S) URL of an off-chain anchor document (metadata, justification, manifesto, …)." .
+
+cardano:anchorHash a rdf:Property ;
+  rdfs:label "anchorHash" ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "The hash of the anchor document content, as an Identifier node so it can be cross-referenced with on-chain hashes elsewhere." .
+
+cardano:onCredential a rdf:Property ;
+  rdfs:label "onCredential" ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a credential-scoped subject (a certificate, an item in a withdrawal block) to the stake credential it acts on." .
+
+cardano:toPool a rdf:Property ;
+  rdfs:label "toPool" ;
+  rdfs:domain cardano:StakeDelegation ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a stake-delegation certificate to its target stake-pool Identifier (the pool's cold key hash)." .
+
+cardano:toDRep a rdf:Property ;
+  rdfs:label "toDRep" ;
+  rdfs:domain cardano:VoteDelegation ;
+  dcterms:description "Binds a vote-delegation certificate to its target — either a concrete DRep Identifier (key or script), or one of the pre-defined targets: always-abstain, always-no-confidence." .
