@@ -559,3 +559,99 @@ cardano:toDRep a rdf:Property ;
   rdfs:label "toDRep" ;
   rdfs:domain cardano:VoteDelegation ;
   dcterms:description "Binds a vote-delegation certificate to its target — either a concrete DRep Identifier (key or script), or one of the pre-defined targets: always-abstain, always-no-confidence." .
+
+# ==============================================================================
+# Phase A.3 — witness-set seaboard coverage
+# Companion to cardano-tx-tools#77 v3 (closes #78). The body emitter now walks
+# the full ConwayTx — body + witness set. Phase A.2 declared everything below
+# the body; Phase A.3 declares the witness-set surface: redeemers, key /
+# bootstrap witnesses, execution budget. cardano:Redeemer already declared in
+# Phase A.2; the 15 net-new terms below extend it.
+# ==============================================================================
+
+# ----- Classes (3) ----------------------------------------------------------
+
+cardano:KeyWitness a rdfs:Class ;
+  rdfs:label "KeyWitness" ;
+  dcterms:description "An Ed25519 signature witness — one entry in the witness set carrying a verification key and a signature over the tx body. The verification key is shared (by Identifier bnode) with any body-level cardano:hasRequiredSigner referencing the same key hash, enabling 1-hop SPARQL joins from signature to required-signer." .
+
+cardano:BootstrapWitness a rdfs:Class ;
+  rdfs:label "BootstrapWitness" ;
+  dcterms:description "A Byron-era bootstrap witness — typically empty on Conway-era transactions. Present only for legacy spending paths that still hold Byron addresses; carries the verification key, signature, chain code, and address attributes as opaque CBOR." .
+
+cardano:ExUnits a rdfs:Class ;
+  rdfs:label "ExUnits" ;
+  dcterms:description "The execution-budget pair for a Plutus script invocation: memory units (memoryUnits) + cpu units (cpuUnits). Attached to a Redeemer when the validator runs." .
+
+# ----- Properties (12) ------------------------------------------------------
+
+cardano:hasRedeemer a rdf:Property ;
+  rdfs:label "hasRedeemer" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:Redeemer ;
+  dcterms:description "Binds a transaction to a Redeemer in its witness set. One triple per redeemer entry — the redeemer's hasPurpose + hasIndex select which body item the redeemer drives (a spending input, a mint policy, a cert, a withdrawal, a vote, or a proposal)." .
+
+cardano:hasKeyWitness a rdf:Property ;
+  rdfs:label "hasKeyWitness" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:KeyWitness ;
+  dcterms:description "Binds a transaction to an Ed25519 KeyWitness in its witness set. One triple per key signing the tx body." .
+
+cardano:hasDatumWitness a rdf:Property ;
+  rdfs:label "hasDatumWitness" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:Datum ;
+  dcterms:description "Binds a transaction to a Datum supplied at witness-time (used when an input's output carries datumHash-only and the datum body must be provided in the witness set to validate). The Datum bnode shares identity with any body-level inline datum or hash-only reference carrying the same hash, via cardano:hasHash on the Identifier — enabling 1-hop SPARQL joins between witness datums and body output datums." .
+
+cardano:hasScriptWitness a rdf:Property ;
+  rdfs:label "hasScriptWitness" ;
+  rdfs:domain cardano:Transaction ;
+  dcterms:description "Binds a transaction to a Script (Plutus or Native) supplied at witness-time. Same bnode-identity sharing as datum witnesses: the script's hash Identifier matches any body-level hasReferenceScript on the same hash, supporting cross-witness/output SPARQL joins." .
+
+cardano:hasBootstrapWitness a rdf:Property ;
+  rdfs:label "hasBootstrapWitness" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:BootstrapWitness ;
+  dcterms:description "Binds a transaction to a Byron-era BootstrapWitness. Typically absent on Conway; present only when spending legacy Byron-shaped UTxOs." .
+
+cardano:hasPurpose a rdf:Property ;
+  rdfs:label "hasPurpose" ;
+  rdfs:domain cardano:Redeemer ;
+  rdfs:range  xsd:string ;
+  dcterms:description "The script purpose driving a Redeemer: one of \"Spend\" (validates a script-locked input), \"Mint\" (runs a minting policy), \"Cert\" (validates a stake credential cert), \"Withdraw\" (validates a reward-account withdrawal), \"Vote\" (Conway), or \"Propose\" (Conway). The hasIndex picks the entry within the corresponding body list." .
+
+cardano:hasData a rdf:Property ;
+  rdfs:label "hasData" ;
+  rdfs:domain cardano:Redeemer ;
+  rdfs:range  cardano:Datum ;
+  dcterms:description "Binds a Redeemer to its PlutusData argument (the value the operator passed to the script). Surfaced as a Datum subject carrying hasHash + hasRawBytes (opaque CBOR) until CIP-57 blueprint typed decoding (cardano-tx-tools#50)." .
+
+cardano:hasExUnits a rdf:Property ;
+  rdfs:label "hasExUnits" ;
+  rdfs:domain cardano:Redeemer ;
+  rdfs:range  cardano:ExUnits ;
+  dcterms:description "Binds a Redeemer to its execution-budget pair." .
+
+cardano:memoryUnits a rdf:Property ;
+  rdfs:label "memoryUnits" ;
+  rdfs:domain cardano:ExUnits ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The memory-execution-unit count declared on the redeemer's execution budget." .
+
+cardano:cpuUnits a rdf:Property ;
+  rdfs:label "cpuUnits" ;
+  rdfs:domain cardano:ExUnits ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The CPU-execution-unit count (steps) declared on the redeemer's execution budget." .
+
+cardano:hasSignature a rdf:Property ;
+  rdfs:label "hasSignature" ;
+  rdfs:domain cardano:KeyWitness ;
+  rdfs:range  xsd:hexBinary ;
+  dcterms:description "The 64-byte Ed25519 signature, hex-encoded, that this KeyWitness carries over the transaction body's hash." .
+
+cardano:hasVerificationKey a rdf:Property ;
+  rdfs:label "hasVerificationKey" ;
+  rdfs:domain cardano:KeyWitness ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a KeyWitness to its Ed25519 verification-key Identifier. The Identifier's bytesHex is the 28-byte BLAKE2b-224 key hash, sharing bnode identity with any body-level cardano:hasRequiredSigner referencing the same key — so SPARQL views can join witness signatures to required signers without literal comparison." .
