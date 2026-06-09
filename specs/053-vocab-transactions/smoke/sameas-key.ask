@@ -1,4 +1,4 @@
-PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>
+PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>
 PREFIX owl:     <http://www.w3.org/2002/07/owl#>
 PREFIX :        <https://example.org/smoke/sameas-key#>
 
