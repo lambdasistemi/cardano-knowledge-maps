@@ -660,3 +660,115 @@ cardano:hasVerificationKey a rdf:Property ;
   rdfs:domain cardano:KeyWitness ;
   rdfs:range  cardano:Identifier ;
   dcterms:description "Binds a KeyWitness to its Ed25519 verification-key Identifier. The Identifier's bytesHex is the 28-byte BLAKE2b-224 key hash, sharing bnode identity with any body-level cardano:hasRequiredSigner referencing the same key — so SPARQL views can join witness signatures to required signers without literal comparison." .
+
+# Transaction-metadata decoding — the decoded auxiliary-data metadata map.
+# Each top-level label becomes a MetadatumEntry; each value is one of five
+# kinds (int/bytes/text/list/map), preserving order, arity, and chunking.
+# Companion to cardano-ledger-rdf#83 (spec 062). Generic core only — no
+# label-specific (e.g. 1694) interpretation lives here.
+
+cardano:MetadatumValue a rdfs:Class ;
+  rdfs:label "MetadatumValue" ;
+  dcterms:description "Abstract decoded transaction-metadatum value. Every concrete value node is also typed with exactly one kind subclass: MetaInt, MetaBytes, MetaText, MetaList, or MetaMap." .
+
+cardano:MetaInt a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaInt" ;
+  dcterms:description "Integer metadatum leaf; carries cardano:intValue (xsd:integer)." .
+
+cardano:MetaBytes a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaBytes" ;
+  dcterms:description "Byte-string metadatum leaf; carries cardano:bytesHex (lowercase hex). Distinguishable from MetaText so a hex byte value is never confused with UTF-8 text." .
+
+cardano:MetaText a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaText" ;
+  dcterms:description "Text-string metadatum leaf; carries cardano:textValue (xsd:string)." .
+
+cardano:MetaList a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaList" ;
+  dcterms:description "List metadatum; carries ordered cardano:hasElement edges to MetadatumElement wrappers. Element order and arity are preserved exactly — multi-chunk values are never joined (that is a schema-level concern, not the generic decode)." .
+
+cardano:MetaMap a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaMap" ;
+  dcterms:description "Map metadatum; carries cardano:hasEntry edges to MetadatumMapEntry wrappers. Every key->value pair is preserved; keys are full value nodes, not assumed to be strings." .
+
+cardano:MetadatumEntry a rdfs:Class ;
+  rdfs:label "MetadatumEntry" ;
+  dcterms:description "A top-level label->value association on an AuxiliaryData node, reached by cardano:hasMetadatum; carries the integer cardano:metadataLabel and a cardano:metadatumValue." .
+
+cardano:MetadatumElement a rdfs:Class ;
+  rdfs:label "MetadatumElement" ;
+  dcterms:description "Positional wrapper for one element of a MetaList; carries the 0-based cardano:elementIndex and a cardano:metadatumValue." .
+
+cardano:MetadatumMapEntry a rdfs:Class ;
+  rdfs:label "MetadatumMapEntry" ;
+  dcterms:description "One key->value pair of a MetaMap; carries the 0-based cardano:entryIndex, a cardano:metaKey, and a cardano:metaValue." .
+
+cardano:hasMetadatum a rdf:Property ;
+  rdfs:label "hasMetadatum" ;
+  rdfs:domain cardano:AuxiliaryData ;
+  rdfs:range  cardano:MetadatumEntry ;
+  dcterms:description "Relates an AuxiliaryData node to one MetadatumEntry per top-level metadata label." .
+
+cardano:metadataLabel a rdf:Property ;
+  rdfs:label "metadataLabel" ;
+  rdfs:domain cardano:MetadatumEntry ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The integer (Word64) label of a MetadatumEntry." .
+
+cardano:metadatumValue a rdf:Property ;
+  rdfs:label "metadatumValue" ;
+  rdfs:range  cardano:MetadatumValue ;
+  dcterms:description "Links a MetadatumEntry or a MetadatumElement to its decoded MetadatumValue. Domain left open across the two wrapper kinds." .
+
+cardano:intValue a rdf:Property ;
+  rdfs:label "intValue" ;
+  rdfs:domain cardano:MetaInt ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "Integer payload of a MetaInt leaf." .
+
+cardano:textValue a rdf:Property ;
+  rdfs:label "textValue" ;
+  rdfs:domain cardano:MetaText ;
+  rdfs:range  xsd:string ;
+  dcterms:description "Text payload of a MetaText leaf." .
+
+cardano:hasElement a rdf:Property ;
+  rdfs:label "hasElement" ;
+  rdfs:domain cardano:MetaList ;
+  rdfs:range  cardano:MetadatumElement ;
+  dcterms:description "Relates a MetaList to one MetadatumElement wrapper per on-chain element, in order." .
+
+cardano:elementIndex a rdf:Property ;
+  rdfs:label "elementIndex" ;
+  rdfs:domain cardano:MetadatumElement ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "0-based position of a MetadatumElement within its MetaList." .
+
+cardano:hasEntry a rdf:Property ;
+  rdfs:label "hasEntry" ;
+  rdfs:domain cardano:MetaMap ;
+  rdfs:range  cardano:MetadatumMapEntry ;
+  dcterms:description "Relates a MetaMap to one MetadatumMapEntry per key->value pair, in order." .
+
+cardano:entryIndex a rdf:Property ;
+  rdfs:label "entryIndex" ;
+  rdfs:domain cardano:MetadatumMapEntry ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "0-based position of a MetadatumMapEntry within its MetaMap." .
+
+cardano:metaKey a rdf:Property ;
+  rdfs:label "metaKey" ;
+  rdfs:domain cardano:MetadatumMapEntry ;
+  rdfs:range  cardano:MetadatumValue ;
+  dcterms:description "Links a MetadatumMapEntry to its key, itself a MetadatumValue (not assumed to be a string)." .
+
+cardano:metaValue a rdf:Property ;
+  rdfs:label "metaValue" ;
+  rdfs:domain cardano:MetadatumMapEntry ;
+  rdfs:range  cardano:MetadatumValue ;
+  dcterms:description "Links a MetadatumMapEntry to its value MetadatumValue." .
