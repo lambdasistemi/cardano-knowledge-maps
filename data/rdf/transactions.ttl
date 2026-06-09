@@ -1,4 +1,8 @@
-@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
+# transactions.ttl — ledger-level Cardano RDF vocabulary
+# Migrated from lambdasistemi/cardano-knowledge-maps@5108855
+# on 2026-05-27 as part of cardano-ledger-rdf#19.
+# See https://github.com/lambdasistemi/cardano-ledger-rdf/issues/19
+@prefix cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
@@ -10,13 +14,13 @@
 # Ontology header
 # ==============================================================================
 
-<https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano/transactions>
+<https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano/transactions>
   a owl:Ontology ;
   rdfs:label "Cardano Transaction Vocabulary (Phase A)" ;
   dcterms:description "Class and property declarations for Conway-tx RDF emission. Extends the cardano: namespace defined in cardano.ontology.ttl. Phase A: declarations only; SKOS LeafType ConceptScheme and OWL 2 RL reasoning axioms ship in later commits on the same PR." ;
   owl:versionInfo "0.1.0-phaseA" ;
   owl:imports
-    <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano> .
+    <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano> .
 
 # ==============================================================================
 # Classes
@@ -24,57 +28,75 @@
 
 cardano:Transaction a rdfs:Class ;
   rdfs:label "Transaction" ;
-  dcterms:description "A Cardano transaction in the Conway era: inputs, outputs, fee, validity interval, certificates, withdrawals, governance proposals, mint, witness set." .
+  dcterms:description "A Cardano transaction in the Conway era: inputs, outputs, fee, validity interval, certificates, withdrawals, governance proposals, mint, witness set." ;
+  rdfs:comment "A Cardano transaction in the Conway era: inputs, outputs, fee, validity interval, certificates, withdrawals, governance proposals, mint, witness set." .
 
 cardano:Input a rdfs:Class ;
   rdfs:label "Input" ;
-  dcterms:description "A spent UTxO reference; resolves to an Output from the resolved UTxO context." .
+  dcterms:description "A spent UTxO reference; resolves to an Output from the resolved UTxO context." ;
+  rdfs:comment "A spent UTxO reference; resolves to an Output from the resolved UTxO context." .
 
 cardano:Output a rdfs:Class ;
   rdfs:label "Output" ;
-  dcterms:description "A UTxO produced by a transaction: address, value, optional datum and reference script." .
+  dcterms:description "A UTxO produced by a transaction: address, value, optional datum and reference script." ;
+  rdfs:comment "A UTxO produced by a transaction: address, value, optional datum and reference script." .
 
 cardano:Address a rdfs:Class ;
   rdfs:label "Address" ;
-  dcterms:description "A Cardano address decomposed into its payment credential, optional stake credential, and bech32 form." .
+  dcterms:description "A Cardano address decomposed into its payment credential, optional stake credential, and bech32 form." ;
+  rdfs:comment "A Cardano address decomposed into its payment credential, optional stake credential, and bech32 form." .
 
 cardano:Credential a rdfs:Class ;
   rdfs:label "Credential" ;
-  dcterms:description "Abstract credential carried by an address; subclasses distinguish payment vs stake." .
+  dcterms:description "Abstract credential carried by an address; subclasses distinguish payment vs stake." ;
+  rdfs:comment "Abstract credential carried by an address; subclasses distinguish payment vs stake." .
 
 cardano:PaymentCredential a rdfs:Class ;
   rdfs:subClassOf cardano:Credential ;
   rdfs:label "PaymentCredential" ;
-  dcterms:description "The payment credential of an address (key or script hash)." .
+  dcterms:description "The payment credential of an address (key or script hash)." ;
+  rdfs:comment "The payment credential of an address (key or script hash)." .
 
 cardano:StakeCredential a rdfs:Class ;
   rdfs:subClassOf cardano:Credential ;
   rdfs:label "StakeCredential" ;
-  dcterms:description "The stake credential of an address (key or script hash); absent for enterprise addresses." .
+  dcterms:description "The stake credential of an address (key or script hash); absent for enterprise addresses." ;
+  rdfs:comment "The stake credential of an address (key or script hash); absent for enterprise addresses." .
 
 cardano:Identifier a rdfs:Class ;
   rdfs:label "Identifier" ;
-  dcterms:description "A hashed leaf carrying its role-class type and canonical hex bytes; the OWL key (leafType, bytesHex) declared in Phase B unifies identifiers across leaves." .
+  dcterms:description "A hashed leaf carrying its role-class type and canonical hex bytes; the OWL key (leafType, bytesHex) declared in Phase B unifies identifiers across leaves." ;
+  rdfs:comment "A hashed leaf carrying its role-class type and canonical hex bytes; the OWL key (leafType, bytesHex) declared in Phase B unifies identifiers across leaves." .
 
 cardano:Entity a rdfs:Class ;
   rdfs:label "Entity" ;
-  dcterms:description "An operator-declared on-chain identity; bound to one or more Identifier instances via cardano:hasIdentifier." .
+  dcterms:description "An operator-declared on-chain identity; bound to one or more Identifier instances via cardano:hasIdentifier." ;
+  rdfs:comment "An operator-declared on-chain identity; bound to one or more Identifier instances via cardano:hasIdentifier." .
 
 cardano:Asset a rdfs:Class ;
   rdfs:label "Asset" ;
-  dcterms:description "A Cardano native asset: policy + asset name." .
+  dcterms:description "A Cardano native asset: policy + asset name." ;
+  rdfs:comment "A Cardano native asset: policy + asset name." .
 
 cardano:Datum a rdfs:Class ;
   rdfs:label "Datum" ;
-  dcterms:description "A datum attached to a script-locked output, by hash or inline." .
+  dcterms:description "A datum attached to a script-locked output, by hash or inline." ;
+  rdfs:comment "A datum attached to a script-locked output, by hash or inline." .
+
+cardano:AuxiliaryData a rdfs:Class ;
+  rdfs:label "AuxiliaryData" ;
+  dcterms:description "Auxiliary transaction data carried in the fourth Conway transaction tuple slot, including metadata and auxiliary scripts. Emitted as an opaque raw-CBOR leaf until a typed auxiliary-data vocabulary is introduced." ;
+  rdfs:comment "Auxiliary transaction data carried in the fourth Conway transaction tuple slot, including metadata and auxiliary scripts. Emitted as an opaque raw-CBOR leaf until a typed auxiliary-data vocabulary is introduced." .
 
 cardano:Redeemer a rdfs:Class ;
   rdfs:label "Redeemer" ;
-  dcterms:description "The redeemer fed into a Plutus script during transaction validation." .
+  dcterms:description "The redeemer fed into a Plutus script during transaction validation." ;
+  rdfs:comment "The redeemer fed into a Plutus script during transaction validation." .
 
 cardano:Script a rdfs:Class ;
   rdfs:label "Script" ;
-  dcterms:description "A script witness — Plutus V1/V2/V3 or native — identified by its hash." .
+  dcterms:description "A script witness — Plutus V1/V2/V3 or native — identified by its hash." ;
+  rdfs:comment "A script witness — Plutus V1/V2/V3 or native — identified by its hash." .
 
 # ==============================================================================
 # Properties — Transaction shape
@@ -82,47 +104,91 @@ cardano:Script a rdfs:Class ;
 
 cardano:hasInput a rdf:Property ;
   rdfs:label "hasInput" ;
-  dcterms:description "Relates a transaction to one of its consumed UTxO inputs." .
+  dcterms:description "Relates a transaction to one of its consumed UTxO inputs." ;
+  rdfs:comment "Relates a transaction to one of its consumed UTxO inputs." .
 
 cardano:hasOutput a rdf:Property ;
   rdfs:label "hasOutput" ;
-  dcterms:description "Relates a transaction to one of its produced UTxO outputs." .
+  dcterms:description "Relates a transaction to one of its produced UTxO outputs." ;
+  rdfs:comment "Relates a transaction to one of its produced UTxO outputs." .
 
 cardano:hasFee a rdf:Property ;
   rdfs:label "hasFee" ;
-  dcterms:description "The fee paid by a transaction, in lovelace." .
+  dcterms:description "The fee paid by a transaction, in lovelace." ;
+  rdfs:comment "The fee paid by a transaction, in lovelace." .
+
+cardano:hasCurrentTreasuryValue a rdf:Property ;
+  rdfs:label "hasCurrentTreasuryValue" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The optional Conway transaction body field 21 current_treasury_value, in lovelace." ;
+  rdfs:comment "The optional Conway transaction body field 21 current_treasury_value, in lovelace." .
+
+cardano:hasDonation a rdf:Property ;
+  rdfs:label "hasDonation" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The optional Conway transaction body field 22 treasury donation, in lovelace." ;
+  rdfs:comment "The optional Conway transaction body field 22 treasury donation, in lovelace." .
+
+cardano:isValid a rdf:Property ;
+  rdfs:label "isValid" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  xsd:boolean ;
+  dcterms:description "The Conway transaction validation flag from isValidTxL. True means phase-2 scripts are expected to validate; false marks scripts-failed/collateral-paid transactions." ;
+  rdfs:comment "The Conway transaction validation flag from isValidTxL. True means phase-2 scripts are expected to validate; false marks scripts-failed/collateral-paid transactions." .
+
+cardano:hasAuxiliaryData a rdf:Property ;
+  rdfs:label "hasAuxiliaryData" ;
+  rdfs:domain cardano:Transaction ;
+  rdfs:range  cardano:AuxiliaryData ;
+  dcterms:description "Relates a transaction to its auxiliary data body when the fourth Conway transaction tuple slot is non-null. The target currently carries cardano:hasRawBytes with canonical auxiliary-data CBOR." ;
+  rdfs:comment "Relates a transaction to its auxiliary data body when the fourth Conway transaction tuple slot is non-null. The target currently carries cardano:hasRawBytes with canonical auxiliary-data CBOR." .
 
 cardano:hasValidityInterval a rdf:Property ;
   rdfs:label "hasValidityInterval" ;
-  dcterms:description "The validity interval (invalidBefore, invalidHereafter) bounding when the transaction may be included on chain." .
+  dcterms:description "The validity interval (invalidBefore, invalidHereafter) bounding when the transaction may be included on chain." ;
+  rdfs:comment "The validity interval (invalidBefore, invalidHereafter) bounding when the transaction may be included on chain." .
 
 cardano:hasCertificate a rdf:Property ;
   rdfs:label "hasCertificate" ;
-  dcterms:description "A certificate carried by the transaction (stake registration, delegation, pool operations, governance certificates)." .
+  dcterms:description "A certificate carried by the transaction (stake registration, delegation, pool operations, governance certificates)." ;
+  rdfs:comment "A certificate carried by the transaction (stake registration, delegation, pool operations, governance certificates)." .
 
 cardano:hasWithdrawal a rdf:Property ;
   rdfs:label "hasWithdrawal" ;
-  dcterms:description "A reward-account withdrawal carried by the transaction." .
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( cardano:Transaction cardano:TreasuryWithdrawals )
+  ] ;
+  rdfs:range  cardano:Withdrawal ;
+  dcterms:description "A reward-account withdrawal carried by the transaction body or by a TreasuryWithdrawals governance action." ;
+  rdfs:comment "A reward-account withdrawal carried by the transaction body or by a TreasuryWithdrawals governance action." .
 
 cardano:hasProposal a rdf:Property ;
   rdfs:label "hasProposal" ;
-  dcterms:description "A Conway governance proposal submitted by the transaction." .
+  dcterms:description "A Conway governance proposal submitted by the transaction." ;
+  rdfs:comment "A Conway governance proposal submitted by the transaction." .
 
 cardano:hasMint a rdf:Property ;
   rdfs:label "hasMint" ;
-  dcterms:description "A native-asset mint or burn entry attached to the transaction." .
+  dcterms:description "A native-asset mint or burn entry attached to the transaction." ;
+  rdfs:comment "A native-asset mint or burn entry attached to the transaction." .
 
 cardano:hasCollateralInput a rdf:Property ;
   rdfs:label "hasCollateralInput" ;
-  dcterms:description "A collateral input pledged by the transaction in case of Plutus script failure." .
+  dcterms:description "A collateral input pledged by the transaction in case of Plutus script failure." ;
+  rdfs:comment "A collateral input pledged by the transaction in case of Plutus script failure." .
 
 cardano:hasReferenceInput a rdf:Property ;
   rdfs:label "hasReferenceInput" ;
-  dcterms:description "A reference input observed but not spent by the transaction." .
+  dcterms:description "A reference input observed but not spent by the transaction." ;
+  rdfs:comment "A reference input observed but not spent by the transaction." .
 
 cardano:hasWitnessSet a rdf:Property ;
   rdfs:label "hasWitnessSet" ;
-  dcterms:description "The witness set bundled with the transaction (keys, scripts, datums, redeemers)." .
+  dcterms:description "The witness set bundled with the transaction (keys, scripts, datums, redeemers)." ;
+  rdfs:comment "The witness set bundled with the transaction (keys, scripts, datums, redeemers)." .
 
 # ==============================================================================
 # Properties — Per-leaf
@@ -130,31 +196,38 @@ cardano:hasWitnessSet a rdf:Property ;
 
 cardano:atAddress a rdf:Property ;
   rdfs:label "atAddress" ;
-  dcterms:description "The address at which an output sits." .
+  dcterms:description "The address at which an output sits." ;
+  rdfs:comment "The address at which an output sits." .
 
 cardano:hasPaymentCredential a rdf:Property ;
   rdfs:label "hasPaymentCredential" ;
-  dcterms:description "The payment credential decomposed out of an address." .
+  dcterms:description "The payment credential decomposed out of an address." ;
+  rdfs:comment "The payment credential decomposed out of an address." .
 
 cardano:hasStakeCredential a rdf:Property ;
   rdfs:label "hasStakeCredential" ;
-  dcterms:description "The stake credential decomposed out of an address (absent for enterprise addresses)." .
+  dcterms:description "The stake credential decomposed out of an address (absent for enterprise addresses)." ;
+  rdfs:comment "The stake credential decomposed out of an address (absent for enterprise addresses)." .
 
 cardano:bytesHex a rdf:Property ;
   rdfs:label "bytesHex" ;
-  dcterms:description "The canonical hex-encoded bytes of a hashed leaf." .
+  dcterms:description "The canonical hex-encoded bytes of a hashed leaf." ;
+  rdfs:comment "The canonical hex-encoded bytes of a hashed leaf." .
 
 cardano:leafType a rdf:Property ;
   rdfs:label "leafType" ;
-  dcterms:description "The role-class type of a hashed leaf (e.g. payment-key-hash, script-hash, pool-id, drep-id)." .
+  dcterms:description "The role-class type of a hashed leaf (e.g. payment-key-hash, script-hash, pool-id, drep-id)." ;
+  rdfs:comment "The role-class type of a hashed leaf (e.g. payment-key-hash, script-hash, pool-id, drep-id)." .
 
 cardano:hasIdentifier a rdf:Property ;
   rdfs:label "hasIdentifier" ;
-  dcterms:description "Binds an operator-declared Entity to one of its on-chain Identifier instances." .
+  dcterms:description "Binds an operator-declared Entity to one of its on-chain Identifier instances." ;
+  rdfs:comment "Binds an operator-declared Entity to one of its on-chain Identifier instances." .
 
 cardano:bech32 a rdf:Property ;
   rdfs:label "bech32" ;
-  dcterms:description "The bech32 string form of an address or hashed identifier." .
+  dcterms:description "The bech32 string form of an address or hashed identifier." ;
+  rdfs:comment "The bech32 string form of an address or hashed identifier." .
 
 # ==============================================================================
 # Properties — Asset
@@ -162,11 +235,13 @@ cardano:bech32 a rdf:Property ;
 
 cardano:hasPolicy a rdf:Property ;
   rdfs:label "hasPolicy" ;
-  dcterms:description "The minting policy script hash governing a native asset." .
+  dcterms:description "The minting policy script hash governing a native asset." ;
+  rdfs:comment "The minting policy script hash governing a native asset." .
 
 cardano:hasAssetName a rdf:Property ;
   rdfs:label "hasAssetName" ;
-  dcterms:description "The asset-name byte string distinguishing assets under a common minting policy." .
+  dcterms:description "The asset-name byte string distinguishing assets under a common minting policy." ;
+  rdfs:comment "The asset-name byte string distinguishing assets under a common minting policy." .
 
 # ==============================================================================
 # Properties — Datum / Redeemer / Script
@@ -174,19 +249,23 @@ cardano:hasAssetName a rdf:Property ;
 
 cardano:hasDatum a rdf:Property ;
   rdfs:label "hasDatum" ;
-  dcterms:description "Relates an output to its attached datum (by hash or inline)." .
+  dcterms:description "Relates an output to its attached datum (by hash or inline)." ;
+  rdfs:comment "Relates an output to its attached datum (by hash or inline)." .
 
 cardano:hasReferenceScript a rdf:Property ;
   rdfs:label "hasReferenceScript" ;
-  dcterms:description "Relates an output to a reference script attached to it." .
+  dcterms:description "Relates an output to a reference script attached to it." ;
+  rdfs:comment "Relates an output to a reference script attached to it." .
 
 cardano:hasRawBytes a rdf:Property ;
   rdfs:label "hasRawBytes" ;
-  dcterms:description "The raw CBOR/bytes payload of a datum, redeemer, or script." .
+  dcterms:description "The raw CBOR/bytes payload of a datum, redeemer, or script." ;
+  rdfs:comment "The raw CBOR/bytes payload of a datum, redeemer, or script." .
 
 cardano:decodedAs a rdf:Property ;
   rdfs:label "decodedAs" ;
-  dcterms:description "The decoded structured form of a datum or redeemer, when available." .
+  dcterms:description "The decoded structured form of a datum or redeemer, when available." ;
+  rdfs:comment "The decoded structured form of a datum or redeemer, when available." .
 
 cardano:decodeError a owl:DatatypeProperty ;
   rdfs:label "decodeError" ;
@@ -195,11 +274,13 @@ cardano:decodeError a owl:DatatypeProperty ;
 
 cardano:hasHash a rdf:Property ;
   rdfs:label "hasHash" ;
-  dcterms:description "The hash of a datum, redeemer, script, or other hashable artifact." .
+  dcterms:description "The hash of a datum, redeemer, script, or other hashable artifact." ;
+  rdfs:comment "The hash of a datum, redeemer, script, or other hashable artifact." .
 
 cardano:hasVersion a rdf:Property ;
   rdfs:label "hasVersion" ;
-  dcterms:description "The Plutus language version of a script (V1, V2, V3) or analogous version tag." .
+  dcterms:description "The Plutus language version of a script (V1, V2, V3) or analogous version tag." ;
+  rdfs:comment "The Plutus language version of a script (V1, V2, V3) or analogous version tag." .
 
 # ==============================================================================
 # Properties — Resolved-input
@@ -207,11 +288,13 @@ cardano:hasVersion a rdf:Property ;
 
 cardano:resolvedTo a rdf:Property ;
   rdfs:label "resolvedTo" ;
-  dcterms:description "Relates a transaction input to the Output it resolves to under the resolved UTxO context." .
+  dcterms:description "Relates a transaction input to the Output it resolves to under the resolved UTxO context." ;
+  rdfs:comment "Relates a transaction input to the Output it resolves to under the resolved UTxO context." .
 
 cardano:hasResolution a rdf:Property ;
   rdfs:label "hasResolution" ;
-  dcterms:description "The inverse direction of cardano:resolvedTo: relates an Output to the Input that consumes it. Declared in Phase A so the Phase B owl:inverseOf axiom can reference a published term." .
+  dcterms:description "The inverse direction of cardano:resolvedTo: relates an Output to the Input that consumes it. Declared in Phase A so the Phase B owl:inverseOf axiom can reference a published term." ;
+  rdfs:comment "The inverse direction of cardano:resolvedTo: relates an Output to the Input that consumes it. Declared in Phase A so the Phase B owl:inverseOf axiom can reference a published term." .
 
 # ==============================================================================
 # SKOS — LeafType ConceptScheme
@@ -229,55 +312,64 @@ cardano:PaymentKey a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Payment Key" ;
   rdfs:label "PaymentKey" ;
-  dcterms:description "Hashed Ed25519 public key authorising spending at an address." .
+  dcterms:description "Hashed Ed25519 public key authorising spending at an address." ;
+  rdfs:comment "Hashed Ed25519 public key authorising spending at an address." .
 
 cardano:PaymentScript a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Payment Script" ;
   rdfs:label "PaymentScript" ;
-  dcterms:description "Plutus or native-script hash governing spending at an address." .
+  dcterms:description "Plutus or native-script hash governing spending at an address." ;
+  rdfs:comment "Plutus or native-script hash governing spending at an address." .
 
 cardano:StakeKey a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Stake Key" ;
   rdfs:label "StakeKey" ;
-  dcterms:description "Hashed Ed25519 public key holding stake delegation rights." .
+  dcterms:description "Hashed Ed25519 public key holding stake delegation rights." ;
+  rdfs:comment "Hashed Ed25519 public key holding stake delegation rights." .
 
 cardano:StakeScript a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Stake Script" ;
   rdfs:label "StakeScript" ;
-  dcterms:description "Script hash holding stake delegation rights (script-based reward accounts)." .
+  dcterms:description "Script hash holding stake delegation rights (script-based reward accounts)." ;
+  rdfs:comment "Script hash holding stake delegation rights (script-based reward accounts)." .
 
 cardano:DRepKey a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "DRep Key" ;
   rdfs:label "DRepKey" ;
-  dcterms:description "Hashed Ed25519 public key registered as a delegated representative under Conway-era governance." .
+  dcterms:description "Hashed Ed25519 public key registered as a delegated representative under Conway-era governance." ;
+  rdfs:comment "Hashed Ed25519 public key registered as a delegated representative under Conway-era governance." .
 
 cardano:DRepScript a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "DRep Script" ;
   rdfs:label "DRepScript" ;
-  dcterms:description "Script hash registered as a delegated representative (multi-sig or contract DRep)." .
+  dcterms:description "Script hash registered as a delegated representative (multi-sig or contract DRep)." ;
+  rdfs:comment "Script hash registered as a delegated representative (multi-sig or contract DRep)." .
 
 cardano:PoolId a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Pool ID" ;
   rdfs:label "PoolId" ;
-  dcterms:description "VRF hash identifying a stake pool." .
+  dcterms:description "VRF hash identifying a stake pool." ;
+  rdfs:comment "VRF hash identifying a stake pool." .
 
 cardano:Policy a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Minting Policy" ;
   rdfs:label "Policy" ;
-  dcterms:description "Hashed minting policy script governing a native asset." .
+  dcterms:description "Hashed minting policy script governing a native asset." ;
+  rdfs:comment "Hashed minting policy script governing a native asset." .
 
 cardano:AssetClass a skos:Concept , rdfs:Class ;
   skos:inScheme cardano:LeafType ;
   skos:prefLabel "Asset Class" ;
   rdfs:label "AssetClass" ;
-  dcterms:description "Composite identifier (policy + asset name) for a native asset." .
+  dcterms:description "Composite identifier (policy + asset name) for a native asset." ;
+  rdfs:comment "Composite identifier (policy + asset name) for a native asset." .
 
 # -- Kin links ----------------------------------------------------------------
 # `skos:related` is symmetric in SKOS semantics; declare each pair once.
@@ -316,7 +408,8 @@ cardano:fromTxOutRef a rdf:Property ;
   rdfs:label "fromTxOutRef" ;
   rdfs:domain cardano:Input ;
   rdfs:range  rdfs:Literal ;
-  dcterms:description "The TxIn reference '<txid>#<ix>' for a spending or reference or collateral input." .
+  dcterms:description "The TxIn reference '<txid>#<ix>' for a spending or reference or collateral input." ;
+  rdfs:comment "The TxIn reference '<txid>#<ix>' for a spending or reference or collateral input." .
 
 # ==============================================================================
 # Properties — Value semantics (Phase A.1)
@@ -325,24 +418,28 @@ cardano:fromTxOutRef a rdf:Property ;
 cardano:lovelace a rdf:Property ;
   rdfs:label "lovelace" ;
   rdfs:range  xsd:integer ;
-  dcterms:description "An ADA-denominated value, in lovelace (1 ADA = 1_000_000 lovelace). Used on Output, Withdrawal, and any value-bearing subject." .
+  dcterms:description "An ADA-denominated value, in lovelace (1 ADA = 1_000_000 lovelace). Used on Output, Withdrawal, and any value-bearing subject." ;
+  rdfs:comment "An ADA-denominated value, in lovelace (1 ADA = 1_000_000 lovelace). Used on Output, Withdrawal, and any value-bearing subject." .
 
 cardano:quantity a rdf:Property ;
   rdfs:label "quantity" ;
   rdfs:range  xsd:integer ;
-  dcterms:description "A signed integer quantity (negative values denote burns in a mint context)." .
+  dcterms:description "A signed integer quantity (negative values denote burns in a mint context)." ;
+  rdfs:comment "A signed integer quantity (negative values denote burns in a mint context)." .
 
 cardano:mintsAsset a rdf:Property ;
   rdfs:label "mintsAsset" ;
   rdfs:domain cardano:Mint ;
-  dcterms:description "Binds a mint entry to the (policy, asset-name) pair it touches." .
+  dcterms:description "Binds a mint entry to the (policy, asset-name) pair it touches." ;
+  rdfs:comment "Binds a mint entry to the (policy, asset-name) pair it touches." .
 
 # ==============================================================================
 
 cardano:hasAssetValue a rdf:Property ;
   rdfs:label "hasAssetValue" ;
   rdfs:domain cardano:Output ;
-  dcterms:description "Binds an Output (or any value-bearing subject) to its multi-asset value list head (an rdf:List of asset-quantity entries). Distinct from cardano:mintsAsset which is mint-context-scoped." .
+  dcterms:description "Binds an Output (or any value-bearing subject) to its multi-asset value list head (an rdf:List of asset-quantity entries). Distinct from cardano:mintsAsset which is mint-context-scoped." ;
+  rdfs:comment "Binds an Output (or any value-bearing subject) to its multi-asset value list head (an rdf:List of asset-quantity entries). Distinct from cardano:mintsAsset which is mint-context-scoped." .
 
 # Properties — Reward-account / Withdrawal (Phase A.1)
 # ==============================================================================
@@ -350,7 +447,8 @@ cardano:hasAssetValue a rdf:Property ;
 cardano:withdrawalAccount a rdf:Property ;
   rdfs:label "withdrawalAccount" ;
   rdfs:domain cardano:Withdrawal ;
-  dcterms:description "Binds a withdrawal to its reward-account identifier (a stake credential)." .
+  dcterms:description "Binds a withdrawal to its reward-account identifier (a stake credential)." ;
+  rdfs:comment "Binds a withdrawal to its reward-account identifier (a stake credential)." .
 
 # ==============================================================================
 # Properties — Body-root extra fields (Phase A.1)
@@ -360,17 +458,20 @@ cardano:networkId a rdf:Property ;
   rdfs:label "networkId" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The network id (0 = testnet, 1 = mainnet) declared on the transaction body when present." .
+  dcterms:description "The network id (0 = testnet, 1 = mainnet) declared on the transaction body when present." ;
+  rdfs:comment "The network id (0 = testnet, 1 = mainnet) declared on the transaction body when present." .
 
 cardano:scriptDataHash a rdf:Property ;
   rdfs:label "scriptDataHash" ;
   rdfs:domain cardano:Transaction ;
-  dcterms:description "The script-data hash declared on the transaction body when any Plutus scripts are exercised." .
+  dcterms:description "The script-data hash declared on the transaction body when any Plutus scripts are exercised." ;
+  rdfs:comment "The script-data hash declared on the transaction body when any Plutus scripts are exercised." .
 
 cardano:auxiliaryDataHash a rdf:Property ;
   rdfs:label "auxiliaryDataHash" ;
   rdfs:domain cardano:Transaction ;
-  dcterms:description "The auxiliary-data hash declared on the transaction body when metadata or auxiliary data is attached." .
+  dcterms:description "The auxiliary-data hash declared on the transaction body when metadata or auxiliary data is attached." ;
+  rdfs:comment "The auxiliary-data hash declared on the transaction body when metadata or auxiliary data is attached." .
 
 # ==============================================================================
 # Properties — Validity interval sub-fields (Phase A.1)
@@ -386,12 +487,14 @@ cardano:auxiliaryDataHash a rdf:Property ;
 cardano:intervalStart a rdf:Property ;
   rdfs:label "intervalStart" ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The inclusive lower slot bound of a validity interval (Conway 'validityIntervalStart')." .
+  dcterms:description "The inclusive lower slot bound of a validity interval (Conway 'validityIntervalStart')." ;
+  rdfs:comment "The inclusive lower slot bound of a validity interval (Conway 'validityIntervalStart')." .
 
 cardano:intervalEnd a rdf:Property ;
   rdfs:label "intervalEnd" ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The exclusive upper slot bound of a validity interval (Conway 'invalidHereafter' / TTL)." .
+  dcterms:description "The exclusive upper slot bound of a validity interval (Conway 'invalidHereafter' / TTL)." ;
+  rdfs:comment "The exclusive upper slot bound of a validity interval (Conway 'invalidHereafter' / TTL)." .
 
 # ==============================================================================
 # Phase A.2 — exhaustive Conway body coverage + drift declarations
@@ -399,7 +502,7 @@ cardano:intervalEnd a rdf:Property ;
 # authored by kmaps maintainers. Terms duplicated from Phase A.1 are omitted.
 # ==============================================================================
 
-# ----- Classes (17) ---------------------------------------------------------
+# ----- Classes (25) ---------------------------------------------------------
 
 cardano:Script a rdfs:Class ;
   rdfs:label "Script" ;
@@ -407,163 +510,574 @@ cardano:Script a rdfs:Class ;
 
 cardano:Voter a rdfs:Class ;
   rdfs:label "Voter" ;
-  dcterms:description "A governance voter — a DRep, a stake pool, or a constitutional-committee member casting verdicts on governance actions. Discriminated by role subclass (VoterDRep / VoterStakePool / VoterCommitteeCold)." .
+  dcterms:description "A governance voter — a DRep, a stake pool, or a constitutional-committee member casting verdicts on governance actions. Discriminated by role subclass (VoterDRep / VoterStakePool / VoterCommitteeCold)." ;
+  rdfs:comment "A governance voter — a DRep, a stake pool, or a constitutional-committee member casting verdicts on governance actions. Discriminated by role subclass (VoterDRep / VoterStakePool / VoterCommitteeCold)." .
 
 cardano:Certificate a rdfs:Class ;
   rdfs:label "Certificate" ;
-  dcterms:description "An on-chain certificate carried by a transaction body — stake key registration / deregistration, stake delegation, vote delegation, pool registration / retirement, DRep registration / unregistration / update, committee key resignation, committee hot-key authorization, etc. Discriminated by subclass." .
+  dcterms:description "An on-chain certificate carried by a transaction body — stake key registration / deregistration, stake delegation, vote delegation, pool registration / retirement, DRep registration / unregistration / update, committee key resignation, committee hot-key authorization, etc. Discriminated by subclass." ;
+  rdfs:comment "An on-chain certificate carried by a transaction body — stake key registration / deregistration, stake delegation, vote delegation, pool registration / retirement, DRep registration / unregistration / update, committee key resignation, committee hot-key authorization, etc. Discriminated by subclass." .
 
 cardano:DRep a rdfs:Class ;
   rdfs:label "DRep" ;
-  dcterms:description "A Delegated Representative (CIP-1694). The on-chain identity an ada-holder may delegate voting power to in Conway-era governance." .
+  dcterms:description "A Delegated Representative (CIP-1694). The on-chain identity an ada-holder may delegate voting power to in Conway-era governance." ;
+  rdfs:comment "A Delegated Representative (CIP-1694). The on-chain identity an ada-holder may delegate voting power to in Conway-era governance." .
 
 cardano:Mint a rdfs:Class ;
   rdfs:label "Mint" ;
-  dcterms:description "A single mint entry — one (policy, asset name, signed quantity) triple inside a transaction's mint field. Negative quantities denote burns." .
+  dcterms:description "A single mint entry — one (policy, asset name, signed quantity) triple inside a transaction's mint field. Negative quantities denote burns." ;
+  rdfs:comment "A single mint entry — one (policy, asset name, signed quantity) triple inside a transaction's mint field. Negative quantities denote burns." .
 
 cardano:NativeScript a rdfs:Class ;
   rdfs:label "NativeScript" ;
   rdfs:subClassOf cardano:Script ;
-  dcterms:description "A reference script whose language is native Cardano multi-sig (timelock + key combinators). Distinct from Plutus scripts; carries the raw script body as CBOR." .
+  dcterms:description "A native Cardano multi-sig / timelock script. Native scripts are emitted as recursive trees of ScriptPubkey, ScriptAll, ScriptAny, ScriptNofK, InvalidBefore, and InvalidHereafter nodes." ;
+  rdfs:comment "A native Cardano multi-sig / timelock script. Native scripts are emitted as recursive trees of ScriptPubkey, ScriptAll, ScriptAny, ScriptNofK, InvalidBefore, and InvalidHereafter nodes." .
+
+cardano:ScriptPubkey a rdfs:Class ;
+  rdfs:label "ScriptPubkey" ;
+  rdfs:subClassOf cardano:NativeScript ;
+  dcterms:description "A native-script leaf requiring a payment-key signature. Carries cardano:requiresSigner to the signer Identifier." ;
+  rdfs:comment "A native-script leaf requiring a payment-key signature. Carries cardano:requiresSigner to the signer Identifier." .
+
+cardano:ScriptAll a rdfs:Class ;
+  rdfs:label "ScriptAll" ;
+  rdfs:subClassOf cardano:NativeScript ;
+  dcterms:description "A native-script internal node requiring every child script to validate. Children are linked with cardano:hasChild." ;
+  rdfs:comment "A native-script internal node requiring every child script to validate. Children are linked with cardano:hasChild." .
+
+cardano:ScriptAny a rdfs:Class ;
+  rdfs:label "ScriptAny" ;
+  rdfs:subClassOf cardano:NativeScript ;
+  dcterms:description "A native-script internal node requiring at least one child script to validate. Children are linked with cardano:hasChild." ;
+  rdfs:comment "A native-script internal node requiring at least one child script to validate. Children are linked with cardano:hasChild." .
+
+cardano:ScriptNofK a rdfs:Class ;
+  rdfs:label "ScriptNofK" ;
+  rdfs:subClassOf cardano:NativeScript ;
+  dcterms:description "A native-script threshold node requiring cardano:requiredCount of its child scripts to validate." ;
+  rdfs:comment "A native-script threshold node requiring cardano:requiredCount of its child scripts to validate." .
+
+cardano:InvalidBefore a rdfs:Class ;
+  rdfs:label "InvalidBefore" ;
+  rdfs:subClassOf cardano:NativeScript ;
+  dcterms:description "A native-script timelock leaf corresponding to invalid_before. Carries cardano:hasSlot with the lower slot bound." ;
+  rdfs:comment "A native-script timelock leaf corresponding to invalid_before. Carries cardano:hasSlot with the lower slot bound." .
+
+cardano:InvalidHereafter a rdfs:Class ;
+  rdfs:label "InvalidHereafter" ;
+  rdfs:subClassOf cardano:NativeScript ;
+  dcterms:description "A native-script timelock leaf corresponding to invalid_hereafter. Carries cardano:hasSlot with the upper slot bound." ;
+  rdfs:comment "A native-script timelock leaf corresponding to invalid_hereafter. Carries cardano:hasSlot with the upper slot bound." .
 
 cardano:OpaqueLeaf a rdfs:Class ;
   rdfs:label "OpaqueLeaf" ;
-  dcterms:description "A Conway-era field whose canonical RDF shape has not yet been designed. Carries cardano:leafType (the Conway constructor name) + cardano:hasRawBytes (CBOR-encoded body) so the operator can read the field even before it gets a proper modelling. Used as the fallback in exhaustive Conway pattern-matching so the emitter never crashes on novel constructors." .
+  dcterms:description "A Conway-era field whose canonical RDF shape has not yet been designed. Carries cardano:leafType (the Conway constructor name) + cardano:hasRawBytes (CBOR-encoded body) so the operator can read the field even before it gets a proper modelling. Used as the fallback in exhaustive Conway pattern-matching so the emitter never crashes on novel constructors." ;
+  rdfs:comment "A Conway-era field whose canonical RDF shape has not yet been designed. Carries cardano:leafType (the Conway constructor name) + cardano:hasRawBytes (CBOR-encoded body) so the operator can read the field even before it gets a proper modelling. Used as the fallback in exhaustive Conway pattern-matching so the emitter never crashes on novel constructors." .
+
+cardano:Proposal a rdfs:Class ;
+  rdfs:label "Proposal" ;
+  dcterms:description "A Conway governance proposal procedure submitted by a transaction. Carries the proposal deposit, return reward-account, anchor metadata, and a per-variant governance action payload." ;
+  rdfs:comment "A Conway governance proposal procedure submitted by a transaction. Carries the proposal deposit, return reward-account, anchor metadata, and a per-variant governance action payload." .
+
+cardano:GovAction a rdfs:Class ;
+  rdfs:label "GovAction" ;
+  dcterms:description "A Conway governance action carried by a Proposal. Specific subclasses describe the typed payload for each governance-action constructor." ;
+  rdfs:comment "A Conway governance action carried by a Proposal. Specific subclasses describe the typed payload for each governance-action constructor." .
+
+cardano:TreasuryWithdrawals a rdfs:Class ;
+  rdfs:label "TreasuryWithdrawals" ;
+  rdfs:subClassOf cardano:GovAction ;
+  dcterms:description "A Conway governance action withdrawing lovelace from the treasury to one or more reward accounts, optionally guarded by a policy script hash." ;
+  rdfs:comment "A Conway governance action withdrawing lovelace from the treasury to one or more reward accounts, optionally guarded by a policy script hash." .
+
+cardano:ParameterChange a rdfs:Class ;
+  rdfs:label "ParameterChange" ;
+  rdfs:subClassOf cardano:GovAction ;
+  dcterms:description "A Conway governance action changing protocol parameters, with an optional prior action and optional guard policy." ;
+  rdfs:comment "A Conway governance action changing protocol parameters, with an optional prior action and optional guard policy." .
+
+cardano:ProtocolParamUpdate a rdfs:Class ;
+  rdfs:label "ProtocolParamUpdate" ;
+  dcterms:description "The typed protocol-parameter update payload carried by a ParameterChange governance action." ;
+  rdfs:comment "The typed protocol-parameter update payload carried by a ParameterChange governance action." .
+
+cardano:UpdateCommittee a rdfs:Class ;
+  rdfs:label "UpdateCommittee" ;
+  rdfs:subClassOf cardano:GovAction ;
+  dcterms:description "A Conway governance action updating the constitutional committee membership and quorum." ;
+  rdfs:comment "A Conway governance action updating the constitutional committee membership and quorum." .
+
+cardano:CommitteeAddition a rdfs:Class ;
+  rdfs:label "CommitteeAddition" ;
+  dcterms:description "A committee member addition paired with the term-limit epoch for the added cold credential." ;
+  rdfs:comment "A committee member addition paired with the term-limit epoch for the added cold credential." .
+
+cardano:NewConstitution a rdfs:Class ;
+  rdfs:label "NewConstitution" ;
+  rdfs:subClassOf cardano:GovAction ;
+  dcterms:description "A Conway governance action adopting a new constitution document and optional guardrail script." ;
+  rdfs:comment "A Conway governance action adopting a new constitution document and optional guardrail script." .
+
+cardano:Constitution a rdfs:Class ;
+  rdfs:label "Constitution" ;
+  dcterms:description "A proposed constitution payload: anchor metadata plus an optional guardrail script hash." ;
+  rdfs:comment "A proposed constitution payload: anchor metadata plus an optional guardrail script hash." .
+
+cardano:HardForkInitiation a rdfs:Class ;
+  rdfs:label "HardForkInitiation" ;
+  rdfs:subClassOf cardano:GovAction ;
+  dcterms:description "A Conway governance action initiating a hard fork to a target protocol version." ;
+  rdfs:comment "A Conway governance action initiating a hard fork to a target protocol version." .
+
+cardano:ProtocolVersion a rdfs:Class ;
+  rdfs:label "ProtocolVersion" ;
+  dcterms:description "A Cardano protocol version decomposed into major and minor version numbers." ;
+  rdfs:comment "A Cardano protocol version decomposed into major and minor version numbers." .
+
+cardano:PoolVotingThresholds a rdfs:Class ;
+  rdfs:label "PoolVotingThresholds" ;
+  dcterms:description "Pool voting thresholds inside a typed protocol-parameter update." ;
+  rdfs:comment "Pool voting thresholds inside a typed protocol-parameter update." .
+
+cardano:DRepVotingThresholds a rdfs:Class ;
+  rdfs:label "DRepVotingThresholds" ;
+  dcterms:description "DRep voting thresholds inside a typed protocol-parameter update." ;
+  rdfs:comment "DRep voting thresholds inside a typed protocol-parameter update." .
+
+cardano:ExUnitPrices a rdfs:Class ;
+  rdfs:label "ExUnitPrices" ;
+  dcterms:description "Protocol-parameter prices for execution memory and CPU steps." ;
+  rdfs:comment "Protocol-parameter prices for execution memory and CPU steps." .
+
+cardano:Anchor a rdfs:Class ;
+  rdfs:label "Anchor" ;
+  dcterms:description "An off-chain pointer to governance metadata, decomposed into a URL and content hash." ;
+  rdfs:comment "An off-chain pointer to governance metadata, decomposed into a URL and content hash." .
 
 cardano:PlutusScript a rdfs:Class ;
   rdfs:label "PlutusScript" ;
   rdfs:subClassOf cardano:Script ;
-  dcterms:description "A reference script whose language is a Plutus version (V1, V2, V3, …). Carries cardano:hasVersion in addition to the hash + raw bytes." .
+  dcterms:description "A reference script whose language is a Plutus version (V1, V2, V3, …). Carries cardano:hasVersion in addition to the hash + raw bytes." ;
+  rdfs:comment "A reference script whose language is a Plutus version (V1, V2, V3, …). Carries cardano:hasVersion in addition to the hash + raw bytes." .
 
 cardano:Pool a rdfs:Class ;
   rdfs:label "Pool" ;
-  dcterms:description "A stake pool — the on-chain identity an ada-holder may delegate stake to for block production rewards." .
+  dcterms:description "A stake pool — the on-chain identity an ada-holder may delegate stake to for block production rewards." ;
+  rdfs:comment "A stake pool — the on-chain identity an ada-holder may delegate stake to for block production rewards." .
 
 cardano:StakeDelegation a rdfs:Class ;
   rdfs:label "StakeDelegation" ;
   rdfs:subClassOf cardano:Certificate ;
-  dcterms:description "A certificate delegating a stake credential's voting / reward share to a stake pool. Carries cardano:onCredential (the delegator stake credential) + cardano:toPool (the target pool)." .
+  dcterms:description "A certificate delegating a stake credential's voting / reward share to a stake pool. Carries cardano:onCredential (the delegator stake credential) + cardano:toPool (the target pool)." ;
+  rdfs:comment "A certificate delegating a stake credential's voting / reward share to a stake pool. Carries cardano:onCredential (the delegator stake credential) + cardano:toPool (the target pool)." .
 
 cardano:TxOutRef a rdfs:Class ;
   rdfs:label "TxOutRef" ;
-  dcterms:description "A reference to a specific output of a previously-submitted transaction — the tuple of a transaction id and an output index. Used everywhere an Input names what it spends, references, or holds as collateral. Decomposed into cardano:hasTxId (an Identifier node) + cardano:hasIndex (a non-negative integer)." .
+  dcterms:description "A reference to a specific output of a previously-submitted transaction — the tuple of a transaction id and an output index. Used everywhere an Input names what it spends, references, or holds as collateral. Decomposed into cardano:hasTxId (an Identifier node) + cardano:hasIndex (a non-negative integer)." ;
+  rdfs:comment "A reference to a specific output of a previously-submitted transaction — the tuple of a transaction id and an output index. Used everywhere an Input names what it spends, references, or holds as collateral. Decomposed into cardano:hasTxId (an Identifier node) + cardano:hasIndex (a non-negative integer)." .
+
+cardano:GovActionId a rdfs:Class , skos:Concept ;
+  skos:inScheme cardano:LeafType ;
+  skos:prefLabel "Governance Action ID" ;
+  rdfs:label "Governance action identifier" ;
+  rdfs:comment "Identifier for a governance action: (txid, index) tuple identifying the proposing transaction and the proposal's position within that transaction." .
 
 cardano:Vote a rdfs:Class ;
   rdfs:label "Vote" ;
-  dcterms:description "A single voting-procedure entry: one voter casting one verdict on one governance action. Carries cardano:hasVoter, cardano:hasVotingAction, cardano:hasVerdict, and optional cardano:hasAnchor for justifying metadata." .
+  dcterms:description "A single voting-procedure entry: one voter casting one verdict on one governance action. Carries cardano:hasVoter, cardano:hasVotingAction, cardano:hasVerdict, and optional cardano:hasAnchor for justifying metadata." ;
+  rdfs:comment "A single voting-procedure entry: one voter casting one verdict on one governance action. Carries cardano:hasVoter, cardano:hasVotingAction, cardano:hasVerdict, and optional cardano:hasAnchor for justifying metadata." .
 
 cardano:VoteDelegation a rdfs:Class ;
   rdfs:label "VoteDelegation" ;
   rdfs:subClassOf cardano:Certificate ;
-  dcterms:description "A certificate delegating a stake credential's voting power to a DRep (or to one of the pre-defined voting targets: always-abstain, always-no-confidence). Carries cardano:onCredential + cardano:toDRep." .
+  dcterms:description "A certificate delegating a stake credential's voting power to a DRep (or to one of the pre-defined voting targets: always-abstain, always-no-confidence). Carries cardano:onCredential + cardano:toDRep." ;
+  rdfs:comment "A certificate delegating a stake credential's voting power to a DRep (or to one of the pre-defined voting targets: always-abstain, always-no-confidence). Carries cardano:onCredential + cardano:toDRep." .
 
 cardano:VoterDRep a rdfs:Class ;
   rdfs:label "VoterDRep" ;
   rdfs:subClassOf cardano:Voter ;
-  dcterms:description "A voter acting in the DRep role. The voter's identity is a DRep credential (key or script)." .
+  dcterms:description "A voter acting in the DRep role. The voter's identity is a DRep credential (key or script)." ;
+  rdfs:comment "A voter acting in the DRep role. The voter's identity is a DRep credential (key or script)." .
 
 cardano:VoterStakePool a rdfs:Class ;
   rdfs:label "VoterStakePool" ;
   rdfs:subClassOf cardano:Voter ;
-  dcterms:description "A voter acting in the stake-pool role. The voter's identity is a stake-pool cold key hash." .
+  dcterms:description "A voter acting in the stake-pool role. The voter's identity is a stake-pool cold key hash." ;
+  rdfs:comment "A voter acting in the stake-pool role. The voter's identity is a stake-pool cold key hash." .
 
 cardano:VoterCommitteeCold a rdfs:Class ;
   rdfs:label "VoterCommitteeCold" ;
   rdfs:subClassOf cardano:Voter ;
-  dcterms:description "A voter acting in the constitutional-committee role. The voter's identity is the committee cold key hash." .
+  dcterms:description "A voter acting in the constitutional-committee role. The voter's identity is the committee cold key hash." ;
+  rdfs:comment "A voter acting in the constitutional-committee role. The voter's identity is the committee cold key hash." .
 
 cardano:Withdrawal a rdfs:Class ;
   rdfs:label "Withdrawal" ;
-  dcterms:description "A single withdrawal entry — taking accumulated rewards out of a reward account back into the spendable UTxO. Carries cardano:withdrawalAccount (a stake credential identifier) + cardano:lovelace (the amount withdrawn)." .
+  dcterms:description "A single withdrawal entry — taking accumulated rewards out of a reward account or naming a treasury withdrawal recipient. Body-level withdrawals carry cardano:withdrawalAccount + cardano:lovelace; TreasuryWithdrawals actions carry cardano:toRewardAccount + cardano:hasLovelace." ;
+  rdfs:comment "A single withdrawal entry — taking accumulated rewards out of a reward account or naming a treasury withdrawal recipient. Body-level withdrawals carry cardano:withdrawalAccount + cardano:lovelace; TreasuryWithdrawals actions carry cardano:toRewardAccount + cardano:hasLovelace." .
 
-# ----- Properties (16) ------------------------------------------------------
+# ----- Properties (22) ------------------------------------------------------
 
 cardano:hasRequiredSigner a rdf:Property ;
   rdfs:label "hasRequiredSigner" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:Identifier ;
-  dcterms:description "Binds a transaction to a payment-key Identifier whose signature the script-validation phase requires. One triple per entry in the body's required-signers Set. Object is an Identifier node (sharing identity with any other position naming the same key) — never a literal." .
+  dcterms:description "Binds a transaction to a payment-key Identifier whose signature the script-validation phase requires. One triple per entry in the body's required-signers Set. Object is an Identifier node (sharing identity with any other position naming the same key) — never a literal." ;
+  rdfs:comment "Binds a transaction to a payment-key Identifier whose signature the script-validation phase requires. One triple per entry in the body's required-signers Set. Object is an Identifier node (sharing identity with any other position naming the same key) — never a literal." .
+
+cardano:hasChild a rdf:Property ;
+  rdfs:label "hasChild" ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( cardano:ScriptAll cardano:ScriptAny cardano:ScriptNofK )
+  ] ;
+  rdfs:range  cardano:NativeScript ;
+  dcterms:description "Binds a composite native-script node to one child native-script node. Child bnodes are derived from the parent bnode and one-based child position." ;
+  rdfs:comment "Binds a composite native-script node to one child native-script node. Child bnodes are derived from the parent bnode and one-based child position." .
+
+cardano:requiresSigner a rdf:Property ;
+  rdfs:label "requiresSigner" ;
+  rdfs:domain cardano:ScriptPubkey ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a ScriptPubkey native-script leaf to the payment-key Identifier whose witness is required." ;
+  rdfs:comment "Binds a ScriptPubkey native-script leaf to the payment-key Identifier whose witness is required." .
+
+cardano:requiredCount a rdf:Property ;
+  rdfs:label "requiredCount" ;
+  rdfs:domain cardano:ScriptNofK ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The threshold count for a ScriptNofK native-script node." ;
+  rdfs:comment "The threshold count for a ScriptNofK native-script node." .
+
+cardano:hasSlot a rdf:Property ;
+  rdfs:label "hasSlot" ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( cardano:InvalidBefore cardano:InvalidHereafter )
+  ] ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The slot number carried by a native-script timelock leaf." ;
+  rdfs:comment "The slot number carried by a native-script timelock leaf." .
 
 cardano:totalCollateral a rdf:Property ;
   rdfs:label "totalCollateral" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The total collateral declared on a Plutus-bearing transaction body, in lovelace. The ledger seizes this amount if the script-validation phase fails. Elided when no Plutus scripts are exercised." .
+  dcterms:description "The total collateral declared on a Plutus-bearing transaction body, in lovelace. The ledger seizes this amount if the script-validation phase fails. Elided when no Plutus scripts are exercised." ;
+  rdfs:comment "The total collateral declared on a Plutus-bearing transaction body, in lovelace. The ledger seizes this amount if the script-validation phase fails. Elided when no Plutus scripts are exercised." .
 
 cardano:hasCollateralReturn a rdf:Property ;
   rdfs:label "hasCollateralReturn" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:Output ;
-  dcterms:description "Binds a transaction to the output where unspent collateral returns when script-validation succeeds (collateral minus totalCollateral)." .
+  dcterms:description "Binds a transaction to the output where unspent collateral returns when script-validation succeeds (collateral minus totalCollateral)." ;
+  rdfs:comment "Binds a transaction to the output where unspent collateral returns when script-validation succeeds (collateral minus totalCollateral)." .
 
 cardano:hasTxId a rdf:Property ;
   rdfs:label "hasTxId" ;
-  rdfs:domain cardano:TxOutRef ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( cardano:TxOutRef cardano:GovActionId )
+  ] ;
   rdfs:range  cardano:Identifier ;
-  dcterms:description "Binds a TxOutRef to its transaction-id Identifier (a 32-byte hash carried via cardano:bytesHex)." .
+  dcterms:description "Binds a TxOutRef or GovActionId to its transaction-id Identifier (a 32-byte hash carried via cardano:bytesHex)." ;
+  rdfs:comment "Binds a TxOutRef or GovActionId to its transaction-id Identifier (a 32-byte hash carried via cardano:bytesHex)." .
 
 cardano:hasIndex a rdf:Property ;
   rdfs:label "hasIndex" ;
-  rdfs:domain cardano:TxOutRef ;
+  rdfs:domain [
+    a owl:Class ;
+    owl:unionOf ( cardano:TxOutRef cardano:GovActionId )
+  ] ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The zero-based output index inside the referenced transaction's outputs list." .
+  dcterms:description "The zero-based output index inside a TxOutRef, or proposal index inside a GovActionId." ;
+  rdfs:comment "The zero-based output index inside a TxOutRef, or proposal index inside a GovActionId." .
 
 cardano:hasAsset a rdf:Property ;
   rdfs:label "hasAsset" ;
-  dcterms:description "Binds a value-bearing subject to a single asset entry — one cardano:Asset node carrying a (policy, asset name) pair plus its quantity. Used in mint clusters and resolved multi-asset values." .
+  dcterms:description "Binds a value-bearing subject to a single asset entry — one cardano:Asset node carrying a (policy, asset name) pair plus its quantity. Used in mint clusters and resolved multi-asset values." ;
+  rdfs:comment "Binds a value-bearing subject to a single asset entry — one cardano:Asset node carrying a (policy, asset name) pair plus its quantity. Used in mint clusters and resolved multi-asset values." .
+
+cardano:hasDeposit a rdf:Property ;
+  rdfs:label "hasDeposit" ;
+  rdfs:domain cardano:Proposal ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The deposit locked by a Conway governance proposal procedure, in lovelace. Emitted on the proposal subject alongside the raw-bytes fallback datum view." ;
+  rdfs:comment "The deposit locked by a Conway governance proposal procedure, in lovelace. Emitted on the proposal subject alongside the raw-bytes fallback datum view." .
+
+cardano:hasReturnAddress a rdf:Property ;
+  rdfs:label "hasReturnAddress" ;
+  rdfs:domain cardano:Proposal ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a governance proposal to the reward-account credential that receives the returned deposit. Object is the same Identifier node scheme used for withdrawal reward accounts." ;
+  rdfs:comment "Binds a governance proposal to the reward-account credential that receives the returned deposit. Object is the same Identifier node scheme used for withdrawal reward accounts." .
+
+cardano:hasGovAction a rdf:Property ;
+  rdfs:label "hasGovAction" ;
+  rdfs:domain cardano:Proposal ;
+  rdfs:range  cardano:GovAction ;
+  dcterms:description "Binds a Proposal to its typed Conway governance-action payload. The raw CBOR fallback remains available through cardano:hasDatum on the same proposal subject." ;
+  rdfs:comment "Binds a Proposal to its typed Conway governance-action payload. The raw CBOR fallback remains available through cardano:hasDatum on the same proposal subject." .
+
+cardano:toRewardAccount a rdf:Property ;
+  rdfs:label "toRewardAccount" ;
+  rdfs:domain cardano:Withdrawal ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Binds a treasury-withdrawal recipient entry to the reward-account stake credential receiving lovelace." ;
+  rdfs:comment "Binds a treasury-withdrawal recipient entry to the reward-account stake credential receiving lovelace." .
+
+cardano:hasLovelace a rdf:Property ;
+  rdfs:label "hasLovelace" ;
+  rdfs:domain cardano:Withdrawal ;
+  rdfs:range  xsd:integer ;
+  dcterms:description "The lovelace amount carried by a treasury-withdrawal recipient entry." ;
+  rdfs:comment "The lovelace amount carried by a treasury-withdrawal recipient entry." .
+
+cardano:hasGuardPolicy a rdf:Property ;
+  rdfs:label "hasGuardPolicy" ;
+  rdfs:domain cardano:TreasuryWithdrawals ;
+  rdfs:range  cardano:Identifier ;
+  dcterms:description "Optional policy script hash that guards a TreasuryWithdrawals governance action." ;
+  rdfs:comment "Optional policy script hash that guards a TreasuryWithdrawals governance action." .
+
+cardano:hasPriorAction a rdf:Property ;
+  rdfs:label "hasPriorAction" ;
+  rdfs:range  cardano:GovActionId ;
+  dcterms:description "Binds a governance action to the prior action it follows, when the ledger constructor carries one." ;
+  rdfs:comment "Binds a governance action to the prior action it follows, when the ledger constructor carries one." .
+
+cardano:hasProtocolParamUpdate a rdf:Property ;
+  rdfs:label "hasProtocolParamUpdate" ;
+  rdfs:domain cardano:ParameterChange ;
+  rdfs:range  cardano:ProtocolParamUpdate ;
+  dcterms:description "Binds a ParameterChange governance action to its protocol-parameter update payload." ;
+  rdfs:comment "Binds a ParameterChange governance action to its protocol-parameter update payload." .
+
+cardano:hasMinFeeA a rdf:Property ; rdfs:label "hasMinFeeA" ;
+  rdfs:comment "Per-byte component of the Conway transaction fee (`a` in `fee = a * size + b`)." .
+
+cardano:hasMinFeeB a rdf:Property ; rdfs:label "hasMinFeeB" ;
+  rdfs:comment "Constant component of the Conway transaction fee (`b` in `fee = a * size + b`)." .
+
+cardano:hasMaxBlockBodySize a rdf:Property ; rdfs:label "hasMaxBlockBodySize" ;
+  rdfs:comment "Protocol-parameter bound on the maximum block body size in bytes." .
+
+cardano:hasMaxTxSize a rdf:Property ; rdfs:label "hasMaxTxSize" ;
+  rdfs:comment "Protocol-parameter bound on the maximum transaction size in bytes." .
+
+cardano:hasMaxBlockHeaderSize a rdf:Property ; rdfs:label "hasMaxBlockHeaderSize" ;
+  rdfs:comment "Protocol-parameter bound on the maximum block header size in bytes." .
+
+cardano:hasKeyDeposit a rdf:Property ; rdfs:label "hasKeyDeposit" ;
+  rdfs:comment "Lovelace deposit a stake credential must lock at registration time." .
+
+cardano:hasPoolDeposit a rdf:Property ; rdfs:label "hasPoolDeposit" ;
+  rdfs:comment "Lovelace deposit a stake pool must lock at registration time." .
+
+cardano:hasMaxEpoch a rdf:Property ; rdfs:label "hasMaxEpoch" ;
+  rdfs:comment "Maximum number of epochs into the future a pool retirement can be scheduled." .
+
+cardano:hasNOpt a rdf:Property ; rdfs:label "hasNOpt" ;
+  rdfs:comment "Desired number of stake pools targeted by the saturation curve (`k` in stake-pool reward math)." .
+
+cardano:hasPoolPledgeInfluence a rdf:Property ; rdfs:label "hasPoolPledgeInfluence" ;
+  rdfs:comment "Influence factor of pool pledge on rewards (`a0`)." .
+
+cardano:hasExpansionRate a rdf:Property ; rdfs:label "hasExpansionRate" ;
+  rdfs:comment "Per-epoch monetary expansion rate (`rho`)." .
+
+cardano:hasTreasuryGrowthRate a rdf:Property ; rdfs:label "hasTreasuryGrowthRate" ;
+  rdfs:comment "Per-epoch fraction of expansion sent to the treasury (`tau`)." .
+
+cardano:hasMinPoolCost a rdf:Property ; rdfs:label "hasMinPoolCost" ;
+  rdfs:comment "Minimum declared fixed cost a pool may set in its parameters." .
+
+cardano:hasAdaPerUtxoByte a rdf:Property ; rdfs:label "hasAdaPerUtxoByte" ;
+  rdfs:comment "Lovelace charged per byte of UTxO storage (Conway-era replacement for `minUTxOValue`)." .
+
+cardano:hasCostModels a rdf:Property ; rdfs:label "hasCostModels" ;
+  rdfs:comment "Plutus cost model table (one entry per supported Plutus language version)." .
+
+cardano:hasExecutionCosts a rdf:Property ; rdfs:label "hasExecutionCosts" ;
+  rdfs:comment "Per-unit prices for Plutus execution budgets (memory + steps)." .
+
+cardano:hasMaxTxExUnits a rdf:Property ; rdfs:label "hasMaxTxExUnits" ;
+  rdfs:comment "Maximum Plutus execution budget allowed for a single transaction." .
+
+cardano:hasMaxBlockExUnits a rdf:Property ; rdfs:label "hasMaxBlockExUnits" ;
+  rdfs:comment "Maximum aggregate Plutus execution budget allowed for a single block." .
+
+cardano:hasMaxValueSize a rdf:Property ; rdfs:label "hasMaxValueSize" ;
+  rdfs:comment "Protocol-parameter bound on the encoded size of a single Value (lovelace + assets)." .
+
+cardano:hasCollateralPercentage a rdf:Property ; rdfs:label "hasCollateralPercentage" ;
+  rdfs:comment "Percentage of script fees that must be covered by collateral inputs." .
+
+cardano:hasMaxCollateralInputs a rdf:Property ; rdfs:label "hasMaxCollateralInputs" ;
+  rdfs:comment "Protocol-parameter bound on the number of collateral inputs per transaction." .
+
+cardano:hasPoolVotingThresholds a rdf:Property ; rdfs:label "hasPoolVotingThresholds" ;
+  rdfs:comment "Per-governance-action thresholds the SPO voting bloc must clear." .
+
+cardano:hasDRepVotingThresholds a rdf:Property ; rdfs:label "hasDRepVotingThresholds" ;
+  rdfs:comment "Per-governance-action thresholds the DRep voting bloc must clear." .
+
+cardano:hasCommitteeMinSize a rdf:Property ; rdfs:label "hasCommitteeMinSize" ;
+  rdfs:comment "Minimum size of the constitutional committee." .
+
+cardano:hasCommitteeMaxTermLength a rdf:Property ; rdfs:label "hasCommitteeMaxTermLength" ;
+  rdfs:comment "Maximum term length, in epochs, a committee member may serve." .
+
+cardano:hasGovActionLifetime a rdf:Property ; rdfs:label "hasGovActionLifetime" ;
+  rdfs:comment "Number of epochs a governance action remains votable before expiring." .
+
+cardano:hasGovActionDeposit a rdf:Property ; rdfs:label "hasGovActionDeposit" ;
+  rdfs:comment "Lovelace deposit required to submit a governance action." .
+
+cardano:hasDRepDeposit a rdf:Property ; rdfs:label "hasDRepDeposit" ;
+  rdfs:comment "Lovelace deposit required to register a DRep." .
+
+cardano:hasDRepActivity a rdf:Property ; rdfs:label "hasDRepActivity" ;
+  rdfs:comment "Number of epochs of inactivity after which a DRep is considered dormant." .
+
+cardano:hasMinFeeRefScriptCoinsPerByte a rdf:Property ; rdfs:label "hasMinFeeRefScriptCoinsPerByte" ;
+  rdfs:comment "Conway extra fee charged per byte of reference-script payload included via reference inputs." .
+
+cardano:hasSteps a rdf:Property ; rdfs:label "hasSteps" ;
+  rdfs:comment "Plutus execution-budget steps component." .
+
+cardano:hasMemory a rdf:Property ; rdfs:label "hasMemory" ;
+  rdfs:comment "Plutus execution-budget memory component." .
+
+cardano:hasPriceMemory a rdf:Property ; rdfs:label "hasPriceMemory" ;
+  rdfs:comment "Per-unit price of Plutus memory inside `hasExecutionCosts`." .
+
+cardano:hasPriceSteps a rdf:Property ; rdfs:label "hasPriceSteps" ;
+  rdfs:comment "Per-unit price of Plutus steps inside `hasExecutionCosts`." .
+
+cardano:hasMotionNoConfidence a rdf:Property ; rdfs:label "hasMotionNoConfidence" ;
+  rdfs:comment "Voting threshold for a motion of no-confidence governance action." .
+
+cardano:hasCommitteeNormal a rdf:Property ; rdfs:label "hasCommitteeNormal" ;
+  rdfs:comment "Voting threshold for a normal committee update governance action." .
+
+cardano:hasCommitteeNoConfidence a rdf:Property ; rdfs:label "hasCommitteeNoConfidence" ;
+  rdfs:comment "Voting threshold for a committee update during no-confidence." .
+
+cardano:hasUpdateToConstitution a rdf:Property ; rdfs:label "hasUpdateToConstitution" ;
+  rdfs:comment "Voting threshold for a constitution update governance action." .
+
+cardano:hasHardForkInitiation a rdf:Property ; rdfs:label "hasHardForkInitiation" ;
+  rdfs:comment "Voting threshold for a hard-fork-initiation governance action." .
+
+cardano:hasPPSecurityGroup a rdf:Property ; rdfs:label "hasPPSecurityGroup" ;
+  rdfs:comment "Voting threshold for protocol-parameter changes in the security parameter group." .
+
+cardano:hasPPNetworkGroup a rdf:Property ; rdfs:label "hasPPNetworkGroup" ;
+  rdfs:comment "Voting threshold for protocol-parameter changes in the network parameter group." .
+
+cardano:hasPPEconomicGroup a rdf:Property ; rdfs:label "hasPPEconomicGroup" ;
+  rdfs:comment "Voting threshold for protocol-parameter changes in the economic parameter group." .
+
+cardano:hasPPTechnicalGroup a rdf:Property ; rdfs:label "hasPPTechnicalGroup" ;
+  rdfs:comment "Voting threshold for protocol-parameter changes in the technical parameter group." .
+
+cardano:hasPPGovGroup a rdf:Property ; rdfs:label "hasPPGovGroup" ;
+  rdfs:comment "Voting threshold for protocol-parameter changes in the governance parameter group." .
+
+cardano:hasTreasuryWithdrawal a rdf:Property ; rdfs:label "hasTreasuryWithdrawal" ;
+  rdfs:comment "Reward-account withdrawal entry inside a treasury-withdrawals governance action." .
+
+cardano:hasNewQuorum a rdf:Property ; rdfs:label "hasNewQuorum" ;
+  rdfs:comment "New committee quorum threshold proposed by a committee-update governance action." .
+
+cardano:removesMember a rdf:Property ; rdfs:label "removesMember" ;
+  rdfs:comment "Committee member removed by an update-committee governance action." .
+
+cardano:addsMember a rdf:Property ; rdfs:label "addsMember" ;
+  rdfs:comment "Committee member added by an update-committee governance action." .
+
+cardano:termLimit a rdf:Property ; rdfs:label "termLimit" ;
+  rdfs:comment "Epoch at which a committee member's term expires." .
+
+cardano:hasConstitution a rdf:Property ; rdfs:label "hasConstitution" ;
+  rdfs:comment "Anchor of the constitution document referenced by a new-constitution governance action." .
+
+cardano:hasGuardrailScript a rdf:Property ; rdfs:label "hasGuardrailScript" ;
+  rdfs:comment "Optional guardrail script hash bound to the constitution." .
+
+cardano:hasProtocolVersion a rdf:Property ; rdfs:label "hasProtocolVersion" ;
+  rdfs:comment "Conway protocol-version record (major + minor) bound to a hard-fork-initiation action." .
+
+cardano:hasMajorVersion a rdf:Property ; rdfs:label "hasMajorVersion" ;
+  rdfs:comment "Major protocol-version number." .
+
+cardano:hasMinorVersion a rdf:Property ; rdfs:label "hasMinorVersion" ;
+  rdfs:comment "Minor protocol-version number." .
 
 cardano:hasVote a rdf:Property ;
   rdfs:label "hasVote" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:Vote ;
-  dcterms:description "Binds a transaction to a single Vote it casts in its votingProcedures block. One triple per (voter, governance-action) entry." .
+  dcterms:description "Binds a transaction to a single Vote it casts in its votingProcedures block. One triple per (voter, governance-action) entry." ;
+  rdfs:comment "Binds a transaction to a single Vote it casts in its votingProcedures block. One triple per (voter, governance-action) entry." .
 
 cardano:hasVoter a rdf:Property ;
   rdfs:label "hasVoter" ;
   rdfs:domain cardano:Vote ;
-  dcterms:description "Binds a Vote to the voter identity casting it. Object is a subclass of cardano:Voter — VoterDRep / VoterStakePool / VoterCommitteeCold." .
+  dcterms:description "Binds a Vote to the voter identity casting it. Object is a subclass of cardano:Voter — VoterDRep / VoterStakePool / VoterCommitteeCold." ;
+  rdfs:comment "Binds a Vote to the voter identity casting it. Object is a subclass of cardano:Voter — VoterDRep / VoterStakePool / VoterCommitteeCold." .
 
 cardano:hasVotingAction a rdf:Property ;
   rdfs:label "hasVotingAction" ;
   rdfs:domain cardano:Vote ;
-  rdfs:range  cardano:Identifier ;
-  dcterms:description "Binds a Vote to the governance-action identifier it votes on (a TxOutRef-shaped pair on chain; surfaced as an Identifier node here)." .
+  rdfs:range  cardano:GovActionId ;
+  dcterms:description "Binds a Vote to the governance-action identifier it votes on: a typed (txid, index) tuple using cardano:hasTxId and cardano:hasIndex." ;
+  rdfs:comment "Binds a Vote to the governance-action identifier it votes on: a typed (txid, index) tuple using cardano:hasTxId and cardano:hasIndex." .
 
 cardano:hasVerdict a rdf:Property ;
   rdfs:label "hasVerdict" ;
   rdfs:domain cardano:Vote ;
   rdfs:range  xsd:string ;
-  dcterms:description "The verdict carried by a vote: \"Yes\", \"No\", or \"Abstain\"." .
+  dcterms:description "The verdict carried by a vote: \"Yes\", \"No\", or \"Abstain\"." ;
+  rdfs:comment "The verdict carried by a vote: \"Yes\", \"No\", or \"Abstain\"." .
 
 cardano:hasAnchor a rdf:Property ;
   rdfs:label "hasAnchor" ;
-  dcterms:description "Binds a governance-bearing subject (Vote, Proposal, certain certificates) to its anchor — an off-chain pointer to justifying metadata. Anchor decomposes into cardano:anchorUrl + cardano:anchorHash." .
+  dcterms:description "Binds a governance-bearing subject (Vote, Proposal, certain certificates) to its anchor — an off-chain pointer to justifying metadata. Anchor decomposes into cardano:anchorUrl + cardano:anchorHash." ;
+  rdfs:comment "Binds a governance-bearing subject (Vote, Proposal, certain certificates) to its anchor — an off-chain pointer to justifying metadata. Anchor decomposes into cardano:anchorUrl + cardano:anchorHash." .
 
 cardano:anchorUrl a rdf:Property ;
   rdfs:label "anchorUrl" ;
   rdfs:range  xsd:anyURI ;
-  dcterms:description "The HTTP(S) URL of an off-chain anchor document (metadata, justification, manifesto, …)." .
+  dcterms:description "The HTTP(S) URL of an off-chain anchor document (metadata, justification, manifesto, …)." ;
+  rdfs:comment "The HTTP(S) URL of an off-chain anchor document (metadata, justification, manifesto, …)." .
 
 cardano:anchorHash a rdf:Property ;
   rdfs:label "anchorHash" ;
   rdfs:range  cardano:Identifier ;
-  dcterms:description "The hash of the anchor document content, as an Identifier node so it can be cross-referenced with on-chain hashes elsewhere." .
+  dcterms:description "The hash of the anchor document content, as an Identifier node so it can be cross-referenced with on-chain hashes elsewhere." ;
+  rdfs:comment "The hash of the anchor document content, as an Identifier node so it can be cross-referenced with on-chain hashes elsewhere." .
 
 cardano:onCredential a rdf:Property ;
   rdfs:label "onCredential" ;
   rdfs:range  cardano:Identifier ;
-  dcterms:description "Binds a credential-scoped subject (a certificate, an item in a withdrawal block) to the stake credential it acts on." .
+  dcterms:description "Binds a credential-scoped subject (a certificate, an item in a withdrawal block) to the stake credential it acts on." ;
+  rdfs:comment "Binds a credential-scoped subject (a certificate, an item in a withdrawal block) to the stake credential it acts on." .
 
 cardano:toPool a rdf:Property ;
   rdfs:label "toPool" ;
   rdfs:domain cardano:StakeDelegation ;
   rdfs:range  cardano:Identifier ;
-  dcterms:description "Binds a stake-delegation certificate to its target stake-pool Identifier (the pool's cold key hash)." .
+  dcterms:description "Binds a stake-delegation certificate to its target stake-pool Identifier (the pool's cold key hash)." ;
+  rdfs:comment "Binds a stake-delegation certificate to its target stake-pool Identifier (the pool's cold key hash)." .
 
 cardano:toDRep a rdf:Property ;
   rdfs:label "toDRep" ;
   rdfs:domain cardano:VoteDelegation ;
-  dcterms:description "Binds a vote-delegation certificate to its target — either a concrete DRep Identifier (key or script), or one of the pre-defined targets: always-abstain, always-no-confidence." .
+  dcterms:description "Binds a vote-delegation certificate to its target — either a concrete DRep Identifier (key or script), or one of the pre-defined targets: always-abstain, always-no-confidence." ;
+  rdfs:comment "Binds a vote-delegation certificate to its target — either a concrete DRep Identifier (key or script), or one of the pre-defined targets: always-abstain, always-no-confidence." .
 
 # ==============================================================================
 # Phase A.3 — witness-set seaboard coverage
@@ -578,15 +1092,18 @@ cardano:toDRep a rdf:Property ;
 
 cardano:KeyWitness a rdfs:Class ;
   rdfs:label "KeyWitness" ;
-  dcterms:description "An Ed25519 signature witness — one entry in the witness set carrying a verification key and a signature over the tx body. The verification key is shared (by Identifier bnode) with any body-level cardano:hasRequiredSigner referencing the same key hash, enabling 1-hop SPARQL joins from signature to required-signer." .
+  dcterms:description "An Ed25519 signature witness — one entry in the witness set carrying a verification key and a signature over the tx body. The verification key is shared (by Identifier bnode) with any body-level cardano:hasRequiredSigner referencing the same key hash, enabling 1-hop SPARQL joins from signature to required-signer." ;
+  rdfs:comment "An Ed25519 signature witness — one entry in the witness set carrying a verification key and a signature over the tx body. The verification key is shared (by Identifier bnode) with any body-level cardano:hasRequiredSigner referencing the same key hash, enabling 1-hop SPARQL joins from signature to required-signer." .
 
 cardano:BootstrapWitness a rdfs:Class ;
   rdfs:label "BootstrapWitness" ;
-  dcterms:description "A Byron-era bootstrap witness — typically empty on Conway-era transactions. Present only for legacy spending paths that still hold Byron addresses; carries the verification key, signature, chain code, and address attributes as opaque CBOR." .
+  dcterms:description "A Byron-era bootstrap witness — typically empty on Conway-era transactions. Present only for legacy spending paths that still hold Byron addresses; carries the verification key, signature, chain code, and address attributes as opaque CBOR." ;
+  rdfs:comment "A Byron-era bootstrap witness — typically empty on Conway-era transactions. Present only for legacy spending paths that still hold Byron addresses; carries the verification key, signature, chain code, and address attributes as opaque CBOR." .
 
 cardano:ExUnits a rdfs:Class ;
   rdfs:label "ExUnits" ;
-  dcterms:description "The execution-budget pair for a Plutus script invocation: memory units (memoryUnits) + cpu units (cpuUnits). Attached to a Redeemer when the validator runs." .
+  dcterms:description "The execution-budget pair for a Plutus script invocation: memory units (memoryUnits) + cpu units (cpuUnits). Attached to a Redeemer when the validator runs." ;
+  rdfs:comment "The execution-budget pair for a Plutus script invocation: memory units (memoryUnits) + cpu units (cpuUnits). Attached to a Redeemer when the validator runs." .
 
 # ----- Properties (12) ------------------------------------------------------
 
@@ -594,69 +1111,304 @@ cardano:hasRedeemer a rdf:Property ;
   rdfs:label "hasRedeemer" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:Redeemer ;
-  dcterms:description "Binds a transaction to a Redeemer in its witness set. One triple per redeemer entry — the redeemer's hasPurpose + hasIndex select which body item the redeemer drives (a spending input, a mint policy, a cert, a withdrawal, a vote, or a proposal)." .
+  dcterms:description "Binds a transaction to a Redeemer in its witness set. One triple per redeemer entry — the redeemer's hasPurpose + hasIndex select which body item the redeemer drives (a spending input, a mint policy, a cert, a withdrawal, a vote, or a proposal)." ;
+  rdfs:comment "Binds a transaction to a Redeemer in its witness set. One triple per redeemer entry — the redeemer's hasPurpose + hasIndex select which body item the redeemer drives (a spending input, a mint policy, a cert, a withdrawal, a vote, or a proposal)." .
 
 cardano:hasKeyWitness a rdf:Property ;
   rdfs:label "hasKeyWitness" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:KeyWitness ;
-  dcterms:description "Binds a transaction to an Ed25519 KeyWitness in its witness set. One triple per key signing the tx body." .
+  dcterms:description "Binds a transaction to an Ed25519 KeyWitness in its witness set. One triple per key signing the tx body." ;
+  rdfs:comment "Binds a transaction to an Ed25519 KeyWitness in its witness set. One triple per key signing the tx body." .
 
 cardano:hasDatumWitness a rdf:Property ;
   rdfs:label "hasDatumWitness" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:Datum ;
-  dcterms:description "Binds a transaction to a Datum supplied at witness-time (used when an input's output carries datumHash-only and the datum body must be provided in the witness set to validate). The Datum bnode shares identity with any body-level inline datum or hash-only reference carrying the same hash, via cardano:hasHash on the Identifier — enabling 1-hop SPARQL joins between witness datums and body output datums." .
+  dcterms:description "Binds a transaction to a Datum supplied at witness-time (used when an input's output carries datumHash-only and the datum body must be provided in the witness set to validate). The Datum bnode shares identity with any body-level inline datum or hash-only reference carrying the same hash, via cardano:hasHash on the Identifier — enabling 1-hop SPARQL joins between witness datums and body output datums." ;
+  rdfs:comment "Binds a transaction to a Datum supplied at witness-time (used when an input's output carries datumHash-only and the datum body must be provided in the witness set to validate). The Datum bnode shares identity with any body-level inline datum or hash-only reference carrying the same hash, via cardano:hasHash on the Identifier — enabling 1-hop SPARQL joins between witness datums and body output datums." .
 
 cardano:hasScriptWitness a rdf:Property ;
   rdfs:label "hasScriptWitness" ;
   rdfs:domain cardano:Transaction ;
-  dcterms:description "Binds a transaction to a Script (Plutus or Native) supplied at witness-time. Same bnode-identity sharing as datum witnesses: the script's hash Identifier matches any body-level hasReferenceScript on the same hash, supporting cross-witness/output SPARQL joins." .
+  dcterms:description "Binds a transaction to a Script (Plutus or Native) supplied at witness-time. Same bnode-identity sharing as datum witnesses: the script's hash Identifier matches any body-level hasReferenceScript on the same hash, supporting cross-witness/output SPARQL joins." ;
+  rdfs:comment "Binds a transaction to a Script (Plutus or Native) supplied at witness-time. Same bnode-identity sharing as datum witnesses: the script's hash Identifier matches any body-level hasReferenceScript on the same hash, supporting cross-witness/output SPARQL joins." .
 
 cardano:hasBootstrapWitness a rdf:Property ;
   rdfs:label "hasBootstrapWitness" ;
   rdfs:domain cardano:Transaction ;
   rdfs:range  cardano:BootstrapWitness ;
-  dcterms:description "Binds a transaction to a Byron-era BootstrapWitness. Typically absent on Conway; present only when spending legacy Byron-shaped UTxOs." .
+  dcterms:description "Binds a transaction to a Byron-era BootstrapWitness. Typically absent on Conway; present only when spending legacy Byron-shaped UTxOs." ;
+  rdfs:comment "Binds a transaction to a Byron-era BootstrapWitness. Typically absent on Conway; present only when spending legacy Byron-shaped UTxOs." .
 
 cardano:hasPurpose a rdf:Property ;
   rdfs:label "hasPurpose" ;
   rdfs:domain cardano:Redeemer ;
   rdfs:range  xsd:string ;
-  dcterms:description "The script purpose driving a Redeemer: one of \"Spend\" (validates a script-locked input), \"Mint\" (runs a minting policy), \"Cert\" (validates a stake credential cert), \"Withdraw\" (validates a reward-account withdrawal), \"Vote\" (Conway), or \"Propose\" (Conway). The hasIndex picks the entry within the corresponding body list." .
+  dcterms:description "The script purpose driving a Redeemer: one of \"Spend\" (validates a script-locked input), \"Mint\" (runs a minting policy), \"Cert\" (validates a stake credential cert), \"Withdraw\" (validates a reward-account withdrawal), \"Vote\" (Conway), or \"Propose\" (Conway). The hasIndex picks the entry within the corresponding body list." ;
+  rdfs:comment "The script purpose driving a Redeemer: one of \"Spend\" (validates a script-locked input), \"Mint\" (runs a minting policy), \"Cert\" (validates a stake credential cert), \"Withdraw\" (validates a reward-account withdrawal), \"Vote\" (Conway), or \"Propose\" (Conway). The hasIndex picks the entry within the corresponding body list." .
 
 cardano:hasData a rdf:Property ;
   rdfs:label "hasData" ;
   rdfs:domain cardano:Redeemer ;
   rdfs:range  cardano:Datum ;
-  dcterms:description "Binds a Redeemer to its PlutusData argument (the value the operator passed to the script). Surfaced as a Datum subject carrying hasHash + hasRawBytes (opaque CBOR) until CIP-57 blueprint typed decoding (cardano-tx-tools#50)." .
+  dcterms:description "Binds a Redeemer to its PlutusData argument (the value the operator passed to the script). Surfaced as a Datum subject carrying hasHash + hasRawBytes (opaque CBOR) until CIP-57 blueprint typed decoding (cardano-tx-tools#50)." ;
+  rdfs:comment "Binds a Redeemer to its PlutusData argument (the value the operator passed to the script). Surfaced as a Datum subject carrying hasHash + hasRawBytes (opaque CBOR) until CIP-57 blueprint typed decoding (cardano-tx-tools#50)." .
 
 cardano:hasExUnits a rdf:Property ;
   rdfs:label "hasExUnits" ;
   rdfs:domain cardano:Redeemer ;
   rdfs:range  cardano:ExUnits ;
-  dcterms:description "Binds a Redeemer to its execution-budget pair." .
+  dcterms:description "Binds a Redeemer to its execution-budget pair." ;
+  rdfs:comment "Binds a Redeemer to its execution-budget pair." .
 
 cardano:memoryUnits a rdf:Property ;
   rdfs:label "memoryUnits" ;
   rdfs:domain cardano:ExUnits ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The memory-execution-unit count declared on the redeemer's execution budget." .
+  dcterms:description "The memory-execution-unit count declared on the redeemer's execution budget." ;
+  rdfs:comment "The memory-execution-unit count declared on the redeemer's execution budget." .
 
 cardano:cpuUnits a rdf:Property ;
   rdfs:label "cpuUnits" ;
   rdfs:domain cardano:ExUnits ;
   rdfs:range  xsd:integer ;
-  dcterms:description "The CPU-execution-unit count (steps) declared on the redeemer's execution budget." .
+  dcterms:description "The CPU-execution-unit count (steps) declared on the redeemer's execution budget." ;
+  rdfs:comment "The CPU-execution-unit count (steps) declared on the redeemer's execution budget." .
 
 cardano:hasSignature a rdf:Property ;
   rdfs:label "hasSignature" ;
   rdfs:domain cardano:KeyWitness ;
   rdfs:range  xsd:hexBinary ;
-  dcterms:description "The 64-byte Ed25519 signature, hex-encoded, that this KeyWitness carries over the transaction body's hash." .
+  dcterms:description "The 64-byte Ed25519 signature, hex-encoded, that this KeyWitness carries over the transaction body's hash." ;
+  rdfs:comment "The 64-byte Ed25519 signature, hex-encoded, that this KeyWitness carries over the transaction body's hash." .
 
 cardano:hasVerificationKey a rdf:Property ;
   rdfs:label "hasVerificationKey" ;
   rdfs:domain cardano:KeyWitness ;
   rdfs:range  cardano:Identifier ;
-  dcterms:description "Binds a KeyWitness to its Ed25519 verification-key Identifier. The Identifier's bytesHex is the 28-byte BLAKE2b-224 key hash, sharing bnode identity with any body-level cardano:hasRequiredSigner referencing the same key — so SPARQL views can join witness signatures to required signers without literal comparison." .
+  dcterms:description "Binds a KeyWitness to its Ed25519 verification-key Identifier. The Identifier's bytesHex is the 28-byte BLAKE2b-224 key hash, sharing bnode identity with any body-level cardano:hasRequiredSigner referencing the same key — so SPARQL views can join witness signatures to required signers without literal comparison." ;
+  rdfs:comment "Binds a KeyWitness to its Ed25519 verification-key Identifier. The Identifier's bytesHex is the 28-byte BLAKE2b-224 key hash, sharing bnode identity with any body-level cardano:hasRequiredSigner referencing the same key — so SPARQL views can join witness signatures to required signers without literal comparison." .
+
+# ==============================================================================
+# Phase A.4 — typed Conway certificate coverage
+# ==============================================================================
+
+cardano:AuthCommitteeHotKey a rdfs:Class ; rdfs:label "AuthCommitteeHotKey" ;
+  rdfs:comment "Conway certificate authorising a hot key for an existing constitutional committee member." .
+
+cardano:DRepAlwaysAbstain a rdfs:Class ; rdfs:label "DRepAlwaysAbstain" ;
+  rdfs:comment "Predefined DRep target that always votes abstain on every governance action." .
+
+cardano:DRepAlwaysNoConfidence a rdfs:Class ; rdfs:label "DRepAlwaysNoConfidence" ;
+  rdfs:comment "Predefined DRep target that always votes no-confidence on every governance action." .
+
+cardano:MultiHostName a rdfs:Class ; rdfs:label "MultiHostName" ;
+  rdfs:comment "Stake-pool relay variant naming a multi-host DNS record (round-robin / failover entry)." .
+
+cardano:PoolMetadata a rdfs:Class ; rdfs:label "PoolMetadata" ;
+  rdfs:comment "Off-chain pool metadata anchor: URL plus a hash of the canonical metadata JSON." .
+
+cardano:PoolParams a rdfs:Class ; rdfs:label "PoolParams" ;
+  rdfs:comment "The full Conway-era stake-pool parameter record: operator key, VRF key, pledge, costs, margin, reward account, owners, relays, optional metadata anchor." .
+
+cardano:PoolRegistration a rdfs:Class ; rdfs:label "PoolRegistration" ;
+  rdfs:comment "Stake-pool registration certificate that binds a new pool's parameters to the chain." .
+
+cardano:PoolRetirement a rdfs:Class ; rdfs:label "PoolRetirement" ;
+  rdfs:comment "Stake-pool retirement certificate declaring the epoch at which the pool will deregister." .
+
+cardano:RegDRep a rdfs:Class ; rdfs:label "RegDRep" ;
+  rdfs:comment "Conway certificate registering a DRep with a deposit and an optional metadata anchor." .
+
+cardano:RegDeposit a rdfs:Class ; rdfs:label "RegDeposit" ;
+  rdfs:comment "Conway certificate registering a stake credential and locking the registration deposit." .
+
+cardano:Relay a rdfs:Class ; rdfs:label "Relay" ;
+  rdfs:comment "Stake-pool relay entry: either a single host (IP or DNS) or a multi-host DNS record." .
+
+cardano:ResignCommitteeColdKey a rdfs:Class ; rdfs:label "ResignCommitteeColdKey" ;
+  rdfs:comment "Conway certificate resigning a constitutional committee member's cold key." .
+
+cardano:SingleHostAddr a rdfs:Class ; rdfs:label "SingleHostAddr" ;
+  rdfs:comment "Stake-pool relay variant naming a single host by IPv4 / IPv6 address and optional port." .
+
+cardano:SingleHostName a rdfs:Class ; rdfs:label "SingleHostName" ;
+  rdfs:comment "Stake-pool relay variant naming a single host by DNS name and optional port." .
+
+cardano:StakeRegDeleg a rdfs:Class ; rdfs:label "StakeRegDeleg" ;
+  rdfs:comment "Conway combined certificate that registers a stake credential and delegates it to a pool in one step." .
+
+cardano:StakeVoteRegDeleg a rdfs:Class ; rdfs:label "StakeVoteRegDeleg" ;
+  rdfs:comment "Conway combined certificate that registers a stake credential, delegates it to a pool, and binds it to a DRep in one step." .
+
+cardano:UnRegDRep a rdfs:Class ; rdfs:label "UnRegDRep" ;
+  rdfs:comment "Conway certificate deregistering a DRep and returning its deposit." .
+
+cardano:UnRegDeposit a rdfs:Class ; rdfs:label "UnRegDeposit" ;
+  rdfs:comment "Conway certificate deregistering a stake credential and returning its registration deposit." .
+
+cardano:UpdateDRep a rdfs:Class ; rdfs:label "UpdateDRep" ;
+  rdfs:comment "Conway certificate updating a registered DRep's metadata anchor without changing its deposit." .
+
+cardano:VoteRegDeleg a rdfs:Class ; rdfs:label "VoteRegDeleg" ;
+  rdfs:comment "Conway combined certificate that registers a stake credential and binds it to a DRep in one step." .
+
+cardano:delegatesToDRep a rdf:Property ; rdfs:label "delegatesToDRep" ;
+  rdfs:comment "Delegation edge: a stake credential's voting power is bound to the named DRep." .
+
+cardano:delegatesToPool a rdf:Property ; rdfs:label "delegatesToPool" ;
+  rdfs:comment "Delegation edge: a stake credential's block-production stake is bound to the named stake pool." .
+
+cardano:hasCommitteeColdCredential a rdf:Property ; rdfs:label "hasCommitteeColdCredential" ;
+  rdfs:comment "Cold credential of a constitutional committee member." .
+
+cardano:hasCommitteeHotCredential a rdf:Property ; rdfs:label "hasCommitteeHotCredential" ;
+  rdfs:comment "Hot credential of a constitutional committee member, authorised by an `AuthCommitteeHotKey` certificate." .
+
+cardano:hasCost a rdf:Property ; rdfs:label "hasCost" ;
+  rdfs:comment "Pool-parameter declared fixed cost the pool charges per epoch before margin." .
+
+cardano:hasDRepCredential a rdf:Property ; rdfs:label "hasDRepCredential" ;
+  rdfs:comment "Credential identifying a registered DRep." .
+
+cardano:hasDnsName a rdf:Property ; rdfs:label "hasDnsName" ;
+  rdfs:comment "DNS-name field of a pool relay entry." .
+
+cardano:hasIPv4 a rdf:Property ; rdfs:label "hasIPv4" ;
+  rdfs:comment "IPv4 address field of a pool relay entry." .
+
+cardano:hasIPv6 a rdf:Property ; rdfs:label "hasIPv6" ;
+  rdfs:comment "IPv6 address field of a pool relay entry." .
+
+cardano:hasMargin a rdf:Property ; rdfs:label "hasMargin" ;
+  rdfs:comment "Pool-parameter operator margin: the fraction of rewards retained by the pool operator." .
+
+cardano:hasOperator a rdf:Property ; rdfs:label "hasOperator" ;
+  rdfs:comment "Pool key hash of the pool operator's cold key." .
+
+cardano:hasOwner a rdf:Property ; rdfs:label "hasOwner" ;
+  rdfs:comment "Stake-key hash of one of a pool's registered owners." .
+
+cardano:hasPledge a rdf:Property ; rdfs:label "hasPledge" ;
+  rdfs:comment "Pool-parameter declared pledge (lovelace the operator commits to the pool)." .
+
+cardano:hasPoolMetadata a rdf:Property ; rdfs:label "hasPoolMetadata" ;
+  rdfs:comment "Off-chain metadata anchor of a stake pool (URL + hash)." .
+
+cardano:hasPoolOperator a rdf:Property ; rdfs:label "hasPoolOperator" ;
+  rdfs:comment "Pool key hash identifying the pool an operation targets." .
+
+cardano:hasPoolParams a rdf:Property ; rdfs:label "hasPoolParams" ;
+  rdfs:comment "Reference to the pool-parameter record bundled with a `PoolRegistration` certificate." .
+
+cardano:hasPort a rdf:Property ; rdfs:label "hasPort" ;
+  rdfs:comment "Optional TCP port of a single-host pool relay entry." .
+
+cardano:hasRelay a rdf:Property ; rdfs:label "hasRelay" ;
+  rdfs:comment "Pool-parameter relay entry (single-host, multi-host, or DNS)." .
+
+cardano:hasRewardAccount a rdf:Property ; rdfs:label "hasRewardAccount" ;
+  rdfs:comment "Reward account into which a stake pool's epochly rewards are paid." .
+
+cardano:hasUrl a rdf:Property ; rdfs:label "hasUrl" ;
+  rdfs:comment "URL of an off-chain anchor (metadata, anchor doc)." .
+
+cardano:hasVrfKeyhash a rdf:Property ; rdfs:label "hasVrfKeyhash" ;
+  rdfs:comment "Pool-parameter VRF key hash used for block production." .
+
+cardano:retireAtEpoch a rdf:Property ; rdfs:label "retireAtEpoch" ;
+  rdfs:comment "Epoch at which a stake-pool retirement certificate scheduled the pool to retire." .
+
+# ==============================================================================
+# Transaction-metadata decoding (spec 062)
+# ==============================================================================
+# Generic, faithful decode of the Conway auxiliary-data metadata map
+# (`Map Word64 Metadatum`). One MetadatumEntry per top-level label; each
+# value is a typed node of one of the five Cardano metadatum kinds. Lists
+# keep their arity (chunked text is NOT joined — that is the downstream
+# typed-metadata pass); map keys are full value nodes, not assumed strings.
+# No label-specific or treasury interpretation lives here.
+
+cardano:MetadatumValue a rdfs:Class ;
+  rdfs:label "MetadatumValue" ;
+  dcterms:description "Abstract decoded transaction-metadatum value; every concrete node is also typed with exactly one kind subclass (MetaInt, MetaBytes, MetaText, MetaList, MetaMap)." ;
+  rdfs:comment "Abstract decoded transaction-metadatum value; every concrete node is also typed with exactly one kind subclass (MetaInt, MetaBytes, MetaText, MetaList, MetaMap)." .
+
+cardano:MetaInt a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaInt" ;
+  dcterms:description "Integer metadatum leaf; carries cardano:intValue (xsd:integer)." ;
+  rdfs:comment "Integer metadatum leaf; carries cardano:intValue (xsd:integer)." .
+
+cardano:MetaBytes a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaBytes" ;
+  dcterms:description "Byte-string metadatum leaf; carries cardano:bytesHex (lowercase hex). Distinguishable from MetaText so a hex byte value is never confused with UTF-8 text." ;
+  rdfs:comment "Byte-string metadatum leaf; carries cardano:bytesHex (lowercase hex). Distinguishable from MetaText so a hex byte value is never confused with UTF-8 text." .
+
+cardano:MetaText a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaText" ;
+  dcterms:description "Text-string metadatum leaf; carries cardano:textValue (xsd:string)." ;
+  rdfs:comment "Text-string metadatum leaf; carries cardano:textValue (xsd:string)." .
+
+cardano:MetaList a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaList" ;
+  dcterms:description "List metadatum; carries ordered cardano:hasElement edges to MetadatumElement wrappers. Element order and arity are preserved exactly — no joining." ;
+  rdfs:comment "List metadatum; carries ordered cardano:hasElement edges to MetadatumElement wrappers. Element order and arity are preserved exactly — no joining." .
+
+cardano:MetaMap a rdfs:Class ;
+  rdfs:subClassOf cardano:MetadatumValue ;
+  rdfs:label "MetaMap" ;
+  dcterms:description "Map metadatum; carries cardano:hasEntry edges to MetadatumMapEntry wrappers. Every key->value pair is preserved; keys are full value nodes." ;
+  rdfs:comment "Map metadatum; carries cardano:hasEntry edges to MetadatumMapEntry wrappers. Every key->value pair is preserved; keys are full value nodes." .
+
+cardano:MetadatumEntry a rdfs:Class ;
+  rdfs:label "MetadatumEntry" ;
+  dcterms:description "A top-level label->value association on an AuxiliaryData node, reached by cardano:hasMetadatum; carries the integer cardano:metadataLabel and a cardano:metadatumValue." ;
+  rdfs:comment "A top-level label->value association on an AuxiliaryData node, reached by cardano:hasMetadatum; carries the integer cardano:metadataLabel and a cardano:metadatumValue." .
+
+cardano:MetadatumElement a rdfs:Class ;
+  rdfs:label "MetadatumElement" ;
+  dcterms:description "Positional wrapper for one element of a MetaList; carries the 0-based cardano:elementIndex and a cardano:metadatumValue." ;
+  rdfs:comment "Positional wrapper for one element of a MetaList; carries the 0-based cardano:elementIndex and a cardano:metadatumValue." .
+
+cardano:MetadatumMapEntry a rdfs:Class ;
+  rdfs:label "MetadatumMapEntry" ;
+  dcterms:description "One key->value pair of a MetaMap; carries the 0-based cardano:entryIndex, a cardano:metaKey, and a cardano:metaValue." ;
+  rdfs:comment "One key->value pair of a MetaMap; carries the 0-based cardano:entryIndex, a cardano:metaKey, and a cardano:metaValue." .
+
+cardano:hasMetadatum a rdf:Property ; rdfs:label "hasMetadatum" ;
+  rdfs:comment "Relates an AuxiliaryData node to one MetadatumEntry per top-level metadata label." .
+
+cardano:metadataLabel a rdf:Property ; rdfs:label "metadataLabel" ;
+  rdfs:comment "The integer (Word64) label of a MetadatumEntry (xsd:integer)." .
+
+cardano:metadatumValue a rdf:Property ; rdfs:label "metadatumValue" ;
+  rdfs:comment "Links a MetadatumEntry or MetadatumElement to its decoded MetadatumValue." .
+
+cardano:intValue a rdf:Property ; rdfs:label "intValue" ;
+  rdfs:comment "Integer payload of a MetaInt leaf (xsd:integer)." .
+
+cardano:textValue a rdf:Property ; rdfs:label "textValue" ;
+  rdfs:comment "Text payload of a MetaText leaf (xsd:string)." .
+
+cardano:hasElement a rdf:Property ; rdfs:label "hasElement" ;
+  rdfs:comment "Relates a MetaList to one MetadatumElement wrapper per on-chain element, in order." .
+
+cardano:elementIndex a rdf:Property ; rdfs:label "elementIndex" ;
+  rdfs:comment "0-based position of a MetadatumElement within its MetaList (xsd:integer)." .
+
+cardano:hasEntry a rdf:Property ; rdfs:label "hasEntry" ;
+  rdfs:comment "Relates a MetaMap to one MetadatumMapEntry per key->value pair, in order." .
+
+cardano:entryIndex a rdf:Property ; rdfs:label "entryIndex" ;
+  rdfs:comment "0-based position of a MetadatumMapEntry within its MetaMap (xsd:integer)." .
+
+cardano:metaKey a rdf:Property ; rdfs:label "metaKey" ;
+  rdfs:comment "Links a MetadatumMapEntry to its key, itself a MetadatumValue (not assumed to be a string)." .
+
+cardano:metaValue a rdf:Property ; rdfs:label "metaValue" ;
+  rdfs:comment "Links a MetadatumMapEntry to its value MetadatumValue." .

@@ -1,5 +1,5 @@
 @prefix : <https://example.org/smoke/sameas-key#> .
-@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
+@prefix cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#> .
 
 # Two distinct blank-node Identifier instances with matching role-class
 # and matching hex bytes. Under the `cardano:Identifier owl:hasKey
