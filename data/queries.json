@@ -3,7 +3,7 @@
     "id": "governance-view",
     "name": "Cardano Governance",
     "description": "CIP-1694 governance model — actors, voting, actions, ratification, and constitutional framework.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:GovernanceActor }\n  UNION { ?node a cardano:GovernanceActionType }\n  UNION { ?node a cardano:GovernanceProcess }\n  UNION { ?node a cardano:GovernanceMechanism }\n  UNION { ?node a cardano:GovernanceArtifact }\n  UNION { ?node a cardano:GovernanceAction }\n  UNION { ?node a cardano:ParameterGroup }\n  UNION { ?node a cardano:ProtocolParameter }\n  UNION { ?node a cardano:CIP }\n  UNION { ?node a cardano:LedgerEra }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:GovernanceActor }\n  UNION { ?node a cardano:GovernanceActionType }\n  UNION { ?node a cardano:GovernanceProcess }\n  UNION { ?node a cardano:GovernanceMechanism }\n  UNION { ?node a cardano:GovernanceArtifact }\n  UNION { ?node a cardano:GovernanceAction }\n  UNION { ?node a cardano:ParameterGroup }\n  UNION { ?node a cardano:ProtocolParameter }\n  UNION { ?node a cardano:CIP }\n  UNION { ?node a cardano:LedgerEra }\n}",
     "tags": [
       "view"
     ]
@@ -12,7 +12,7 @@
     "id": "smart-contracts-view",
     "name": "Smart Contracts",
     "description": "Plutus platform, on-chain languages, EUTxO model, patterns, protocols, tooling, and standards.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:SmartContractConcept }\n  UNION { ?node a cardano:SmartContractLanguage }\n  UNION { ?node a cardano:SmartContractRuntime }\n  UNION { ?node a cardano:SmartContractPattern }\n  UNION { ?node a cardano:TransactionComponent }\n  UNION { ?node a cardano:DApp }\n  UNION { ?node a cardano:DeveloperTool }\n  UNION { ?node a cardano:VasilFeature }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:SmartContractConcept }\n  UNION { ?node a cardano:SmartContractLanguage }\n  UNION { ?node a cardano:SmartContractRuntime }\n  UNION { ?node a cardano:SmartContractPattern }\n  UNION { ?node a cardano:TransactionComponent }\n  UNION { ?node a cardano:DApp }\n  UNION { ?node a cardano:DeveloperTool }\n  UNION { ?node a cardano:VasilFeature }\n}",
     "tags": [
       "view"
     ]
@@ -21,126 +21,126 @@
     "id": "all-actors",
     "name": "Governance Actors",
     "description": "All governance participants: DReps, SPOs, CC, and ada holders.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE {\n  { ?node a cardano:DRep }\n  UNION { ?node a cardano:SPO }\n  UNION { ?node a cardano:ConstitutionalCommittee }\n  UNION { ?node a cardano:AdaHolder }\n  UNION { ?node a cardano:GovernanceOrganization }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE {\n  { ?node a cardano:DRep }\n  UNION { ?node a cardano:SPO }\n  UNION { ?node a cardano:ConstitutionalCommittee }\n  UNION { ?node a cardano:AdaHolder }\n  UNION { ?node a cardano:GovernanceOrganization }\n}",
     "tags": []
   },
   {
     "id": "all-action-types",
     "name": "Governance Action Types",
     "description": "The seven types of governance action defined by CIP-1694.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE {\n  { ?node a cardano:MotionOfNoConfidence }\n  UNION { ?node a cardano:UpdateCommittee }\n  UNION { ?node a cardano:NewConstitution }\n  UNION { ?node a cardano:HardForkInitiation }\n  UNION { ?node a cardano:ProtocolParameterChange }\n  UNION { ?node a cardano:TreasuryWithdrawal }\n  UNION { ?node a cardano:InfoAction }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE {\n  { ?node a cardano:MotionOfNoConfidence }\n  UNION { ?node a cardano:UpdateCommittee }\n  UNION { ?node a cardano:NewConstitution }\n  UNION { ?node a cardano:HardForkInitiation }\n  UNION { ?node a cardano:ProtocolParameterChange }\n  UNION { ?node a cardano:TreasuryWithdrawal }\n  UNION { ?node a cardano:InfoAction }\n}",
     "tags": []
   },
   {
     "id": "all-parameters",
     "name": "Protocol Parameters",
     "description": "Parameter groups and individual protocol parameters.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE {\n  { ?node a cardano:ParameterGroup } UNION { ?node a cardano:ProtocolParameter }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE {\n  { ?node a cardano:ParameterGroup } UNION { ?node a cardano:ProtocolParameter }\n}",
     "tags": []
   },
   {
     "id": "all-languages",
     "name": "Smart Contract Languages",
     "description": "All on-chain programming languages targeting Plutus Core.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:SmartContractLanguage }",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:SmartContractLanguage }",
     "tags": []
   },
   {
     "id": "all-tools",
     "name": "Developer Tooling",
     "description": "SDKs, explorers, and infrastructure for building on Cardano.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:DeveloperTool }",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:DeveloperTool }",
     "tags": []
   },
   {
     "id": "who-votes-on",
     "name": "Who Votes on What",
     "description": "All voting relationships — which bodies vote on which action types.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node cardano:votesOn ?target }\n  UNION { ?source cardano:votesOn ?node }\n  UNION { ?node cardano:evaluatesAndVotesOn ?target }\n  UNION { ?source cardano:evaluatesAndVotesOn ?node }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node cardano:votesOn ?target }\n  UNION { ?source cardano:votesOn ?node }\n  UNION { ?node cardano:evaluatesAndVotesOn ?target }\n  UNION { ?source cardano:evaluatesAndVotesOn ?node }\n}",
     "tags": []
   },
   {
     "id": "threshold-network",
     "name": "Threshold & Ratification Network",
     "description": "Voting thresholds, ratification process, and what they connect to.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:VotingThreshold }\n  UNION { ?node a cardano:RatificationProcess }\n  UNION { ?node a cardano:VotingProcess }\n  UNION { ?node a cardano:EnactmentProcess }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:VotingThreshold }\n  UNION { ?node a cardano:RatificationProcess }\n  UNION { ?node a cardano:VotingProcess }\n  UNION { ?node a cardano:EnactmentProcess }\n}",
     "tags": []
   },
   {
     "id": "constitution-enforcement",
     "name": "Constitutional Enforcement",
     "description": "The constitution, guardrails script, and the CC — how constitutionality is enforced.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:Constitution }\n  UNION { ?node a cardano:GuardrailsScript }\n  UNION { ?node a cardano:ConstitutionalCommittee }\n  UNION { ?node a cardano:HotColdKeySystem }\n  UNION { ?node a cardano:NewConstitution }\n  UNION { ?node a cardano:MotionOfNoConfidence }\n  UNION { ?node a cardano:UpdateCommittee }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:Constitution }\n  UNION { ?node a cardano:GuardrailsScript }\n  UNION { ?node a cardano:ConstitutionalCommittee }\n  UNION { ?node a cardano:HotColdKeySystem }\n  UNION { ?node a cardano:NewConstitution }\n  UNION { ?node a cardano:MotionOfNoConfidence }\n  UNION { ?node a cardano:UpdateCommittee }\n}",
     "tags": []
   },
   {
     "id": "delegation-paths",
     "name": "Delegation Paths",
     "description": "How ada holders delegate voting power and stake — DReps, SPOs, and pre-defined options.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node cardano:delegatesVotingPowerTo ?target }\n  UNION { ?source cardano:delegatesVotingPowerTo ?node }\n  UNION { ?node cardano:delegatesStakeTo ?target }\n  UNION { ?source cardano:delegatesStakeTo ?node }\n  UNION { ?node cardano:canDelegateTo ?target }\n  UNION { ?source cardano:canDelegateTo ?node }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node cardano:delegatesVotingPowerTo ?target }\n  UNION { ?source cardano:delegatesVotingPowerTo ?node }\n  UNION { ?node cardano:delegatesStakeTo ?target }\n  UNION { ?source cardano:delegatesStakeTo ?node }\n  UNION { ?node cardano:canDelegateTo ?target }\n  UNION { ?source cardano:canDelegateTo ?node }\n}",
     "tags": []
   },
   {
     "id": "plutus-execution",
     "name": "Plutus Execution Model",
     "description": "From Plutus Core through the CEK machine to execution units and cost models.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:SmartContractRuntime }\n  UNION { ?node a cardano:TransactionComponent }\n  UNION { ?node a cardano:ProtocolParameter }\n  UNION { ?node cardano:compilesTo ?target }\n  UNION { ?source cardano:compilesTo ?node }\n  UNION { ?node cardano:evaluatedBy ?target }\n  UNION { ?node cardano:pricedBy ?target }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:SmartContractRuntime }\n  UNION { ?node a cardano:TransactionComponent }\n  UNION { ?node a cardano:ProtocolParameter }\n  UNION { ?node cardano:compilesTo ?target }\n  UNION { ?source cardano:compilesTo ?node }\n  UNION { ?node cardano:evaluatedBy ?target }\n  UNION { ?node cardano:pricedBy ?target }\n}",
     "tags": []
   },
   {
     "id": "vasil-upgrades",
     "name": "Vasil-Era Features",
     "description": "Reference scripts, reference inputs, and inline datums — the Vasil hard fork features.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:VasilFeature }\n  UNION { ?node a cardano:SmartContractConcept .\n          FILTER(?node IN (\n            <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus>,\n            <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/eutxo>\n          ))\n        }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:VasilFeature }\n  UNION { ?node a cardano:SmartContractConcept .\n          FILTER(?node IN (\n            <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/plutus>,\n            <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/eutxo>\n          ))\n        }\n}",
     "tags": []
   },
   {
     "id": "cip-standards",
     "name": "CIP Standards",
     "description": "All Cardano Improvement Proposals referenced in the graph.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:CIP }",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:CIP }",
     "tags": []
   },
   {
     "id": "budget-2026",
     "name": "Budget 2026 Proposals",
     "description": "Cardano Budget 2026 — all submitted proposals with their proposers, deliverables, and treasury links.",
-    "sparql": "PREFIX gbkind: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbkind:proposal }\n  UNION { ?proposal a gbkind:proposal ; cardano:proposedBy ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:administeredBy ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:deliversArtifact ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:partOfBudgetProcess ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:runsIn ?node }\n}",
+    "sparql": "PREFIX gbkind: <https://lambdasistemi.github.io/graph-browser/vocab/kinds#>\nPREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a gbkind:proposal }\n  UNION { ?proposal a gbkind:proposal ; cardano:proposedBy ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:administeredBy ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:deliversArtifact ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:partOfBudgetProcess ?node }\n  UNION { ?proposal a gbkind:proposal ; cardano:runsIn ?node }\n}",
     "tags": ["view", "budget-2026"]
   },
   {
     "id": "budget-2026-work-packages",
     "name": "Budget 2026 — Work Packages",
     "description": "Every Budget 2026 work package with its parent proposal, milestones, line items, cost categories, and the partner/role each line item is performed by.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:WorkPackage }\n  UNION { ?proposal cardano:hasWorkPackage ?node . FILTER(STR(?proposal) != '') }\n  UNION { ?node a cardano:BudgetProposal }\n  UNION { ?wp a cardano:WorkPackage ; cardano:hasWorkPackageMilestone ?node }\n  UNION { ?wp a cardano:WorkPackage ; cardano:hasBudgetLineItem ?node }\n  UNION { ?bli a cardano:BudgetLineItem ; cardano:lineItemCategory ?node }\n  UNION { ?bli a cardano:BudgetLineItem ; cardano:lineItemPerformedBy ?node }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:WorkPackage }\n  UNION { ?proposal cardano:hasWorkPackage ?node . FILTER(STR(?proposal) != '') }\n  UNION { ?node a cardano:BudgetProposal }\n  UNION { ?wp a cardano:WorkPackage ; cardano:hasWorkPackageMilestone ?node }\n  UNION { ?wp a cardano:WorkPackage ; cardano:hasBudgetLineItem ?node }\n  UNION { ?bli a cardano:BudgetLineItem ; cardano:lineItemCategory ?node }\n  UNION { ?bli a cardano:BudgetLineItem ; cardano:lineItemPerformedBy ?node }\n}",
     "tags": ["view", "budget-2026"]
   },
   {
     "id": "budget-2026-strategy-alignment",
     "name": "Budget 2026 — Strategy & KPIs",
     "description": "How Budget 2026 proposals align with the Cardano 2030 Strategy Framework: pillars, supported KPIs, and proposed new KPIs.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:BudgetProposal }\n  UNION { ?node a cardano:StrategicPillar }\n  UNION { ?node a cardano:StrategyKPI }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:BudgetProposal }\n  UNION { ?node a cardano:StrategicPillar }\n  UNION { ?node a cardano:StrategyKPI }\n}",
     "tags": ["view", "budget-2026"]
   },
   {
     "id": "budget-2026-treasury-flow",
     "name": "Budget 2026 — Treasury Flow",
     "description": "How money moves through the Budget 2026 process: the budget process node, every proposal, every repayment clause and the treasury they return to.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:BudgetProcess }\n  UNION { ?node a cardano:BudgetProposal }\n  UNION { ?node a cardano:RepaymentClause }\n  UNION { ?node a cardano:TreasuryBudgeting }\n  UNION { ?node a cardano:TreasuryWithdrawal }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:BudgetProcess }\n  UNION { ?node a cardano:BudgetProposal }\n  UNION { ?node a cardano:RepaymentClause }\n  UNION { ?node a cardano:TreasuryBudgeting }\n  UNION { ?node a cardano:TreasuryWithdrawal }\n}",
     "tags": ["view", "budget-2026"]
   },
   {
     "id": "treasury-and-budgeting",
     "name": "Treasury & Budgeting",
     "description": "Treasury withdrawals, budgeting mechanism, and economic parameters.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:TreasuryWithdrawal }\n  UNION { ?node a cardano:TreasuryBudgeting }\n  UNION { ?node a cardano:DepositMechanism }\n  UNION { ?node a cardano:ParameterGroup .\n          FILTER(?node = <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/param-group-economic>)\n        }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:TreasuryWithdrawal }\n  UNION { ?node a cardano:TreasuryBudgeting }\n  UNION { ?node a cardano:DepositMechanism }\n  UNION { ?node a cardano:ParameterGroup .\n          FILTER(?node = <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/param-group-economic>)\n        }\n}",
     "tags": []
   },
   {
     "id": "hard-fork-governance",
     "name": "Hard Fork Governance",
     "description": "How hard forks are proposed, who votes, and what SPOs must do.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:HardForkInitiation }\n  UNION { ?node a cardano:SPO }\n  UNION { ?node a cardano:DRep }\n  UNION { ?node a cardano:ConstitutionalCommittee }\n  UNION { ?node a cardano:RatificationProcess }\n  UNION { ?node a cardano:EnactmentProcess }\n  UNION { ?node a cardano:LedgerEra }\n  UNION { ?node a cardano:BootstrapPhase }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:HardForkInitiation }\n  UNION { ?node a cardano:SPO }\n  UNION { ?node a cardano:DRep }\n  UNION { ?node a cardano:ConstitutionalCommittee }\n  UNION { ?node a cardano:RatificationProcess }\n  UNION { ?node a cardano:EnactmentProcess }\n  UNION { ?node a cardano:LedgerEra }\n  UNION { ?node a cardano:BootstrapPhase }\n}",
     "tags": []
   },
   {
@@ -192,21 +192,21 @@
     "id": "dapps",
     "name": "DApps & Protocols",
     "description": "Decentralized applications and protocols built on Cardano.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:DApp }",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT ?node WHERE { ?node a cardano:DApp }",
     "tags": []
   },
   {
     "id": "compilation-chain",
     "name": "Language Compilation Chain",
     "description": "How smart contract languages compile down to Plutus Core and execute on the CEK machine.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node cardano:compilesTo ?target }\n  UNION { ?source cardano:compilesTo ?node }\n  UNION { ?node cardano:evaluatedBy ?target }\n  UNION { ?source cardano:evaluatedBy ?node }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node cardano:compilesTo ?target }\n  UNION { ?source cardano:compilesTo ?node }\n  UNION { ?node cardano:evaluatedBy ?target }\n  UNION { ?source cardano:evaluatedBy ?node }\n}",
     "tags": []
   },
   {
     "id": "prov-activities",
     "name": "Provenance Activities",
     "description": "All governance actions and processes modeled as PROV-O activities.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:GovernanceAction }\n  UNION { ?node a cardano:GovernanceProcess }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:GovernanceAction }\n  UNION { ?node a cardano:GovernanceProcess }\n}",
     "tags": []
   },
   {
@@ -256,7 +256,7 @@
     "id": "hydra-ecosystem",
     "name": "Hydra L2 Ecosystem",
     "description": "Hydra Head protocol — components, lifecycle phases, consensus, and connections to L1.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nPREFIX n: <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:L2Protocol }\n  UNION { ?node a cardano:L2Component }\n  UNION { ?node a cardano:L2Lifecycle }\n  UNION { ?node cardano:componentOf n:hydra }\n  UNION { ?node cardano:lifecyclePhaseOf n:hydra }\n  UNION { ?node cardano:maintainedBy ?org }\n  UNION { VALUES ?node { n:hydra n:eutxo n:plutus n:state-machine n:reference-inputs n:cardano-scaling n:isomorphic-state-channel n:unanimous-consensus } }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nPREFIX n: <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:L2Protocol }\n  UNION { ?node a cardano:L2Component }\n  UNION { ?node a cardano:L2Lifecycle }\n  UNION { ?node cardano:componentOf n:hydra }\n  UNION { ?node cardano:lifecyclePhaseOf n:hydra }\n  UNION { ?node cardano:maintainedBy ?org }\n  UNION { VALUES ?node { n:hydra n:eutxo n:plutus n:state-machine n:reference-inputs n:cardano-scaling n:isomorphic-state-channel n:unanimous-consensus } }\n}",
     "tags": [
       "view"
     ]
@@ -265,7 +265,7 @@
     "id": "hydra-lifecycle",
     "name": "Hydra Head Lifecycle",
     "description": "The five phases of a Hydra head: Init → Commit → Open → Close → Fan-out.",
-    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>\nPREFIX n: <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:L2Lifecycle }\n  UNION { VALUES ?node { n:hydra n:hydra-contestation n:hydra-snapshot n:hydra-participation-token } }\n}",
+    "sparql": "PREFIX cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>\nPREFIX n: <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/>\nSELECT DISTINCT ?node WHERE {\n  { ?node a cardano:L2Lifecycle }\n  UNION { VALUES ?node { n:hydra n:hydra-contestation n:hydra-snapshot n:hydra-participation-token } }\n}",
     "tags": []
   },
   {

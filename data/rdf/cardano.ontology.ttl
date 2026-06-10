@@ -1,4 +1,4 @@
-@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
+@prefix cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#> .
 @prefix rdf:     <http://www.w3.org/1999/02/22-rdf-syntax-ns#> .
 @prefix rdfs:    <http://www.w3.org/2000/01/rdf-schema#> .
 @prefix owl:     <http://www.w3.org/2002/07/owl#> .
@@ -124,11 +124,6 @@ cardano:GovernanceActor a owl:Class ;
   rdfs:subClassOf foaf:Agent ;
   dcterms:description "An entity that participates in Cardano on-chain governance." .
 
-cardano:DRep a owl:Class ;
-  rdfs:label "Delegated Representative" ;
-  rdfs:subClassOf cardano:GovernanceActor , org:Role ;
-  dcterms:description "A registered delegate who votes on governance actions on behalf of ada holders." .
-
 cardano:SPO a owl:Class ;
   rdfs:label "Stake Pool Operator" ;
   rdfs:subClassOf cardano:GovernanceActor , org:Role ;
@@ -164,18 +159,6 @@ cardano:GovernanceActionType a owl:Class ;
 
 cardano:MotionOfNoConfidence a owl:Class ;
   rdfs:label "Motion of No-Confidence" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:UpdateCommittee a owl:Class ;
-  rdfs:label "Update Committee / Threshold" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:NewConstitution a owl:Class ;
-  rdfs:label "New Constitution / Guardrails Script" ;
-  rdfs:subClassOf cardano:GovernanceActionType .
-
-cardano:HardForkInitiation a owl:Class ;
-  rdfs:label "Hard Fork Initiation" ;
   rdfs:subClassOf cardano:GovernanceActionType .
 
 cardano:ProtocolParameterChange a owl:Class ;
@@ -252,10 +235,6 @@ cardano:GovernanceArtifact a owl:Class ;
   rdfs:label "Governance Artifact" ;
   rdfs:subClassOf foaf:Document , prov:Entity ;
   dcterms:description "A document or on-chain script that defines or constrains governance behavior." .
-
-cardano:Constitution a owl:Class ;
-  rdfs:label "Cardano Constitution" ;
-  rdfs:subClassOf cardano:GovernanceArtifact .
 
 cardano:GuardrailsScript a owl:Class ;
   rdfs:label "Guardrails Script" ;

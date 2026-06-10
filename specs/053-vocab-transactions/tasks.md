@@ -61,7 +61,7 @@ Forbidden scope:
 
 Orchestrator analysis already applied:
 - The cardano: prefix is bound to
-  <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>
+  <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>
   in cardano.ontology.ttl. Use exactly that.
 - Phase A is declarations only — no rdfs:domain, no rdfs:range,
   no owl:* axioms, no skos:* triples. Subclass relationships ARE
@@ -81,7 +81,7 @@ GREEN proof:
 Required content of data/rdf/transactions.ttl:
 
 Prefixes (use exactly these IRIs):
-- cardano: https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#
+- cardano: https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#
 - rdf:    http://www.w3.org/1999/02/22-rdf-syntax-ns#
 - rdfs:   http://www.w3.org/2000/01/rdf-schema#
 - owl:    http://www.w3.org/2002/07/owl#
