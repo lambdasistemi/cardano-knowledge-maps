@@ -10,7 +10,7 @@
 
 The parent epic re-targets `cardano-tx-tools` from an in-memory ADT + text renderer to **"Conway tx → RDF graph"**. The emitter, the operator rule format, and every reviewer-facing view all bind to a vocabulary of `cardano:` class and property URIs. Once any third tool reads or writes those URIs, the vocabulary is public API: a wrong name is a versioning event.
 
-This ticket publishes that vocabulary under the existing `cardano-knowledge-maps` namespace (`https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#`), as a new file `data/rdf/transactions.ttl`, so the emitter ticket ([#47](https://github.com/lambdasistemi/cardano-tx-tools/issues/47)) and the harness ticket ([#45](https://github.com/lambdasistemi/cardano-tx-tools/issues/45)) can pin against stable URIs.
+This ticket publishes that vocabulary under the existing `cardano-knowledge-maps` namespace (`https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#`), as a new file `data/rdf/transactions.ttl`, so the emitter ticket ([#47](https://github.com/lambdasistemi/cardano-tx-tools/issues/47)) and the harness ticket ([#45](https://github.com/lambdasistemi/cardano-tx-tools/issues/45)) can pin against stable URIs.
 
 ## Two-phase delivery
 
@@ -43,7 +43,7 @@ They need every name to resolve against a published ontology so the emitter, the
 **Acceptance Scenarios**:
 
 1. **Given** `data/rdf/transactions.ttl` is wired into `data/config.json::graphSources`, **When** the graph-browser validate-action runs in CI, **Then** the file parses as well-formed Turtle and the union graph contains every class and property URI listed in the issue's Phase A scope (see Requirements FR-001..FR-002 below).
-2. **Given** the same file, **When** a downstream consumer reads it via `nix` flake input (parent epic's plan), **Then** the URIs resolve under `https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#`, matching the prefix used elsewhere in the knowledge-maps ontology.
+2. **Given** the same file, **When** a downstream consumer reads it via `nix` flake input (parent epic's plan), **Then** the URIs resolve under `https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#`, matching the prefix used elsewhere in the knowledge-maps ontology.
 
 ---
 
@@ -111,7 +111,7 @@ When an operator writes a Turtle rule declaring an entity, they refer to a role 
   - Asset: `hasPolicy`, `hasAssetName`.
   - Datum / Redeemer / Script: `hasDatum`, `hasReferenceScript`, `hasRawBytes`, `decodedAs`, `hasHash`, `hasVersion`.
   - Resolved-input: `resolvedTo`, `hasResolution` (declared as a property in Phase A so the Phase B `owl:inverseOf` axiom has both subjects already defined; named in the issue's reasoning-axioms list).
-- **FR-003** — `data/rdf/transactions.ttl` MUST use the `cardano:` prefix `<https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#>` exactly as bound in `cardano.ontology.ttl` (Constitution: ontology grounded in W3C standard vocabularies; same prefix means one unified namespace).
+- **FR-003** — `data/rdf/transactions.ttl` MUST use the `cardano:` prefix `<https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#>` exactly as bound in `cardano.ontology.ttl` (Constitution: ontology grounded in W3C standard vocabularies; same prefix means one unified namespace).
 - **FR-004** — Every existing `cardano:` subject defined in `cardano.ontology.ttl` and `smart-contracts.ttl` MUST remain byte-identical after the PR (additive-only invariant). The diff against `origin/main` for those two files MUST be empty.
 - **FR-005** — `data/rdf/transactions.ttl` MUST appear as a `graphSources` entry in `data/config.json` (background: true), so the existing CI validate-action exercises it under the same parse rules as the rest of the ontology.
 

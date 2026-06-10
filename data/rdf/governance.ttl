@@ -10,7 +10,7 @@
 @prefix gbkind:  <https://lambdasistemi.github.io/graph-browser/vocab/kinds#> .
 @prefix gbgroup: <https://lambdasistemi.github.io/graph-browser/vocab/groups#> .
 @prefix gbedge:  <https://lambdasistemi.github.io/graph-browser/vocab/edges#> .
-@prefix cardano: <https://lambdasistemi.github.io/cardano-knowledge-maps/vocab/cardano#> .
+@prefix cardano: <https://lambdasistemi.github.io/cardano-ledger-rdf/vocab/cardano#> .
 @prefix n:       <https://github.com/lambdasistemi/cardano-knowledge-maps/rdf/node/> .
 
 # -- Edges ----------------------------------------------------------------
